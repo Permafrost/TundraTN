@@ -61,6 +61,17 @@ To run the test suite, either:
 * visit <http://localhost:5555/invoke/tundra/test?$package=TundraTN>  
   (substitute your own Integration Server host and port for localhost:5555)
 
+## Services
+
+### Tundra
+
+Top-level services for the most common tasks:
+
+```java
+// logs a message to the Trading Networks activity log
+tundra.tn:log(bizdoc, $type, $class, $summary, $message);
+```  
+
 ## Contributions
 
 1. Check out the latest master to make sure the feature hasn't been implemented 
