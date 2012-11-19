@@ -60,3 +60,23 @@ To run the test suite, either:
 * run tundra:test($package = "TundraTN") service directly
 * visit <http://localhost:5555/invoke/tundra/test?$package=TundraTN>  
   (substitute your own Integration Server host and port for localhost:5555)
+
+## Contributions
+
+1. Check out the latest master to make sure the feature hasn't been implemented 
+   or the bug hasn't been fixed yet
+2. Check out the issue tracker to make sure someone already hasn't requested it 
+   and/or contributed it
+3. Fork the project
+4. Start a feature/bugfix branch
+5. Commit and push until you are happy with your contribution
+6. Make sure to add tests for it. This is important so it won't in a future 
+   version unintentionally
+
+Please try not to mess with the package version, or history. If you want your 
+own version please isolate it to its own commit, so it can be cherry-picked 
+around.
+
+## Copyright
+
+Copyright © 2012 Lachlan Dowding. See license.txt for further details.
