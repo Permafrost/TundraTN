@@ -69,7 +69,7 @@ Top-level services for the most common tasks:
 
 ```java
 // logs a message to the Trading Networks activity log
-tundra.tn:log(bizdoc, $type, $class, $summary, $message);
+tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 ```  
 
 ## Contributions
