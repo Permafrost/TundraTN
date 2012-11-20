@@ -68,9 +68,93 @@ To run the test suite, either:
 Top-level services for the most common tasks:
 
 ```java
-// logs a message to the Trading Networks activity log
+// Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
-```  
+
+// Processes a Trading Networks document by parsing the given document content part, and calling 
+// the given service with the following input arguments: $bizdoc, $sender and $receiver are the 
+// normal bizdoc processing service inputs (except with the '$' prefix), $document is the parsed 
+// content part as an IData document, and $schema is the name of the document reference or flat 
+// file schema used by the parser.
+// 
+// As it provides logging, content parsing, error handling, and document status updates, the
+// $service processing service does not need to include any of this common boilerplate code.
+// 
+// If a custom $catch service is specified, it will be called if an error occurs while processing
+// the bizdoc.  The $catch service will be passed the current pipeline, along with the following 
+// additional arguments: 
+//   $exception - the actual exception object thrown by the $service
+//   $exception.message - the error message
+//   $exception.class - the exception object's Java class name 
+//   $exception.stack - the Java call stack at the time the exception occurred
+// 
+// This service is designed to be called directly from a Trading Networks bizdoc processing rule,
+// hence the non-dollar-prefixed bizdoc argument.
+// 
+// Additional arbitrary input arguments for $service (or pub.flatFile:convertToValues/
+// pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via tundra.tn.document:parse) can be 
+// specified in the $pipeline document. Fully qualified names will be handled correctly, for 
+// example an argument named 'example/item[0]' will be converted to an IData document named 
+// 'example' containing a String list named 'item' with it's first value set accordingly.
+tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+```
+
+#### Document
+
+Services related to Trading Networks documents (bizdocs):
+
+```java
+// Returns the document's content associated with the given part name as a stream. If the part
+// name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat 
+// Files).
+tundra.tn.document.content:get($bizdoc, $part, $encoding);
+
+// Returns the document associated with the given internal ID, optionally 
+// including the document's content parts.
+tundra.tn.document:get($id, $content?);
+
+// Parses the Trading Networks document content part associated with the given part
+// name, or the default part if not provided, using the parsing schema configured on 
+// the document type.
+tundra.tn.document:parse($bizdoc, $part, $encoding);
+
+// Returns the parsing schema associated with the given Trading Networks document. 
+tundra.tn.document.schema:get($bizdoc);
+
+// Sets user status on the given Trading Networks document.
+tundra.tn.document.status:set($bizdoc, $status);
+
+// Returns the Trading Networks document type associated with the given ID as an 
+// IData document.
+// 
+// Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN service 
+// returns an object of type com.wm.app.tn.doc.BizDocType which, despite looking
+// like one, is not a normal IData document and therefore causes problems in
+// Flow services. For example, you cannot branch on fields in the faux document.
+tundra.tn.document.type:get($id);
+
+// Returns the parsing schema associated with the given Trading Networks document type.
+tundra.tn.document.type.schema:get($type);
+```
+
+##### Exception
+
+Exception-related services:
+
+```java
+// Handles a Trading Networks document processing error by logging the error against
+// the document in the activity log, and setting the user status to 'ERROR'.
+tundra.tn.exception:handle($bizdoc);
+```
+
+##### Profile
+
+Services related to Trading Networks partner profiles:
+
+```java
+// Returns the Trading Networks profile associated with the given ID.
+tundra.tn.profile:get($id);
+```
 
 ## Contributions
 
