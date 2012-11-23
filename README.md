@@ -159,6 +159,9 @@ Partner profile-related services:
 ```java
 // Returns the Trading Networks profile associated with the given ID.
 tundra.tn.profile:get($id);
+
+// Returns the Trading Networks Enterprise partner profile.
+tundra.tn.profile:self();
 ```
 
 ## Contributions
