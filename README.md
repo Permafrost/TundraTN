@@ -101,7 +101,7 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encodin
 
 #### Document
 
-Services related to Trading Networks documents (bizdocs):
+Bizdoc-related services:
 
 ```java
 // Returns the document's content associated with the given part name as a stream. If the part
@@ -154,7 +154,7 @@ tundra.tn.exception:handle($bizdoc);
 
 ##### Profile
 
-Services related to Trading Networks partner profiles:
+Partner profile-related services:
 
 ```java
 // Returns the Trading Networks profile associated with the given ID.
