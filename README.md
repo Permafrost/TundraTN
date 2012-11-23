@@ -121,7 +121,7 @@ tundra.tn.document:parse($bizdoc, $part, $encoding);
 // Routes arbitrary content specified as a string, byte array, input stream, or IData document 
 // to Trading Networks. Correctly supports large documents, so any document considered large will 
 // be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
-tundra.tn.document:route($content, $encoding, $schema, TN_parms);
+tundra.tn.document:route($content, $schema, TN_parms);
 
 // Returns the parsing schema associated with the given Trading Networks document.
 tundra.tn.document.schema:get($bizdoc);
