@@ -63,8 +63,6 @@ To run the test suite, either:
 
 ## Services
 
-### Tundra
-
 Top-level services for the most common tasks:
 
 ```java
@@ -107,7 +105,7 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encodin
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 ```
 
-#### Document
+### Document
 
 Bizdoc-related services:
 
@@ -153,7 +151,7 @@ tundra.tn.document.type:get($id);
 tundra.tn.document.type.schema:get($type);
 ```
 
-##### Exception
+### Exception
 
 Exception-related services:
 
@@ -163,7 +161,7 @@ Exception-related services:
 tundra.tn.exception:handle($bizdoc);
 ```
 
-##### Profile
+### Profile
 
 Partner profile-related services:
 
