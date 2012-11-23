@@ -118,6 +118,9 @@ tundra.tn.document:get($id, $content?);
 // the document type.
 tundra.tn.document:parse($bizdoc, $part, $encoding);
 
+// Relates two Trading Networks documents (bizdocs) together.
+tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
+
 // Routes arbitrary content specified as a string, byte array, input stream, or IData document 
 // to Trading Networks. Correctly supports large documents, so any document considered large will 
 // be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
