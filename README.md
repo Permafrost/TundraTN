@@ -115,6 +115,10 @@ Bizdoc-related services:
 // Files).
 tundra.tn.document.content:get($bizdoc, $part, $encoding);
 
+// Adds a content part with the given name and content, specified as a string, bytes or stream, 
+// to the given Trading Networks document (bizdoc).
+tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
+
 // Returns the document associated with the given internal ID, optionally 
 // including the document's content parts.
 tundra.tn.document:get($id, $content?);
