@@ -110,6 +110,21 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
 Bizdoc-related services:
 
 ```java
+// Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc) 
+// attribute value/s match the given regular expression pattern (arg).
+//
+// Refer to <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html> for more information
+// on regular expression use in Java.
+tundra.tn.document.attribute.string:match(values[], arg);
+
+// Trading Networks string transformer which URI decodes the given Trading Networks document (bizdoc) 
+// attribute value/s.
+tundra.tn.document.attribute.uri:decode(values[]);
+
+// Trading Networks string transformer which URI encodes the given Trading Networks document (bizdoc) 
+// attribute value/s.
+tundra.tn.document.attribute.uri:encode(values[]);
+
 // Returns the document's content associated with the given part name as a stream. If the part
 // name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat 
 // Files).
