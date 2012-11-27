@@ -66,6 +66,34 @@ To run the test suite, either:
 Top-level services for the most common tasks:
 
 ```java
+// Delivers Trading Networks document (bizdoc) content to the given destination URI.
+// 
+// Supports the following delivery protocols / URI schemes:
+//   - file: writes the given content to the file specified by the destination URI.  The
+//           following additional options can be provided via the $pipeline document:
+//           - $mode: append / write
+//   - http: transmits the given content to the destination URI. The following adttional
+//           options can be provided via the $pipeline document:
+//           - $method: get / put / post / delete / head / trace / options
+//           - $headers/*: additional HTTP headers as required
+//           - $authority/user: the username to log on to the remote web server with
+//           - $authority/password: the password to log on to the remote web server with
+//   - https: refer to http
+// 
+// Variable substitution is performed on all variables specified in the $pipeline document,
+// and the $destination URI, allowing for dynamic generation of any of these values. Also,
+// if $service is specified, it will be called prior to variable substitution and thus can
+// be used to populate the pipeline with variables to be used by the substitution.
+// 
+// This service leverages the Tundra service tundra.content:deliver. Therefore, additional 
+// delivery protocols can be implemented by creating a service named for the URI scheme in 
+// the Tundra package folder tundra.support.content.deliver.  Services in this folder should 
+// implement the tundra.support.content.deliver:handler specification.
+// 
+// TODO: support the standard Trading Network profile delivery methods, such as primary HTTP
+// etc.
+tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 
