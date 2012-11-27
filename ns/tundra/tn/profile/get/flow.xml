@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FLOW VERSION="3.0" CLEANUP="true">
+  <COMMENT></COMMENT>
 
   <!-- nodes -->
 
@@ -19,23 +20,7 @@
     <array name="rec_fields" type="record" depth="1">
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$id</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">tundra.tn.profile:get</value>
+        <value name="field_name">$tundra.tn.profile:get</value>
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -43,23 +28,15 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
           <record javaclass="com.wm.util.Values">
-            <value name="node_type">record</value>
-            <value name="node_comment"></value>
-            <record name="node_hints" javaclass="com.wm.util.Values">
-              <null name="field_usereditable"/>
-              <value name="field_largerEditor">false</value>
-              <value name="field_password">false</value>
-            </record>
+            <value name="node_type">unknown</value>
             <value name="field_name">$id</value>
             <value name="field_type">string</value>
             <value name="field_dim">0</value>
-            <value name="field_opt">true</value>
             <value name="nillable">true</value>
             <value name="form_qualified">false</value>
             <value name="is_global">false</value>
           </record>
         </array>
-        <value name="rec_closed">true</value>
       </record>
     </array>
   </record>
@@ -88,6 +65,17 @@
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -99,14 +87,14 @@
 
   <!-- nodes -->
 
-<MAPCOPY NAME="Link" FROM="/$id;1;0" TO="/tundra.tn.profile:get;2;0/$id;1;0">
+<MAPCOPY NAME="Link" FROM="/$id;1;0" TO="/$tundra.tn.profile:get;2;0/$id;1;0">
 </MAPCOPY>
 
 <MAPDELETE NAME="Dropper" FIELD="/$id;1;0">
 </MAPDELETE>
 </MAP>
 
-<INVOKE NAME="scope" SCOPE="tundra.tn.profile:get" TIMEOUT="" SERVICE="wm.tn.profile:getProfile" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE NAME="scope" SCOPE="$tundra.tn.profile:get" TIMEOUT="" SERVICE="wm.tn.profile:getProfile" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -142,6 +130,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
+    <value name="field_name">tundra.tn.profile:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -156,17 +145,6 @@
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">tundra.tn.profile:get</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
       </record>
     </array>
   </record>
@@ -185,6 +163,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
+    <value name="field_name">tundra.tn.profile:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -211,18 +190,7 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="field_name">tundra.tn.profile:get</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$profile</value>
+        <value name="field_name">profile</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -232,7 +200,7 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="field_name">profile</value>
+        <value name="field_name">$profile</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -307,6 +275,36 @@
         <value name="is_global">false</value>
         <value name="rec_ref">wm.tn.rec:Profile</value>
       </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$tundra.tn.profile:get</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">unknown</value>
+            <value name="field_name">$id</value>
+            <value name="field_type">string</value>
+            <value name="field_dim">0</value>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="field_name">$profile</value>
+            <value name="field_type">recref</value>
+            <value name="field_dim">0</value>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+            <value name="rec_ref">wm.tn.rec:Profile</value>
+          </record>
+        </array>
+      </record>
     </array>
   </record>
 </Values>
@@ -325,6 +323,17 @@
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="field_name">tundra.tn.profile:get</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$tundra.tn.profile:get</value>
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -359,10 +368,10 @@
 
   <!-- nodes -->
 
-<MAPCOPY NAME="Link" FROM="/tundra.tn.profile:get;2;0/$profile;4;0;wm.tn.rec:Profile" TO="/$profile;4;0;wm.tn.rec:Profile">
+<MAPCOPY NAME="Link" FROM="/$tundra.tn.profile:get;2;0/$profile;4;0;wm.tn.rec:Profile" TO="/$profile;4;0;wm.tn.rec:Profile">
 </MAPCOPY>
 
-<MAPDELETE NAME="Dropper" FIELD="/tundra.tn.profile:get;2;0">
+<MAPDELETE NAME="Dropper" FIELD="/$tundra.tn.profile:get;2;0">
 </MAPDELETE>
 </MAP>
 </FLOW>
