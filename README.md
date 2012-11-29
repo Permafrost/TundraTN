@@ -133,6 +133,13 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encodin
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 ```
 
+### Content
+
+// Routes arbitrary content specified as a string, byte array, input stream, or IData document 
+// to Trading Networks. Correctly supports large documents, so any document considered large will 
+// be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
+tundra.tn.content:route($content, $schema, TN_parms);
+
 ### Document
 
 Bizdoc-related services:
@@ -173,11 +180,6 @@ tundra.tn.document:parse($bizdoc, $part, $encoding);
 
 // Relates two Trading Networks documents (bizdocs) together.
 tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
-
-// Routes arbitrary content specified as a string, byte array, input stream, or IData document 
-// to Trading Networks. Correctly supports large documents, so any document considered large will 
-// be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
-tundra.tn.document:route($content, $schema, TN_parms);
 
 // Returns the parsing schema associated with the given Trading Networks document.
 tundra.tn.document.schema:get($bizdoc);
