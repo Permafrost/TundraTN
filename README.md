@@ -169,6 +169,10 @@ tundra.tn.document.content:get($bizdoc, $part, $encoding);
 // to the given Trading Networks document (bizdoc).
 tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
 
+// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or 
+// receiver on the derivative.
+tundra.tn.document:derive($bizdoc, $sender, $receiver);
+
 // Returns the document associated with the given internal ID, optionally 
 // including the document's content parts.
 tundra.tn.document:get($id, $content?);
