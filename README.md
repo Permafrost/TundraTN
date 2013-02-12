@@ -133,6 +133,15 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encodin
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 ```
 
+### Content
+
+```java
+// Routes arbitrary content specified as a string, byte array, input stream, or IData document 
+// to Trading Networks. Correctly supports large documents, so any document considered large will 
+// be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
+tundra.tn.content:route($content, $schema, TN_parms);
+```
+
 ### Document
 
 Bizdoc-related services:
@@ -162,6 +171,10 @@ tundra.tn.document.content:get($bizdoc, $part, $encoding);
 // to the given Trading Networks document (bizdoc).
 tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
 
+// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or 
+// receiver on the derivative.
+tundra.tn.document:derive($bizdoc, $sender, $receiver);
+
 // Returns the document associated with the given internal ID, optionally 
 // including the document's content parts.
 tundra.tn.document:get($id, $content?);
@@ -173,11 +186,6 @@ tundra.tn.document:parse($bizdoc, $part, $encoding);
 
 // Relates two Trading Networks documents (bizdocs) together.
 tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
-
-// Routes arbitrary content specified as a string, byte array, input stream, or IData document 
-// to Trading Networks. Correctly supports large documents, so any document considered large will 
-// be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
-tundra.tn.document:route($content, $schema, TN_parms);
 
 // Returns the parsing schema associated with the given Trading Networks document.
 tundra.tn.document.schema:get($bizdoc);
@@ -213,8 +221,10 @@ tundra.tn.exception:handle($bizdoc);
 Partner profile-related services:
 
 ```java
-// Returns the Trading Networks profile associated with the given ID.
-tundra.tn.profile:get($id);
+// Returns the Trading Networks profile associated with the given ID. If $type is 
+// null, then $id must be the internal partner ID, otherwise $type is the external
+// ID name to use to find the profile.
+tundra.tn.profile:get($id, $type);
 
 // Returns the Trading Networks Enterprise partner profile.
 tundra.tn.profile:self();
