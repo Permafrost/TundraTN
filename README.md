@@ -72,7 +72,7 @@ Top-level services for the most common tasks:
 //   - file: writes the given content to the file specified by the destination URI.  The
 //           following additional options can be provided via the $pipeline document:
 //           - $mode: append / write
-//   - http: transmits the given content to the destination URI. The following adttional
+//   - http: transmits the given content to the destination URI. The following additional
 //           options can be provided via the $pipeline document:
 //           - $method: get / put / post / delete / head / trace / options
 //           - $headers/*: additional HTTP headers as required
