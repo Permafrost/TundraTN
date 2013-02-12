@@ -135,10 +135,12 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
 
 ### Content
 
+```java
 // Routes arbitrary content specified as a string, byte array, input stream, or IData document 
 // to Trading Networks. Correctly supports large documents, so any document considered large will 
 // be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
 tundra.tn.content:route($content, $schema, TN_parms);
+```
 
 ### Document
 
