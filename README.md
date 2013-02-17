@@ -94,6 +94,14 @@ Top-level services for the most common tasks:
 // etc.
 tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
 
+// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or 
+// receiver on the derivative.
+//
+// If a $service is specified, it will be called as a processing service for the bizdoc. It can
+// return the $derivatives list, thereby allowing for the derivatives to be determined at
+// runtime.
+tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 

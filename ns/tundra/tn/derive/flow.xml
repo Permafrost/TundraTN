@@ -570,6 +570,18 @@
 <MAPDELETE NAME="Dropper" FIELD="/TN_parms;2;0">
 </MAPDELETE>
 
+<MAPCOPY NAME="Link" FROM="/$part;1;0" TO="/$pipeline;2;0/$part;1;0">
+</MAPCOPY>
+
+<MAPCOPY NAME="Link" FROM="/$encoding;1;0" TO="/$pipeline;2;0/$encoding;1;0">
+</MAPCOPY>
+
+<MAPDELETE NAME="Dropper" FIELD="/$part;1;0">
+</MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/$encoding;1;0">
+</MAPDELETE>
+
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$service;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
@@ -606,18 +618,6 @@
 </Values>
 </DATA>
 </MAPSET>
-
-<MAPCOPY NAME="Link" FROM="/$part;1;0" TO="/$pipeline;2;0/$part;1;0">
-</MAPCOPY>
-
-<MAPCOPY NAME="Link" FROM="/$encoding;1;0" TO="/$pipeline;2;0/$encoding;1;0">
-</MAPCOPY>
-
-<MAPDELETE NAME="Dropper" FIELD="/$part;1;0">
-</MAPDELETE>
-
-<MAPDELETE NAME="Dropper" FIELD="/$encoding;1;0">
-</MAPDELETE>
 </MAP>
 
 <MAP MODE="OUTPUT">
