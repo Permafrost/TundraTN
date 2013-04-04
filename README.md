@@ -6,7 +6,7 @@ A package of useful services for webMethods Trading Networks 7.1 or higher.
 
 TundraTN is dependent on the following packages:
 
-* Tundra
+* Tundra - https://github.com/Permafrost/Tundra.git
 * WmTN
 
 ## Installation
