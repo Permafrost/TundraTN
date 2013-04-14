@@ -23,8 +23,9 @@ Then activate and enable the TundraTN package from the package management web pa
 Integration Server web administration site.
 
 Or, if you don't want to use git, you can download the full package from GitHub by clicking 
-the ZIP button above, then copy the resulting TundraTN.zip file to your Integration 
-Server's ./replicate/inbound folder, and install it from the Package Management web page.
+the ZIP button above, then extract the resulting TundraTN-master.zip file to your Integration 
+Server's ./packages/ folder, rename the folder to TundraTN, and then activate and enable it
+from the package management web page on the Integration Server web administration site.
 
 ## Upgrading
 
