@@ -136,6 +136,14 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // 'example' containing a String list named 'item' with it's first value set accordingly.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
 
+// One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format. 
+// Calls the given splitting service, passing the parsed content as an input, and routing the split 
+// content back to Trading Networks as new documents automatically. 
+//
+// The splitting service must accept a single IData document and return an IData document list, and 
+// optionally TN_parms.
+tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+
 // One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format. 
 // Calls the given translation service, passing the parsed content as an input, and routing the 
 // translated content back to Trading Networks as a new document automatically. 
