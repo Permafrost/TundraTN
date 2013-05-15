@@ -251,10 +251,31 @@ tundra.tn.profile:get($id, $type);
 tundra.tn.profile:self();
 ```
 
+### Queue
+
+Queue processing service versions of the tundra.tn:* meta processing services:
+
+```java
+// For each item in the Trading Networks queue, process it with tundra.tn:deliver.
+tundra.tn.queue:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+
+// For each item in the Trading Networks queue, process it with tundra.tn:derive.
+tundra.tn.queue:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+
+// For each item in the Trading Networks queue, process it with tundra.tn:process.
+tundra.tn.queue:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+
+// For each item in the Trading Networks queue, process it with tundra.tn:split.
+tundra.tn.queue:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+
+// For each item in the Trading Networks queue, process it with tundra.tn:translate.
+tundra.tn.queue:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+```
+
 ### Reliable
 
 Reliable processing services (service execution task) versions of the tundra.tn:* 
-processing services:
+meta processing services:
 
 ```java
 // Reliably processes (as a service execution task) a Trading Networks document via 
