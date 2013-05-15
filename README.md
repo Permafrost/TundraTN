@@ -137,6 +137,10 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // 'example' containing a String list named 'item' with it's first value set accordingly.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
 
+// Reprocesses the given document in Trading Networks by rematching it against the 
+// processing rule base and executing the first processing rule that matches.
+tundra.tn:reroute(bizdoc);
+
 // One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format. 
 // Calls the given splitting service, passing the parsed content as an input, and routing the split 
 // content back to Trading Networks as new documents automatically. 
@@ -257,19 +261,22 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
 ```java
 // For each item in the Trading Networks queue, process it with tundra.tn:deliver.
-tundra.tn.queue:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:derive.
-tundra.tn.queue:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:process.
-tundra.tn.queue:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $part, $encoding);
+
+// For each item in the Trading Networks queue, process it with tundra.tn:reroute.
+tundra.tn.queue:reroute(queue);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:split.
-tundra.tn.queue:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:translate.
-tundra.tn.queue:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 ```
 
 ### Reliable
@@ -289,6 +296,10 @@ tundra.tn.reliable:derive(bizdoc, $service, $catch, $finally, $pipeline, $deriva
 // Reliably processes (as a service execution task) a Trading Networks document via 
 // tundra.tn:process.
 tundra.tn.reliable:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+
+// Reliably processes (as a service execution task) a Trading Networks document via 
+// tundra.tn:reroute.
+tundra.tn.reliable:reroute(bizdoc);
 
 // Reliably processes (as a service execution task) a Trading Networks document via 
 // tundra.tn:split.
