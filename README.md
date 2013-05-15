@@ -251,6 +251,33 @@ tundra.tn.profile:get($id, $type);
 tundra.tn.profile:self();
 ```
 
+### Reliable
+
+Reliable processing services (service execution task) versions of the tundra.tn:* 
+processing services:
+
+```java
+// Reliably processes (as a service execution task) a Trading Networks document via 
+// tundra.tn:deliver.
+tundra.tn.reliable:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+
+// Reliably processes (as a service execution task) a Trading Networks document via 
+// tundra.tn:derive.
+tundra.tn.reliable:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+
+// Reliably processes (as a service execution task) a Trading Networks document via 
+// tundra.tn:process.
+tundra.tn.reliable:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+
+// Reliably processes (as a service execution task) a Trading Networks document via 
+// tundra.tn:split.
+tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+
+// Reliably processes (as a service execution task) a Trading Networks document via 
+// tundra.tn:translate.
+tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+```
+
 ## Contributions
 
 1. Check out the latest master to make sure the feature hasn't been implemented 
