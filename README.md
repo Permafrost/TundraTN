@@ -22,8 +22,8 @@ $ git checkout v<n.n.n> # where <n.n.n> is the desired version
 Then activate and enable the TundraTN package from the package management web page on the
 Integration Server web administration site.
 
-Or, if you don't want to use git, you can download the full package from GitHub by clicking 
-the ZIP button above, then extract the resulting TundraTN-master.zip file to your Integration 
+Or, if you don't want to use git, you can download the full package from GitHub by clicking
+the ZIP button above, then extract the resulting TundraTN-master.zip file to your Integration
 Server's ./packages/ folder, rename the folder to TundraTN, and then activate and enable it
 from the package management web page on the Integration Server web administration site.
 
@@ -46,24 +46,24 @@ Integration Server web administration site.
    scoping mechanism (typical user-space variables will be unprefixed), except
    Trading Networks-specific arguments, such as bizdoc, sender and receiver
 2. All boolean arguments are suffixed with a '?'
-3. Single-word argument names are preferred. Where multiple words are necessary, 
+3. Single-word argument names are preferred. Where multiple words are necessary,
    words are separated with a '.'
-4. Service namespace is kept flat. Namespace folders are usually nouns. Service 
-   names are usually verbs, indicating the action performed on the noun (parent 
+4. Service namespace is kept flat. Namespace folders are usually nouns. Service
+   names are usually verbs, indicating the action performed on the noun (parent
    folder)
-5. All private elements are kept in the tundra.tn.support folder. All other 
-   elements comprise the public API of the package. As the private 
-   elements do not contribute to the public API, they are liable to change at 
+5. All private elements are kept in the tundra.tn.support folder. All other
+   elements comprise the public API of the package. As the private
+   elements do not contribute to the public API, they are liable to change at
    any time. Enter at your own risk
 
 ## Tests
 
-*Almost* every service in TundraTN has unit tests, located in the 
+*Almost* every service in TundraTN has unit tests, located in the
 tundra.tn.support.test folder.
 
 To run the test suite, either:
 * run tundra:test($package = "TundraTN") service directly
-* visit <http://localhost:5555/invoke/tundra/test?$package=TundraTN>  
+* visit <http://localhost:5555/invoke/tundra/test?$package=TundraTN>
   (substitute your own Integration Server host and port for localhost:5555)
 
 ## Services
@@ -71,8 +71,35 @@ To run the test suite, either:
 Top-level services for the most common tasks:
 
 ```java
+// Processes a Trading Networks document by parsing the given document content part, and calling
+// the given list of services with the following input arguments: $bizdoc, $sender and $receiver
+// are the normal bizdoc processing service inputs (except with the '$' prefix), $document is the
+// parsed content part as an IData document , and $schema is the name of the document reference or
+// flat file schema used by the parser.
+//
+// As it provides logging, content parsing, error handling, and document status updates, the
+// $services processing services do not need to include any of this common boilerplate code.
+//
+// If a custom $catch service is specified, it will be called if an error occurs while processing
+// the bizdoc.  The $catch service will be passed the current pipeline, along with the following
+// additional arguments:
+//   $exception - the actual exception object thrown by the $service
+//   $exception.message - the error message
+//   $exception.class - the exception object's Java class name
+//   $exception.stack - the Java call stack at the time the exception occurred
+//
+// This service is designed to be called directly from a Trading Networks bizdoc processing rule,
+// hence the non-dollar-prefixed bizdoc argument.
+//
+// Additional arbitrary input arguments for $service (or pub.flatFile:convertToValues/
+// pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via tundra.tn.document:parse) can be
+// specified in the $pipeline document. Fully qualified names will be handled correctly, for
+// example an argument named 'example/item[0]' will be converted to an IData document named
+// 'example' containing a String list named 'item' with it's first value set accordingly.
+tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $part);
+
 // Delivers Trading Networks document (bizdoc) content to the given destination URI.
-// 
+//
 // Supports the following delivery protocols / URI schemes:
 //   - file: writes the given content to the file specified by the destination URI.  The
 //           following additional options can be provided via the $pipeline document:
@@ -84,22 +111,22 @@ Top-level services for the most common tasks:
 //           - $authority/user: the username to log on to the remote web server with
 //           - $authority/password: the password to log on to the remote web server with
 //   - https: refer to http
-// 
+//
 // Variable substitution is performed on all variables specified in the $pipeline document,
 // and the $destination URI, allowing for dynamic generation of any of these values. Also,
 // if $service is specified, it will be called prior to variable substitution and thus can
 // be used to populate the pipeline with variables to be used by the substitution.
-// 
-// This service leverages the Tundra service tundra.content:deliver. Therefore, additional 
-// delivery protocols can be implemented by creating a service named for the URI scheme in 
-// the Tundra package folder tundra.support.content.deliver.  Services in this folder should 
+//
+// This service leverages the Tundra service tundra.content:deliver. Therefore, additional
+// delivery protocols can be implemented by creating a service named for the URI scheme in
+// the Tundra package folder tundra.support.content.deliver.  Services in this folder should
 // implement the tundra.support.content.deliver:handler specification.
-// 
+//
 // TODO: support the standard Trading Network profile delivery methods, such as primary HTTP
 // etc.
 tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
 
-// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or 
+// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
 //
 // If a $service is specified, it will be called as a processing service for the bizdoc. It can
@@ -110,59 +137,59 @@ tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $p
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 
-// Processes a Trading Networks document by parsing the given document content part, and calling 
-// the given service with the following input arguments: $bizdoc, $sender and $receiver are the 
-// normal bizdoc processing service inputs (except with the '$' prefix), $document is the parsed 
-// content part as an IData document, and $schema is the name of the document reference or flat 
+// Processes a Trading Networks document by parsing the given document content part, and calling
+// the given service with the following input arguments: $bizdoc, $sender and $receiver are the
+// normal bizdoc processing service inputs (except with the '$' prefix), $document is the parsed
+// content part as an IData document, and $schema is the name of the document reference or flat
 // file schema used by the parser.
-// 
+//
 // As it provides logging, content parsing, error handling, and document status updates, the
 // $service processing service does not need to include any of this common boilerplate code.
-// 
+//
 // If a custom $catch service is specified, it will be called if an error occurs while processing
-// the bizdoc.  The $catch service will be passed the current pipeline, along with the following 
-// additional arguments: 
+// the bizdoc.  The $catch service will be passed the current pipeline, along with the following
+// additional arguments:
 //   $exception - the actual exception object thrown by the $service
 //   $exception.message - the error message
-//   $exception.class - the exception object's Java class name 
+//   $exception.class - the exception object's Java class name
 //   $exception.stack - the Java call stack at the time the exception occurred
-// 
+//
 // This service is designed to be called directly from a Trading Networks bizdoc processing rule,
 // hence the non-dollar-prefixed bizdoc argument.
-// 
+//
 // Additional arbitrary input arguments for $service (or pub.flatFile:convertToValues/
-// pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via tundra.tn.document:parse) can be 
-// specified in the $pipeline document. Fully qualified names will be handled correctly, for 
-// example an argument named 'example/item[0]' will be converted to an IData document named 
+// pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via tundra.tn.document:parse) can be
+// specified in the $pipeline document. Fully qualified names will be handled correctly, for
+// example an argument named 'example/item[0]' will be converted to an IData document named
 // 'example' containing a String list named 'item' with it's first value set accordingly.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
 
-// Reprocesses the given document in Trading Networks by rematching it against the 
+// Reprocesses the given document in Trading Networks by rematching it against the
 // processing rule base and executing the first processing rule that matches.
 tundra.tn:reroute(bizdoc);
 
-// One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format. 
-// Calls the given splitting service, passing the parsed content as an input, and routing the split 
-// content back to Trading Networks as new documents automatically. 
+// One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
+// Calls the given splitting service, passing the parsed content as an input, and routing the split
+// content back to Trading Networks as new documents automatically.
 //
-// The splitting service must accept a single IData document and return an IData document list, and 
+// The splitting service must accept a single IData document and return an IData document list, and
 // optionally TN_parms.
 tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 
-// One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format. 
-// Calls the given translation service, passing the parsed content as an input, and routing the 
-// translated content back to Trading Networks as a new document automatically. 
-// 
-// The translation service must accept a single IData document and return a single IData document, 
+// One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
+// Calls the given translation service, passing the parsed content as an input, and routing the
+// translated content back to Trading Networks as a new document automatically.
+//
+// The translation service must accept a single IData document and return a single IData document,
 // and optionally TN_parms.
-tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
 ```
 
 ### Content
 
 ```java
-// Routes arbitrary content specified as a string, byte array, input stream, or IData document 
-// to Trading Networks. Correctly supports large documents, so any document considered large will 
+// Routes arbitrary content specified as a string, byte array, input stream, or IData document
+// to Trading Networks. Correctly supports large documents, so any document considered large will
 // be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
 tundra.tn.content:route($content, $schema, TN_parms);
 ```
@@ -172,40 +199,40 @@ tundra.tn.content:route($content, $schema, TN_parms);
 Bizdoc-related services:
 
 ```java
-// Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc) 
+// Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc)
 // attribute value/s match the given regular expression pattern (arg).
 //
 // Refer to <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html> for more information
 // on regular expression use in Java.
 tundra.tn.document.attribute.string:match(values[], arg);
 
-// Trading Networks string transformer which URI decodes the given Trading Networks document (bizdoc) 
+// Trading Networks string transformer which URI decodes the given Trading Networks document (bizdoc)
 // attribute value/s.
 tundra.tn.document.attribute.uri:decode(values[]);
 
-// Trading Networks string transformer which URI encodes the given Trading Networks document (bizdoc) 
+// Trading Networks string transformer which URI encodes the given Trading Networks document (bizdoc)
 // attribute value/s.
 tundra.tn.document.attribute.uri:encode(values[]);
 
 // Returns the document's content associated with the given part name as a stream. If the part
-// name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat 
+// name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat
 // Files).
 tundra.tn.document.content:get($bizdoc, $part, $encoding);
 
-// Adds a content part with the given name and content, specified as a string, bytes or stream, 
+// Adds a content part with the given name and content, specified as a string, bytes or stream,
 // to the given Trading Networks document (bizdoc).
 tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
 
-// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or 
+// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
 tundra.tn.document:derive($bizdoc, $sender, $receiver);
 
-// Returns the document associated with the given internal ID, optionally 
+// Returns the document associated with the given internal ID, optionally
 // including the document's content parts.
 tundra.tn.document:get($id, $content?);
 
 // Parses the Trading Networks document content part associated with the given part
-// name, or the default part if not provided, using the parsing schema configured on 
+// name, or the default part if not provided, using the parsing schema configured on
 // the document type.
 tundra.tn.document:parse($bizdoc, $part, $encoding);
 
@@ -218,10 +245,10 @@ tundra.tn.document.schema:get($bizdoc);
 // Sets user status on the given Trading Networks document.
 tundra.tn.document.status:set($bizdoc, $status);
 
-// Returns the Trading Networks document type associated with the given ID as an 
+// Returns the Trading Networks document type associated with the given ID as an
 // IData document.
-// 
-// Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN service 
+//
+// Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN service
 // returns an object of type com.wm.app.tn.doc.BizDocType which, despite looking
 // like one, is not a normal IData document and therefore causes problems in
 // Flow services. For example, you cannot branch on fields in the faux document.
@@ -246,7 +273,7 @@ tundra.tn.exception:handle($bizdoc);
 Partner profile-related services:
 
 ```java
-// Returns the Trading Networks profile associated with the given ID. If $type is 
+// Returns the Trading Networks profile associated with the given ID. If $type is
 // null, then $id must be the internal partner ID, otherwise $type is the external
 // ID name to use to find the profile.
 tundra.tn.profile:get($id, $type);
@@ -281,49 +308,49 @@ tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.
 
 ### Reliable
 
-Reliable processing services (service execution task) versions of the tundra.tn:* 
+Reliable processing services (service execution task) versions of the tundra.tn:*
 meta processing services:
 
 ```java
-// Reliably processes (as a service execution task) a Trading Networks document via 
+// Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:deliver.
 tundra.tn.reliable:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
 
-// Reliably processes (as a service execution task) a Trading Networks document via 
+// Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:derive.
 tundra.tn.reliable:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
 
-// Reliably processes (as a service execution task) a Trading Networks document via 
+// Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:process.
 tundra.tn.reliable:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
 
-// Reliably processes (as a service execution task) a Trading Networks document via 
+// Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:reroute.
 tundra.tn.reliable:reroute(bizdoc);
 
-// Reliably processes (as a service execution task) a Trading Networks document via 
+// Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:split.
 tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 
-// Reliably processes (as a service execution task) a Trading Networks document via 
+// Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:translate.
 tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 ```
 
 ## Contributions
 
-1. Check out the latest master to make sure the feature hasn't been implemented 
+1. Check out the latest master to make sure the feature hasn't been implemented
    or the bug hasn't been fixed yet
-2. Check out the issue tracker to make sure someone already hasn't requested it 
+2. Check out the issue tracker to make sure someone already hasn't requested it
    and/or contributed it
 3. Fork the project
 4. Start a feature/bugfix branch
 5. Commit and push until you are happy with your contribution
-6. Make sure to add tests for it. This is important so it won't in a future 
+6. Make sure to add tests for it. This is important so it won't in a future
    version unintentionally
 
-Please try not to mess with the package version, or history. If you want your 
-own version please isolate it to its own commit, so it can be cherry-picked 
+Please try not to mess with the package version, or history. If you want your
+own version please isolate it to its own commit, so it can be cherry-picked
 around.
 
 ## Copyright
