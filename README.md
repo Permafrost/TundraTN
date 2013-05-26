@@ -287,6 +287,9 @@ tundra.tn.profile:self();
 Queue processing service versions of the tundra.tn:* meta processing services:
 
 ```java
+// For each item in the Trading Networks queue, process it with tundra.tn:chain.
+tundra.tn.queue:chain(queue, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding);
+
 // For each item in the Trading Networks queue, process it with tundra.tn:deliver.
 tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
 
@@ -294,7 +297,7 @@ tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $final
 tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:process.
-tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $part, $encoding);
+tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:reroute.
 tundra.tn.queue:reroute(queue);
@@ -303,7 +306,7 @@ tundra.tn.queue:reroute(queue);
 tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:translate.
-tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, , $encoding.input, $encoding.output, $part);
 ```
 
 ### Reliable
@@ -312,6 +315,10 @@ Reliable processing services (service execution task) versions of the tundra.tn:
 meta processing services:
 
 ```java
+// Reliably processes (as a service execution task) a Trading Networks document via
+// tundra.tn:chain.
+tundra.tn.reliable:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding);
+
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:deliver.
 tundra.tn.reliable:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
@@ -322,7 +329,7 @@ tundra.tn.reliable:derive(bizdoc, $service, $catch, $finally, $pipeline, $deriva
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:process.
-tundra.tn.reliable:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+tundra.tn.reliable:process(bizdoc, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding);
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:reroute.
@@ -334,7 +341,7 @@ tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:translate.
-tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
 ```
 
 ## Contributions
