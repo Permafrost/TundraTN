@@ -174,7 +174,7 @@ tundra.tn:reroute(bizdoc);
 //
 // The splitting service must accept a single IData document and return an IData document list, and
 // optionally TN_parms.
-tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
 
 // One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given translation service, passing the parsed content as an input, and routing the
@@ -303,7 +303,7 @@ tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.i
 tundra.tn.queue:reroute(queue);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:split.
-tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:translate.
 tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, , $encoding.input, $encoding.output, $part);
@@ -337,7 +337,7 @@ tundra.tn.reliable:reroute(bizdoc);
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:split.
-tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $part);
+tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:translate.
