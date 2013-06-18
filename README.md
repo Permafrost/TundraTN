@@ -242,6 +242,11 @@ tundra.tn.content:route($content, $schema, TN_parms);
 Bizdoc-related services:
 
 ```java
+// Trading Networks string transformer which returns the Trading Networks My Enterprise profile's
+// internal ID. This transformer can be used to force the sender or receiver of a document to
+// always be the My Enterprise profile.
+tundra.tn.document.attribute.profile:self(values[]);
+
 // Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc)
 // attribute value/s match the given regular expression pattern (arg).
 //
