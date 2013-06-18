@@ -266,6 +266,10 @@ tundra.tn.document.content:get($bizdoc, $part, $encoding);
 // to the given Trading Networks document (bizdoc).
 tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
 
+// Returns true if the given $bizdoc is related to a derived bizdoc with the given $sender
+// and $receiver.
+tundra.tn.document.derivative:exists($bizdoc, $sender, $receiver);
+
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
 tundra.tn.document:derive($bizdoc, $sender, $receiver);
