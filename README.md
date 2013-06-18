@@ -170,7 +170,12 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // If a $service is specified, it will be called as a processing service for the bizdoc. It can
 // return the $derivatives list, thereby allowing for the derivatives to be determined at
 // runtime.
-tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+//
+// Each $derivatives rule can specify a filter condition, which can either be a service which
+// implements tundra.tn.schema.derivative.filter:specification, or an inline conditional
+// statement (as supported by Tundra/tundra.condition:evaluate). Note that the input pipeline
+// for an inline conditional statement is the same as the input pipeline for a filter service.
+tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding);
 
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
@@ -380,6 +385,21 @@ tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:translate.
 tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
+```
+
+### Schema
+
+Document schemas and interface specifications:
+
+```java
+// This schema describes the structure for derivative rules used by tundra.tn:derive.
+tundra.tn.schema.derivative:document;
+
+// Filter services used by tundra.tn:derive must implement this specification. The filter service
+// is allowed to edit the $derivative rule, which enables it to disable the rule by setting
+// $derivative/enabled? to 'false', or specify a different sender or receiver to derive a document
+// copy for.
+tundra.tn.schema.derivative.filter:specification;
 ```
 
 ## Contributions
