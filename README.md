@@ -109,6 +109,14 @@ To run the test suite, either:
 Top-level services for the most common tasks:
 
 ```java
+// Edits the given XML or flat file bizdoc content part with the list of {key, value} pairs
+// specified in $amendments.
+//
+// The keys in $amendments can be fully-qualified (for example, "a/b/c[0]"), and the values can
+// include percent-delimited variable substitution strings which will be substituted prior to
+// being inserted in $document.
+tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output);
+
 // Processes a Trading Networks document by parsing the given document content part, and calling
 // the given list of services with the following input arguments: $bizdoc, $sender and $receiver
 // are the normal bizdoc processing service inputs (except with the '$' prefix), $document is the
