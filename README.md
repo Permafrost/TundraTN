@@ -282,18 +282,21 @@ tundra.tn.document.attribute.uri:decode(values[]);
 // attribute value/s.
 tundra.tn.document.attribute.uri:encode(values[]);
 
-// Returns the document's content associated with the given part name as a stream. If the part
-// name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat
-// Files).
-tundra.tn.document.content:get($bizdoc, $part, $encoding);
-
 // Adds a content part with the given name and content, specified as a string, bytes or stream,
 // to the given Trading Networks document (bizdoc).
 tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
 
+// Returns true if the content part identified by the given $part name exists for the given bizdoc.
+tundra.tn.document.content:exists($bizdoc, $part);
+
 // Returns true if the given $bizdoc is related to a derived bizdoc with the given $sender
 // and $receiver.
 tundra.tn.document.derivative:exists($bizdoc, $sender, $receiver);
+
+// Returns the document's content associated with the given part name as a stream. If the part
+// name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat
+// Files).
+tundra.tn.document.content:get($bizdoc, $part, $encoding);
 
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
