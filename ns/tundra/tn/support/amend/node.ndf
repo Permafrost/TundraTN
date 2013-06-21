@@ -296,7 +296,19 @@ specified in $amendments.
 
 The keys in $amendments can be fully-qualified (for example, "a/b/c[0]"), and the values can
 include percent-delimited variable substitution strings which will be substituted prior to
-being inserted in $document.</value>
+being inserted in $document.
+
+The bizdoc user status is first updated to 'AMENDING', then the content part identified by 
+$part.input (or the default content part if not specified) is parsed to an IData document 
+using the named $schema (or the schema configured on the TN document type if not specified), 
+the amendments are applied via the $amendments[] {key, value} pairs, the amended IData
+document is then emitted as stream then added to the bizdoc as a new content part identified
+by $part.output (or 'amendment' if not specified), and the bizdoc user status is updated to
+'AMENDED'.
+
+This service is designed to be used in conjunction with other TN processing rule actions, such
+as the 'Deliver document by' action, which can use the amended content part for delivery
+rather than the original content part.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
