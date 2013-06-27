@@ -195,6 +195,12 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // implements tundra.tn.schema.derivative.filter:specification, or an inline conditional
 // statement (as supported by Tundra/tundra.condition:evaluate). Note that the input pipeline
 // for an inline conditional statement is the same as the input pipeline for a filter service.
+//
+// Each $derivatives rule can also specify a list of {key, value} pairs, specified in the
+// amendments[] IData array, which will be applied to the default bizdoc content part prior
+// to the new copy for the derivative being routed to Trading Networks. The keys in amendments[]
+// can be fully-qualified (for example, "a/b/c[0]"), and the values can include percent-delimited
+// variable substitution strings which will be substituted prior to being inserted in $document.
 tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding);
 
 // Logs a message to the Trading Networks activity log.
