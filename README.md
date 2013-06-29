@@ -306,6 +306,13 @@ tundra.tn.document.content:get($bizdoc, $part, $encoding);
 
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
+//
+// An optional list of {key, value} pairs, specified in the $amendments[] IData array,
+// will be applied to the default bizdoc content part prior to the new copy for the
+// derivative being routed to Trading Networks. The keys in $amendments[] can be fully-
+// qualified (for example, "a/b/c[0]"), and the values can include percent-delimited
+// variable substitution strings which will be substituted prior to being inserted in
+// $document.
 tundra.tn.document:derive($bizdoc, $sender, $receiver);
 
 // Returns the document associated with the given internal ID, optionally
