@@ -303,7 +303,10 @@ Calls the given splitting service, passing the parsed content as an input, and r
 content back to Trading Networks as new documents automatically. 
 
 The splitting service must accept a single IData document and return an IData document list, and 
-optionally TN_parms.</value>
+optionally TN_parms. TN_parms can either be an IData document or an IData document list. If
+TN_parms is an IData document, it will be used when routing every item in the split document list.
+If TN_parms is an IData list, it must be the same length as the split document list, and the 
+respective TN_parms list item with the same index will be used when routing each split document item.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
