@@ -333,14 +333,14 @@ tundra.tn.document.schema:get($bizdoc);
 // Sets user status on the given Trading Networks document.
 tundra.tn.document.status:set($bizdoc, $status);
 
-// Returns the Trading Networks document type associated with the given ID as an
-// IData document.
+// Returns the Trading Networks document type associated with the given ID or name
+// as an IData document.
 //
 // Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN service
 // returns an object of type com.wm.app.tn.doc.BizDocType which, despite looking
 // like one, is not a normal IData document and therefore causes problems in
 // Flow services. For example, you cannot branch on fields in the faux document.
-tundra.tn.document.type:get($id);
+tundra.tn.document.type:get($id, $name);
 
 // Returns the parsing schema associated with the given Trading Networks document type.
 tundra.tn.document.type.schema:get($type);

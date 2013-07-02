@@ -1,8 +1,8 @@
 package tundra.tn.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2012-11-20 08:17:08.595
-// -----( ON-HOST: -
+// -----( CREATED: 2013-07-03 09:46:11 EST
+// -----( ON-HOST: 172.16.189.216
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -34,12 +34,14 @@ public final class type
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] field:0:optional $id
+		// [i] field:0:optional $name
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
 		  String id = IDataUtil.getString(cursor, "$id");
-		  if (id != null) {
-		    com.wm.app.tn.doc.BizDocType type = get(id);
+		  String name = IDataUtil.getString(cursor, "$name");
+		  if (id != null || name != null) {
+		    com.wm.app.tn.doc.BizDocType type = get(id, name);
 		    IDataUtil.put(cursor, "$type", type.getIData());
 		  }
 		} finally {
@@ -52,10 +54,11 @@ public final class type
 
 	// --- <<IS-START-SHARED>> ---
 	// returns the Trading Networks document type given the ID
-	public static com.wm.app.tn.doc.BizDocType get(String id) throws ServiceException {
+	public static com.wm.app.tn.doc.BizDocType get(String id, String name) throws ServiceException {
 	  IData pipeline = IDataFactory.create();
 	  IDataCursor cursor = pipeline.getCursor();
 	  IDataUtil.put(cursor, "typeId", id);
+	  IDataUtil.put(cursor, "typeName", name);
 	  cursor.destroy();
 	
 	  pipeline = tundra.service.invoke("wm.tn.doctype:view", pipeline);
