@@ -257,9 +257,21 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
 ### Content
 
 ```java
-// Routes arbitrary content specified as a string, byte array, input stream, or IData document
-// to Trading Networks. Correctly supports large documents, so any document considered large will
-// be routed as a large document to Trading Networks, unlike the WmTN/wm.tn.doc.xml:routeXML service.
+// Routes arbitrary content specified as a string, byte array, input stream, or IData document to Trading Networks.
+//
+// Correctly supports large documents, so any document considered large will be routed as a large document in TN,
+// unlike the WmTN/wm.tn.doc.xml:routeXML service.
+//
+// The following values in TN_parms, if specified, will overwrite the normal bizdoc recognised values, allowing
+// for sender, receiver, document ID, group ID, conversation ID, and document type to be forced to the specified
+// value (even for XML document types):
+//   TN_parms/SenderID
+//   TN_parms/ReceiverID
+//   TN_parms/DocumentID
+//   TN_parms/DoctypeID
+//   TN_parms/DoctypeName
+//   TN_parms/GroupID
+//   TN_parms/ConversationID
 tundra.tn.content:route($content, $schema, TN_parms);
 ```
 
