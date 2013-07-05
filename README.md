@@ -447,15 +447,14 @@ Document schemas and interface specifications:
 ```java
 // An improved version of the WmTN/wm.tn.rec:StringAttributeTransformService specification with
 // type constraints provided for the input and output arguments.
-tundra.tn.schema.attribute.string.transformer:filter;
+tundra.tn.schema.attribute.string.transformer:specification;
 
 // This schema describes the structure for derivative rules used by tundra.tn:derive.
 tundra.tn.schema.derivative:document;
 
 // Filter services used by tundra.tn:derive must implement this specification. The filter service
-// is allowed to edit the $derivative rule, which enables it to disable the rule by setting
-// $derivative/enabled? to 'false', or specify a different sender or receiver to derive a document
-// copy for.
+// is allowed to edit the $derivative rule, so that it may disable the rule by setting
+// $derivative/enabled? to 'false', or specify a different sender or receiver.
 tundra.tn.schema.derivative.filter:specification;
 ```
 
