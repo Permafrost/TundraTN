@@ -369,6 +369,9 @@ tundra.tn.exception:handle($bizdoc);
 Partner profile-related services:
 
 ```java
+// Returns the named delivery method for the given Trading Networks profile.
+tundra.tn.profile.delivery:get($profile, $method);
+
 // Returns the Trading Networks profile associated with the given ID. If $type is
 // null, then $id must be the internal partner ID, otherwise $type is the external
 // ID name to use to find the profile.
