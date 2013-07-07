@@ -229,6 +229,12 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // 'example' containing a String list named 'item' with it's first value set accordingly.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
 
+// Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified
+// as a string, byte array, java.io.InputStream, or org.w3c.dom.Node object.
+//
+// This service is intended to be invoked by clients via HTTP or FTP.
+tundra.tn:receive(strict, TN_parms);
+
 // Reprocesses the given document in Trading Networks by rematching it against the
 // processing rule base and executing the first processing rule that matches.
 tundra.tn:reroute(bizdoc);
