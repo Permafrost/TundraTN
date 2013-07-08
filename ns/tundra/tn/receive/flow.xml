@@ -586,32 +586,6 @@ non-XML content:
         <array name="rec_fields" type="record" depth="1">
         </array>
       </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">id</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">false</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
     </array>
   </record>
 </Values>
@@ -679,7 +653,7 @@ non-XML content:
   <!-- nodes -->
 
 <INVOKE TIMEOUT="" SERVICE="pub.flow:setResponse" VALIDATE-IN="$none" VALIDATE-OUT="$none">
-  <COMMENT></COMMENT>
+  <COMMENT>return error message in response body</COMMENT>
 
   <!-- nodes -->
 
@@ -919,8 +893,25 @@ non-XML content:
 </MAP>
 </INVOKE>
 
-<INVOKE TIMEOUT="" SERVICE="pub.flow:setResponseCode" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<INVOKE TIMEOUT="" SERVICE="pub.flow:getTransportInfo" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<MAP MODE="INPUT">
+</MAP>
+
+<MAP MODE="OUTPUT">
+</MAP>
+</INVOKE>
+
+<BRANCH TIMEOUT="" SWITCH="/transport/protocol">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<INVOKE NAME="http" TIMEOUT="" SERVICE="pub.flow:setResponseCode" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+  <COMMENT>only works for HTTP transport</COMMENT>
 
   <!-- nodes -->
 
@@ -943,6 +934,8 @@ non-XML content:
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <array name="field_options" type="value" depth="1">
+          <value>100</value>
+          <value>101</value>
           <value>200</value>
           <value>201</value>
           <value>202</value>
@@ -956,6 +949,7 @@ non-XML content:
           <value>303</value>
           <value>304</value>
           <value>305</value>
+          <value>306</value>
           <value>307</value>
           <value>400</value>
           <value>401</value>
@@ -980,6 +974,7 @@ non-XML content:
           <value>502</value>
           <value>503</value>
           <value>504</value>
+          <value>505</value>
         </array>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
@@ -1101,6 +1096,16 @@ non-XML content:
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
       </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">transport</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">pub.flow:transportInfo</value>
+      </record>
     </array>
   </record>
 </Values>
@@ -1128,7 +1133,20 @@ non-XML content:
 </MAP>
 </INVOKE>
 
-<MAP NAME="drop" MODE="STANDALONE">
+<INVOKE NAME="$default" TIMEOUT="" SERVICE="tundra.exception:raise" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+  <COMMENT>rethrow exception for other transports</COMMENT>
+
+  <!-- nodes -->
+
+<MAP MODE="INPUT">
+</MAP>
+
+<MAP MODE="OUTPUT">
+</MAP>
+</INVOKE>
+</BRANCH>
+
+<MAP NAME="drop" TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -1202,6 +1220,16 @@ non-XML content:
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
       </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">transport</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">pub.flow:transportInfo</value>
+      </record>
     </array>
   </record>
 </Values>
@@ -1223,11 +1251,14 @@ non-XML content:
 
 <MAPDELETE NAME="Dropper" FIELD="/$exception?;3;0">
 </MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/transport;4;0;pub.flow:transportInfo">
+</MAPDELETE>
 </MAP>
 </SEQUENCE>
 
 <INVOKE NAME="$default" TIMEOUT="" SERVICE="pub.flow:setResponse" VALIDATE-IN="$none" VALIDATE-OUT="$none">
-  <COMMENT></COMMENT>
+  <COMMENT>return bizdoc id in response body</COMMENT>
 
   <!-- nodes -->
 
@@ -1323,6 +1354,28 @@ non-XML content:
 <MAPCOPY NAME="Link" FROM="/id;1;0" TO="/string;1;0">
 </MAPCOPY>
 
+<MAPCOPY NAME="Link" FROM="/id;1;0" TO="/response;1;0">
+</MAPCOPY>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/encoding;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">UTF-8</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="field_name">encoding</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/contentType;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
@@ -1350,28 +1403,6 @@ non-XML content:
 </Values>
 </DATA>
 </MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/encoding;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">UTF-8</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="field_name">encoding</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPCOPY NAME="Link" FROM="/id;1;0" TO="/response;1;0">
-</MAPCOPY>
 </MAP>
 
 <MAP MODE="OUTPUT">
