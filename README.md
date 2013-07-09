@@ -175,9 +175,6 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // delivery protocols can be implemented by creating a service named for the URI scheme in
 // the Tundra package folder tundra.support.content.deliver.  Services in this folder should
 // implement the tundra.support.content.deliver:handler specification.
-//
-// TODO: support the standard Trading Network profile delivery methods, such as primary HTTP
-// etc.
 tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
 
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
