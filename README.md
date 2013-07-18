@@ -410,6 +410,14 @@ tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $final
 // For each item in the Trading Networks queue, process it with tundra.tn:derive.
 tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
 
+// For each item in the Trading Networks queue, runs the given $service, which must 
+// implement the bizdoc processing service signature wm.tn.rec:ProcessingService, to 
+// process the item.
+// 
+// As the above implies, this service lets you use any normal bizdoc processing service
+// to process items in a Trading Networks delivery queue.
+tundra.tn.queue:each(queue, $service, $pipeline);
+
 // For each item in the Trading Networks queue, process it with tundra.tn:process.
 tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding);
 
