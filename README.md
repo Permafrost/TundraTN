@@ -167,7 +167,7 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 //   - https:   refer to http
 //   - mailto: sends an email with the given content attached. An example mailto URI is
 //             as follows: mailto:bob@example.com?cc=jane@example.com&subject=Example&body=Example&attachment=message.xml
-//             The following additional override options can be provided via the $pipeline 
+//             The following additional override options can be provided via the $pipeline
 //             document:
 //             - $attachment: the attached file's name
 //             - $from: email address to send the email from
@@ -247,6 +247,25 @@ tundra.tn:receive(strict, TN_parms);
 // Reprocesses the given document in Trading Networks by rematching it against the
 // processing rule base and executing the first processing rule that matches.
 tundra.tn:reroute(bizdoc);
+
+// Retrieves arbitrary content (XML, flat files, binary) from the given $source URI, and routes it
+// to Trading Networks.
+//
+// Supports the following retrieval protocols / URI schemes:
+//   - file:   processes each file matching the given $source URI with the given processing $service.
+//             The file component of the URI can include wildcards or globs (such as *.txt or *.j?r)
+//             for matching multiple files at once. For example, file:////server:port/directory/*.txt
+//             would process all .txt files in the specified directory.
+//             To ensure each file processed is not locked or being written to by another process, the
+//             file is first moved to a ./archive directory prior to processing.
+//
+// Additional retrieval protocols can be implemented by creating a service named for the URI scheme in
+// the folder Tundra/tundra.support.content.retrieve.  Services in this folder must implement the
+// Tundra/tundra.schema.content.retrieve:handler specification.
+//
+// Use the $limit input to configure the maximum number of content matches to be processed in a single
+// execution (defaults to 1000).
+tundra.tn:retrieve($source, $limit, TN_parms);
 
 // One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given splitting service, passing the parsed content as an input, and routing the split
@@ -410,10 +429,10 @@ tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $final
 // For each item in the Trading Networks queue, process it with tundra.tn:derive.
 tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
 
-// For each item in the Trading Networks queue, runs the given $service, which must 
-// implement the bizdoc processing service signature wm.tn.rec:ProcessingService, to 
+// For each item in the Trading Networks queue, runs the given $service, which must
+// implement the bizdoc processing service signature wm.tn.rec:ProcessingService, to
 // process the item.
-// 
+//
 // As the above implies, this service lets you use any normal bizdoc processing service
 // to process items in a Trading Networks delivery queue.
 tundra.tn.queue:each(queue, $service, $pipeline);
