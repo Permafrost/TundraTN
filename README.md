@@ -197,7 +197,7 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // runtime.
 //
 // Each $derivatives rule can specify a filter condition, which can either be a service which
-// implements tundra.tn.schema.derivative.filter:specification, or an inline conditional
+// implements tundra.tn.schema.derivative:filter specification, or an inline conditional
 // statement (as supported by Tundra/tundra.condition:evaluate). Note that the input pipeline
 // for an inline conditional statement is the same as the input pipeline for a filter service.
 //
@@ -495,12 +495,12 @@ Document schemas and interface specifications:
 tundra.tn.schema.attribute.string.transformer:specification;
 
 // This schema describes the structure for derivative rules used by tundra.tn:derive.
-tundra.tn.schema.derivative:document;
+tundra.tn.schema:derivative;
 
 // Filter services used by tundra.tn:derive must implement this specification. The filter service
 // is allowed to edit the $derivative rule, so that it may disable the rule by setting
 // $derivative/enabled? to 'false', or specify a different sender or receiver.
-tundra.tn.schema.derivative.filter:specification;
+tundra.tn.schema.derivative:filter;
 ```
 
 ## Contributions
