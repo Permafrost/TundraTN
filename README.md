@@ -310,25 +310,25 @@ tundra.tn.content:route($content, $schema, TN_parms);
 Bizdoc-related services:
 
 ```java
-// Trading Networks string transformer which returns the Trading Networks My Enterprise profile's
-// internal ID. This transformer can be used to force the sender or receiver of a document to
-// always be the My Enterprise profile.
-tundra.tn.document.attribute.profile:self(values[]);
-
 // Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc)
 // attribute value/s match the given regular expression pattern (arg).
 //
 // Refer to <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html> for more information
 // on regular expression use in Java.
-tundra.tn.document.attribute.string:match(values[], arg);
+tundra.tn.document.attribute.string.transformer:match(values[], arg);
+
+// Trading Networks string transformer which returns the Trading Networks My Enterprise profile's
+// internal ID. This transformer can be used to force the sender or receiver of a document to
+// always be the My Enterprise profile.
+tundra.tn.document.attribute.string.transformer.profile:self(values[]);
 
 // Trading Networks string transformer which URI decodes the given Trading Networks document (bizdoc)
 // attribute value/s.
-tundra.tn.document.attribute.uri:decode(values[]);
+tundra.tn.document.attribute.string.transformer.uri:decode(values[]);
 
 // Trading Networks string transformer which URI encodes the given Trading Networks document (bizdoc)
 // attribute value/s.
-tundra.tn.document.attribute.uri:encode(values[]);
+tundra.tn.document.attribute.string.transformer.uri:encode(values[]);
 
 // Adds a content part with the given name and content, specified as a string, bytes or stream,
 // to the given Trading Networks document (bizdoc).
