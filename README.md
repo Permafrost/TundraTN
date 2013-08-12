@@ -123,7 +123,15 @@ Top-level services for the most common tasks:
 // This service is designed to be used in conjunction with other TN processing rule actions, such
 // as the 'Deliver document by' action, which can use the amended content part for delivery
 // rather than the original content part.
-tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
 
 // Processes a Trading Networks document by parsing the given document content part, and calling
 // the given list of services with the following input arguments: $bizdoc, $sender and $receiver
@@ -150,7 +158,15 @@ tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $
 // specified in the $pipeline document. Fully qualified names will be handled correctly, for
 // example an argument named 'example/item[0]' will be converted to an IData document named
 // 'example' containing a String list named 'item' with it's first value set accordingly.
-tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $part);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $part, $strict);
 
 // Delivers Trading Networks document (bizdoc) content to the given destination URI.
 //
@@ -187,7 +203,15 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // delivery protocols can be implemented by creating a service named for the URI scheme in
 // the Tundra package folder tundra.support.content.deliver.  Services in this folder should
 // implement the tundra.support.content.deliver:handler specification.
-tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part, $strict);
 
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
@@ -206,7 +230,15 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // to the new copy for the derivative being routed to Trading Networks. The keys in amendments[]
 // can be fully-qualified (for example, "a/b/c[0]"), and the values can include percent-delimited
 // variable substitution strings which will be substituted prior to being inserted in $document.
-tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding, $strict);
 
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
@@ -236,7 +268,15 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // specified in the $pipeline document. Fully qualified names will be handled correctly, for
 // example an argument named 'example/item[0]' will be converted to an IData document named
 // 'example' containing a String list named 'item' with it's first value set accordingly.
-tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding, $strict);
 
 // Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified
 // as a string, byte array, java.io.InputStream, or org.w3c.dom.Node object.
@@ -273,7 +313,15 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 //
 // The splitting service must accept a single IData document and return an IData document list, and
 // optionally TN_parms.
-tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part, $strict);
 
 // One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given translation service, passing the parsed content as an input, and routing the
@@ -281,7 +329,15 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 //
 // The translation service must accept a single IData document and return a single IData document,
 // and optionally TN_parms.
-tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
+// 
+// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
+// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// exception will be thrown and handled by the $catch service. For example, if you have enabled
+// duplicate document checking on the Trading Networks document type and do not wish to process
+// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
+// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// $catch service).
+tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part, $strict);
 ```
 
 ### Content
