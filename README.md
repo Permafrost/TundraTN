@@ -357,6 +357,9 @@ tundra.tn.document.content:get($bizdoc, $part, $encoding);
 // $document.
 tundra.tn.document:derive($bizdoc, $sender, $receiver);
 
+// Returns true if any errors (of the given class, if specified) exist on the given bizdoc.
+tundra.tn.document.error:exists($bizdoc, $class);
+
 // Returns the document associated with the given internal ID, optionally
 // including the document's content parts.
 tundra.tn.document:get($id, $content?);
