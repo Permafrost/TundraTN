@@ -123,7 +123,7 @@ Top-level services for the most common tasks:
 // This service is designed to be used in conjunction with other TN processing rule actions, such
 // as the 'Deliver document by' action, which can use the amended content part for delivery
 // rather than the original content part.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -158,7 +158,7 @@ tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $
 // specified in the $pipeline document. Fully qualified names will be handled correctly, for
 // example an argument named 'example/item[0]' will be converted to an IData document named
 // 'example' containing a String list named 'item' with it's first value set accordingly.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -203,7 +203,7 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // delivery protocols can be implemented by creating a service named for the URI scheme in
 // the Tundra package folder tundra.support.content.deliver.  Services in this folder should
 // implement the tundra.support.content.deliver:handler specification.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -230,7 +230,7 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // to the new copy for the derivative being routed to Trading Networks. The keys in amendments[]
 // can be fully-qualified (for example, "a/b/c[0]"), and the values can include percent-delimited
 // variable substitution strings which will be substituted prior to being inserted in $document.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -268,7 +268,7 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // specified in the $pipeline document. Fully qualified names will be handled correctly, for
 // example an argument named 'example/item[0]' will be converted to an IData document named
 // 'example' containing a String list named 'item' with it's first value set accordingly.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -313,7 +313,7 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 //
 // The splitting service must accept a single IData document and return an IData document list, and
 // optionally TN_parms.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -329,7 +329,7 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 //
 // The translation service must accept a single IData document and return a single IData document,
 // and optionally TN_parms.
-// 
+//
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
@@ -366,6 +366,16 @@ tundra.tn.content:route($content, $schema, TN_parms);
 Bizdoc-related services:
 
 ```java
+// Trading Networks date attribute transformer which parses the given Trading Networks document (bizdoc)
+// attribute value/s with the given datetime pattern (arg) into java.util.Date object/s.
+//
+// Since the built-in TN date attribute parsing only supports java.text.SimpleDateFormat (refer:
+// <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>), it is unable to parse
+// ISO8601/XML dates, times, and datetimes which may include a timezone specified in the format
+// (+|-)HH:mm. As this service supports named patterns for ISO8601/XML and java.text.SimpleDateFormat
+// patterns, it can be used instead to parse all date, time and datetime strings.
+tundra.attribute.datetime.transformer:parse(values[], arg);
+
 // Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc)
 // attribute value/s match the given regular expression pattern (arg).
 //
