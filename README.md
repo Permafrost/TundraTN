@@ -525,6 +525,9 @@ Reliable processing services (service execution task) versions of the tundra.tn:
 meta processing services:
 
 ```java
+// Reliably processes (as a service execution task) a Trading Networks document via tundra.tn:amend.
+tundra.tn.reliable:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
+
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:chain.
 tundra.tn.reliable:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding);
