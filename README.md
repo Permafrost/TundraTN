@@ -125,7 +125,7 @@ Top-level services for the most common tasks:
 // rather than the original content part.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
@@ -160,7 +160,7 @@ tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $
 // 'example' containing a String list named 'item' with it's first value set accordingly.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
@@ -205,7 +205,7 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // implement the tundra.support.content.deliver:handler specification.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
@@ -232,7 +232,7 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // variable substitution strings which will be substituted prior to being inserted in $document.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
@@ -270,7 +270,7 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // 'example' containing a String list named 'item' with it's first value set accordingly.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
@@ -315,7 +315,7 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 // optionally TN_parms.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
@@ -331,7 +331,7 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // and optionally TN_parms.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not processed; instead an
+// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
