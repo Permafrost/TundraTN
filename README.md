@@ -312,7 +312,8 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 // content back to Trading Networks as new documents automatically.
 //
 // The splitting service must accept a single IData document and return an IData document list, and
-// optionally TN_parms.
+// optionally TN_parms. Refer to the tundra.tn.schema:splitter specification as a guide to the inputs 
+// and outputs required of the splitting service.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
@@ -578,6 +579,20 @@ tundra.tn.schema:profile;
 // is allowed to edit the $derivative rule, so that it may disable the rule by setting
 // $derivative/enabled? to 'false', or specify a different sender or receiver.
 tundra.tn.schema.derivative:filter;
+
+// Splitting services used by tundra.tn:split can implement this specification.
+// 
+//   - $document is the parsed bizdoc content for splitting. This is the default name
+//     for this input parameter. The actual name of the parameter can be changed using 
+//     tundra.tn:split's $service.input parameter, which allows the use of tundra.tn:split 
+//     with existing mapping services.
+// 
+//   - $documents is the split list of content with which each item of the list will be routed 
+//     back to Trading Networks as individual new documents. This is the default name for 
+//     this output parameter. The actual name of the parameter can be changed using the 
+//     tundra.tn:split's $service.output parameter, which allows the use of tundra.tn:split 
+//     with existing mapping services.
+tundra.tn.schema:splitter;
 
 // Translation services used by tundra.tn:translate can implement this specification.
 // 
