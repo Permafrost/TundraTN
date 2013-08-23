@@ -328,7 +328,8 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // translated content back to Trading Networks as a new document automatically.
 //
 // The translation service must accept a single IData document and return a single IData document,
-// and optionally TN_parms.
+// and optionally TN_parms. Refer to the tundra.tn.schema:translator specification as a guide to 
+// the inputs and outputs required of the translation service.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
@@ -569,10 +570,27 @@ tundra.tn.schema.attribute.string.transformer:specification;
 // This schema describes the structure for derivative rules used by tundra.tn:derive.
 tundra.tn.schema:derivative;
 
+// A compatible superset of wm.tn.rec:ProfileSummary and wm.tn.rec:Profile, with some developer-
+// friendly formats for all the external IDs, extended fields, and delivery methods.
+tundra.tn.schema:profile;
+
 // Filter services used by tundra.tn:derive must implement this specification. The filter service
 // is allowed to edit the $derivative rule, so that it may disable the rule by setting
 // $derivative/enabled? to 'false', or specify a different sender or receiver.
 tundra.tn.schema.derivative:filter;
+
+// Translation services used by tundra.tn:translate can implement this specification.
+// 
+//   - $document is the parsed bizdoc content for translation. This is the default name
+//     for this input parameter. The actual name of the parameter can be changed using 
+//     tundra.tn:translate's $service.input parameter, which allows the use of 
+//     tundra.tn:translate with existing mapping services.
+// 
+//   - $translation is the translated content which will be routed back to Trading Networks
+//     as a new document. This is the default name for this output parameter. The actual 
+//     name of the parameter can be changed using the tundra.tn:translate's $service.output
+//     parameter, which allows the use of tundra.tn:translate with existing mapping services.
+tundra.tn.schema:translator;
 ```
 
 ## Contributions
