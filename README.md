@@ -249,6 +249,9 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // content part as an IData document, and $schema is the name of the document reference or flat
 // file schema used by the parser.
 //
+// Refer to the tundra.tn.schema:processor specification as a guide to the inputs and outputs 
+// required of the processing service.
+//
 // As it provides logging, content parsing, error handling, and document status updates, the
 // $service processing service does not need to include any of this common boilerplate code.
 //
@@ -579,6 +582,13 @@ tundra.tn.schema:profile;
 // is allowed to edit the $derivative rule, so that it may disable the rule by setting
 // $derivative/enabled? to 'false', or specify a different sender or receiver.
 tundra.tn.schema.derivative:filter;
+
+// Processing services called by tundra.tn:process can implement this specification.
+// 
+//   - $document is the parsed bizdoc content for processing. This is the default name
+//     for this input parameter. The actual name of the parameter can be changed using 
+//     the tundra.tn:process $service.input parameter.
+tundra.tn.schema:processor;
 
 // Splitting services used by tundra.tn:split can implement this specification.
 // 
