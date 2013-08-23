@@ -116,7 +116,12 @@
 
   <!-- nodes -->
 
-<INVOKE TIMEOUT="" SERVICE="tundra.tn.document:get" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+<BRANCH TIMEOUT="" SWITCH="/$bizdoc/DocType/TypeID">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<INVOKE NAME="$null" TIMEOUT="" SERVICE="tundra.tn.document:get" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
   <!-- nodes -->
@@ -199,7 +204,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
-    <value name="field_name">tundra.tn.document.schema:get</value>
+    <value name="field_name">$tundra.tn.document.schema:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -286,7 +291,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
-    <value name="field_name">tundra.tn.document.schema:get</value>
+    <value name="field_name">$tundra.tn.document.schema:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -340,7 +345,7 @@
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_ref">wm.tn.rec:Profile</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -356,7 +361,7 @@
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_ref">wm.tn.rec:Profile</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
     </array>
   </record>
@@ -402,7 +407,7 @@
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_ref">wm.tn.rec:Profile</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -418,7 +423,7 @@
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_ref">wm.tn.rec:Profile</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
     </array>
   </record>
@@ -433,13 +438,14 @@
 <MAPDELETE NAME="Dropper" FIELD="/$id;1;0">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$sender;4;0;wm.tn.rec:Profile">
+<MAPDELETE NAME="Dropper" FIELD="/$sender;4;0;tundra.tn.schema:profile">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$receiver;4;0;wm.tn.rec:Profile">
+<MAPDELETE NAME="Dropper" FIELD="/$receiver;4;0;tundra.tn.schema:profile">
 </MAPDELETE>
 </MAP>
 </INVOKE>
+</BRANCH>
 
 <INVOKE TIMEOUT="" SERVICE="tundra.tn.document.type:get" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
@@ -485,6 +491,33 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
       </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$name</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
     </array>
   </record>
 </Values>
@@ -494,7 +527,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
-    <value name="field_name">tundra.tn.document.schema:get</value>
+    <value name="field_name">$tundra.tn.document.schema:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -536,7 +569,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
-    <value name="field_name">tundra.tn.document.schema:get</value>
+    <value name="field_name">$tundra.tn.document.schema:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -609,7 +642,7 @@
 <Values version="2.0">
   <record name="xml" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
-    <value name="field_name">tundra.tn.document.schema:get</value>
+    <value name="field_name">$tundra.tn.document.schema:get</value>
     <value name="field_type">record</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -687,7 +720,7 @@
 </INVOKE>
 </SEQUENCE>
 
-<MAP NAME="drop" TIMEOUT="" MODE="STANDALONE">
+<MAP NAME="drop" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
