@@ -249,7 +249,7 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // content part as an IData document, and $schema is the name of the document reference or flat
 // file schema used by the parser.
 //
-// Refer to the tundra.tn.schema:processor specification as a guide to the inputs and outputs 
+// Refer to the tundra.tn.schema:processor specification as a guide to the inputs and outputs
 // required of the processing service.
 //
 // As it provides logging, content parsing, error handling, and document status updates, the
@@ -315,7 +315,7 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 // content back to Trading Networks as new documents automatically.
 //
 // The splitting service must accept a single IData document and return an IData document list, and
-// optionally TN_parms. Refer to the tundra.tn.schema:splitter specification as a guide to the inputs 
+// optionally TN_parms. Refer to the tundra.tn.schema:splitter specification as a guide to the inputs
 // and outputs required of the splitting service.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
@@ -332,7 +332,7 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // translated content back to Trading Networks as a new document automatically.
 //
 // The translation service must accept a single IData document and return a single IData document,
-// and optionally TN_parms. Refer to the tundra.tn.schema:translator specification as a guide to 
+// and optionally TN_parms. Refer to the tundra.tn.schema:translator specification as a guide to
 // the inputs and outputs required of the translation service.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
@@ -584,37 +584,65 @@ tundra.tn.schema:profile;
 tundra.tn.schema.derivative:filter;
 
 // Processing services called by tundra.tn:process can implement this specification.
-// 
+//
+// Inputs:
 //   - $document is the parsed bizdoc content for processing. This is the default name
-//     for this input parameter. The actual name of the parameter can be changed using 
+//     for this input parameter. The actual name of the parameter can be changed using
 //     the tundra.tn:process $service.input parameter.
+//
+//   - $schema is the name of the Integration Server document reference or flat file
+//     schema used to parse the content into an IData structure.
 tundra.tn.schema:processor;
 
 // Splitting services used by tundra.tn:split can implement this specification.
-// 
+//
+// Inputs:
 //   - $document is the parsed bizdoc content for splitting. This is the default name
-//     for this input parameter. The actual name of the parameter can be changed using 
-//     tundra.tn:split's $service.input parameter, which allows the use of tundra.tn:split 
+//     for this input parameter. The actual name of the parameter can be changed using
+//     tundra.tn:split's $service.input parameter, which allows the use of tundra.tn:split
 //     with existing mapping services.
-// 
-//   - $documents is the split list of content with which each item of the list will be routed 
-//     back to Trading Networks as individual new documents. This is the default name for 
-//     this output parameter. The actual name of the parameter can be changed using the 
-//     tundra.tn:split's $service.output parameter, which allows the use of tundra.tn:split 
+//
+//   - $schema is the name of the Integration Server document reference or flat file schema
+//     used to parse the content into an IData structure.
+//
+// Outputs:
+//   - $documents[] is the split list of content with which each item of the list will be routed
+//     back to Trading Networks as individual new documents. This is the default name for
+//     this output parameter. The actual name of the parameter can be changed using the
+//     tundra.tn:split's $service.output parameter, which allows the use of tundra.tn:split
 //     with existing mapping services.
+//
+//   - $schemas[] is the list of Integration Server document references or flat file schemas
+//     that each $documents[] item conforms to. The length of $schemas[] must match the
+//     length of $documents[], and $schema[n] is used to serialize $document[n] to an input
+//     stream for routing to Trading Networks.
+//
+//   - TN_parms provides routing hints for Trading Networks. It can be specified as either a
+//     singleton IData or an IData list. If specified as a singleton, it will be used when
+//     routing every item in the $documents[] list. If specified as a list, the length of
+//     TN_parms[] must match the length of $documents[], and TN_parms[n] will be used when
+//     routing $documents[n] to Trading Networks.
 tundra.tn.schema:splitter;
 
 // Translation services used by tundra.tn:translate can implement this specification.
-// 
+//
+// Inputs:
 //   - $document is the parsed bizdoc content for translation. This is the default name
-//     for this input parameter. The actual name of the parameter can be changed using 
-//     tundra.tn:translate's $service.input parameter, which allows the use of 
+//     for this input parameter. The actual name of the parameter can be changed using
+//     tundra.tn:translate's $service.input parameter, which allows the use of
 //     tundra.tn:translate with existing mapping services.
-// 
+//
+//   - $schema is the name of the Integration Server document reference or flat file
+//     schema used to parse the content into an IData structure.
+//
+// Outputs:
 //   - $translation is the translated content which will be routed back to Trading Networks
-//     as a new document. This is the default name for this output parameter. The actual 
+//     as a new document. This is the default name for this output parameter. The actual
 //     name of the parameter can be changed using the tundra.tn:translate's $service.output
 //     parameter, which allows the use of tundra.tn:translate with existing mapping services.
+//
+//   - TN_parms provides routing hints for routing the $translation document back to
+//     Trading Networks.
 tundra.tn.schema:translator;
 ```
 
