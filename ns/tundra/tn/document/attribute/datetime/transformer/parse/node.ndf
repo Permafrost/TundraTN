@@ -14,14 +14,14 @@ ISO8601/XML dates, times, and datetimes which may include a timezone specified i
 (+|-)HH:mm. As this service supports named patterns for ISO8601/XML and java.text.SimpleDateFormat 
 patterns, it can be used instead to parse all date, time and datetime strings.
 
-Pattern (arg) is not specified, it defaults to an ISO8601/XML datetime.
+If a pattern (arg) is not specified, it defaults to an ISO8601/XML datetime.
 
 Supports a handful of well-known named patterns:
 
 Name           Pattern
--------------  ---------------
+-------------  --------------------------------------------
 datetime       ISO8601/XML datetime
-datetime.jdbc  yyyy-MM-dd HH:mm:ss
+datetime.jdbc  yyyy-MM-dd HH:mm:ss.SSS
 date           ISO8601/XML date
 date.jdbc      yyyy-mm-dd
 time           ISO8601/XML time
@@ -73,16 +73,10 @@ Z       time zone offset/id          zone          -0800; -08:00; Asia/Tokyo
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
-  <null name="auditfields_input"/>
-  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
-  <value name="pipeline_option">1</value>
-  <null name="originURI"/>
-  <value name="modifiable">true</value>
-  <value name="is_public">false</value>
 </Values>
