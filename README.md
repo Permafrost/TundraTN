@@ -133,6 +133,19 @@ Top-level services for the most common tasks:
 // $catch service).
 tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
 
+// Evaluates each given branch condition in the specified order against the pipeline and executes 
+// the action for the first matching branch against the bizdoc being processed.
+//
+// Conditions can be any statement supported by Tundra/tundra.condition:evaluate. The condition
+// will be evaluated against a pipeline containing $bizdoc, $sender, and $receiver. Further, a 
+// null condition will always evaluate to true, and can therefore be used as a default branch
+// statement to match any documents unmatched by more specific conditions.
+//
+// Supported actions include all the TundraTN top-level processing services: tundra.tn:chain,
+// tundra.tn:deliver, tundra.tn:derive, tundra.tn:process, tundra.tn:split, and 
+// tundra.tn:translate.
+tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
+
 // Processes a Trading Networks document by parsing the given document content part, and calling
 // the given list of services with the following input arguments: $bizdoc, $sender and $receiver
 // are the normal bizdoc processing service inputs (except with the '$' prefix), $document is the
@@ -494,6 +507,9 @@ tundra.tn.profile:self();
 Queue processing service versions of the tundra.tn:* meta processing services:
 
 ```java
+// For each item in the Trading Networks queue, process it with tundra.tn:branch.
+tundra.tn.queue:branch(queue, $branches[], $catch, $finally);
+
 // For each item in the Trading Networks queue, process it with tundra.tn:chain.
 tundra.tn.queue:chain(queue, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding);
 
@@ -532,6 +548,9 @@ meta processing services:
 ```java
 // Reliably processes (as a service execution task) a Trading Networks document via tundra.tn:amend.
 tundra.tn.reliable:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
+
+// Reliably processes (as a service execution task) a Trading Networks document via tundra.tn:branch.
+tundra.tn.reliable:branch(bizdoc, $branches[], $catch, $finally);
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:chain.
