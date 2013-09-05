@@ -484,6 +484,7 @@ tundra.tn.document.status:set($bizdoc, $status);
 // returns an object of type com.wm.app.tn.doc.BizDocType which, despite looking
 // like one, is not a normal IData document and therefore causes problems in
 // Flow services. For example, you cannot branch on fields in the faux document.
+// Nor does this service throw an exception of the document type does not exist.
 tundra.tn.document.type:get($id, $name);
 
 // Returns the parsing schema associated with the given Trading Networks document type.

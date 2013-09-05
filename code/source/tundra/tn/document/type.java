@@ -1,7 +1,7 @@
 package tundra.tn.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2013-08-23 16:22:53.226
+// -----( CREATED: 2013-09-05 17:36:33.218
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -42,7 +42,7 @@ public final class type
 		  String name = IDataUtil.getString(cursor, "$name");
 		  if (id != null || name != null) {
 		    com.wm.app.tn.doc.BizDocType type = get(id, name);
-		    IDataUtil.put(cursor, "$type", type.getIData());
+		    if (type != null) IDataUtil.put(cursor, "$type", type.getIData());
 		  }
 		} finally {
 		  cursor.destroy();
@@ -54,7 +54,7 @@ public final class type
 
 	// --- <<IS-START-SHARED>> ---
 	// returns the Trading Networks document type given the ID
-	public static com.wm.app.tn.doc.BizDocType get(String id, String name) throws ServiceException {
+	public static com.wm.app.tn.doc.BizDocType get(String id, String name) {
 	  com.wm.app.tn.doc.BizDocType type = null;
 	  if (id != null) {
 	    type = com.wm.app.tn.db.BizDocTypeStore.get(id, true, true);
