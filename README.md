@@ -129,7 +129,7 @@ Top-level services for the most common tasks:
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
 
@@ -177,7 +177,7 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $part, $strict);
 
@@ -222,7 +222,7 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part, $strict);
 
@@ -249,7 +249,7 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding, $strict);
 
@@ -299,7 +299,7 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding, $strict);
 
@@ -351,7 +351,7 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part, $strict);
 
@@ -368,7 +368,7 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // exception will be thrown and handled by the $catch service. For example, if you have enabled
 // duplicate document checking on the Trading Networks document type and do not wish to process
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ERROR' (when using the standard
+// be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part, $strict);
 ```
