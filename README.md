@@ -253,6 +253,15 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // $catch service).
 tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding, $strict);
 
+// Receives arbitrary (XML or flat file) content and then discards it (does nothing with it). This is the 
+// Trading Networks equivalent of Unix's /dev/null[1], which is useful for successfully receiving messages 
+// from a partner that do not need to be saved or processed.
+//
+// This service is intended to be invoked by clients via HTTP or FTP.
+//
+// [1] http://en.wikipedia.org/wiki//dev/null
+tundra.tn:discard();
+
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 
