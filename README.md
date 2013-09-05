@@ -309,6 +309,12 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encodin
 // This service is intended to be invoked by clients via HTTP or FTP.
 tundra.tn:receive(strict, TN_parms);
 
+// Receives arbitrary (XML or flat file) content and then rejects it by always returning an 
+// error to the client.
+//
+// This service is intended to be invoked by clients via HTTP or FTP.
+tundra.tn:reject();
+
 // Reprocesses the given document in Trading Networks by rematching it against the
 // processing rule base and executing the first processing rule that matches.
 tundra.tn:reroute(bizdoc);
