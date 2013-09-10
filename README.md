@@ -251,6 +251,11 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 // be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
+//
+// Upon successful processing by this service, the bizdoc user status will be either set to 'DONE'
+// if one or more derivatives were created, or 'IGNORED' if no derivatives are created, unless 
+// the $service processing service has already changed the user status in which case this service
+// will not change it again.
 tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding, $strict);
 
 // Receives arbitrary (XML or flat file) content and then discards it (does nothing with it). This is the 

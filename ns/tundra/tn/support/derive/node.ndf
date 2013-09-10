@@ -340,7 +340,12 @@ exception will be thrown and handled by the $catch service. For example, if you 
 duplicate document checking on the Trading Networks document type and do not wish to process
 duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 be processed and will instead have their user status set to 'ABORTED' (when using the standard
-$catch service).</value>
+$catch service).
+
+Upon successful processing by this service, the bizdoc user status will be either set to 'DONE'
+if one or more derivatives were created, or 'IGNORED' if no derivatives are created, unless 
+the $service processing service has already changed the user status in which case this service
+will not change it again.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
