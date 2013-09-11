@@ -137,8 +137,11 @@ tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $
 // the action for the first matching branch against the bizdoc being processed.
 //
 // Conditions can be any statement supported by Tundra/tundra.condition:evaluate. The condition
-// will be evaluated against a pipeline containing $bizdoc, $sender, and $receiver. Further, a 
-// null condition will always evaluate to true, and can therefore be used as a default branch
+// will be evaluated against a pipeline containing $bizdoc, $sender, $receiver, the parsed 
+// bizdoc content as an IData document called $document, and the parsing schema/document blueprint 
+// used by the parser as a string called $schema.
+//
+// A null condition will always evaluate to true, and can therefore be used as a default branch
 // statement to match any documents unmatched by more specific conditions.
 //
 // Supported actions include all the TundraTN top-level processing services: tundra.tn:chain,
