@@ -361,7 +361,11 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 // be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
-tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part, $strict);
+//
+// If $required is 'true', the splitting service must return one or more translated contents. Failure
+// to do so results in the document user status set to 'ERROR'. The default value is 'false', for
+// which missing translated contents results in the document user status set to 'IGNORED'.
+tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $strict);
 
 // One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given translation service, passing the parsed content as an input, and routing the
@@ -562,7 +566,7 @@ tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.i
 tundra.tn.queue:reroute(queue);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:split.
-tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
+tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:translate.
 tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
@@ -602,7 +606,7 @@ tundra.tn.reliable:reroute(bizdoc);
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:split.
-tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $part);
+tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
 
 // Reliably processes (as a service execution task) a Trading Networks document via
 // tundra.tn:translate.
