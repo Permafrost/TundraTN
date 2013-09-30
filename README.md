@@ -90,16 +90,6 @@ on your Integration Server's web administration site
    elements do not contribute to the public API, they are liable to change at
    any time. Enter at your own risk
 
-## Tests
-
-*Almost* every service in TundraTN has unit tests, located in the
-tundra.tn.support.test folder.
-
-To run the test suite, either:
-* run tundra:test($package = "TundraTN") service directly
-* visit <http://localhost:5555/invoke/tundra/test?$package=TundraTN>
-  (substitute your own Integration Server host and port for localhost:5555)
-
 ## Services
 
 Top-level services for the most common tasks:
