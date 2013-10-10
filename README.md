@@ -186,10 +186,10 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 //             - $headers/*: additional HTTP headers as required
 //             - $authority/user: the username to log on to the remote web server with
 //             - $authority/password: the password to log on to the remote web server with
-//   - https:   refer to http
+//   - https:  refer to http
 //   - mailto: sends an email with the given content attached. An example mailto URI is
 //             as follows: mailto:bob@example.com?cc=jane@example.com&subject=Example&body=Example&attachment=message.xml
-//             The following additional override options can be provided via the $pipeline
+//             The following additional override options can be provided via the $pipeline 
 //             document:
 //             - $attachment: the attached file's name
 //             - $from: email address to send the email from
@@ -199,15 +199,14 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 //               smtp://user:password@host:port), defaults to the SMTP server configured
 //               in the Integration Server setting watt.server.smtpServer
 //
-//
 // Variable substitution is performed on all variables specified in the $pipeline document,
 // and the $destination URI, allowing for dynamic generation of any of these values. Also,
 // if $service is specified, it will be called prior to variable substitution and thus can
 // be used to populate the pipeline with variables to be used by the substitution.
 //
-// This service leverages the Tundra service tundra.content:deliver. Therefore, additional
-// delivery protocols can be implemented by creating a service named for the URI scheme in
-// the Tundra package folder tundra.support.content.deliver.  Services in this folder should
+// This service leverages the Tundra service tundra.content:deliver. Therefore, additional 
+// delivery protocols can be implemented by creating a service named for the URI scheme in 
+// the Tundra package folder tundra.support.content.deliver.  Services in this folder should 
 // implement the tundra.support.content.deliver:handler specification.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and

@@ -102,10 +102,21 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="field_name">$encoding</value>
+          <value name="field_name">$service</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">string</value>
+              </record>
+            </array>
+          </record>
           <value name="nillable">true</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
@@ -141,14 +152,18 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
+            <value name="field_usereditable">false</value>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="field_name">$service</value>
+          <value name="field_name">$parse?</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>false</value>
+            <value>true</value>
+          </array>
           <record name="field_content_type" javaclass="com.wm.util.Values">
             <value name="contentType">1</value>
             <value name="internalType">reference</value>
@@ -156,10 +171,26 @@
             <array name="targetNames" type="record" depth="1">
               <record javaclass="com.wm.util.Values">
                 <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
+                <value name="ncName">boolean</value>
               </record>
             </array>
           </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <null name="field_usereditable"/>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$encoding</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
           <value name="nillable">true</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
@@ -380,7 +411,9 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Delivers Trading Networks document (bizdoc) content to the given destination URI.
+  <value name="node_comment"># Description 
+
+Delivers Trading Networks document (bizdoc) content to the given destination URI.
 
 Supports the following delivery protocols / URI schemes:
   - file:   writes the given content to the file specified by the destination URI.  The
@@ -421,7 +454,68 @@ exception will be thrown and handled by the $catch service. For example, if you 
 duplicate document checking on the Trading Networks document type and do not wish to process
 duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 be processed and will instead have their user status set to 'ABORTED' (when using the standard
-$catch service).</value>
+$catch service).
+
+# Inputs
+
+$bizdoc
+  The Trading Networks document whose content is to be delivered.
+
+$destination
+  Either a URI, or a named destination (such as Receiver's Preferred Protocol), to which the
+  bizdoc content will be delivered.
+
+$service
+  Optional fully qualified service name, which when specified will be invoked prior to delivery,
+  thus allowing a service to perform processing to influence the delivery (such as populating
+  the pipeline with configuration variables at runtime).
+
+$pipeline
+  Optional IData document containing arbitrary variables which can be used to influence the delivery. 
+  See the service description above for transport-specific options which can be provided via this 
+  IData document.
+
+$part
+  Optional name of the bizdoc content part to be delivered. Defaults to the default content part when
+  not specified (xmldata for XML document types, ffdata for Flat File document types).
+
+$parse? 
+  Optional boolean flag, when true the bizdoc content part identified by $part will be parsed using 
+  the parsing schema configured on the Trading Networks document type, prior to both invoking $service,
+  if specified, and content delivery. The parsed document content can then be used in conjunction with
+  variable substitution for influencing the delivery URI based on the content of the document. Defaults 
+  to false.
+
+$encoding
+  Optional charset to be used when delivery the bizdoc content.
+
+$strict/Recognition
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Verification
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Validation
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Persistence
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Saving
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Routing
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+# Outputs
+
+This service has no outputs.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
