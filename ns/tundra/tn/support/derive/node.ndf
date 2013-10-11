@@ -104,6 +104,33 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
+            <null name="field_usereditable"/>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$part</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">string</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
@@ -316,7 +343,9 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Derives new bizdocs from an existing bizdoc, updating the sender and/or receiver on each 
+  <value name="node_comment"># Description
+
+Derives new bizdocs from an existing bizdoc, updating the sender and/or receiver on each 
 derivative.
 
 If a $service is specified, it will be called as a processing service for the bizdoc. It can
@@ -345,7 +374,87 @@ $catch service).
 Upon successful processing by this service, the bizdoc user status will be either set to 'DONE'
 if one or more derivatives were created, or 'IGNORED' if no derivatives are created, unless 
 the $service processing service has already changed the user status in which case this service
-will not change it again.</value>
+will not change it again.
+
+# Inputs
+
+$bizdoc
+  The Trading Networks document from which bizdoc copies will be derived.
+
+$service
+  Optional fully qualified service name, which when specified will be invoked prior to deriving
+  any bizdoc copies, thus allowing a service to perform processing to influence the derivative
+  process (such as specifying additional derivative rules at runtime).
+
+$derivatives[]/description
+  Optional description of the derivative rule, used in all related activity log statements.
+
+$derivatives[]/sender
+  Optional (internal or external) ID identifying the desired Trading Networks partner profile 
+  to be used as the sender on the derivative bizdoc. Defaults to the original bizdoc sender 
+  if not specified.
+
+$derivatives[]/receiver
+  Optional (internal or external) ID identifying the desired Trading Networks partner profile 
+  to be used as the receiver on the derivative bizdoc. Defaults to the original bizdoc receiver 
+  if not specified.
+
+$derivatives[]/type
+  Optional Trading Networks external ID type used by the above $derivatives[]/sender and 
+  $derivatives[]/receiver inputs. If not specified, then the sender and receiver IDs are treated
+  as internal partner profile IDs.
+
+$derivatives[]/filter
+  Optional inline filter condition (as supported by Tundra/tundra.condition:evaluate) or fully 
+  qualified service name of a service implementing the tundra.tn.schema.derivative:filter specification. 
+  If specifying an inline filter condition, the input pipeline will be the same as described for a
+  filter service by the tundra.tn.schema.derivative:filter specification. If not specified, then a copy
+  will always be derived for this new sender/receiver.
+
+$derivatives[]/amendments[]/key
+$derivatives[]/amendments[]/value
+  Optional {key, value} pairs used to make small inline modifications to the derived bizdoc content.
+  Keys are fully qualified references to fields in the parsed bizdoc content.
+
+$derivatives[]/TN_parms
+  Optional TN_parms IData document, used when routing the derivative bizdoc.
+
+$derivatives[]/enabled?
+  Optional boolean flag, when true this derivative rule is active, when false, this derivative rule
+  is inactive and ignored. Defaults to true when not specified.
+
+$part
+  Optional name of the bizdoc content part to be copied to the resulting derivatives. Defaults to 
+  the default content part when not specified (xmldata for XML document types, ffdata for Flat 
+  File document types).
+
+$strict/Recognition
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Verification
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Validation
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Persistence
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Saving
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Routing
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+# Outputs
+
+This service has no outputs.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
