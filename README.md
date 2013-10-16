@@ -189,7 +189,7 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 //   - https:  refer to http
 //   - mailto: sends an email with the given content attached. An example mailto URI is
 //             as follows: mailto:bob@example.com?cc=jane@example.com&subject=Example&body=Example&attachment=message.xml
-//             The following additional override options can be provided via the $pipeline 
+//             The following additional override options can be provided via the $pipeline
 //             document:
 //             - $attachment: the attached file's name
 //             - $from: email address to send the email from
@@ -204,9 +204,9 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // if $service is specified, it will be called prior to variable substitution and thus can
 // be used to populate the pipeline with variables to be used by the substitution.
 //
-// This service leverages the Tundra service tundra.content:deliver. Therefore, additional 
-// delivery protocols can be implemented by creating a service named for the URI scheme in 
-// the Tundra package folder tundra.support.content.deliver.  Services in this folder should 
+// This service leverages the Tundra service tundra.content:deliver. Therefore, additional
+// delivery protocols can be implemented by creating a service named for the URI scheme in
+// the Tundra package folder tundra.support.content.deliver.  Services in this folder should
 // implement the tundra.support.content.deliver:handler specification.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
@@ -529,36 +529,49 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
 ```java
 // For each item in the Trading Networks queue, process it with tundra.tn:branch.
-tundra.tn.queue:branch(queue, $branches[], $catch, $finally);
+tundra.tn.queue:branch(queue, $branches[], $catch, $finally, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:chain.
-tundra.tn.queue:chain(queue, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding);
+tundra.tn.queue:chain(queue, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:deliver.
-tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $finally, $pipeline, $part, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:derive.
-tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding, $concurrency);
 
 // For each item in the Trading Networks queue, runs the given $service, which must
 // implement the bizdoc processing service signature wm.tn.rec:ProcessingService, to
 // process the item.
 //
+// If a $concurrency > 1 is specified, a thread pool will be created with a size equal
+// to the given value. These threads are not managed by the normal Integration Server
+// thread pools, and therefore are not restricted by Integration Server thread pool
+// settings. As such, please ensure that the sum of all the $concurrency values for
+// all Trading Networks queues that specify a value > 1, plus the configured Integration
+// Server thread pool maximum is supported by the amount of free memory available on
+// your server:
+//
+// ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+//
+// If a $concurrency <= 1 is specified, tasks will be processed sequentially on the main
+// thread.
+//
 // As the above implies, this service lets you use any normal bizdoc processing service
 // to process items in a Trading Networks delivery queue.
-tundra.tn.queue:each(queue, $service, $pipeline);
+tundra.tn.queue:each(queue, $service, $pipeline, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:process.
-tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding);
+tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:reroute.
-tundra.tn.queue:reroute(queue);
+tundra.tn.queue:reroute(queue, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:split.
-tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
+tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $concurrency);
 
 // For each item in the Trading Networks queue, process it with tundra.tn:translate.
-tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
+tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $concurrency);
 ```
 
 ### Reliable
