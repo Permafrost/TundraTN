@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2013-10-16 14:50:01 EST
-// -----( ON-HOST: 172.16.189.247
+// -----( CREATED: 2013-10-30 15:49:13.828
+// -----( ON-HOST: EBZDEVWAP37.ebiztest.qr.com.au
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -72,6 +72,10 @@ public final class queue
 	
 	    java.util.List<java.util.concurrent.Future<IData>> futures = new java.util.ArrayList<java.util.concurrent.Future<IData>>();
 	
+	    com.wm.app.tn.delivery.DeliveryQueue q = com.wm.app.tn.db.QueueOperations.selectByName(queue);
+	    if (q == null) throw new ServiceException("Queue '" + queue + "' does not exist");
+	    String type = q.getQueueType();
+	
 	    while(true) {
 	      com.wm.app.tn.delivery.GuaranteedJob task = com.wm.app.tn.db.DeliveryStore.dequeueOldestJob(queue);
 	      if (task == null) {
@@ -91,12 +95,15 @@ public final class queue
 	        IDataUtil.put(cursor, "$service", service);
 	        IDataUtil.put(cursor, "$pipeline", IDataUtil.deepClone(pipeline));
 	        IDataUtil.put(cursor, "queue", queue);
+	        IDataUtil.put(cursor, "queue.type", type);
 	        cursor.destroy();
 	
 	        futures.add(executor.submit(new CallableService(executeTaskService, session, input)));
 	      }
 	    }
 	    executor.shutdown();
+	  } catch (java.sql.SQLException ex) {
+	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } catch (java.io.IOException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } catch (com.wm.app.tn.delivery.DeliveryException ex) {
