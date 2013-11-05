@@ -262,34 +262,10 @@ tundra.tn:discard();
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 
-// Processes a Trading Networks document by parsing the given document content part, and calling
-// the given service with the following input arguments: $bizdoc, $sender and $receiver are the
-// normal bizdoc processing service inputs (except with the '$' prefix), $document is the parsed
-// content part as an IData document, and $schema is the name of the document reference or flat
-// file schema used by the parser.
+// Processes a Trading Networks document via the given $service processing service. 
 //
-// Refer to the tundra.tn.schema:processor specification as a guide to the inputs and outputs
-// required of the processing service.
-//
-// As it provides logging, content parsing, error handling, and document status updates, the
-// $service processing service does not need to include any of this common boilerplate code.
-//
-// If a custom $catch service is specified, it will be called if an error occurs while processing
-// the bizdoc.  The $catch service will be passed the current pipeline, along with the following
-// additional arguments:
-//   $exception - the actual exception object thrown by the $service
-//   $exception.message - the error message
-//   $exception.class - the exception object's Java class name
-//   $exception.stack - the Java call stack at the time the exception occurred
-//
-// This service is designed to be called directly from a Trading Networks bizdoc processing rule,
-// hence the non-dollar-prefixed bizdoc argument.
-//
-// Additional arbitrary input arguments for $service (or pub.flatFile:convertToValues/
-// pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via tundra.tn.document:parse) can be
-// specified in the $pipeline document. Fully qualified names will be handled correctly, for
-// example an argument named 'example/item[0]' will be converted to an IData document named
-// 'example' containing a String list named 'item' with it's first value set accordingly.
+// As this service provides logging, content parsing, error handling, and bizdoc status updates, 
+// the $service processing service does not need to include any of this common boilerplate code.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 // the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
@@ -298,6 +274,8 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 // be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
+//
+// This service is designed to be called directly from a Trading Networks bizdoc processing rule.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding, $strict);
 
 // Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified 

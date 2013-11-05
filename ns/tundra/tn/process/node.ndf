@@ -183,6 +183,68 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_usereditable">false</value>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$parse?</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>true</value>
+            <value>false</value>
+          </array>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">boolean</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_usereditable">false</value>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$prefix?</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>true</value>
+            <value>false</value>
+          </array>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">boolean</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
             <null name="field_usereditable"/>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
@@ -449,34 +511,12 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Processes a Trading Networks document by parsing the given document content part, and calling 
-the given service with the following input arguments: $bizdoc, $sender and $receiver are the 
-normal bizdoc processing service inputs (except with the '$' prefix), $document is the parsed 
-content part as an IData document , and $schema is the name of the document reference or flat 
-file schema used by the parser. 
+  <value name="node_comment"># Description
 
-Refer to the tundra.tn.schema:processor specification as a guide to the inputs and outputs 
-required of the processing service.
+Processes a Trading Networks document via the given $service processing service. 
 
-As it provides logging, content parsing, error handling, and document status updates, the
-$service processing service does not need to include any of this common boilerplate code.
-
-If a custom $catch service is specified, it will be called if an error occurs while processing
-the bizdoc.  The $catch service will be passed the current pipeline, along with the following 
-additional arguments: 
-  $exception - the actual exception object thrown by the $service
-  $exception.message - the error message
-  $exception.class - the exception object's Java class name 
-  $exception.stack - the Java call stack at the time the exception occurred
-
-This service is designed to be called directly from a Trading Networks bizdoc processing rule,
-hence the non-dollar-prefixed bizdoc argument.
-
-Additional arbitrary input arguments for $service (or pub.flatFile:convertToValues/
-pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via tundra.tn.document:parse) can be 
-specified in the $pipeline document. Fully qualified names will be handled correctly, for 
-example an argument named 'example/item[0]' will be converted to an IData document named 
-'example' containing a String list named 'item' with it's first value set accordingly.
+As this service provides logging, content parsing, error handling, and bizdoc status updates, 
+the $service processing service does not need to include any of this common boilerplate code.
 
 Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
 the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
@@ -484,7 +524,89 @@ exception will be thrown and handled by the $catch service. For example, if you 
 duplicate document checking on the Trading Networks document type and do not wish to process
 duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 be processed and will instead have their user status set to 'ABORTED' (when using the standard
-$catch service).</value>
+$catch service).
+
+This service is designed to be called directly from a Trading Networks bizdoc processing rule.
+
+# Inputs
+
+bizdoc
+  The Trading Networks document to be processed.
+
+$service
+  Fully qualified service name to be called to process the bizdoc.
+
+$catch
+  Optional fully qualified exception handling service name to handle any exceptions thrown by
+  $service. The $catch service should implement the Tundra/tundra.schema.exception:handler 
+  specification. Defaults to the standard TundraTN exception handler tundra.tn.exception:handle,
+  which logs the error in the document's activity log, sets the user status of the document as 
+  'ABORTED' if the document is being processed in 'strict' mode and it contains any errors of 
+  the specified $strict classes otherwise it sets the user status to 'ERROR', and rethrows the
+  exception.
+
+$finally
+  Optional fully qualified service name to be run after $service is called and whether or not
+  and exception is encountered.
+
+$pipeline
+  Optional IData document containing additional arbitrary input arguments for $service (or 
+  pub.flatFile:convertToValues/pub.xml:xmlStringToXMLNode/pub.xml:xmlNodeToDocument via 
+  tundra.tn.document:parse). Fully qualified names will be handled correctly, for example an 
+  argument named 'example/item[0]' will be converted to an IData document named 'example' 
+  containing a String list named 'item' with it's first value set accordingly.
+
+$service.input
+  Optional name to be used when adding the parsed bizdoc content to the input pipeline of the 
+  call to $service. Defaults to '$document'. Not used if $parse? is false.
+
+$parse?
+  Optional boolean flag indicating whether the specified bizdoc content part should be parsed to
+  an IData document and added to the input pipeline of the call to $service. Defaults to true.
+
+$prefix?
+  Optional boolean flag indicating whether to use the '$' prefix on the standard input arguments 
+  (bizdoc, sender, and receiver) when calling $service. When true $service should implement the 
+  TundraTN/tundra.tn.schema:processor specification, when false $service should implement the 
+  WmTN/wm.tn.rec:ProcessingService specification. Defaults to true.
+
+$part
+  Optional name identifying the bizdoc content part to be parsed and added to the input pipeline of
+  the call to $service. Defaults to the default content part: xmldata for XML documents, and ffdata
+  for Flat File documents. Not used if $parse? is false.
+
+$encoding
+  Optional character encoding to be used when reading the bizdoc content part bytes. Defaults to the 
+  Java virtual machine default charset. 
+  Refer: &lt;http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()&gt;
+
+$strict/Recognition
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Verification
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Validation
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Persistence
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Saving
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+$strict/Routing
+  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
+  with this class. Defaults to true.
+
+# Outputs
+
+This service has no outputs.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
