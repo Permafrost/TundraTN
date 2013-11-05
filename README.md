@@ -300,10 +300,19 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // $catch service).
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding, $strict);
 
-// Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified
+// Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified 
 // as a string, byte array, java.io.InputStream, or org.w3c.dom.Node object.
 //
-// This service is intended to be invoked by clients via HTTP or FTP.
+// This service is either intended to be invoked directly by clients via HTTP or FTP, or it can be wrapped by another 
+// service which specifies appropriate TN_parms to control the routing of the content (ie. a one-line flat file
+// gateway service).
+//
+// When invoked via HTTP, if the content is received successfully an HTTP 200 response will be returned, with a 
+// 'text/plain' response body containing the resulting Trading Networks bizdoc internal ID. If an exception is 
+// encountered, an HTTP 500 response is returned, with a 'text/plain' response body containing the exception message.
+//
+// When invoked by a wrapping service, an exceptions encountered will be thrown to the calling service. It is then the
+// calling service's responsibility to set an appropriate response for the transport in question.
 tundra.tn:receive(strict, TN_parms);
 
 // Receives arbitrary (XML or flat file) content and then rejects it by always returning an
