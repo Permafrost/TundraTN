@@ -7,6 +7,7 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -20,6 +21,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -35,6 +37,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">InternalID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -54,6 +57,7 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">unknown</value>
@@ -63,6 +67,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$service</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -89,6 +94,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$derivatives</value>
           <value name="field_type">recref</value>
           <value name="field_dim">1</value>
@@ -98,6 +104,7 @@
           <value name="is_global">false</value>
           <value name="is_soap_array_encoding_used">false</value>
           <value name="rec_closed">true</value>
+          <value name="modifiable">true</value>
           <value name="rec_ref">tundra.tn.schema:derivative</value>
         </record>
         <record javaclass="com.wm.util.Values">
@@ -108,6 +115,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$part</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -134,6 +142,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$strict</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -150,6 +159,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Recognition</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -181,6 +191,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Verification</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -212,6 +223,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Validation</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -243,6 +255,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Persistence</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -274,6 +287,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Saving</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -305,6 +319,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Routing</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -329,11 +344,14 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -341,120 +359,10 @@
       <value name="is_global">false</value>
       <array name="rec_fields" type="record" depth="1">
       </array>
+      <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment"># Description
-
-Derives new bizdocs from an existing bizdoc, updating the sender and/or receiver on each 
-derivative.
-
-If a $service is specified, it will be called as a processing service for the bizdoc. It can
-return the $derivatives list, thereby allowing for the derivatives to be determined at
-runtime.
-
-Each $derivatives rule can specify a filter condition, which can either be a service which
-implements tundra.tn.schema.derivative:filter specification, or an inline conditional
-statement (as supported by Tundra/tundra.condition:evaluate). Note that the input pipeline
-for an inline conditional statement is the same as the input pipeline for a filter service.
-
-Each $derivatives rule can also specify a list of {key, value} pairs, specified in the 
-amendments[] IData array, which will be applied to the default bizdoc content part prior
-to the new copy for the derivative being routed to Trading Networks. The keys in amendments[] 
-can be fully-qualified (for example, "a/b/c[0]"), and the values can include percent-delimited 
-variable substitution strings which will be substituted prior to being inserted in $document.
-
-Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
-exception will be thrown and handled by the $catch service. For example, if you have enabled
-duplicate document checking on the Trading Networks document type and do not wish to process
-duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-be processed and will instead have their user status set to 'ABORTED' (when using the standard
-$catch service).
-
-Upon successful processing by this service, the bizdoc user status will be either set to 'DONE'
-if one or more derivatives were created, or 'IGNORED' if no derivatives are created, unless 
-the $service processing service has already changed the user status in which case this service
-will not change it again.
-
-# Inputs
-
-$bizdoc
-  The Trading Networks document from which bizdoc copies will be derived.
-
-$service
-  Optional fully qualified service name, which when specified will be invoked prior to deriving
-  any bizdoc copies, thus allowing a service to perform processing to influence the derivative
-  process (such as specifying additional derivative rules at runtime).
-
-$derivatives[]/description
-  Optional description of the derivative rule, used in all related activity log statements.
-
-$derivatives[]/sender
-  Optional (internal or external) ID identifying the desired Trading Networks partner profile 
-  to be used as the sender on the derivative bizdoc. Defaults to the original bizdoc sender 
-  if not specified.
-
-$derivatives[]/receiver
-  Optional (internal or external) ID identifying the desired Trading Networks partner profile 
-  to be used as the receiver on the derivative bizdoc. Defaults to the original bizdoc receiver 
-  if not specified.
-
-$derivatives[]/type
-  Optional Trading Networks external ID type used by the above $derivatives[]/sender and 
-  $derivatives[]/receiver inputs. If not specified, then the sender and receiver IDs are treated
-  as internal partner profile IDs.
-
-$derivatives[]/filter
-  Optional inline filter condition (as supported by Tundra/tundra.condition:evaluate) or fully 
-  qualified service name of a service implementing the tundra.tn.schema.derivative:filter specification. 
-  If specifying an inline filter condition, the input pipeline will be the same as described for a
-  filter service by the tundra.tn.schema.derivative:filter specification. If not specified, then a copy
-  will always be derived for this new sender/receiver.
-
-$derivatives[]/amendments[]/key
-$derivatives[]/amendments[]/value
-  Optional {key, value} pairs used to make small inline modifications to the derived bizdoc content.
-  Keys are fully qualified references to fields in the parsed bizdoc content.
-
-$derivatives[]/TN_parms
-  Optional TN_parms IData document, used when routing the derivative bizdoc.
-
-$derivatives[]/enabled?
-  Optional boolean flag, when true this derivative rule is active, when false, this derivative rule
-  is inactive and ignored. Defaults to true when not specified.
-
-$part
-  Optional name of the bizdoc content part to be copied to the resulting derivatives. Defaults to 
-  the default content part when not specified (xmldata for XML document types, ffdata for Flat 
-  File document types).
-
-$strict/Recognition
-  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
-  with this class. Defaults to true.
-
-$strict/Verification
-  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
-  with this class. Defaults to true.
-
-$strict/Validation
-  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
-  with this class. Defaults to true.
-
-$strict/Persistence
-  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
-  with this class. Defaults to true.
-
-$strict/Saving
-  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
-  with this class. Defaults to true.
-
-$strict/Routing
-  Optional boolean flag, when true delivery will be aborted if the bizdoc contains any errors
-  with this class. Defaults to true.
-
-# Outputs
-
-This service has no outputs.</value>
+  <value name="node_comment">The supporting implementation for tundra.tn:derive.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
@@ -471,10 +379,16 @@ This service has no outputs.</value>
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
 </Values>
