@@ -620,15 +620,25 @@ $receiver
 
 $amendments[]/key
 $amendments[]/value
+$amendments[]/condition
   Optional {key, value} pairs used to make small inline modifications to the derived bizdoc content.
-  Keys are fully qualified references to fields in the parsed bizdoc content.
+  Keys are fully-qualified references to fields in the parsed bizdoc content.
+  An optional Tundra/tundra.condition:evaluate conditional statement can also be specified, which is 
+  evaluated against the pipeline containing $bizdoc, $sender, $receiver, and $document (the parsed
+  bizdoc content), and only if the condition evaluates to true will the associated amended value be 
+  applied. If not specified, the amended value will always be applied.
 
-$attributes[]/key
-$attributes[]/value
+$attributes/key
+$attributes/value
+$attributes/condition
   Optional {key, value} pairs used to set attributes on the derived bizdoc, where key identifies the 
   attribute that is set to the given value. Keys and values can be literal strings or percent-delimited 
   variable substitution strings, where the variable substitution scope includes the following: $bizdoc, 
   $sender, $receiver, $document (parsed bizdoc content), $schema, $schema.type.
+  An optional Tundra/tundra.condition:evaluate conditional statement can also be specified, which is 
+  evaluated against the pipeline containing $bizdoc, $sender, $receiver, and $document (the parsed
+  bizdoc content), and only if the condition evaluates to true will the attribute be added to the
+  derived bizdoc. If not specified, the attribute will always be added to the derived bizdoc.
 
 TN_parms
   Optional TN_parms IData document, used when routing the derivative bizdoc.
