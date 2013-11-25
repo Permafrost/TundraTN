@@ -20,37 +20,10 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="field_name">$content</value>
+          <value name="field_name">$bytes</value>
           <value name="field_type">object</value>
           <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="field_name">$schema</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
+          <value name="wrapper_type">byte []</value>
           <value name="nillable">true</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
@@ -87,7 +60,6 @@ non-XML content:
               <value name="field_name">$contentType</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
-              <value name="field_opt">true</value>
               <record name="field_content_type" javaclass="com.wm.util.Values">
                 <value name="contentType">1</value>
                 <value name="internalType">reference</value>
@@ -99,7 +71,33 @@ non-XML content:
                   </record>
                 </array>
               </record>
-              <value name="nillable">true</value>
+              <value name="nillable">false</value>
+              <value name="form_qualified">false</value>
+              <value name="is_global">false</value>
+            </record>
+            <record javaclass="com.wm.util.Values">
+              <value name="node_type">record</value>
+              <value name="node_comment"></value>
+              <record name="node_hints" javaclass="com.wm.util.Values">
+                <null name="field_usereditable"/>
+                <value name="field_largerEditor">false</value>
+                <value name="field_password">false</value>
+              </record>
+              <value name="field_name">$contentLength</value>
+              <value name="field_type">string</value>
+              <value name="field_dim">0</value>
+              <record name="field_content_type" javaclass="com.wm.util.Values">
+                <value name="contentType">1</value>
+                <value name="internalType">reference</value>
+                <value name="dataTypeVersion">dtVersion2</value>
+                <array name="targetNames" type="record" depth="1">
+                  <record javaclass="com.wm.util.Values">
+                    <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                    <value name="ncName">nonNegativeInteger</value>
+                  </record>
+                </array>
+              </record>
+              <value name="nillable">false</value>
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
             </record>
@@ -123,33 +121,6 @@ non-XML content:
                   <record javaclass="com.wm.util.Values">
                     <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
                     <value name="ncName">string</value>
-                  </record>
-                </array>
-              </record>
-              <value name="nillable">true</value>
-              <value name="form_qualified">false</value>
-              <value name="is_global">false</value>
-            </record>
-            <record javaclass="com.wm.util.Values">
-              <value name="node_type">unknown</value>
-              <value name="node_comment"></value>
-              <record name="node_hints" javaclass="com.wm.util.Values">
-                <null name="field_usereditable"/>
-                <value name="field_largerEditor">false</value>
-                <value name="field_password">false</value>
-              </record>
-              <value name="field_name">$contentLength</value>
-              <value name="field_type">string</value>
-              <value name="field_dim">0</value>
-              <value name="field_opt">true</value>
-              <record name="field_content_type" javaclass="com.wm.util.Values">
-                <value name="contentType">1</value>
-                <value name="internalType">reference</value>
-                <value name="dataTypeVersion">dtVersion2</value>
-                <array name="targetNames" type="record" depth="1">
-                  <record javaclass="com.wm.util.Values">
-                    <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                    <value name="ncName">nonNegativeInteger</value>
                   </record>
                 </array>
               </record>
@@ -402,14 +373,12 @@ non-XML content:
       </array>
     </record>
   </record>
-  <value name="node_comment">Routes arbitrary content to Trading Networks.</value>
+  <value name="node_comment">Routes an array of bytes to Trading Networks.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
-  <value name="template">tundra_tn_support_content_route</value>
-  <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
   <value name="icontext_policy">$null</value>
