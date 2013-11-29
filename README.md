@@ -172,7 +172,7 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 // be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
-tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $part, $strict);
+tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $parse?, $prefix?, $part, $strict);
 
 // Delivers Trading Networks document (bizdoc) content to the given destination URI.
 //
@@ -216,7 +216,7 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 // duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
 // be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
-tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part, $strict);
+tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $parse?, $prefix?, $part, $strict);
 
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
@@ -248,7 +248,7 @@ tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $
 // if one or more derivatives were created, or 'IGNORED' if no derivatives are created, unless
 // the $service processing service has already changed the user status in which case this service
 // will not change it again.
-tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $part, $encoding, $strict);
+tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $prefix?, $part, $encoding, $strict);
 
 // Receives arbitrary (XML or flat file) content and then discards it (does nothing with it). This is the
 // Trading Networks equivalent of Unix's /dev/null[1], which is useful for successfully receiving messages
@@ -276,7 +276,7 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // $catch service).
 //
 // This service is designed to be called directly from a Trading Networks bizdoc processing rule.
-tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $part, $encoding, $strict);
+tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefix?, $part, $encoding, $strict);
 
 // Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified 
 // as a string, byte array, java.io.InputStream, or org.w3c.dom.Node object.
@@ -341,7 +341,7 @@ tundra.tn:retrieve($source, $limit, TN_parms);
 // If $required is 'true', the splitting service must return one or more translated contents. Failure
 // to do so results in the document user status set to 'ERROR'. The default value is 'false', for
 // which missing translated contents results in the document user status set to 'IGNORED'.
-tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $strict);
+tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
 
 // One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given translation service, passing the parsed content as an input, and routing the
@@ -362,7 +362,7 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // If $required is 'true', the translation service must return translated content. Failure to do so
 // results in the document user status set to 'ERROR'. The default value is 'false', for which
 // missing translated content results in the document user status set to 'IGNORED'.
-tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $strict);
+tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
 ```
 
 ### Content
