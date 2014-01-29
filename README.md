@@ -293,12 +293,6 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefi
 // calling service's responsibility to set an appropriate response for the transport in question.
 tundra.tn:receive(strict, TN_parms);
 
-// Receives arbitrary (XML or flat file) content and then rejects it by always returning an
-// error to the client.
-//
-// This service is intended to be invoked by clients via HTTP or FTP.
-tundra.tn:reject();
-
 // Reprocesses the given document in Trading Networks by rematching it against the
 // processing rule base and executing the first processing rule that matches.
 tundra.tn:reroute(bizdoc);
@@ -364,6 +358,13 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // missing translated content results in the document user status set to 'IGNORED'.
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
 ```
+
+* #### tundra.tn:reject
+
+    Receives arbitrary (XML or flat file) content and then rejects it
+    by always returning an error to the client.
+
+    This service is intended to be invoked by clients via HTTP or FTP.
 
 ### Content
 
