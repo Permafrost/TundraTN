@@ -359,6 +359,15 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
 ```
 
+* #### tundra.tn:discard
+
+    Receives arbitrary (XML or flat file) content and then discards it
+    (does nothing with it). This is the Trading Networks equivalent of
+    Unix's [/dev/null], which is useful for successfully receiving
+    messages from a partner that do not need to be saved or processed.
+
+    This service is intended to be invoked by clients via HTTP or FTP.
+
 * #### tundra.tn:reject
 
     Receives arbitrary (XML or flat file) content and then rejects it
@@ -738,3 +747,5 @@ around.
 ## Copyright
 
 Copyright © 2012 Lachlan Dowding. See license.txt for further details.
+
+[/dev/null]: <http://en.wikipedia.org/wiki//dev/null>
