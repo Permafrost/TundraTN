@@ -262,9 +262,9 @@ tundra.tn:discard();
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 
-// Processes a Trading Networks document via the given $service processing service. 
+// Processes a Trading Networks document via the given $service processing service.
 //
-// As this service provides logging, content parsing, error handling, and bizdoc status updates, 
+// As this service provides logging, content parsing, error handling, and bizdoc status updates,
 // the $service processing service does not need to include any of this common boilerplate code.
 //
 // Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
@@ -278,15 +278,15 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // This service is designed to be called directly from a Trading Networks bizdoc processing rule.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefix?, $part, $encoding, $strict);
 
-// Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified 
+// Receives arbitrary (XML or flat file) content and routes it to Trading Networks. The content can be specified
 // as a string, byte array, java.io.InputStream, or org.w3c.dom.Node object.
 //
-// This service is either intended to be invoked directly by clients via HTTP or FTP, or it can be wrapped by another 
+// This service is either intended to be invoked directly by clients via HTTP or FTP, or it can be wrapped by another
 // service which specifies appropriate TN_parms to control the routing of the content (ie. a one-line flat file
 // gateway service).
 //
-// When invoked via HTTP, if the content is received successfully an HTTP 200 response will be returned, with a 
-// 'text/plain' response body containing the resulting Trading Networks bizdoc internal ID. If an exception is 
+// When invoked via HTTP, if the content is received successfully an HTTP 200 response will be returned, with a
+// 'text/plain' response body containing the resulting Trading Networks bizdoc internal ID. If an exception is
 // encountered, an HTTP 500 response is returned, with a 'text/plain' response body containing the exception message.
 //
 // When invoked by a wrapping service, an exceptions encountered will be thrown to the calling service. It is then the
@@ -487,11 +487,43 @@ tundra.tn.document.type.schema:get($type);
 
 Exception-related services:
 
-```java
-// Handles a Trading Networks document processing error by logging the error against
-// the document in the activity log, and setting the user status to 'ERROR'.
-tundra.tn.exception:handle($bizdoc);
-```
+* #### tundra.tn.exception:handle
+
+    Handles a Trading Networks document processing error by logging the
+    error against the document in the activity log, and setting the user
+    status to either 'ABORTED' for security or strictness exceptions,
+    or 'ERROR' for any other exceptions.
+
+    This service can be used as a standard catch service for Trading Networks
+    document processing services in conjunction with `Tundra/tundra.service:ensure`.
+
+    * Inputs:
+      * `bizdoc` is the Trading Networks document being processed that
+        caused the error.
+      * `$exception` is the Java exception object that was thrown by the
+        processing service.
+      * `$exception.class` is the Java class name of the exception object
+        that was thrown by the processing service.
+      * `$exception.message` is the error message related to the Java
+        exception object that was thrown by the processing service.
+
+* #### tundra.tn.exception:raise
+
+    Throws a new exception with the given message.
+
+    * Inputs:
+      * `$message` is an optional error message to use when constructing the
+        new exception object to be thrown. If not specified, an empty message
+        will be used to construct the exception object.
+      * `$type` is an optional choice of 'security' or 'strict', which if
+        specified will throw one of the following subclasses of
+        com.wm.app.b2b.server.ServiceException respectively:
+        * tundra.tn.exception$SecurityException - used to indicate a user
+          access error.
+        * tundra.tn.exception$StrictException - used to indicate a document
+          strictness error.
+        If not specified, a com.wm.app.b2b.server.ServiceException exception
+        object will be thrown.
 
 ### Profile
 
