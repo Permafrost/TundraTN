@@ -458,24 +458,57 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
 
 ### Content
 
-```java
-// Routes arbitrary content specified as a string, byte array, input stream, or IData document to Trading Networks.
-//
-// Correctly supports large documents, so any document considered large will be routed as a large document in TN,
-// unlike the WmTN/wm.tn.doc.xml:routeXML service.
-//
-// The following values in TN_parms, if specified, will overwrite the normal bizdoc recognised values, allowing
-// for sender, receiver, document ID, group ID, conversation ID, and document type to be forced to the specified
-// value (even for XML document types):
-//   TN_parms/SenderID
-//   TN_parms/ReceiverID
-//   TN_parms/DocumentID
-//   TN_parms/DoctypeID
-//   TN_parms/DoctypeName
-//   TN_parms/GroupID
-//   TN_parms/ConversationID
-tundra.tn.content:route($content, $schema, TN_parms);
-```
+* #### tundra.tn.content:route
+
+    Routes arbitrary content specified as a string, byte array, input 
+    stream, or IData document to Trading Networks.
+
+    Correctly supports large documents, so any document considered 
+    large will be routed as a large document in TN, unlike the 
+    WmTN/wm.tn.doc.xml:routeXML service.
+
+    Also supports overriding the normally recognised document attributes,
+    such as sender, receiver, document ID, group ID, conversation ID, 
+    and document type with the value specified in TN_parms for both XML 
+    and flat files documents.
+
+    * Inputs:
+      * `$content` is string, byte array, input stream, or IData 
+        document content to be routed to Trading Networks.
+
+      * `$schema` is an optional document reference or flat file
+        schema used to serialise `$content` when provided as an IData
+        document.
+
+      * `TN_parms` is an optional set of routing hints for Trading 
+        Networks to use when routing `$content`. If specified, the 
+        following values will overwrite the normal bizdoc recognised 
+        values, allowing for sender, receiver, document ID, group ID, 
+        conversation ID, and document type to be forced to have the 
+        specified value (even for XML document types):
+        * `SenderID`
+        * `ReceiverID`
+        * `DocumentID`
+        * `DoctypeID`
+        * `DoctypeName`
+        * `GroupID`
+        * `ConversationID`
+
+      * `$strict?` is an optional boolean, which if true will abort 
+        routing/processing rule execution of the document if any
+        any errors (such as validation errors) are encountered prior 
+        to processing, and result in an exception being thrown.
+        Defaults to false.
+
+    * Outputs:
+      * `$bizdoc` is the resulting Trading Networks document that was
+        routed.
+      * `$sender` is the Trading Networks profile of the sender of the
+        document.
+      * `$receiver` is the Trading Networks profile of the receiver of
+        the document.
+      * `TN_parms` is the routing hints used to route the document in
+        Trading Networks.
 
 ### Document
 
