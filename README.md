@@ -1,6 +1,10 @@
 # TundraTN ❄
 
-A package of useful services for webMethods Trading Networks 7.1 or higher.
+A package of useful services for webMethods Trading Networks 7.1 and higher.
+
+## Related
+
+See also [Tundra](https://github.com/Permafrost/Tundra), a package of useful services for webMethods Integration Server 7.1 and higher.
 
 ## Dependencies
 
@@ -460,31 +464,31 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
 
 * #### tundra.tn.content:route
 
-    Routes arbitrary content specified as a string, byte array, input 
+    Routes arbitrary content specified as a string, byte array, input
     stream, or IData document to Trading Networks.
 
-    Correctly supports large documents, so any document considered 
-    large will be routed as a large document in TN, unlike the 
+    Correctly supports large documents, so any document considered
+    large will be routed as a large document in TN, unlike the
     WmTN/wm.tn.doc.xml:routeXML service.
 
     Also supports overriding the normally recognised document attributes,
-    such as sender, receiver, document ID, group ID, conversation ID, 
-    and document type with the value specified in TN_parms for both XML 
+    such as sender, receiver, document ID, group ID, conversation ID,
+    and document type with the value specified in TN_parms for both XML
     and flat files documents.
 
     * Inputs:
-      * `$content` is string, byte array, input stream, or IData 
+      * `$content` is string, byte array, input stream, or IData
         document content to be routed to Trading Networks.
 
       * `$schema` is an optional document reference or flat file
         schema used to serialise `$content` when provided as an IData
         document.
 
-      * `TN_parms` is an optional set of routing hints for Trading 
-        Networks to use when routing `$content`. If specified, the 
-        following values will overwrite the normal bizdoc recognised 
-        values, allowing for sender, receiver, document ID, group ID, 
-        conversation ID, and document type to be forced to have the 
+      * `TN_parms` is an optional set of routing hints for Trading
+        Networks to use when routing `$content`. If specified, the
+        following values will overwrite the normal bizdoc recognised
+        values, allowing for sender, receiver, document ID, group ID,
+        conversation ID, and document type to be forced to have the
         specified value (even for XML document types):
         * `SenderID`
         * `ReceiverID`
@@ -494,9 +498,9 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
         * `GroupID`
         * `ConversationID`
 
-      * `$strict?` is an optional boolean, which if true will abort 
+      * `$strict?` is an optional boolean, which if true will abort
         routing/processing rule execution of the document if any
-        any errors (such as validation errors) are encountered prior 
+        any errors (such as validation errors) are encountered prior
         to processing, and result in an exception being thrown.
         Defaults to false.
 
