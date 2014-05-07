@@ -286,25 +286,6 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefi
 // processing rule base and executing the first processing rule that matches.
 tundra.tn:reroute(bizdoc);
 
-// Retrieves arbitrary content (XML, flat files, binary) from the given $source URI, and routes it
-// to Trading Networks.
-//
-// Supports the following retrieval protocols / URI schemes:
-//   - file:   processes each file matching the given $source URI with the given processing $service.
-//             The file component of the URI can include wildcards or globs (such as *.txt or *.j?r)
-//             for matching multiple files at once. For example, file:////server:port/directory/*.txt
-//             would process all .txt files in the specified directory.
-//             To ensure each file processed is not locked or being written to by another process, the
-//             file is first moved to a ./archive directory prior to processing.
-//
-// Additional retrieval protocols can be implemented by creating a service named for the URI scheme in
-// the folder Tundra/tundra.support.content.retrieve.  Services in this folder must implement the
-// Tundra/tundra.schema.content.retrieve:handler specification.
-//
-// Use the $limit input to configure the maximum number of content matches to be processed in a single
-// execution (defaults to 1000).
-tundra.tn:retrieve($source, $limit, TN_parms);
-
 // One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given splitting service, passing the parsed content as an input, and routing the split
 // content back to Trading Networks as new documents automatically.
@@ -459,6 +440,49 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
     by always returning an error to the client.
 
     This service is intended to be invoked by clients via HTTP or FTP.
+
+* #### tundra.tn:retrieve
+
+  Retrieves arbitrary content (XML, flat files, binary) from the given `$source`
+  URI, and routes it to Trading Networks.
+
+  Additional retrieval protocols can be implemented by creating a service named
+  for the URI scheme in the folder `Tundra/tundra.content.retrieve`.  Services in
+  this folder must implement the `Tundra/tundra.schema.content.retrieve:handler`
+  specification.
+
+  * Inputs:
+    * `$source` is a URI identifying the location from which content is to be
+      retrieved. Supports the following retrieval protocols / URI schemes:
+
+      * `file:` routes each file matching the given `$source` URI to Trading
+        Networks. The file component of the URI can include wildcards
+        or globs (such as `*.txt` or `*.j?r`) for matching multiple files at once.
+
+        The following example would process all `*.txt` files in the specified directory:
+
+            file:////server:port/directory/*.txt
+
+        To ensure each file processed is not locked or being written to by
+        another process, the file is first moved to an archive directory prior
+        to processing. The name of this directory can be configured by adding a
+        query string parameter called `archive` to the URI, for example:
+
+            file:////server:port/directory/*.txt?archive=backup
+
+        In this example, files are first moved to a subdirectory named `backup`.
+        If not specified, the archive directory defaults to a subdirectory named
+        `archive`.
+
+    * `$limit` is an optional maximum number of content matches to be processed in
+      a single execution. Defaults to 1000.
+
+    * `$strict?` is an optional boolean, which if true will abort routing/
+      processing rule execution of the document if any any errors (such as
+      validation errors) are encountered prior to processing. Defaults to false.
+
+    * `TN_parms` is an optional set of routing hints for Trading Networks to use
+      when routing the retrieved content.
 
 ### Content
 
