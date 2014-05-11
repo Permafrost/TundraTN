@@ -662,14 +662,27 @@ Bizdoc-related services:
     * `newValues` is a list of parsed [java.util.Date] objects representing
       the same instants in time as the given input datetime string `values`.
 
-```java
-// Trading Networks string transformer which returns whether the given Trading Networks document (bizdoc)
-// attribute value/s match the given regular expression pattern (arg).
-//
-// Refer to <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html> for more information
-// on regular expression use in Java.
-tundra.tn.document.attribute.string.transformer:match(values[], arg);
+* #### tundra.tn.document.attribute.string.transformer:match
 
+  Trading Networks string transformer which returns whether the given Trading
+  Networks document attribute value or list of values match the given [regular
+  expression pattern].
+
+  This service is intended to be invoked by Trading Networks as a custom
+  document type attribute transformer.
+
+  * Inputs:
+    * `values` is the list of strings to be matched against the [regular
+      expression pattern].
+    * `isArray` is a boolean indicating if the `values` argument contains multiple
+      items.
+    * `arg` is a [regular expression pattern].
+
+  * Outputs:
+    * `newValues` is a list boolean values indicating if the given input
+      string `values` match the given [regular expression pattern] `arg`.
+
+```java
 // Trading Networks string transformer which returns the Trading Networks My Enterprise profile's
 // internal ID. This transformer can be used to force the sender or receiver of a document to
 // always be the My Enterprise profile.
@@ -1007,4 +1020,5 @@ Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 [ISO8601]: <http://en.wikipedia.org/wiki/ISO_8601>
 [java.text.SimpleDateFormat]: <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>
 [java.util.Date]: <http://docs.oracle.com/javase/6/docs/api/java/util/Date.html>
+[regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
