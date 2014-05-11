@@ -5,58 +5,50 @@
   <value name="svc_subtype">default</value>
   <value name="svc_sigtype">java 3.5</value>
   <value name="svc_spec">tundra.tn.schema.attribute.datetime:transformer</value>
-  <value name="node_comment">Trading Networks date attribute transformer which parses the given Trading Networks document (bizdoc) 
-attribute value/s with the given datetime pattern (arg) into java.util.Date object/s.
+  <value name="node_comment">Trading Networks date attribute transformer which parses the given Trading 
+Networks document attribute value or list of values with the given datetime 
+pattern into [java.util.Date] object or list of objects.
 
-Since the built-in TN date attribute parsing only supports java.text.SimpleDateFormat (refer:
-&lt;http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html&gt;), it is unable to parse
-ISO8601/XML dates, times, and datetimes which may include a timezone specified in the format 
-(+|-)HH:mm. As this service supports named patterns for ISO8601/XML and java.text.SimpleDateFormat 
-patterns, it can be used instead to parse all date, time and datetime strings.
-
-If a pattern (arg) is not specified, it defaults to an ISO8601/XML datetime.
+Since the built-in TN date attribute parsing only supports 
+[java.text.SimpleDateFormat], versions prior to Java 7 are unable to parse 
+[ISO8601] dates, times, and datetimes when they include a timezone offset. 
+This service supports named patterns including [ISO8601] and custom 
+[java.text.SimpleDateFormat] patterns.
 
 Supports a handful of well-known named patterns:
 
-Name           Pattern
--------------  --------------------------------------------
-datetime       ISO8601/XML datetime
-datetime.jdbc  yyyy-MM-dd HH:mm:ss.SSS
-date           ISO8601/XML date
-date.jdbc      yyyy-mm-dd
-time           ISO8601/XML time
-time.jdbc      HH:mm:ss
-milliseconds   Number of milliseconds since the Epoch, 
-               January 1, 1970 00:00:00.000 GMT (Gregorian)
+    Name           Pattern
+    -------------  --------------------------------------------
+    datetime       ISO8601/XML datetime
+    datetime.jdbc  yyyy-MM-dd HH:mm:ss.SSS
+    date           ISO8601/XML date
+    date.jdbc      yyyy-mm-dd
+    time           ISO8601/XML time
+    time.jdbc      HH:mm:ss
+    milliseconds   Number of milliseconds since the Epoch, 
+                   January 1, 1970 00:00:00.000 GMT (Gregorian)
 
-Custom patterns can be specified using the following java.text.SimpleDateFormat 
-compatible pattern strings:
+Custom datetime patterns can be specified using [java.text.SimpleDateFormat] 
+compatible patterns.
 
-Symbol  Meaning                      Presentation  Examples
-------  -------                      ------------  -------
-G       era                          text          AD
-C       century of era (&gt;=0)         number        20
-Y       year of era (&gt;=0)            year          1996
-x       weekyear                     year          1996
-w       week of weekyear             number        27
-e       day of week                  number        2
-E       day of week                  text          Tuesday; Tue
-y       year                         year          1996
-D       day of year                  number        189
-M       month of year                month         July; Jul; 07
-d       day of month                 number        10
-a       halfday of day               text          PM
-K       hour of halfday (0~11)       number        0
-h       clockhour of halfday (1~12)  number        12
-H       hour of day (0~23)           number        0
-k       clockhour of day (1~24)      number        24
-m       minute of hour               number        30
-s       second of minute             number        55
-S       fraction of second           number        978
-z       time zone                    text          Pacific Standard Time; PST
-Z       time zone offset/id          zone          -0800; -08:00; Asia/Tokyo
-'       escape for text              delimiter
-''      single quote                 literal       '</value>
+This service is intended to be invoked by Trading Networks as a custom 
+document type attribute transformer.
+
+* Inputs:
+  * values is the list of datetime strings to be parsed.
+  * isArray is a boolean indicating if the values argument contains multiple 
+    items.
+  * arg is either a named pattern, or a custom [java.text.SimpleDateFormat]
+    pattern used to parse the specified values. Defaults to an ISO8601/XML 
+    datetime, if not specified.
+
+* Outputs:
+  * newValues is a list of parsed [java.util.Date] objects representing 
+    the same instants in time as the given input datetime string values.
+
+[ISO8601]: &lt;http://en.wikipedia.org/wiki/ISO_8601&gt;
+[java.text.SimpleDateFormat]: &lt;http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html&gt;
+[java.util.Date]: &lt;http://docs.oracle.com/javase/6/docs/api/java/util/Date.html&gt;</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
@@ -73,10 +65,16 @@ Z       time zone offset/id          zone          -0800; -08:00; Asia/Tokyo
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
 </Values>
