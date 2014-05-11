@@ -721,11 +721,24 @@ Bizdoc-related services:
   * Outputs:
     * `newValues` is a list of URI decoded items from the input values list.
 
-```java
-// Trading Networks string transformer which URI encodes the given Trading Networks document (bizdoc)
-// attribute value/s.
-tundra.tn.document.attribute.string.transformer.uri:encode(values[]);
+* #### tundra.tn.document.attribute.string.transformer.uri:encode
 
+  Trading Networks string transformer which URI encodes the given Trading
+  Networks document attribute value or list of values.
+
+  This service is intended to be invoked by Trading Networks as a custom
+  document type attribute transformer.
+
+  * Inputs:
+    * `values` is the list of strings to be URI encoded.
+    * `isArray` is a boolean indicating if the `values` argument contains multiple
+      items.
+    * `arg` is not used by this service, and therefore not required.
+
+  * Outputs:
+    * `newValues` is a list of URI encoded items from the input values list.
+
+```java
 // Adds a content part with the given name and content, specified as a string, bytes or stream,
 // to the given Trading Networks document (bizdoc).
 tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
