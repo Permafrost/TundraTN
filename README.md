@@ -974,11 +974,23 @@ Document schemas and interface specifications:
   * Outputs:
     * `newValues` is a list of transformed items from the input `values` list.
 
-```java
-// An improved version of the WmTN/wm.tn.rec:StringAttributeTransformService specification with
-// type constraints provided for the input and output arguments.
-tundra.tn.schema.attribute.string.transformer:specification;
+* #### tundra.tn.schema.attribute.string:transformer
 
+  An improved version of the `WmTN/wm.tn.rec:StringAttributeTransformService`
+  specification with type constraints provided for the input and output
+  arguments.
+
+  * Inputs:
+    * `values` is the list of extracted values to be transformed.
+    * `isArray` is a boolean indicating if the `values` argument contains multiple
+      items.
+    * `arg` is an optional argument that can be used to influence the
+      transformation.
+
+  * Outputs:
+    * `newValues` is a list of transformed items from the input `values` list.
+
+```java
 // This schema describes the structure for derivative rules used by tundra.tn:derive.
 tundra.tn.schema:derivative;
 
