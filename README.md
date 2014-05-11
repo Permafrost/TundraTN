@@ -958,6 +958,22 @@ tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $sch
 
 Document schemas and interface specifications:
 
+* #### tundra.tn.schema.attribute.datetime:transformer
+
+  An improved version of the `WmTN/wm.tn.rec:DateAttributeTransformService`
+  specification with type constraints provided for the input and output
+  arguments.
+
+  * Inputs:
+    * `values` is the list of extracted values to be transformed.
+    * `isArray` is a boolean indicating if the values argument contains multiple
+      items.
+    * `arg` is an optional argument that can be used to influence the
+      transformation.
+
+  * Outputs:
+    * `newValues` is a list of transformed items from the input `values` list.
+
 ```java
 // An improved version of the WmTN/wm.tn.rec:StringAttributeTransformService specification with
 // type constraints provided for the input and output arguments.
