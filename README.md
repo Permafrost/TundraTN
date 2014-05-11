@@ -682,12 +682,29 @@ Bizdoc-related services:
     * `newValues` is a list boolean values indicating if the given input
       string `values` match the given [regular expression pattern] `arg`.
 
-```java
-// Trading Networks string transformer which returns the Trading Networks My Enterprise profile's
-// internal ID. This transformer can be used to force the sender or receiver of a document to
-// always be the My Enterprise profile.
-tundra.tn.document.attribute.string.transformer.profile:self(values[]);
+* #### tundra.tn.document.attribute.string.transformer.profile:self
 
+  Trading Networks string transformer which returns the Trading Networks My
+  Enterprise profile's internal ID. This transformer can be used to force the
+  sender or receiver of a document to always be the My Enterprise profile,
+  regardless of the value of the extracted attribute.
+
+  This service is intended to be invoked by Trading Networks as a custom
+  document type attribute transformer.
+
+  * Inputs:
+    * `values` is a list of arbitrary strings, their values are ignored by this
+      service and are therefore irrelevant.
+    * `isArray` is a boolean indicating if the values argument contains multiple
+      items.
+    * `arg` is not used by this service, and therefore not required.
+
+  * Outputs:
+    * `newValues` is a list the same length as the input `values` list, but where
+      every item is the internal ID for the Trading Networks My Enterprise
+      profile.
+
+```java
 // Trading Networks string transformer which URI decodes the given Trading Networks document (bizdoc)
 // attribute value/s.
 tundra.tn.document.attribute.string.transformer.uri:decode(values[]);
