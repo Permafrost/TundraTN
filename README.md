@@ -695,7 +695,7 @@ Bizdoc-related services:
   * Inputs:
     * `values` is a list of arbitrary strings, their values are ignored by this
       service and are therefore irrelevant.
-    * `isArray` is a boolean indicating if the values argument contains multiple
+    * `isArray` is a boolean indicating if the `values` argument contains multiple
       items.
     * `arg` is not used by this service, and therefore not required.
 
@@ -704,11 +704,24 @@ Bizdoc-related services:
       every item is the internal ID for the Trading Networks My Enterprise
       profile.
 
-```java
-// Trading Networks string transformer which URI decodes the given Trading Networks document (bizdoc)
-// attribute value/s.
-tundra.tn.document.attribute.string.transformer.uri:decode(values[]);
+* #### tundra.tn.document.attribute.string.transformer.uri:decode
 
+  Trading Networks string transformer which URI decodes the given Trading Networks
+  document attribute value or list of values.
+
+  This service is intended to be invoked by Trading Networks as a custom
+  document type attribute transformer.
+
+  * Inputs:
+    * `values` is the list of strings to be URI decoded.
+    * `isArray` is a boolean indicating if the `values` argument contains multiple
+      items.
+    * `arg` is not used by this service, and therefore not required.
+
+  * Outputs:
+    * `newValues` is a list of URI decoded items from the input values list.
+
+```java
 // Trading Networks string transformer which URI encodes the given Trading Networks document (bizdoc)
 // attribute value/s.
 tundra.tn.document.attribute.string.transformer.uri:encode(values[]);
