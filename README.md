@@ -178,50 +178,6 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // $catch service).
 tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $parse?, $prefix?, $part, $strict);
 
-// Delivers Trading Networks document (bizdoc) content to the given destination URI.
-//
-// Supports the following delivery protocols / URI schemes:
-//   - file:   writes the given content to the file specified by the destination URI.  The
-//             following additional options can be provided via the $pipeline document:
-//             - $mode: append / write
-//   - http:   transmits the given content to the destination URI. The following additional
-//             options can be provided via the $pipeline document:
-//             - $method: get / put / post / delete / head / trace / options
-//             - $headers/*: additional HTTP headers as required
-//             - $authority/user: the username to log on to the remote web server with
-//             - $authority/password: the password to log on to the remote web server with
-//   - https:  refer to http
-//   - mailto: sends an email with the given content attached. An example mailto URI is
-//             as follows: mailto:bob@example.com?cc=jane@example.com&subject=Example&body=Example&attachment=message.xml
-//             The following additional override options can be provided via the $pipeline
-//             document:
-//             - $attachment: the attached file's name
-//             - $from: email address to send the email from
-//             - $subject: the subject line text
-//             - $body: the main text of the email
-//             - $smtp: an SMTP URI specifying the SMTP server to use (for example,
-//               smtp://user:password@host:port), defaults to the SMTP server configured
-//               in the Integration Server setting watt.server.smtpServer
-//
-// Variable substitution is performed on all variables specified in the $pipeline document,
-// and the $destination URI, allowing for dynamic generation of any of these values. Also,
-// if $service is specified, it will be called prior to variable substitution and thus can
-// be used to populate the pipeline with variables to be used by the substitution.
-//
-// This service leverages the Tundra service tundra.content:deliver. Therefore, additional
-// delivery protocols can be implemented by creating a service named for the URI scheme in
-// the Tundra package folder tundra.support.content.deliver.  Services in this folder should
-// implement the tundra.support.content.deliver:handler specification.
-//
-// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
-// exception will be thrown and handled by the $catch service. For example, if you have enabled
-// duplicate document checking on the Trading Networks document type and do not wish to process
-// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ABORTED' (when using the standard
-// $catch service).
-tundra.tn:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $parse?, $prefix?, $part, $strict);
-
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
 //
@@ -328,6 +284,127 @@ tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $s
 // missing translated content results in the document user status set to 'IGNORED'.
 tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
 ```
+
+* #### tundra.tn:deliver
+
+  Delivers Trading Networks document (bizdoc) content to the given destination
+  URI.
+
+  Variable substitution is performed on all variables specified in the
+  `$pipeline` document, and the `$destination` URI, allowing for dynamic
+  generation of any of these values. Also, if `$service` is specified, it will
+  be called prior to variable substitution and thus can be used to populate
+  the pipeline with variables to be used by the substitution.
+
+  This service leverages the service `Tundra/tundra.content:deliver`. Therefore,
+  additional delivery protocols can be implemented by creating a service named
+  for the URI scheme in the folder `tundra.content.deliver`.  Services in this
+  folder should implement the `tundra.schema.content.deliver:handler`
+  specification.
+
+  * Inputs:
+    * `bizdoc` is the Trading Networks document whose content is to be delivered.
+
+    * `$destination` is either a URI, or a named destination (such as Receiver's
+      Preferred Protocol), to which the bizdoc content will be delivered.
+      Supports the following delivery protocols (URI schemes):
+      * `file`: writes the given content to the file specified by the
+        destination URI. The following additional options can be provided via
+        the `$pipeline` document:
+        * `$mode`: append / write
+
+      * `http`: transmits the given content to the destination URI. The
+        following additional options can be provided via the `$pipeline` document:
+        * `$method`: get / put / post / delete / head / trace / options
+        * `$headers/*`: additional HTTP headers as required
+        * `$authority/user`: the username to log on to the remote web server
+        * `$authority/password`: the password to log on to the remote web server
+
+      * `https`: refer to http
+
+      * `mailto`: sends an email with the given content attached. An example
+        mailto URI is as follows:
+
+            mailto:bob@example.com?cc=jane@example.com&subject=Example&body=Example&attachment=message.xml
+
+        The following additional override options can be provided via the
+        `$pipeline` document:
+        * `$attachment`: the attached file's name
+        * `$from`: email address to send the email from
+        * `$subject`: the subject line text
+        * `$body`: the main text of the email
+        * `$smtp`: an SMTP URI specifying the SMTP server to use (for example,
+          `smtp://user:password@host:port`), defaults to the SMTP server
+          configured in the Integration Server setting `watt.server.smtpServer`
+
+    * `$service` is an optional fully-qualified service name which, when
+      specified, will be invoked prior to delivery, thus allowing a service to
+      perform processing to influence the delivery (such as populating the
+      pipeline with configuration variables at runtime).
+
+    * `$catch` is an optional fully-qualified service name which, when
+      specified, will be invoked if an exception is thrown while attempting
+      delivery. The input pipeline will include the variables described in
+      the specification `Tundra/tundra.schema.exception:handler`, as per a
+      normal catch service invoked by `Tundra/tundra.service:ensure`. Defaults
+      to `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
+      handler, when not specified.
+
+    * `$finally` is an optional fully-qualified service name which, when
+      specified, will be invoked after delivery, and whether or not an
+      exception is encountered during delivery.
+
+    * `$pipeline` is an optional IData document containing arbitrary variables
+      which can be used to influence the delivery. See the `$destination`
+      description above for transport-specific options which can be provided
+      via this IData document.
+
+    * `$status.done` is an optional user status to use for the bizdoc when
+      delivery has completed successfully. Defaults to DONE.
+
+    * `$part` is an optional name of the bizdoc content part to be delivered.
+      Defaults to the default content part when not specified (xmldata for XML
+      document types, ffdata for Flat File document types).
+
+    * `$parse?` is an optional boolean flag which when true parses the bizdoc
+      content part identified by `$part` using the parsing schema configured on
+      the Trading Networks document type, prior to both invoking `$service`, if
+      specified, and content delivery. The parsed document content can then be
+      used in conjunction with variable substitution for influencing the
+      delivery URI based on the content of the document. Defaults to false.
+
+    * `$prefix?` is an optional boolean flag indicating whether to use the '$'
+      prefix on the standard input arguments (bizdoc, sender, and receiver)
+      when calling `$service`. When true `$service` should implement the
+      `TundraTN/tundra.tn.schema:processor` specification; when false `$service`
+      should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
+      Defaults to true.
+
+    * `$encoding` is an optional character set to use when to encode text
+      content for delivery. Defaults to the Java virtual machine
+      [default charset].
+
+    * `$strict` is an optional set of boolean flags that control 'strict' mode
+      processing of bizdocs: if any error classes are set to 'true' and the
+      bizdoc contains errors for those classes, the bizdoc will not be
+      processed; instead an exception will be thrown and handled by the
+      $catch service.
+
+      For example, if you have enabled duplicate document checking on the
+      Trading Networks document type and do not wish to deliver duplicates,
+      set the `$strict/Saving` error class to 'true' and duplicate documents
+      will not be delivered, and will instead have their user status set to
+      'ABORTED' (when using the standard `$catch` service).
+
+      The following flags are supported, and all default to true if not
+      specified:
+
+      * `Recognition`
+      * `Verification`
+      * `Validation`
+      * `Persistence`
+      * `Saving`
+      * `Routing`
 
 * #### tundra.tn:discard
 
@@ -893,4 +970,5 @@ around.
 Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 
 [/dev/null]: <http://en.wikipedia.org/wiki//dev/null>
+[default charset]: <http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
