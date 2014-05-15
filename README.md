@@ -849,18 +849,85 @@ Exception-related services:
 
 Partner profile-related services:
 
-```java
-// Returns the named delivery method for the given Trading Networks profile.
-tundra.tn.profile.delivery:get($profile, $method);
+* #### tundra.tn.profile.delivery:get
 
-// Returns the Trading Networks profile associated with the given ID. If $type is
-// null, then $id must be the internal partner ID, otherwise $type is the external
-// ID name to use to find the profile.
-tundra.tn.profile:get($id, $type);
+  Returns the named delivery method for the given Trading Networks partner
+  profile.
 
-// Returns the Trading Networks Enterprise partner profile.
-tundra.tn.profile:self();
-```
+  * Inputs:
+    * `$profile` is the Trading Networks partner profile from which to retrieve
+      the named delivery method. The structure is a minimal version of the
+      `TundraTN/tundra.tn.schema:profile` document, which support profiles
+      provided in `WmTN/wm.tn.rec:ProfileSummary` or `WmTN/wm.tn.rec:Profile`
+      format, or an ID provided in the PartnerID or ProfileID fields.
+
+    * `$method` is the named delivery method to be retrieved, a choice of:
+      * Preferred Protocol
+      * Primary E-mail
+      * Primary FTP
+      * Primary FTPS
+      * Primary HTTP
+      * Primary HTTPS
+      * Secondary E-mail
+      * Secondary FTP
+      * Secondary FTPS
+      * Secondary HTTP
+      * Secondary HTTPS
+
+  * Outputs:
+    * `$delivery` is the named delivery method retrieved from the given partner
+      profile, if it exists.
+
+* #### tundra.tn.profile:get
+
+  Returns the Trading Networks partner profile associated with the given ID.
+
+  Executing this service has the side-effect of seeding the TundraTN local
+  in-memory cache with the returned partner profile, if it was not already
+  cached.
+
+  * Inputs:
+    * `$id` is an optional identifier to use to look up the partner profile.
+      If not specified, no profile is returned.
+    * `$type` is an optional External ID description which the given `$id`
+      corresponds. If not specified, `$id` is assumed to be an internal partner
+      ID.
+
+  * Outputs:
+    * `$profile` is the Trading Networks partner profile associated with the
+      given `$id`. The profile structure is a superset of both
+      `wm.tn.rec:ProfileSummary` and `wm.tn.rec:Profile`, with additional
+      convenient and usable structures added for External IDs, Delivery
+      Methods, and Extended Fields.
+
+* #### tundra.tn.profile:list
+
+  Returns a list of all the Trading Networks partner profiles stored in the
+  Trading Networks database.
+
+  Executing this service has the side-effect of seeding the TundraTN local
+  in-memory cache with all partner profiles, if they were not already
+  cached.
+
+  * Outputs:
+    * `$profiles` is a list of every Trading Networks partner profile. The
+      profile structure is a superset of both `wm.tn.rec:ProfileSummary` and
+      `wm.tn.rec:Profile`, with additional convenient and usable structures
+      added for External IDs, Delivery Methods, and Extended Fields.
+
+* #### tundra.tn.profile:self
+
+  Returns the Trading Networks My Enterprise partner profile.
+
+  Executing this service has the side-effect of seeding the TundraTN local
+  in-memory cache with the My Enterprise partner profile, if it was not
+  already cached.
+
+  * Outputs:
+    * `$profile` is the Trading Networks My Enterprise partner profile. The
+      profile structure is a superset of both `wm.tn.rec:ProfileSummary` and
+      `wm.tn.rec:Profile`, with additional convenient and usable structures
+      added for External IDs, Delivery Methods, and Extended Fields.
 
 ### Queue
 

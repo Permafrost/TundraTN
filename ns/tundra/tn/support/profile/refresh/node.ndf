@@ -23,42 +23,16 @@
       <value name="form_qualified">false</value>
       <value name="is_global">false</value>
       <array name="rec_fields" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="field_name">$profile</value>
-          <value name="field_type">recref</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-          <value name="rec_ref">tundra.tn.schema:profile</value>
-        </record>
       </array>
     </record>
   </record>
-  <value name="node_comment">Returns the Trading Networks My Enterprise partner profile.
-
-Executing this service has the side-effect of seeding the TundraTN local
-in-memory cache with the My Enterprise partner profile, if it was not 
-already cached.
-
-* Outputs:
-  * $profile is the Trading Networks My Enterprise partner profile. The 
-    profile structure is a superset of both wm.tn.rec:ProfileSummary and 
-    wm.tn.rec:Profile, with additional convenient and usable structures 
-    added for External IDs, Delivery Methods, and Extended Fields.</value>
+  <value name="node_comment">Reloads each partner profile stored in the local in-memory 
+partner profile cache from the Trading Networks database.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
-  <value name="template">tundra_tn_profile_self</value>
   <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
@@ -67,7 +41,7 @@ already cached.
   <value name="retry_max">0</value>
   <value name="retry_interval">0</value>
   <value name="svc_in_validator_options">default</value>
-  <value name="svc_out_validator_options">none</value>
+  <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
