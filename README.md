@@ -41,8 +41,8 @@ web administration site.
 ### Using Zip
 
 1. Download a zip of the desired version of the package from https://github.com/Permafrost/TundraTN/releases
-2. Copy the TundraTN-n.n.n.zip file to your Integration Server's ./replicate/inbound/ directory
-3. Install and activate the TundraTN package release (TundraTN-n.n.n.zip) from the package management web page
+2. Copy the TundraTN-vn.n.n.zip file to your Integration Server's ./replicate/inbound/ directory
+3. Install and activate the TundraTN package release (TundraTN-vn.n.n.zip) from the package management web page
 on your Integration Server's web administration site
 
 ## Upgrading
@@ -74,8 +74,8 @@ site.
 ### Using Zip
 
 1. Download a zip of the desired updated version of the package from https://github.com/Permafrost/TundraTN/releases
-2. Copy the TundraTN-n.n.n.zip file to your Integration Server's ./replicate/inbound/ directory
-3. Install and activate the updated TundraTN package release (TundraTN-n.n.n.zip) from the package management web page
+2. Copy the TundraTN-vn.n.n.zip file to your Integration Server's ./replicate/inbound/ directory
+3. Install and activate the updated TundraTN package release (TundraTN-vn.n.n.zip) from the package management web page
 on your Integration Server's web administration site
 
 ## Conventions
