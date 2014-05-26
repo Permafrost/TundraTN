@@ -754,7 +754,7 @@ Bizdoc-related services:
     * `$content` is the content part data to be added, specified as a string,
       byte array, or input stream.
 
-    * `$content.type` is an optional MIME media type describing the type content
+    * `$content.type` is an optional MIME media type describing the type of content
       being added. Defaults to application/octet-stream (the default MIME media
       type for arbitrary binary data) if not specified.
 
