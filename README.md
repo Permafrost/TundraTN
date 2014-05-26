@@ -1035,41 +1035,68 @@ tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.
 Reliable processing services (service execution task) versions of the tundra.tn:*
 meta processing services:
 
-```java
-// Reliably processes (as a service execution task) a Trading Networks document via tundra.tn:amend.
-tundra.tn.reliable:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
+* #### tundra.tn.reliable:amend
 
-// Reliably processes (as a service execution task) a Trading Networks document via tundra.tn:branch.
-tundra.tn.reliable:branch(bizdoc, $branches[], $catch, $finally);
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:amend`.
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:chain.
-tundra.tn.reliable:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding);
+  Refer to `tundra.tn:amend` for futher details.
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:deliver.
-tundra.tn.reliable:deliver(bizdoc, $destination, $encoding, $service, $catch, $finally, $pipeline, $part);
+* #### tundra.tn.reliable:branch
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:derive.
-tundra.tn.reliable:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding);
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:branch`.
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:process.
-tundra.tn.reliable:process(bizdoc, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding);
+  Refer to `tundra.tn:branch` for futher details.
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:reroute.
-tundra.tn.reliable:reroute(bizdoc);
+* #### tundra.tn.reliable:chain
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:split.
-tundra.tn.reliable:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:chain`.
 
-// Reliably processes (as a service execution task) a Trading Networks document via
-// tundra.tn:translate.
-tundra.tn.reliable:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part);
-```
+  Refer to `tundra.tn:chain` for futher details.
+
+* #### tundra.tn.reliable:deliver
+
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:deliver`.
+
+  Refer to `tundra.tn:deliver` for futher details.
+
+* #### tundra.tn.reliable:derive
+
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:derive`.
+
+  Refer to `tundra.tn:derive` for futher details.
+
+* #### tundra.tn.reliable:process
+
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:process`.
+
+  Refer to `tundra.tn:process` for futher details.
+
+* #### tundra.tn.reliable:reroute
+
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:reroute`.
+
+  Refer to `tundra.tn:reroute` for futher details.
+
+* #### tundra.tn.reliable:split
+
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:split`.
+
+  Refer to `tundra.tn:split` for futher details.
+
+* #### tundra.tn.reliable:translate
+
+  Reliably processes (as a service execution task) a Trading Networks document
+  via `tundra.tn:translate`.
+
+  Refer to `tundra.tn:translate` for futher details.
 
 ### Schema
 
