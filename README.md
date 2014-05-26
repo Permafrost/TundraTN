@@ -738,11 +738,31 @@ Bizdoc-related services:
   * Outputs:
     * `newValues` is a list of URI encoded items from the input values list.
 
-```java
-// Adds a content part with the given name and content, specified as a string, bytes or stream,
-// to the given Trading Networks document (bizdoc).
-tundra.tn.document.content:add($bizdoc, $part, $content, $content.type);
+* #### tundra.tn.document.content:add
 
+  Adds a content part with the given name and content, specified as a string,
+  bytes or stream, to the given Trading Networks document (bizdoc).
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to add the content part to.
+      Only the internal ID of the bizdoc must be specified, with the remainder
+      of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+    * `$part` is the name of the content part to be added to the Trading
+      Networks document, and uniquely identifies the part being added.
+
+    * `$content` is the content part data to be added, specified as a string,
+      byte array, or input stream.
+
+    * `$content.type` is an optional MIME media type describing the type content
+      being added. Defaults to application/octet-stream (the default MIME media
+      type for arbitrary binary data) if not specified.
+
+    * `$encoding` is the optional character set used to encode `$content` when
+      specified as a byte array or input stream and representing text data.
+      Defaults to the Java virtual machine [default charset].
+
+```java
 // Returns true if the content part identified by the given $part name exists for the given bizdoc.
 tundra.tn.document.content:exists($bizdoc, $part);
 
