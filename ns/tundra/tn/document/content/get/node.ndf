@@ -87,34 +87,6 @@
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
         </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">$encoding</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
       </array>
       <value name="modifiable">true</value>
     </record>
@@ -175,9 +147,24 @@
       <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment">Returns the document's content associated with the given part name as a stream. If the part
-name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat 
-Files).</value>
+  <value name="node_comment">Returns the given Trading Networks document's content associated with the 
+given part name as a stream.
+
+* Inputs:
+  * $bizdoc is the Trading Networks document to retrieve the content part
+    from. Only the internal ID of the bizdoc must be specified, with the 
+    remainder of the WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
+
+  * $part is an optional name of the content part to be returned. If not 
+    specified, the default content part (xmldata for XML; ffdata for Flat 
+    Files) is returned.
+
+* Outputs:
+  * $content is the content part data as an input stream associated with
+    the given $part name.
+
+  * $content.type is the MIME media type describing the type of data 
+    returned.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

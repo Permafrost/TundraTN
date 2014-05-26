@@ -779,15 +779,31 @@ Bizdoc-related services:
     * `$exists?` is a boolean that when true indicates that the given `$bizdoc`
       has a content part with the given `$part` name.
 
+* #### tundra.tn.document.content:get
+
+  Returns the given Trading Networks document's content associated with the
+  given part name as a stream.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to retrieve the content part
+      from. Only the internal ID of the bizdoc must be specified, with the
+      remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+    * $part` is an optional name of the content part to be returned. If not
+      specified, the default content part (xmldata for XML; ffdata for Flat
+      Files) is returned.
+
+  * Outputs:
+    * `$content` is the content part data as an input stream associated with
+      the given `$part` name.
+
+    * `$content.type` is the MIME media type describing the type of data
+      returned.
+
 ```java
 // Returns true if the given $bizdoc is related to a derived bizdoc with the given $sender
 // and $receiver.
 tundra.tn.document.derivative:exists($bizdoc, $sender, $receiver);
-
-// Returns the document's content associated with the given part name as a stream. If the part
-// name is not provided, the default content part is returned (xmldata for XML; ffdata for Flat
-// Files).
-tundra.tn.document.content:get($bizdoc, $part, $encoding);
 
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
