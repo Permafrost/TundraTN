@@ -762,10 +762,24 @@ Bizdoc-related services:
       specified as a byte array or input stream and representing text data.
       Defaults to the Java virtual machine [default charset].
 
-```java
-// Returns true if the content part identified by the given $part name exists for the given bizdoc.
-tundra.tn.document.content:exists($bizdoc, $part);
+* #### tundra.tn.document.content:exists
 
+  Returns true if the content part identified by the given part name exists
+  for the given bizdoc.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to check for the existence of
+      the given content part. Only the internal ID of the bizdoc must be
+      specified, with the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope`
+      structure purely optional.
+
+    * `$part` is the name of the content part check for the existence of.
+
+  * Outputs:
+    * `$exists?` is a boolean that when true indicates that the given `$bizdoc`
+      has a content part with the given `$part` name.
+
+```java
 // Returns true if the given $bizdoc is related to a derived bizdoc with the given $sender
 // and $receiver.
 tundra.tn.document.derivative:exists($bizdoc, $sender, $receiver);
