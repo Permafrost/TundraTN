@@ -885,6 +885,26 @@ Bizdoc-related services:
       * `Flat File`
       * `XML`
 
+* #### tundra.tn.document.type.schema:get
+
+  Returns the parsing schema associated with the given Trading Networks
+  document type.
+
+  * Inputs:
+    * `$type` is the Trading Networks document type, specified in the
+      `WmTN/wm.tn.rec:BizDocType` structure, to retrieve the parsing
+      schema from.
+
+  * Outputs:
+    * `$schema` is the fully-qualified name of the document reference (for XML)
+      or flat file schema (for flat files) declared on the given document
+      type.
+
+    * `$schema.type` specifies whether `$schema` is an XML document reference or
+      flat file schema, and is a choice of one of the following values:
+      * `Flat File`
+      * `XML`
+
 ```java
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
@@ -921,9 +941,6 @@ tundra.tn.document.status:set($bizdoc, $status);
 // Flow services. For example, you cannot branch on fields in the faux document.
 // Nor does this service throw an exception of the document type does not exist.
 tundra.tn.document.type:get($id, $name);
-
-// Returns the parsing schema associated with the given Trading Networks document type.
-tundra.tn.document.type.schema:get($type);
 ```
 
 ### Exception
