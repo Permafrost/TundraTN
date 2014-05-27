@@ -865,6 +865,26 @@ Bizdoc-related services:
     * `$errors` is the list of activity error logs of the given classes (if
       specified) that were found logged against the given bizdoc.
 
+* #### tundra.tn.document.schema:get
+
+  Returns the parsing schema associated with the given Trading Networks
+  document.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to retrieve the parsing schema
+      from. Only the internal ID of the bizdoc must be specified, with the
+      remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+  * Outputs:
+    * `$schema` is the fully-qualified name of the document reference (for XML)
+      or flat file schema (for flat files) declared on the given bizdoc's
+      document type.
+
+    * `$schema.type` specifies whether `$schema` is an XML document reference or
+      flat file schema, and is a choice of one of the following values:
+      * `Flat File`
+      * `XML`
+
 ```java
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
@@ -888,9 +908,6 @@ tundra.tn.document:parse($bizdoc, $part, $encoding);
 
 // Relates two Trading Networks documents (bizdocs) together.
 tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
-
-// Returns the parsing schema associated with the given Trading Networks document.
-tundra.tn.document.schema:get($bizdoc);
 
 // Sets user status on the given Trading Networks document.
 tundra.tn.document.status:set($bizdoc, $status);
