@@ -7,7 +7,6 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
-      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -21,7 +20,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">$bizdoc</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -37,7 +35,6 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
-              <value name="is_public">false</value>
               <value name="field_name">InternalID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -57,7 +54,6 @@
               <value name="is_global">false</value>
             </record>
           </array>
-          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -67,7 +63,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">$status</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -87,11 +82,9 @@
           <value name="is_global">false</value>
         </record>
       </array>
-      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
-      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -99,10 +92,16 @@
       <value name="is_global">false</value>
       <array name="rec_fields" type="record" depth="1">
       </array>
-      <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment">Sets user status on the given Trading Networks document.</value>
+  <value name="node_comment">Sets user status on the given Trading Networks document.
+
+* Inputs:
+  * $bizdoc is the Trading Networks document to set the user status on. Only 
+    the internal ID of the bizdoc must be specified, with the remainder of 
+    the WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
+
+  * $status is the user status string to be set on the given bizdoc.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
@@ -119,16 +118,10 @@
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
-  <null name="auditfields_input"/>
-  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
-  <value name="pipeline_option">1</value>
-  <null name="originURI"/>
-  <value name="modifiable">true</value>
-  <value name="is_public">false</value>
 </Values>

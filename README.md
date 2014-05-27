@@ -885,6 +885,17 @@ Bizdoc-related services:
       * `Flat File`
       * `XML`
 
+* #### tundra.tn.document.status:set
+
+  Sets user status on the given Trading Networks document.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to set the user status on. Only
+      the internal ID of the bizdoc must be specified, with the remainder of
+      the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+    * `$status` is the user status string to be set on the given bizdoc.
+
 * #### tundra.tn.document.type.schema:get
 
   Returns the parsing schema associated with the given Trading Networks
@@ -928,9 +939,6 @@ tundra.tn.document:parse($bizdoc, $part, $encoding);
 
 // Relates two Trading Networks documents (bizdocs) together.
 tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
-
-// Sets user status on the given Trading Networks document.
-tundra.tn.document.status:set($bizdoc, $status);
 
 // Returns the Trading Networks document type associated with the given ID or name
 // as an IData document.
