@@ -865,6 +865,29 @@ Bizdoc-related services:
     * `$errors` is the list of activity error logs of the given classes (if
       specified) that were found logged against the given bizdoc.
 
+* #### tundra.tn.document:relate
+
+  Relates two Trading Networks documents (bizdocs) together.
+
+  Use this service in preference to `WmTN/wm.tn.doc:relateDocuments`, as this
+  service does not throw an exception if the relationship already exists, and
+  this service also logs the creation of the relationship on the target
+  bizdoc.
+
+  * Inputs:
+    * `$bizdoc.source` is the source Trading Networks document in the
+      relationship. Only the internal ID of the bizdoc must be specified, with
+      the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
+      optional.
+
+    * `$bizdoc.target` is the target Trading Networks document in the
+      relationship. Only the internal ID of the bizdoc must be specified, with
+      the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
+      optional.
+
+    * `$relationship` is an optional string describing the relationship between
+      the source and target bizdocs. If not specified, defaults to 'Unknown'.
+
 * #### tundra.tn.document.schema:get
 
   Returns the parsing schema associated with the given Trading Networks
