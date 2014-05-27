@@ -1292,22 +1292,22 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       dequeued and processed.
 
     * Refer to `TundraTN/tundra.tn:split` for details on the following inputs:
-      * $service
-      * $catch
-      * $finally
-      * $pipeline
-      * $schema.input
-      * $schema.output
-      * $service.input
-      * $service.output
-      * $encoding.input
-      * $encoding.output
-      * $status.done
-      * $status.ignored
-      * $required?
-      * $prefix?
-      * $part
-      * $strict
+      * `$service`
+      * `$catch`
+      * `$finally`
+      * `$pipeline`
+      * `$schema.input`
+      * `$schema.output`
+      * `$service.input`
+      * `$service.output`
+      * `$encoding.input`
+      * `$encoding.output`
+      * `$status.done`
+      * `$status.ignored`
+      * `$required?`
+      * `$prefix?`
+      * `$part`
+      * `$strict`
 
     * `$concurrency` is an optional number of threads to be used for processing
       queue tasks. Defaults to 1, if not specified.
