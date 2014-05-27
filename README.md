@@ -830,6 +830,41 @@ Bizdoc-related services:
 
     * `$derivative` is the optional derivative bizdoc, if it exists.
 
+* #### tundra.tn.document.error:exists
+
+  Returns true if any errors (of the given class, if specified) exist on the
+  given bizdoc.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to check for the existence of
+      any errors (of the given class, if specified) exist. Only the internal
+      ID of the bizdoc must be specified, with the remainder of the
+      `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+    * `$class` is an optional set of boolean flags which indicate which error
+      classes are of interest. If not specified, all error classes are
+      considered to be of interest.
+      * `Security`
+      * `Recognition`
+      * `Verification`
+      * `Validation`
+      * `Persistence`
+      * `Saving`
+      * `Routing`
+      * `General`
+      * `Processing`
+      * `Delivery`
+      * `Transient`
+      * `Unrecoverable`
+
+  * Outputs:
+    * `$exists?` is a boolean that when true indicates the existence of one or
+      more errors of the given classes (if specified) have been logged against
+      the given bizdoc.
+
+    * `$errors` is the list of activity error logs of the given classes (if
+      specified) that were found logged against the given bizdoc.
+
 ```java
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
@@ -841,9 +876,6 @@ Bizdoc-related services:
 // variable substitution strings which will be substituted prior to being inserted in
 // $document.
 tundra.tn.document:derive($bizdoc, $sender, $receiver);
-
-// Returns true if any errors (of the given class, if specified) exist on the given bizdoc.
-tundra.tn.document.error:exists($bizdoc, $class);
 
 // Returns the document associated with the given internal ID, optionally
 // including the document's content parts.
