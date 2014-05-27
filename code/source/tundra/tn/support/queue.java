@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2013-10-30 15:49:13.828
-// -----( ON-HOST: EBZDEVWAP37.ebiztest.qr.com.au
+// -----( CREATED: 2014-05-27 18:50:40 EST
+// -----( ON-HOST: 172.16.189.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -50,7 +50,7 @@ public final class queue
 		  int concurrency = 1;
 		  if (s != null) concurrency = Integer.parseInt(s);
 		
-		  each(queue, service, scope, concurrency);
+		  each(queue, service, scope == null? pipeline : scope, concurrency);
 		} finally {
 		  cursor.destroy();
 		}

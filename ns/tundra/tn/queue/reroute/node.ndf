@@ -140,7 +140,36 @@
       <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment">For each item in the Trading Networks queue, process it with tundra.tn:reroute.</value>
+  <value name="node_comment">Invokes TundraTN/tundra.tn:reroute for each item in the given Trading 
+Networks queue.
+
+* Inputs:
+  * queue is the name of the Trading Networks queue from which tasks will be
+    dequeued and processed. 
+
+  * $concurrency is an optional number of threads to be used for processing 
+    queue tasks. Defaults to 1, if not specified.
+
+    If a $concurrency &gt; 1 is specified, a thread pool will be created with a 
+    size equal to the given value. These threads are not managed by the 
+    normal Integration Server thread pools, and therefore are not restricted 
+    by Integration Server thread pool settings. As such, please ensure that 
+    the sum of all the $concurrency values for all Trading Networks queues 
+    that specify a value &gt; 1, plus the configured Integration Server thread 
+    pool maximum is supported by the amount of free memory available on your 
+    server:
+
+        ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size &lt; Server free memory
+
+    If a $concurrency &lt;= 1 is specified, tasks will be processed 
+    sequentially on the main thread.
+
+* Outputs:
+  * queue is the name of the Trading Networks queue from which tasks were 
+    dequeued and processed.
+
+  * logMsg is an optional message describing the processing of the queue. 
+    This output variable is not used by this service.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

@@ -983,52 +983,407 @@ Partner profile-related services:
 
 Queue processing service versions of the tundra.tn:* meta processing services:
 
-```java
-// For each item in the Trading Networks queue, process it with tundra.tn:branch.
-tundra.tn.queue:branch(queue, $branches[], $catch, $finally, $concurrency);
+* #### tundra.tn.queue:branch
 
-// For each item in the Trading Networks queue, process it with tundra.tn:chain.
-tundra.tn.queue:chain(queue, $services[], $catch, $finally, $pipeline, $service.input, $part, $encoding, $concurrency);
+  Invokes `TundraTN/tundra.tn:branch` for each item in the given Trading
+  Networks queue.
 
-// For each item in the Trading Networks queue, process it with tundra.tn:deliver.
-tundra.tn.queue:deliver(queue, $destination, $encoding, $service, $catch, $finally, $pipeline, $part, $concurrency);
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
 
-// For each item in the Trading Networks queue, process it with tundra.tn:derive.
-tundra.tn.queue:derive(queue, $service, $catch, $finally, $pipeline, $derivatives, $part, $encoding, $concurrency);
+    * Refer to `TundraTN/tundra.tn:branch` for details on the following inputs:
+      * `$branches`
+      * `$catch`
+      * `$finally`
 
-// For each item in the Trading Networks queue, runs the given $service, which must
-// implement the bizdoc processing service signature wm.tn.rec:ProcessingService, to
-// process the item.
-//
-// If a $concurrency > 1 is specified, a thread pool will be created with a size equal
-// to the given value. These threads are not managed by the normal Integration Server
-// thread pools, and therefore are not restricted by Integration Server thread pool
-// settings. As such, please ensure that the sum of all the $concurrency values for
-// all Trading Networks queues that specify a value > 1, plus the configured Integration
-// Server thread pool maximum is supported by the amount of free memory available on
-// your server:
-//
-// ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-//
-// If a $concurrency <= 1 is specified, tasks will be processed sequentially on the main
-// thread.
-//
-// As the above implies, this service lets you use any normal bizdoc processing service
-// to process items in a Trading Networks delivery queue.
-tundra.tn.queue:each(queue, $service, $pipeline, $concurrency);
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
 
-// For each item in the Trading Networks queue, process it with tundra.tn:process.
-tundra.tn.queue:process(queue, $service, $catch, $finally, $pipeline, $service.input, $part, $encoding, $concurrency);
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
 
-// For each item in the Trading Networks queue, process it with tundra.tn:reroute.
-tundra.tn.queue:reroute(queue, $concurrency);
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
 
-// For each item in the Trading Networks queue, process it with tundra.tn:split.
-tundra.tn.queue:split(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $concurrency);
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
 
-// For each item in the Trading Networks queue, process it with tundra.tn:translate.
-tundra.tn.queue:translate(queue, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $part, $concurrency);
-```
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:chain
+
+  Invokes `TundraTN/tundra.tn:chain` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * Refer to `TundraTN/tundra.tn:chain` for details on the following inputs:
+      * `$services`
+      * `$catch`
+      * `$finally`
+      * `$pipeline`
+      * `$service.input`
+      * `$status.done`
+      * `$parse?`
+      * `$prefix?`
+      * `$part`
+      * `$encoding`
+      * `$strict`
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:deliver
+
+  Invokes `TundraTN/tundra.tn:deliver` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * Refer to `TundraTN/tundra.tn:deliver` for details on the following inputs:
+      * `$destination`
+      * `$service`
+      * `$catch`
+      * `$finally`
+      * `$pipeline`
+      * `$status.done`
+      * `$parse?`
+      * `$prefix?`
+      * `$part`
+      * `$encoding`
+      * `$strict`
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:derive
+
+  Invokes `TundraTN/tundra.tn:derive` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * Refer to `TundraTN/tundra.tn:derive` for details on the following inputs:
+      * `$service`
+      * `$catch`
+      * `$finally`
+      * `$pipeline`
+      * `$derivatives`
+      * `$status.done`
+      * `$status.ignored`
+      * `$prefix?`
+      * `$part`
+      * `$strict`
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:each
+
+  Invokes the given bizdoc processing service for each item in the given
+  Trading Networks queue.
+
+  As the above implies, this service lets you use any normal bizdoc processing
+  service to process items in a Trading Networks delivery queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * `$service` is the fully-qualified service name of the bizdoc processing
+      service, which will be invoked for each task on the given queue. The
+      service is required to implement the `WmTN/wm.tn.rec:ProcessingService`
+      specification.
+
+    * `$pipeline` is an optional input pipeline to be used when invoking the
+      given `$service` bizdoc processing service. Defaults to using the pipeline
+      itself as the input pipeline for `$service`, if not specified.
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:process
+
+  Invokes `TundraTN/tundra.tn:process` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * Refer to `TundraTN/tundra.tn:process` for details on the following inputs:
+      * `$service`
+      * `$catch`
+      * `$finally`
+      * `$pipeline`
+      * `$service.input`
+      * `$status.done`
+      * `$parse?`
+      * `$prefix?`
+      * `$part`
+      * `$encoding`
+      * `$strict`
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:reroute
+
+  Invokes `TundraTN/tundra.tn:reroute` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:split
+
+  Invokes `TundraTN/tundra.tn:split` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * Refer to `TundraTN/tundra.tn:split` for details on the following inputs:
+      * $service
+      * $catch
+      * $finally
+      * $pipeline
+      * $schema.input
+      * $schema.output
+      * $service.input
+      * $service.output
+      * $encoding.input
+      * $encoding.output
+      * $status.done
+      * $status.ignored
+      * $required?
+      * $prefix?
+      * $part
+      * $strict
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
+* #### tundra.tn.queue:translate
+
+  Invokes `TundraTN/tundra.tn:translate` for each item in the given Trading
+  Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      dequeued and processed.
+
+    * Refer to `TundraTN/tundra.tn:translate` for details on the following
+      inputs:
+      * `$service`
+      * `$catch`
+      * `$finally`
+      * `$pipeline`
+      * `$schema.input`
+      * `$schema.output`
+      * `$service.input`
+      * `$service.output`
+      * `$encoding.input`
+      * `$encoding.output`
+      * `$status.done`
+      * `$status.ignored`
+      * `$required?`
+      * `$prefix?`
+      * `$part`
+      * `$strict`
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      dequeued and processed.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
 
 ### Reliable
 

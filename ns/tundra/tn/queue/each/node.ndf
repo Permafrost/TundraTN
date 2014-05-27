@@ -186,50 +186,48 @@
       <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment"># Description
+  <value name="node_comment">Invokes the given bizdoc processing service for each item in the given 
+Trading Networks queue.
 
-For each item in the Trading Networks queue, runs the given $service, which must 
-implement the bizdoc processing service signature wm.tn.rec:ProcessingService, to 
-process the item.
+As the above implies, this service lets you use any normal bizdoc processing 
+service to process items in a Trading Networks delivery queue.
 
-If a $concurrency &gt; 1 is specified, a thread pool will be created with a size equal
-to the given value. These threads are not managed by the normal Integration Server
-thread pools, and therefore are not restricted by Integration Server thread pool
-settings. As such, please ensure that the sum of all the $concurrency values for 
-all Trading Networks queues that specify a value &gt; 1, plus the configured Integration 
-Server thread pool maximum is supported by the amount of free memory available on 
-your server:
+* Inputs:
+  * queue is the name of the Trading Networks queue from which tasks will be
+    dequeued and processed.
 
-((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size &lt; Server free memory
+  * $service is the fully-qualified service name of the bizdoc processing 
+    service, which will be invoked for each task on the given queue. The 
+    service is required to implement the WmTN/wm.tn.rec:ProcessingService
+    specification.
 
-If a $concurrency &lt;= 1 is specified, tasks will be processed sequentially on the main 
-thread.
+  * $pipeline is an optional input pipeline to be used when invoking the 
+    given $service bizdoc processing service. Defaults to using the pipeline 
+    itself as the input pipeline for $service, if not specified.
 
-As the above implies, this service lets you use any normal bizdoc processing service
-to process items in a Trading Networks delivery queue.
+  * $concurrency is an optional number of threads to be used for processing 
+    queue tasks. Defaults to 1, if not specified.
 
-# Inputs
+    If a $concurrency &gt; 1 is specified, a thread pool will be created with a 
+    size equal to the given value. These threads are not managed by the 
+    normal Integration Server thread pools, and therefore are not restricted 
+    by Integration Server thread pool settings. As such, please ensure that 
+    the sum of all the $concurrency values for all Trading Networks queues 
+    that specify a value &gt; 1, plus the configured Integration Server thread 
+    pool maximum is supported by the amount of free memory available on your 
+    server:
 
-queue
-  The name of the Trading Networks queue from which tasks will be dequeued and 
-  processed.
-$service
-  Fully-qualified service name of the bizdoc processing service which will be
-  invoked for each task on the given queue. The service should implement the
-  WmTN/wm.tn.rec:ProcessingService specification.
-$pipeline
-  Optional input pipeline to be used when invoking the given $service processing
-  service.
-$concurrency
-  Optional number of threads to be used for processing queue tasks. Defaults to 1.
+        ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size &lt; Server free memory
 
-# Outputs
+    If a $concurrency &lt;= 1 is specified, tasks will be processed 
+    sequentially on the main thread.
 
-queue
-  The name of the Trading Networks queue from which tasks were dequeued and 
-  processed.
-logMsg
-  Optional message describing the processing of the queue. Not used.</value>
+* Outputs:
+  * queue is the name of the Trading Networks queue from which tasks were 
+    dequeued and processed.
+
+  * logMsg is an optional message describing the processing of the queue. 
+    This output variable is not used by this service.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
