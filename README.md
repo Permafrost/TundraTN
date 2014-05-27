@@ -800,11 +800,37 @@ Bizdoc-related services:
     * `$content.type` is the MIME media type describing the type of data
       returned.
 
-```java
-// Returns true if the given $bizdoc is related to a derived bizdoc with the given $sender
-// and $receiver.
-tundra.tn.document.derivative:exists($bizdoc, $sender, $receiver);
+* #### tundra.tn.document.derivative:exists
 
+  Returns true if the given bizdoc is related to a derived bizdoc with the
+  given sender and receiver.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to check for the existence of a
+      derivative with the given sender and receiver. Only the internal ID of
+      the bizdoc must be specified, with the remainder of the
+      `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+    * `$sender` is the Trading Networks partner profile of the derived sender of
+      the bizdoc. The structure is a minimal version of the
+      `TundraTN/tundra.tn.schema:profile` document, which support profiles
+      provided in `WmTN/wm.tn.rec:ProfileSummary` or `WmTN/wm.tn.rec:Profile`
+      format, or an ID provided in the PartnerID or ProfileID fields.
+
+    * `$receiver` is the Trading Networks partner profile of the derived
+      receiver of the bizdoc. The structure is a minimal version of the
+      `TundraTN/tundra.tn.schema:profile` document, which support profiles
+      provided in `WmTN/wm.tn.rec:ProfileSummary` or `WmTN/wm.tn.rec:Profile`
+      format, or an ID provided in the PartnerID or ProfileID fields.
+
+  * Outputs:
+    * `$exists?` is a boolean that when true indicates the existence of a
+      derivative of the given bizdoc with the given derived sender and
+      receiver.
+
+    * `$derivative` is the optional derivative bizdoc, if it exists.
+
+```java
 // Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
 // receiver on the derivative.
 //
