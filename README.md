@@ -896,6 +896,35 @@ Bizdoc-related services:
 
     * `$status` is the user status string to be set on the given bizdoc.
 
+* #### tundra.tn.document.type:get
+
+  Returns the Trading Networks document type associated with the given ID or
+  name as an IData document.
+
+  Use this service in preference to `WmTN/wm.tn.doctype:view`, as the WmTN
+  service returns an object of type `com.wm.app.tn.doc.BizDocType` which,
+  despite looking like one, is not a normal IData document and therefore
+  causes problems in Flow services. For example, you cannot branch on fields
+  in the `com.wm.app.tn.doc.BizDocType` document.
+
+  Also, unlike `WmTN/wm.tn.doctype:view`, this service does not throw an
+  exception if the document type does not exist.
+
+  * Inputs:
+    * `$id` is an optional internal ID that identifies the Trading Networks
+      document type to be returned. If both `$id` and `$name` are specified, `$id`
+      takes precedence.
+
+    * `$name` is an optional Trading Networks document type name that identifies
+      the document type to be returned. If both `$id` and `$name` are specified,
+      `$id` takes precedence.
+
+  * Outputs:
+    * `$type` is the Trading Networks document type identified by either `$id` or
+      `$name`, returned as an IData document with the `WmTN/wm.tn.rec:BizDocType`
+      structure. If no document type exists with the given `$id` or `$name`,
+      nothing will be returned by this service, nor will an exception be thrown.
+
 * #### tundra.tn.document.type.schema:get
 
   Returns the parsing schema associated with the given Trading Networks
@@ -939,16 +968,6 @@ tundra.tn.document:parse($bizdoc, $part, $encoding);
 
 // Relates two Trading Networks documents (bizdocs) together.
 tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
-
-// Returns the Trading Networks document type associated with the given ID or name
-// as an IData document.
-//
-// Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN service
-// returns an object of type com.wm.app.tn.doc.BizDocType which, despite looking
-// like one, is not a normal IData document and therefore causes problems in
-// Flow services. For example, you cannot branch on fields in the faux document.
-// Nor does this service throw an exception of the document type does not exist.
-tundra.tn.document.type:get($id, $name);
 ```
 
 ### Exception
