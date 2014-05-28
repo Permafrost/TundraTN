@@ -178,9 +178,6 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // $catch service).
 tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $parse?, $prefix?, $part, $strict);
 
-// Logs a message to the Trading Networks activity log.
-tundra.tn:log($bizdoc, $type, $class, $summary, $message);
-
 // Processes a Trading Networks document via the given $service processing service.
 //
 // As this service provides logging, content parsing, error handling, and bizdoc status updates,
@@ -459,6 +456,26 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefi
     messages from a partner that do not need to be saved or processed.
 
     This service is intended to be invoked by clients via HTTP or FTP.
+
+* #### tundra.tn:log
+
+  Logs a message in the Trading Networks activity log, prefixed with the host
+  name on which the log was created for better diagnostics.
+
+  * Inputs:
+    * `$bizdoc` is an optional Trading Networks document against which to log the
+      message.
+
+    * `$type` is an optional choice of MESSAGE, WARNING, or ERROR, which
+      describes the type of message being logged. Defaults to MESSAGE.
+
+    * `$class` is an optional message class or category.
+
+    * `$summary` is an optional short title or summary of the message being
+      logged. If not specified, defaults to be the same as `$message`.
+
+    * `$message` is an optional message to be logged. If not specified, defaults
+      to an empty string.
 
 * #### tundra.tn:receive
 
