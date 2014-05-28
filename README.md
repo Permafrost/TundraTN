@@ -99,34 +99,6 @@ on your Integration Server's web administration site
 Top-level services for the most common tasks:
 
 ```java
-// Edits the given XML or flat file bizdoc content part with the list of {key, value} pairs
-// specified in $amendments.
-//
-// The keys in $amendments can be fully-qualified (for example, "a/b/c[0]"), and the values can
-// include percent-delimited variable substitution strings which will be substituted prior to
-// being inserted in $document.
-//
-// The bizdoc user status is first updated to 'AMENDING', then the content part identified by
-// $part.input (or the default content part if not specified) is parsed to an IData document
-// using the named $schema (or the schema configured on the TN document type if not specified),
-// the amendments are applied via the $amendments[] {key, value} pairs, the amended IData
-// document is then emitted as stream then added to the bizdoc as a new content part identified
-// by $part.output (or 'amendment' if not specified), and the bizdoc user status is updated to
-// 'AMENDED'.
-//
-// This service is designed to be used in conjunction with other TN processing rule actions, such
-// as the 'Deliver document by' action, which can use the amended content part for delivery
-// rather than the original content part.
-//
-// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
-// exception will be thrown and handled by the $catch service. For example, if you have enabled
-// duplicate document checking on the Trading Networks document type and do not wish to process
-// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ABORTED' (when using the standard
-// $catch service).
-tundra.tn:amend(bizdoc, $amendments[], $catch, $finally, $schema, $part.input, $part.output, $encoding.input, $encoding.output, $strict);
-
 // Evaluates each given branch condition in the specified order against the pipeline and executes
 // the action for the first matching branch against the bizdoc being processed.
 //
@@ -178,6 +150,40 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // $catch service).
 tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $parse?, $prefix?, $part, $strict);
 ```
+
+* #### tundra.tn:amend
+
+  Edits the given XML or flat file bizdoc content part with the list of {key,
+  value} pairs specified in `$amendments`.
+
+  The keys in `$amendments` can be fully-qualified, for example `a/b/c[0]`, and
+  the values can include percent-delimited variable substitution strings which
+  will be substituted prior to being inserted in `$document`.
+
+  The bizdoc user status is first updated to 'AMENDING', then the content part
+  identified by `$part.input` (or the default content part if not specified) is
+  parsed to an IData document using the named $schema (or the schema
+  configured on the TN document type if not specified), the amendments are
+  applied via the `$amendments` {key, value} pairs, the amended IData document
+  is then emitted as stream then added to the bizdoc as a new content part
+  identified by `$part.output` (or 'amendment' if not specified), and the bizdoc
+  user status is updated to 'AMENDED'.
+
+  This service is designed to be used in conjunction with other TN processing
+  rule actions, such as the 'Deliver document by' action, which can use the
+  amended content part for delivery rather than the original content part.
+
+  Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
+  are set to 'true' and the bizdoc contains errors for any of these classes,
+  the bizdoc will not be processed; instead an exception will be thrown and
+  handled by the `$catch` service. For example, if you have enabled duplicate
+  document checking on the Trading Networks document type and do not wish to
+  process duplicates, set the `$strict/Saving` error class to 'true' and
+  duplicate documents will not be processed and will instead have their user
+  status set to 'ABORTED' (when using the standard `$catch` service).
+
+  This service is designed to be called directly from a Trading Networks
+  bizdoc processing rule.
 
 * #### tundra.tn:deliver
 
