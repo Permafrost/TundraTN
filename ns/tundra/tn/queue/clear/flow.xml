@@ -241,11 +241,17 @@
 
   <!-- nodes -->
 
+<MAPCOPY NAME="Link" FROM="/$status;1;0" TO="/$pipeline;2;0/$status;1;0" CONDITION="%$status%">
+</MAPCOPY>
+
+<MAPDELETE NAME="Dropper" FIELD="/$status;1;0">
+</MAPDELETE>
+
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$service;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">tundra.tn.document.status:set</value>
+  <value name="xml">tundra.tn.support.document.status:set</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">record</value>
     <value name="node_comment"></value>
@@ -276,9 +282,6 @@
 </Values>
 </DATA>
 </MAPSET>
-
-<MAPCOPY NAME="Link" FROM="/$status;1;0" TO="/$pipeline;2;0/$status;1;0" CONDITION="%$status%">
-</MAPCOPY>
 
 <MAPSET NAME="Setter" OVERWRITE="false" VARIABLES="false" FIELD="/$pipeline;2;0/$status;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
@@ -316,9 +319,6 @@
 </Values>
 </DATA>
 </MAPSET>
-
-<MAPDELETE NAME="Dropper" FIELD="/$status;1;0">
-</MAPDELETE>
 </MAP>
 
 <MAP MODE="OUTPUT">
