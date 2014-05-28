@@ -178,47 +178,6 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // $catch service).
 tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $parse?, $prefix?, $part, $strict);
 
-// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
-// receiver on the derivative.
-//
-// If a $service is specified, it will be called as a processing service for the bizdoc. It can
-// return the $derivatives list, thereby allowing for the derivatives to be determined at
-// runtime.
-//
-// Each $derivatives rule can specify a filter condition, which can either be a service which
-// implements tundra.tn.schema.derivative:filter specification, or an inline conditional
-// statement (as supported by Tundra/tundra.condition:evaluate). Note that the input pipeline
-// for an inline conditional statement is the same as the input pipeline for a filter service.
-//
-// Each $derivatives rule can also specify a list of {key, value} pairs, specified in the
-// amendments[] IData array, which will be applied to the default bizdoc content part prior
-// to the new copy for the derivative being routed to Trading Networks. The keys in amendments[]
-// can be fully-qualified (for example, "a/b/c[0]"), and the values can include percent-delimited
-// variable substitution strings which will be substituted prior to being inserted in $document.
-//
-// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
-// exception will be thrown and handled by the $catch service. For example, if you have enabled
-// duplicate document checking on the Trading Networks document type and do not wish to process
-// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ABORTED' (when using the standard
-// $catch service).
-//
-// Upon successful processing by this service, the bizdoc user status will be either set to 'DONE'
-// if one or more derivatives were created, or 'IGNORED' if no derivatives are created, unless
-// the $service processing service has already changed the user status in which case this service
-// will not change it again.
-tundra.tn:derive(bizdoc, $service, $catch, $finally, $pipeline, $derivatives[], $prefix?, $part, $encoding, $strict);
-
-// Receives arbitrary (XML or flat file) content and then discards it (does nothing with it). This is the
-// Trading Networks equivalent of Unix's /dev/null[1], which is useful for successfully receiving messages
-// from a partner that do not need to be saved or processed.
-//
-// This service is intended to be invoked by clients via HTTP or FTP.
-//
-// [1] http://en.wikipedia.org/wiki//dev/null
-tundra.tn:discard();
-
 // Logs a message to the Trading Networks activity log.
 tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 
@@ -399,6 +358,138 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
       The following flags are supported, and all default to true if not
       specified:
 
+      * `Recognition`
+      * `Verification`
+      * `Validation`
+      * `Persistence`
+      * `Saving`
+      * `Routing`
+
+* #### tundra.tn:derive
+
+  Derives new bizdocs from an existing bizdoc, updating the sender and/or
+  receiver on each derivative.
+
+  Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
+  are set to 'true' and the bizdoc contains errors for any of these classes,
+  the bizdoc will not be processed; instead an exception will be thrown and
+  handled by the `$catch` service. For example, if you have enabled duplicate
+  document checking on the Trading Networks document type and do not wish to
+  process duplicates, set the `$strict/Saving` error class to 'true' and
+  duplicate documents will not be processed and will instead have their user
+  status set to 'ABORTED' (when using the standard `$catch` service).
+
+  Upon successful processing by this service, the bizdoc user status will be
+  either set to `$status.done` if one or more derivatives were created, or
+  `$status.ignored` if no derivatives are created, unless the `$service`
+  processing service has already changed the user status, in which case this
+  service will not change it again.
+
+  * Inputs:
+    * `bizdoc` is the Trading Networks document from which bizdoc copies will be
+      derived.
+
+    * `$service` is an optional fully qualified service name which, when
+      specified, will be invoked prior to deriving any bizdoc copies, thus
+      allowing a service to perform processing to influence the derivative
+      process (such as specifying additional derivative rules at runtime). The
+      service is invoked with an input pipeline containing the following
+      variables: `$bizdoc`, `$sender`, `$receiver`, `$document` (the parsed bizdoc
+      default content part), `$schema`, `$schema.type`, and `$derivatives`. If any
+      derivative rules are added, changed, or removed, the service must return
+      the `$derivatives` rule list in its output pipeline.
+
+    * `$catch` is an optional fully qualified service name which, when
+      specified, will be invoked if an exception is thrown while attempting to
+      derive bizdoc copies. The input pipeline will include the following
+      variables, as per a normal catch service invoked by
+      `Tundra/tundra.service:ensure`: `$exception`, `$exception?`, `$exception.class`,
+      `$exception.message` and `$exception.stack`. If not specified, defaults to
+      `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
+      handler.
+
+    * `$finally` is an optional fully qualified service name which, when
+      specified, will be invoked after delivery, and whether or not an
+      exception is encountered during delivery.
+
+    * `$pipeline` is an optional IData document containing arbitrary variables
+      which can be used to influence the derivative process.
+
+    * `$derivatives` is a list of rules describing when and what copies are to
+      be made of this bizdoc:
+      * `description` is an optional description of the derivative rule, used in
+        all related activity log statements.
+      * `sender` is an optional (internal or external) ID identifying the
+        desired Trading Networks partner profile to be used as the sender on
+        the derivative bizdoc. Defaults to the original bizdoc sender if not
+        specified.
+      * `receiver` is an optional (internal or external) ID identifying the
+        desired Trading Networks partner profile to be used as the receiver on
+        the derivative bizdoc. Defaults to the original bizdoc receiver if not
+        specified.
+      * `type` is an optional Trading Networks external ID type used to
+        interpret the above `sender` and `receiver` values. If not specified, then
+        the sender and receiver IDs are treated as internal partner profile
+        IDs.
+      * `filter` is an optional inline filter condition (as supported by
+        `Tundra/tundra.condition:evaluate`) or fully qualified service name of a
+        service implementing the `TundraTN/tundra.tn.schema.derivative:filter`
+        specification. If specifying an inline filter condition, the input
+        pipeline will be the same as described for a filter service by the
+        `TundraTN/tundra.tn.schema.derivative:filter` specification. If not
+        specified, then a copy will always be derived for this new sender/
+        receiver.
+      * `amendments` is an optional list of {key, value} pairs used to make
+        small inline modifications to the derived bizdoc content:
+        * `key` is a fully-qualified reference to a field in the parsed bizdoc
+          content.
+        * `value` is the new value to be assigned to the element associated with
+          the given key.
+        * `condition` is an optional `Tundra/tundra.condition:evaluate`
+          conditional statement can also be specified, which is evaluated
+          against the pipeline containing `$bizdoc`, `$sender`, `$receiver`, and
+          `$document` (the parsed bizdoc content), and only if the condition
+          evaluates to true will the associated amended value be applied. If
+          not specified, the amended value will always be applied.
+      * `attributes` is an optional list of {key, value} pairs used to set
+        attributes on the derived bizdoc:
+        * `key` identifies the attribute that is set to the given `value`.
+        * `value` is the new value to be assigned to the attribute associated
+          with the given `key`.
+        * `condition` is an optional `Tundra/tundra.condition:evaluate`
+          conditional statement can also be specified, which is evaluated
+          against the pipeline containing `$bizdoc`, `$sender`, `$receiver`, and
+          `$document` (the parsed bizdoc content), and only if the condition
+          evaluates to true will the attribute be added to the derived bizdoc.
+          If not specified, the attribute will always be added to the derived
+          bizdoc.
+      * `TN_parms` is an optional IData document containing routing hints used
+        when routing the derivative bizdoc.
+      * `enabled?` is an optional boolean flag, when true this derivative rule
+        is active, when false, this derivative rule is inactive and ignored.
+        Defaults to true when not specified.
+
+    * `$status.done` is an optional user status to use for the bizdoc when
+      derivatives have been created successfully. Defaults to DONE.
+
+    * `$status.ignored` is an optional user status to use for the bizdoc when no
+      derivatives are created due to filtering. Defaults to IGNORED.
+
+    * `$prefix?` is an optional boolean flag indicating whether to use the '$'
+      prefix on the standard input arguments (bizdoc, sender, and receiver)
+      when calling `$service`. When true `$service` should implement the
+      `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
+      should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
+      Defaults to true.
+
+    * `$part` is the optional name of the bizdoc content part to be copied to
+      the resulting derivatives. Defaults to the default content part when not
+      specified (xmldata for XML document types, ffdata for Flat File document
+      types).
+
+    * `$strict` is an optional set of boolean flags which when true abort the
+      processing of the bizdoc when it contains any errors with the associated
+      class.
       * `Recognition`
       * `Verification`
       * `Validation`
