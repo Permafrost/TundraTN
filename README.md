@@ -830,6 +830,82 @@ Bizdoc-related services:
 
     * `$derivative` is the optional derivative bizdoc, if it exists.
 
+* #### tundra.tn.document:derive
+
+  Copies an existing Trading Networks document (bizdoc), optionally updating
+  the sender and/or receiver on the copy, and routes the copy as a new
+  document to Trading Networks.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document from which a bizdoc copy will
+      be derived. Only the internal ID of the bizdoc must be specified, with
+      the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
+      optional. If the specified bizdoc does not exist, an exception will be
+      thrown.
+
+    * `$sender` is an optional Trading Networks partner profile to be used as
+      the sender on the derivative bizdoc. Defaults to the original bizdoc
+      sender, if not specified.
+
+    * `$receiver` is an optional Trading Networks partner profile to be used as
+      the receiver on the derivative bizdoc. Defaults to the original bizdoc
+      receiver, if not specified.
+
+    * `$amendments` is an optional list of {key, value} pairs applied to the
+      default bizdoc content part prior to the new copy for the derivative
+      being routed to Trading Networks:
+      * `key` is a fully-qualified key, for example `a/b/c[0]`, which identifies
+        the element in the parsed default bizdoc content part which will be
+        overwritten by the given `value`.
+      * `value` is an optional string value which will replace the existing
+        value associated with the given `key`. Percent-delimited variable
+        substitution strings are supported, and will be substituted prior to
+        being inserted into the content. If not specified, the existing value
+        will be replaced with null.
+      * condition is an optional `Tundra/tundra.condition:evaluate` conditional
+        statement can also be specified, which is evaluated against the
+        pipeline containing `$bizdoc`, `$sender`, `$receiver`, and `$document` (the
+        parsed bizdoc content), and only if the condition evaluates to true
+        will the associated amended value be applied. If not specified, the
+        amended value will always be applied.
+
+    * `$attributes` is an optional list of {key, value} pairs used to set
+      attributes on the derived bizdoc:
+      * `key` identifies the attribute that is set to the given `value`. Both
+        literal strings and percent-delimited variable substitution strings
+        are supported, where the variable substitution scope includes the
+        following: `$bizdoc`, `$sender`, `$receiver`, and `$document` (parsed bizdoc
+        content).
+      * `value` is the new value the attribute identified by `key` will be set to.
+        Both literal strings and percent-delimited variable substitution
+        strings are supported, where the variable substitution scope includes
+        the following: `$bizdoc`, `$sender`, `$receiver`, and `$document` (parsed bizdoc
+        content).
+      * `condition` is an optional `Tundra/tundra.condition:evaluate` conditional
+        statement can also be specified, which is evaluated against the
+        pipeline containing `$bizdoc`, `$sender`, `$receiver`, and `$document` (the
+        parsed bizdoc content), and only if the condition evaluates to true
+        will the attribute be added to the derived bizdoc. If not specified,
+        the attribute will always be added to the derived bizdoc.
+
+    * `TN_parms` is an optional IData document containing routing hints which
+      are used when routing the derivative bizdoc.
+
+    * `$force?` is an optional boolean flag: when true a new derivative will
+      always be created even if an existing derivative for the same sender/
+      receiver already exists; when false a new derivative will only be
+      created if there is no existing derivative with the same sender/
+      receiver. Defaults to true, if not specified.
+
+    * `$part` is an optional name of the bizdoc content part to be copied to the
+      resulting derivative. If not specified, the default content part is
+      copied (xmldata for XML document types, ffdata for Flat File document
+      types).
+
+  * Outputs:
+    * `$derivative` is the resulting bizdoc copy after it has been routed to
+      Trading Networks.
+
 * #### tundra.tn.document.error:exists
 
   Returns true if any errors (of the given class, if specified) exist on the
@@ -1024,19 +1100,6 @@ Bizdoc-related services:
       flat file schema, and is a choice of one of the following values:
       * `Flat File`
       * `XML`
-
-```java
-// Derives a new bizdoc from an existing bizdoc, optionally updating the sender and/or
-// receiver on the derivative.
-//
-// An optional list of {key, value} pairs, specified in the $amendments[] IData array,
-// will be applied to the default bizdoc content part prior to the new copy for the
-// derivative being routed to Trading Networks. The keys in $amendments[] can be fully-
-// qualified (for example, "a/b/c[0]"), and the values can include percent-delimited
-// variable substitution strings which will be substituted prior to being inserted in
-// $document.
-tundra.tn.document:derive($bizdoc, $sender, $receiver);
-```
 
 ### Exception
 
