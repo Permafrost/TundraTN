@@ -196,6 +196,9 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
   folder should implement the `tundra.schema.content.deliver:handler`
   specification.
 
+  This service is designed to be called directly from a Trading Networks
+  bizdoc processing rule.
+
   * Inputs:
     * `bizdoc` is the Trading Networks document whose content is to be delivered.
 
@@ -320,6 +323,9 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
   processing service has already changed the user status, in which case this
   service will not change it again.
 
+  This service is designed to be called directly from a Trading Networks
+  bizdoc processing rule.
+
   * Inputs:
     * `bizdoc` is the Trading Networks document from which bizdoc copies will be
       derived.
@@ -344,8 +350,8 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
       handler.
 
     * `$finally` is an optional fully qualified service name which, when
-      specified, will be invoked after delivery, and whether or not an
-      exception is encountered during delivery.
+      specified, will be invoked after processing, and whether or not an
+      exception is encountered during processing.
 
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the derivative process.
@@ -434,12 +440,12 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 
 * #### tundra.tn:discard
 
-    Receives arbitrary (XML or flat file) content and then discards it
-    (does nothing with it). This is the Trading Networks equivalent of
-    Unix's [/dev/null], which is useful for successfully receiving
-    messages from a partner that do not need to be saved or processed.
+  Receives arbitrary (XML or flat file) content and then discards it
+  (does nothing with it). This is the Trading Networks equivalent of
+  Unix's [/dev/null], which is useful for successfully receiving
+  messages from a partner that do not need to be saved or processed.
 
-    This service is intended to be invoked by clients via HTTP or FTP.
+  This service is intended to be invoked by clients via HTTP or FTP.
 
 * #### tundra.tn:log
 
@@ -550,106 +556,106 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
 
 * #### tundra.tn:receive
 
-    Receives arbitrary (XML or flat file) content and routes it
-    to Trading Networks. The content can be specified as a string,
-    byte array, java.io.InputStream, or org.w3c.dom.Node object.
+  Receives arbitrary (XML or flat file) content and routes it
+  to Trading Networks. The content can be specified as a string,
+  byte array, java.io.InputStream, or org.w3c.dom.Node object.
 
-    This service is either intended to be invoked directly by
-    clients via HTTP or FTP, or it can be wrapped by another
-    service which specifies appropriate TN_parms to control the
-    routing of the content (ie. a one-line flat file gateway
-    service).
+  This service is either intended to be invoked directly by
+  clients via HTTP or FTP, or it can be wrapped by another
+  service which specifies appropriate TN_parms to control the
+  routing of the content (ie. a one-line flat file gateway
+  service).
 
-    When invoked via HTTP, if the content is received successfully
-    an HTTP 200 OK response is returned, with a 'text/plain'
-    response body containing the resulting Trading Networks bizdoc
-    internal ID. If a security exception is encountered, an HTTP
-    403 Forbidden response is returned with a 'text/plain' response
-    body containing the exception message. If any other type of
-    exception is encountered, an HTTP 500 Internal Server Error
-    response is returned, with a 'text/plain' response body
-    containing the exception message.
+  When invoked via HTTP, if the content is received successfully
+  an HTTP 200 OK response is returned, with a 'text/plain'
+  response body containing the resulting Trading Networks bizdoc
+  internal ID. If a security exception is encountered, an HTTP
+  403 Forbidden response is returned with a 'text/plain' response
+  body containing the exception message. If any other type of
+  exception is encountered, an HTTP 500 Internal Server Error
+  response is returned, with a 'text/plain' response body
+  containing the exception message.
 
-    When invoked via transports other than HTTP, for example FTP,
-    if the content is received successfully the service invocation
-    will succeed and a response body containing the resulting
-    Trading Networks bizdoc internal ID is returned. If a security
-    or any other exception is encountered, the service invocation
-    will fail by rethrowing the exception.
+  When invoked via transports other than HTTP, for example FTP,
+  if the content is received successfully the service invocation
+  will succeed and a response body containing the resulting
+  Trading Networks bizdoc internal ID is returned. If a security
+  or any other exception is encountered, the service invocation
+  will fail by rethrowing the exception.
 
-    When invoked by a wrapping service, an exceptions encountered
-    will be thrown to the calling service. It is then the calling
-    service's responsibility to set an appropriate response for
-    the transport in question.
+  When invoked by a wrapping service, an exceptions encountered
+  will be thrown to the calling service. It is then the calling
+  service's responsibility to set an appropriate response for
+  the transport in question.
 
-    * Inputs:
-      * `strict` is an optional boolean flag indicating whether 'strict'
-        mode routing should be used for the received content. Defaults
-        to true. To disable 'strict' mode when using HTTP, include
-        strict=false as part of the query string of the receive URL:
-        http://localhost:5555/invoke/tundra.tn/receive?strict=false.
+  * Inputs:
+    * `strict` is an optional boolean flag indicating whether 'strict'
+      mode routing should be used for the received content. Defaults
+      to true. To disable 'strict' mode when using HTTP, include
+      strict=false as part of the query string of the receive URL:
+      http://localhost:5555/invoke/tundra.tn/receive?strict=false.
 
-      * `TN_parms` is an optional set of routing hints for Trading
-        Networks to use when routing the received content. If not
-        specified by the caller, the following TN_parms are set
-        automatically as follows:
+    * `TN_parms` is an optional set of routing hints for Trading
+      Networks to use when routing the received content. If not
+      specified by the caller, the following TN_parms are set
+      automatically as follows:
 
-        * `$contentType` is an optional mime media type of the received
-          content. Defaults to the transport content type returned by
-          `WmPublic/pub.flow:getTransportInfo`, or failing that 'text/xml'
-          if a node object is present in the pipeline, or failing that
-          'application/octet-stream'.
+      * `$contentType` is an optional mime media type of the received
+        content. Defaults to the transport content type returned by
+        `WmPublic/pub.flow:getTransportInfo`, or failing that 'text/xml'
+        if a node object is present in the pipeline, or failing that
+        'application/octet-stream'.
 
-        * `$contentEncoding` is an optional character encoding used by
-          the received content, for example 'UTF-16'. Defaults to the
-          encoding specified as the charset property in the content
-          type, or failing that defaults to 'UTF-8'.
+      * `$contentEncoding` is an optional character encoding used by
+        the received content, for example 'UTF-16'. Defaults to the
+        encoding specified as the charset property in the content
+        type, or failing that defaults to 'UTF-8'.
 
-        * `$contentName` is an optional logical label or name for the
-          received content, typically the filename for flat files.
-          For HTTP transports, defaults to the the filename specified
-          in the Content-Disposition header, or failing that the
-          filename part of the request URI. For non-HTTP transports,
-          defaults to the filename returned by
-          `WmPublic/pub.flow:getTransportInfo`.
+      * `$contentName` is an optional logical label or name for the
+        received content, typically the filename for flat files.
+        For HTTP transports, defaults to the the filename specified
+        in the Content-Disposition header, or failing that the
+        filename part of the request URI. For non-HTTP transports,
+        defaults to the filename returned by
+        `WmPublic/pub.flow:getTransportInfo`.
 
-        * `$contentSchema` is an optional Integration Server document
-          reference or flat file schema the received content conforms
-          to. Defaults to the value of the `$schema` variable, if
-          specified in the pipeline.
+      * `$contentSchema` is an optional Integration Server document
+        reference or flat file schema the received content conforms
+        to. Defaults to the value of the `$schema` variable, if
+        specified in the pipeline.
 
-        * `$user` is the user that sent the received content. Defaults
-          to the currently logged on user.
+      * `$user` is the user that sent the received content. Defaults
+        to the currently logged on user.
 
-        * `SenderID` is an optional Trading Networks profile external ID
-          which identifies the sender of the content. For flat files
-          only, defaults to the currently logged on user.
+      * `SenderID` is an optional Trading Networks profile external ID
+        which identifies the sender of the content. For flat files
+        only, defaults to the currently logged on user.
 
-        * `ReceiverID` is an optional Trading Networks profile external ID
-          which identifies the receiver of the content. For flat files
-          only, defaults to the value of the HTTP header 'X-Recipient',
-          or failing that the required External ID value of the My
-          Enterprise profile.
+      * `ReceiverID` is an optional Trading Networks profile external ID
+        which identifies the receiver of the content. For flat files
+        only, defaults to the value of the HTTP header 'X-Recipient',
+        or failing that the required External ID value of the My
+        Enterprise profile.
 
-        * `DocumentID` is an optional ID used to identify the content in
-          Trading Networks. For flat files only, defaults to the value
-          of the HTTP header 'Message-ID', or failing that an [UUID] is
-          automatically generated.
+      * `DocumentID` is an optional ID used to identify the content in
+        Trading Networks. For flat files only, defaults to the value
+        of the HTTP header 'Message-ID', or failing that an [UUID] is
+        automatically generated.
 
-        * `GroupID` is an optional ID used to identify the group this
-          content belongs to in Trading Networks. For flat files only,
-          defaults to the value of `TN_parms/DocumentID`.
+      * `GroupID` is an optional ID used to identify the group this
+        content belongs to in Trading Networks. For flat files only,
+        defaults to the value of `TN_parms/DocumentID`.
 
-    * Outputs:
-      * `id` is the internal/native ID assigned by Trading Networks to
-        the resulting bizdoc.
+  * Outputs:
+    * `id` is the internal/native ID assigned by Trading Networks to
+      the resulting bizdoc.
 
 * #### tundra.tn:reject
 
-    Receives arbitrary (XML or flat file) content and then rejects it
-    by always returning an error to the client.
+  Receives arbitrary (XML or flat file) content and then rejects it
+  by always returning an error to the client.
 
-    This service is intended to be invoked by clients via HTTP or FTP.
+  This service is intended to be invoked by clients via HTTP or FTP.
 
 * #### tundra.tn:reroute
 
@@ -725,6 +731,9 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
   duplicate documents will not be processed and will instead have their user
   status set to 'ABORTED' (when using the standard `$catch` service).
 
+  This service is designed to be called directly from a Trading Networks
+  bizdoc processing rule.
+
   * Inputs:
     * `bizdoc` is the Trading Networks document whose content is to be
       split.
@@ -746,8 +755,8 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
       handler.
 
     * `$finally` is an optional fully-qualified service name which, when
-      specified, will be invoked after delivery, and whether or not an
-      exception is encountered during delivery.
+      specified, will be invoked after translation, and whether or not an
+      exception is encountered during translation.
 
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the splitting process.
@@ -830,7 +839,10 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
   document checking on the Trading Networks document type and do not wish to
   process duplicates, set the `$strict/Saving` error class to 'true' and
   duplicate documents will not be processed and will instead have their user
-  status set to 'ABORTED' (when using the standard $catch service).
+  status set to 'ABORTED' (when using the standard `$catch` service).
+
+  This service is designed to be called directly from a Trading Networks
+  bizdoc processing rule.
 
   * Inputs:
     * `bizdoc` is the Trading Networks document whose content is to be
@@ -853,8 +865,8 @@ tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input
       handler.
 
     * `$finally` is an optional fully-qualified service name which, when
-      specified, will be invoked after delivery, and whether or not an
-      exception is encountered during delivery.
+      specified, will be invoked after translation, and whether or not an
+      exception is encountered during translation.
 
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the translation process.
