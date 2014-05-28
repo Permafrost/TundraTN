@@ -865,6 +865,29 @@ Bizdoc-related services:
     * `$errors` is the list of activity error logs of the given classes (if
       specified) that were found logged against the given bizdoc.
 
+* #### tundra.tn.document:get
+
+  Returns the Trading Networks document (bizdoc) associated with the given
+  internal ID, optionally including the document's content parts.
+
+  * Inputs:
+    * `$id` is the internal ID of the Trading Networks document (bizdoc) to be
+      retrieved.
+
+    * `$content?` is an optional boolean indicating whether to also return the
+      bizdoc's content parts. Defaults to false.
+
+  * Outputs:
+    * `$bizdoc` is the Trading Networks document associated with the given
+      `$id`, if found. If no bizdoc exists with the given `$id`, an exception will
+      be thrown.
+
+    * `$sender` is the Trading Networks partner profile of the sender of the
+      returned bizdoc.
+
+    * `$receiver` is the Trading Networks partner profile of the receiver of the
+      returned bizdoc.
+
 * #### tundra.tn.document:relate
 
   Relates two Trading Networks documents (bizdocs) together.
