@@ -217,27 +217,6 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefi
 // to do so results in the document user status set to 'ERROR'. The default value is 'false', for
 // which missing translated contents results in the document user status set to 'IGNORED'.
 tundra.tn:split(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
-
-// One-to-one conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
-// Calls the given translation service, passing the parsed content as an input, and routing the
-// translated content back to Trading Networks as a new document automatically.
-//
-// The translation service must accept a single IData document and return a single IData document,
-// and optionally TN_parms. Refer to the tundra.tn.schema:translator specification as a guide to
-// the inputs and outputs required of the translation service.
-//
-// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
-// exception will be thrown and handled by the $catch service. For example, if you have enabled
-// duplicate document checking on the Trading Networks document type and do not wish to process
-// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ABORTED' (when using the standard
-// $catch service).
-//
-// If $required is 'true', the translation service must return translated content. Failure to do so
-// results in the document user status set to 'ERROR'. The default value is 'false', for which
-// missing translated content results in the document user status set to 'IGNORED'.
-tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input, $schema.output, $service.input, $service.output, $encoding.input, $encoding.output, $required?, $prefix?, $part, $strict);
 ```
 
 * #### tundra.tn:deliver
@@ -662,6 +641,108 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
 
     * `TN_parms` is an optional set of routing hints for Trading Networks to use
       when routing the retrieved content.
+
+* #### tundra.tn:translate
+
+  One-to-one conversion of an XML or flat file Trading Networks document
+  (bizdoc) to another format. Calls the given translation service, passing the
+  parsed content as an input, and routing the translated content back to
+  Trading Networks as a new document automatically.
+
+  Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
+  are set to 'true' and the bizdoc contains errors for any of these classes,
+  the bizdoc will not be processed; instead an exception will be thrown and
+  handled by the `$catch` service. For example, if you have enabled duplicate
+  document checking on the Trading Networks document type and do not wish to
+  process duplicates, set the `$strict/Saving` error class to 'true' and
+  duplicate documents will not be processed and will instead have their user
+  status set to 'ABORTED' (when using the standard $catch service).
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document whose content is to be
+      translated.
+
+    * `$service` is the fully-qualified name of the service which will be
+      invoked to translate the parsed bizdoc content. The translation service
+      must accept a single IData document and return a single IData document,
+      and optionally TN_parms. Refer to the
+      `TundraTN/tundra.tn.schema:translator` specification as a guide to the
+      inputs and outputs required of the translation service.
+
+    * `$catch` is an optional fully-qualified service name which, when
+      specified, will be invoked if an exception is thrown while attempting to
+      translate the bizdoc content. The input pipeline will include the
+      following variables, as per a normal catch service invoked by
+      `Tundra/tundra.service:ensure`: `$exception`, `$exception?`, `$exception.class`,
+      `$exception.message` and `$exception.stack`. If not specified, defaults to
+      `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
+      handler.
+
+    * `$finally` is an optional fully-qualified service name which, when
+      specified, will be invoked after delivery, and whether or not an
+      exception is encountered during delivery.
+
+    * `$pipeline` is an optional IData document containing arbitrary variables
+      which can be used to influence the translation process.
+
+    * `$schema.input` is the optional name of the Integration Server document
+      reference or flat file schema to use to parse the bizdoc content into an
+      IData structure. Defaults to the parsing schema specified on the
+      associated Trading Networks document type.
+
+    * `$schema.output` is the optional name of the Integration Server document
+      reference or flat file schema to use to serialize the translated
+      document returned by `$service`.
+
+    * `$service.input` is the optional name of the input parameter used for the
+      parsed bizdoc content in the input pipeline of the invocation of `$service`.
+      Defaults to `$document`.
+
+    * `$service.output` is the optional name of the output parameter used by
+      `$service` to return the translated document in its output pipeline.
+      Defaults to `$translation`.
+
+    * `$encoding.input` is an optional character set to use when decoding the
+      content part data. If not specified, defaults to the character set
+      specified in the MIME content type of the content part being parsed, or
+      failing that the Java virtual machine [default charset].
+
+    * `$encoding.output` is an optional character set to use when serializing
+      the translated document. If not specified, defaults to the Java virtual
+      machine [default charset].
+
+    * `$status.done` is an optional user status to use for the bizdoc when
+      it has been translated successfully. Defaults to DONE.
+
+    * `$status.ignored` is an optional user status to use for the bizdoc when no
+      translation is returned by `$service` and `$required` is false. Defaults to
+      IGNORED.
+
+    * `$required?` is an optional boolean indicating whether `$service` is
+      required to return a translated document. If true, and no translation is
+      returned by `$service`, an exception will be thrown and handled by the
+      `$catch` service. Defaults to false.
+
+    * `$prefix?` is an optional boolean flag indicating whether to use the '$'
+      prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
+      when calling `$service`. When true `$service` should implement the
+      `TundraTN/tundra.tn.schema:translator` specification, when false `$service`
+      should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
+      Defaults to true.
+
+    * `$part` is the optional name of the bizdoc content part to be translated.
+      Defaults to the default content part when not specified (xmldata for XML
+      document types, ffdata for Flat File document types).
+
+    * `$strict` is an optional set of boolean flags which when true abort the
+      processing of the bizdoc when it contains any errors with the associated
+      class.
+      * `Recognition`
+      * `Verification`
+      * `Validation`
+      * `Persistence`
+      * `Saving`
+      * `Routing`
 
 ### Content
 
