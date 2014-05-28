@@ -177,22 +177,6 @@ tundra.tn:branch(bizdoc, $branches[], $catch, $finally)
 // be processed and will instead have their user status set to 'ABORTED' (when using the standard
 // $catch service).
 tundra.tn:chain(bizdoc, $services[], $catch, $finally, $pipeline, $service.input, $encoding, $parse?, $prefix?, $part, $strict);
-
-// Processes a Trading Networks document via the given $service processing service.
-//
-// As this service provides logging, content parsing, error handling, and bizdoc status updates,
-// the $service processing service does not need to include any of this common boilerplate code.
-//
-// Supports 'strict' mode processing of bizdocs: if any $strict error classes are set to 'true' and
-// the bizdoc contains errors for any of these classes, the bizdoc will not be processed; instead an
-// exception will be thrown and handled by the $catch service. For example, if you have enabled
-// duplicate document checking on the Trading Networks document type and do not wish to process
-// duplicates, set the $strict/Saving error class to 'true' and duplicate documents will not
-// be processed and will instead have their user status set to 'ABORTED' (when using the standard
-// $catch service).
-//
-// This service is designed to be called directly from a Trading Networks bizdoc processing rule.
-tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefix?, $part, $encoding, $strict);
 ```
 
 * #### tundra.tn:deliver
@@ -476,6 +460,93 @@ tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefi
 
     * `$message` is an optional message to be logged. If not specified, defaults
       to an empty string.
+
+* #### tundra.tn:process
+
+  Processes a Trading Networks document via the given `$service` processing
+  service.
+
+  As this service provides logging, content parsing, error handling, and
+  bizdoc status updates, the `$service` processing service does not need to
+  include any of this common boilerplate code.
+
+  Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
+  are set to 'true' and the bizdoc contains errors for any of these classes,
+  the bizdoc will not be processed; instead an exception will be thrown and
+  handled by the `$catch` service. For example, if you have enabled duplicate
+  document checking on the Trading Networks document type and do not wish to
+  process duplicates, set the `$strict/Saving` error class to 'true' and
+  duplicate documents will not be processed and will instead have their user
+  status set to 'ABORTED' (when using the standard `$catch` service).
+
+  This service is designed to be called directly from a Trading Networks
+  bizdoc processing rule.
+
+  * Inputs:
+    * `bizdoc` is the Trading Networks document to be processed.
+
+    * `$service` is the fully-qualified service name to be called to process the
+      bizdoc. Refer to the `TundraTN/tundra.tn.schema:processor` specification
+      as a guide to the inputs and outputs required of the processing service.
+
+    * `$catch` is an optional fully-qualified service name which, when
+      specified, will be invoked if an exception is thrown while attempting to
+      process the bizdoc. The input pipeline will include the following
+      variables, as per a normal catch service invoked by
+      `Tundra/tundra.service:ensure`: `$exception`, `$exception?`, `$exception.class`,
+      `$exception.message`, and `$exception.stack`. If not specified, defaults to
+      `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
+      handler.
+
+    * `$finally` is an optional fully-qualified service name which, when
+      specified, will be invoked after processing, and whether or not an
+      exception is encountered during processing.
+
+    * `$pipeline` is an optional IData document containing additional arbitrary
+      input arguments for `$service` (or `WmPublic/pub.flatFile:convertToValues`,
+      `WmPublic/pub.xml:xmlStringToXMLNode`, or `WmPublic/pub.xml:xmlNodeToDocument` via
+      `Tundra/tundra.tn.document:parse`). Fully-qualified names will be handled
+      correctly, for example an argument named `example/item[0]` will be
+      converted to an IData document named 'example' containing a String list
+      named 'item' with it's first value set accordingly.
+
+    * `$service.input` is an optional name to be used when adding the parsed
+      bizdoc content to the input pipeline of the call to `$service`. Defaults
+      to $document. Not used if `$parse?` is false.
+
+    * `$status.done` is an optional user status to use for the bizdoc when
+      processing has completed successfully. Defaults to DONE.
+
+    * `$parse?` is an optional boolean flag indicating whether the specified
+      bizdoc content part should be parsed to an IData document and added to
+      the input pipeline of the call to `$service`. Defaults to true.
+
+    * `$prefix?` is an optional boolean flag indicating whether to use the '$'
+      prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
+      when calling `$service`. When true `$service` should implement the
+      `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
+      should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
+      Defaults to true.
+
+    * `$part` is an optional name identifying the bizdoc content part to be
+      parsed and added to the input pipeline of the call to `$service`. Defaults
+      to the default content part (xmldata for XML documents, ffdata for Flat
+      File documents). Not used if `$parse?` is false.
+
+    * `$encoding` optional character encoding to be used when reading the bizdoc
+      content part bytes. If not specified, defaults to the character set
+      specified in the MIME content type of the content part being parsed, or
+      failing that the Java virtual machine [default charset].
+
+    * `$strict` is an optional set of boolean flags which when true abort the
+      processing of the bizdoc when it contains any errors with the associated
+      class.
+      * `Recognition `
+      * `Verification`
+      * `Validation`
+      * `Persistence`
+      * `Saving`
+      * `Routing`
 
 * #### tundra.tn:receive
 
