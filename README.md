@@ -1739,81 +1739,157 @@ Document schemas and interface specifications:
   * Outputs:
     * `newValues` is a list of transformed items from the input `values` list.
 
-```java
-// This schema describes the structure for derivative rules used by tundra.tn:derive.
-tundra.tn.schema:derivative;
+* #### tundra.tn.schema:derivative
 
-// A compatible superset of wm.tn.rec:ProfileSummary and wm.tn.rec:Profile, with some developer-
-// friendly formats for all the external IDs, extended fields, and delivery methods.
-tundra.tn.schema:profile;
+  This schema describes the structure for derivative rules used by
+  `TundraTN/tundra.tn:derive`.
 
-// Filter services used by tundra.tn:derive must implement this specification. The filter service
-// is allowed to edit the $derivative rule, so that it may disable the rule by setting
-// $derivative/enabled? to 'false', or specify a different sender or receiver.
-tundra.tn.schema.derivative:filter;
+* #### tundra.tn.schema.derivative:filter
 
-// Processing services called by tundra.tn:process can implement this specification.
-//
-// Inputs:
-//   - $document is the parsed bizdoc content for processing. This is the default name
-//     for this input parameter. The actual name of the parameter can be changed using
-//     the tundra.tn:process $service.input parameter.
-//
-//   - $schema is the name of the Integration Server document reference or flat file
-//     schema used to parse the content into an IData structure.
-tundra.tn.schema:processor;
+  Filter services used by `TundraTN/tundra.tn:derive` must implement this
+  specification.
 
-// Splitting services used by tundra.tn:split can implement this specification.
-//
-// Inputs:
-//   - $document is the parsed bizdoc content for splitting. This is the default name
-//     for this input parameter. The actual name of the parameter can be changed using
-//     tundra.tn:split's $service.input parameter, which allows the use of tundra.tn:split
-//     with existing mapping services.
-//
-//   - $schema is the name of the Integration Server document reference or flat file schema
-//     used to parse the content into an IData structure.
-//
-// Outputs:
-//   - $documents[] is the split list of content with which each item of the list will be routed
-//     back to Trading Networks as individual new documents. This is the default name for
-//     this output parameter. The actual name of the parameter can be changed using the
-//     tundra.tn:split's $service.output parameter, which allows the use of tundra.tn:split
-//     with existing mapping services.
-//
-//   - $schemas[] is the list of Integration Server document references or flat file schemas
-//     that each $documents[] item conforms to. The length of $schemas[] must match the
-//     length of $documents[], and $schema[n] is used to serialize $document[n] to an input
-//     stream for routing to Trading Networks.
-//
-//   - TN_parms provides routing hints for Trading Networks. It can be specified as either a
-//     singleton IData or an IData list. If specified as a singleton, it will be used when
-//     routing every item in the $documents[] list. If specified as a list, the length of
-//     TN_parms[] must match the length of $documents[], and TN_parms[n] will be used when
-//     routing $documents[n] to Trading Networks.
-tundra.tn.schema:splitter;
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document being processed.
 
-// Translation services used by tundra.tn:translate can implement this specification.
-//
-// Inputs:
-//   - $document is the parsed bizdoc content for translation. This is the default name
-//     for this input parameter. The actual name of the parameter can be changed using
-//     tundra.tn:translate's $service.input parameter, which allows the use of
-//     tundra.tn:translate with existing mapping services.
-//
-//   - $schema is the name of the Integration Server document reference or flat file
-//     schema used to parse the content into an IData structure.
-//
-// Outputs:
-//   - $translation is the translated content which will be routed back to Trading Networks
-//     as a new document. This is the default name for this output parameter. The actual
-//     name of the parameter can be changed using the tundra.tn:translate's $service.output
-//     parameter, which allows the use of tundra.tn:translate with existing mapping services.
-//
-//   - TN_parms provides routing hints for routing the $translation document back to
-//     Trading Networks.
-tundra.tn.schema:translator;
-```
+    * `$sender` is the Trading Networks partner profile associated with the
+      sender of the bizdoc.
+
+    * `$receiver` is the Trading Networks partner profile associated with the
+      receiver of the bizdoc.
+
+    * `$document` is the parsed bizdoc content for processing.
+
+    * `$schema` is the name of the Integration Server document reference or flat
+      file schema used to parse the content into an IData structure.
+
+    * `$derivative` is the derivative rule to be filtered. The filter service is
+      allowed to edit the `$derivative` rule, so that it may, for example,
+      disable the rule by setting `$derivative/enabled?` to `false`, or specify
+      a different sender and/or receiver.
+
+  * Outputs:
+    * `$derivative` is the derivative rule after filtering. The filter service
+      is required to return the rule whether it makes changes to it or not.
+
+* #### tundra.tn.schema:processor
+
+  Processing services called by `TundraTN/tundra.tn:process` can implement this
+  specification.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document whose content is to be
+      processed.
+
+    * `$sender` is the Trading Networks partner profile associated with the
+      sender of the bizdoc.
+
+    * `$receiver` is the Trading Networks partner profile associated with the
+      receiver of the bizdoc.
+
+    * `$document` is the parsed bizdoc content for processing. This is the
+      default name for this input parameter. The actual name of the parameter
+      can be changed using the `TundraTN/tundra.tn:process` `$service.input`
+      parameter.
+
+    * `$schema` is the name of the Integration Server document reference or flat
+      file schema used to parse the content into an IData structure.
+
+    * `$schema.type` describes whether the schema used to parse the content was
+      a Flat File or XML schema.
+
+  * Outputs:
+    * `$summary` is an optional diagnostic summary message to be automatically
+      logged in the Trading Networks Activity Log.
+
+    * `$message` is an optional diagnostic detailed message to be automatically
+      logged in the Trading Networks Activity Log.
+
+* #### tundra.tn.schema:profile
+
+  A compatible superset of wm.tn.rec:ProfileSummary and wm.tn.rec:Profile,
+  with some developer-friendly formats for all the external IDs, extended
+  fields, and delivery methods.
+
+* #### tundra.tn.schema:splitter
+
+  Splitting services used by `TundraTN/tundra.tn:split` can implement this
+  specification.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document whose content is to be
+      split.
+
+    * `$sender` is the Trading Networks partner profile associated with the
+      sender of the bizdoc.
+
+    * `$receiver` is the Trading Networks partner profile associated with the
+      receiver of the bizdoc.
+
+    * `$document` is the parsed bizdoc content for splitting. This is the
+      default name for this input parameter. The actual name of the parameter
+      can be changed using the `TundraTN/tundra.tn:split` `$service.input`
+      parameter, which allows the use of `TundraTN/tundra.tn:split` with
+      existing mapping services.
+
+    * `$schema` is the name of the Integration Server document reference or flat
+      file schema used to parse the content into an IData structure.
+
+  * Outputs:
+    * `$documents` is the split list of content with which each item of the
+      list will be routed back to Trading Networks as individual new
+      documents. This is the default name for this output parameter. The
+      actual name of the parameter can be changed using the
+      `TundraTN/tundra.tn:split` `$service.output` parameter, which allows the
+      use of `TundraTN/tundra.tn:split` with existing mapping services.
+
+    * `$schemas` is the list of Integration Server document references or flat
+      file schemas that each `$documents` item conforms to. The length of
+      `$schemas` must match the length of `$documents`, and `$schema[n]` is used to
+      serialize `$document[n]` to an input stream for routing to Trading
+      Networks.
+
+    * `TN_parms` provides routing hints for Trading Networks. It can be
+      specified as either a singleton IData or an IData list. If specified as
+      a singleton, it will be used when routing every item in the `$documents`
+      list. If specified as a list, the length of `TN_parms` must match the
+      length of `$documents`, and `TN_parms[n]` will be used when routing
+      `$documents[n]` to Trading Networks.
+
+* #### tundra.tn.schema:translator
+
+  Translation services used by `TundraTN/tundra.tn:translate` can implement this
+  specification.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document whose content is to be
+      translated.
+
+    * `$sender` is the Trading Networks partner profile associated with the
+      sender of the bizdoc.
+
+    * `$receiver` is the Trading Networks partner profile associated with the
+      receiver of the bizdoc.
+
+    * `$document` is the parsed bizdoc content for translation. This is the
+      default name for this input parameter. The actual name of the parameter
+      can be changed using the `TundraTN/tundra.tn:translate` `$service.input`
+      parameter, which allows the use of `TundraTN/tundra.tn:translate` with
+      existing mapping services.
+
+    * `$schema` is the name of the Integration Server document reference or flat
+      file schema used to parse the content into an IData structure.
+
+  * Outputs:
+    * `$translation` is the translated content which will be routed back to
+      Trading Networks as a new document. This is the default name for this
+      output parameter. The actual name of the parameter can be changed using
+      the `TundraTN/tundra.tn:translate` `$service.output` parameter, which
+      allows the use of `TundraTN/tundra.tn:translate` with existing mapping
+      services.
+
+    * `TN_parms` is an optional set of routing hints used when routing the
+      translated document to Trading Networks.
 
 ## Contributions
 
