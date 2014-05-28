@@ -888,6 +888,40 @@ Bizdoc-related services:
     * `$receiver` is the Trading Networks partner profile of the receiver of the
       returned bizdoc.
 
+* #### tundra.tn.document:parse
+
+  Parses the Trading Networks document content part associated with the given
+  part name, or the default part if not provided, using the parsing schema
+  configured on the associated document type.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document whose content is to be parsed.
+      Only the internal ID of the bizdoc must be specified, with the remainder
+      of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional. If the
+      specified bizdoc does not exist, an exception will be thrown.
+
+    * `$part` is an optional content part name to be parsed. If not specified,
+      the default content part (xmldata for XML, ffdata for Flat Files) will
+      be parsed. If the specified content part name does not exist, an
+      exception will be thrown.
+
+    * `$encoding` is an optional character set to use when decoding the content
+      part data. If not specified, defaults to the character set specified in
+      the MIME content type of the content part being parsed, or failing that
+      the Java virtual machine [default charset][1].
+
+  * Outputs:
+    * `$document` is the parsed content part in an IData document representation.
+
+    * `$schema` is the fully-qualified name of the document reference (for XML)
+      or flat file schema (for flat files) declared on the associated document
+      type, and used to parse the content part.
+
+    * `$schema.type` specifies whether `$schema` is an XML document reference or
+      flat file schema, and is a choice of one of the following values:
+      * Flat File
+      * XML
+
 * #### tundra.tn.document:relate
 
   Relates two Trading Networks documents (bizdocs) together.
@@ -1002,18 +1036,6 @@ Bizdoc-related services:
 // variable substitution strings which will be substituted prior to being inserted in
 // $document.
 tundra.tn.document:derive($bizdoc, $sender, $receiver);
-
-// Returns the document associated with the given internal ID, optionally
-// including the document's content parts.
-tundra.tn.document:get($id, $content?);
-
-// Parses the Trading Networks document content part associated with the given part
-// name, or the default part if not provided, using the parsing schema configured on
-// the document type.
-tundra.tn.document:parse($bizdoc, $part, $encoding);
-
-// Relates two Trading Networks documents (bizdocs) together.
-tundra.tn.document:relate($bizdoc.source, $bizdoc.target, $relationship);
 ```
 
 ### Exception
