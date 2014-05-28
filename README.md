@@ -197,10 +197,6 @@ tundra.tn:log($bizdoc, $type, $class, $summary, $message);
 // This service is designed to be called directly from a Trading Networks bizdoc processing rule.
 tundra.tn:process(bizdoc, $service, $catch, $finally, $pipeline, $parse?, $prefix?, $part, $encoding, $strict);
 
-// Reprocesses the given document in Trading Networks by rematching it against the
-// processing rule base and executing the first processing rule that matches.
-tundra.tn:reroute(bizdoc);
-
 // One-to-many conversion of an XML or flat file Trading Networks document (bizdoc) to another format.
 // Calls the given splitting service, passing the parsed content as an input, and routing the split
 // content back to Trading Networks as new documents automatically.
@@ -608,6 +604,21 @@ tundra.tn:translate(bizdoc, $service, $catch, $finally, $pipeline, $schema.input
     by always returning an error to the client.
 
     This service is intended to be invoked by clients via HTTP or FTP.
+
+* #### tundra.tn:reroute
+
+    Reprocesses the given document in Trading Networks by rematching it against
+    the processing rule base and executing the first processing rule that
+    matches.
+
+    * Inputs:
+      * `bizdoc` is the Trading Networks document to be rerouted.
+
+    * Outputs:
+      * `bizdoc`
+      * `sender`
+      * `receiver`
+      * `TN_parms`
 
 * #### tundra.tn:retrieve
 
