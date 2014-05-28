@@ -1754,6 +1754,41 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * `logMsg` is an optional message describing the processing of the queue.
       This output variable is not used by this service.
 
+* #### tundra.tn.queue:clear
+
+  Clears all items from the given Trading Networks queue.
+
+  * Inputs:
+    * `queue` is the name of the Trading Networks queue from which tasks will be
+      cleared.
+
+    * `$status` is the user status that will be set on each dequeued bizdoc. If not
+      specified, defaults to DONE.
+
+    * `$concurrency` is an optional number of threads to be used for processing
+      queue tasks. Defaults to 1, if not specified.
+
+      If a `$concurrency` > 1 is specified, a thread pool will be created with a
+      size equal to the given value. These threads are not managed by the
+      normal Integration Server thread pools, and therefore are not restricted
+      by Integration Server thread pool settings. As such, please ensure that
+      the sum of all the `$concurrency` values for all Trading Networks queues
+      that specify a value > 1, plus the configured Integration Server thread
+      pool maximum is supported by the amount of free memory available on your
+      server:
+
+          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+      If a `$concurrency` <= 1 is specified, tasks will be processed
+      sequentially on the main thread.
+
+  * Outputs:
+    * `queue` is the name of the Trading Networks queue from which tasks were
+      cleared.
+
+    * `logMsg` is an optional message describing the processing of the queue.
+      This output variable is not used by this service.
+
 * #### tundra.tn.queue:deliver
 
   Invokes `TundraTN/tundra.tn:deliver` for each item in the given Trading
