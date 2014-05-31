@@ -178,7 +178,7 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
+            <value name="field_usereditable">false</value>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
@@ -187,11 +187,21 @@
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>Flat File</value>
+            <value>JSON</value>
+            <value>XML</value>
+          </array>
           <record name="field_content_type" javaclass="com.wm.util.Values">
             <array name="enumeration" type="record" depth="1">
               <record javaclass="com.wm.util.Values">
                 <value name="primitiveType">0</value>
                 <value name="lexRep">Flat File</value>
+                <value name="isList">false</value>
+              </record>
+              <record javaclass="com.wm.util.Values">
+                <value name="primitiveType">0</value>
+                <value name="lexRep">JSON</value>
                 <value name="isList">false</value>
               </record>
               <record javaclass="com.wm.util.Values">
@@ -265,15 +275,16 @@ configured on the associated document type.
 
   * $schema is an optional output that specifies the fully-qualified name of 
     the document reference (for XML) or flat file schema (for Flat Files) 
-    declared on the associated document type. This output argument is not 
-    returned for JSON content.
+    declared on the associated document type, or the MIME media type 
+    "application/json" (for JSON).
 
   * $schema.type is an optional output that specifies whether $schema is an 
-    XML document reference or flat file schema, and is a choice of one of 
+    XML document reference or flat file schema, or whether a JSON parser
+    was used to parse the content, and is a choice of one of:
     the following values:
     * Flat File
+    * JSON
     * XML
-    This output argument is not returned for JSON content.
 
 [default charset]: &lt;http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()&gt;</value>
   <value name="stateless">no</value>

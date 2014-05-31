@@ -1435,15 +1435,16 @@ Bizdoc-related services:
 
     * `$schema` is an optional output that specifies the fully-qualified name of 
       the document reference (for XML) or flat file schema (for Flat Files) 
-      declared on the associated document type. This output argument is not 
-      returned for JSON content.
+      declared on the associated document type, or the MIME media type 
+      "application/json" (for JSON).
 
     * `$schema.type` is an optional output that specifies whether `$schema` is an 
-      XML document reference or flat file schema, and is a choice of one of 
+      XML document reference or flat file schema, or whether a JSON parser
+      was used to parse the content, and is a choice of one of:
       the following values:
       * Flat File
+      * JSON
       * XML
-      This output argument is not returned for JSON content.
 
 * #### tundra.tn.document:relate
 
