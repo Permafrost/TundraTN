@@ -7,6 +7,7 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -20,6 +21,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -35,6 +37,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">InternalID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -54,6 +57,7 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -63,6 +67,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$part</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -90,6 +95,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$encoding</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -110,9 +116,11 @@
           <value name="is_global">false</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -126,6 +134,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$document</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -135,6 +144,7 @@
           <value name="is_global">false</value>
           <array name="rec_fields" type="record" depth="1">
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -144,6 +154,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$schema</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -171,6 +182,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$schema.type</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -225,6 +237,7 @@
           <value name="is_global">false</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
   </record>
   <value name="node_comment">Parses the Trading Networks document content part associated with the given 
@@ -245,26 +258,31 @@ configured on the associated document type.
   * $encoding is an optional character set to use when decoding the content 
     part data. If not specified, defaults to the character set specified in 
     the MIME content type of the content part being parsed, or failing that 
-    the Java virtual machine [default charset][1].
+    the Java virtual machine [default charset].
 
 * Outputs:
   * $document is the parsed content part in an IData document representation.
 
-  * $schema is the fully-qualified name of the document reference (for XML) 
-    or flat file schema (for flat files) declared on the associated document 
-    type, and used to parse the content part.
+  * $schema is an optional output that specifies the fully-qualified name of 
+    the document reference (for XML) or flat file schema (for Flat Files) 
+    declared on the associated document type. This output argument is not 
+    returned for JSON content.
 
-  * $schema.type specifies whether $schema is an XML document reference or 
-    flat file schema, and is a choice of one of the following values:
+  * $schema.type is an optional output that specifies whether $schema is an 
+    XML document reference or flat file schema, and is a choice of one of 
+    the following values:
     * Flat File
     * XML
+    This output argument is not returned for JSON content.
 
-[1]: &lt;http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()&gt;</value>
+[default charset]: &lt;http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()&gt;</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
+  <value name="template">tundra_tn_document_parse</value>
+  <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
   <value name="icontext_policy">$null</value>
@@ -274,10 +292,16 @@ configured on the associated document type.
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
 </Values>
