@@ -1018,9 +1018,16 @@ Top-level services for the most common tasks:
       * `$content` is string, byte array, input stream, or IData
         document content to be routed to Trading Networks.
 
-      * `$schema` is an optional document reference or flat file
-        schema used to serialise `$content` when provided as an IData
-        document.
+    * `$schema` is an optional input which determines whether to serialize 
+      `$content` as [XML], [JSON], Flat File when provided as an IData document, 
+      and can have the following values:
+      * For [XML] content, specify the fully-qualified name of the document 
+        reference that defines the [XML] format
+      * For [JSON] content specify the MIME media type "application/json"
+      * For Flat File content specify the fully-qualified name of the flat 
+        file schema that defines the Flat File format
+
+      Defaults to serializing `$content` as [XML], if no `$schema` is specified.
 
       * `TN_parms` is an optional set of routing hints for Trading
         Networks to use when routing `$content`. If specified, the
