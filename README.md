@@ -829,6 +829,15 @@ Top-level services for the most common tasks:
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the splitting process.
 
+    * `$content.type.input` is the MIME media type that describes the format of 
+      the bizdoc content being split. For [JSON] content, a recognized [JSON] 
+      MIME media type, such as "application/json", must be specified. Defaults 
+      to the content type specified on the bizdoc content part.
+
+    * `$content.type.output` is the MIME media type that describes the format of 
+      all the resulting split contents. For [JSON] content, a recognized 
+      [JSON] MIME media type, such as "application/json", must be specified.
+
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
       IData structure. Defaults to the parsing schema specified on the
@@ -939,6 +948,15 @@ Top-level services for the most common tasks:
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the translation process.
 
+    * `$content.type.input` is the MIME media type that describes the format of 
+      the bizdoc content being translated. For [JSON] content, a recognized 
+      [JSON] MIME media type, such as "application/json", must be specified. 
+      Defaults to the content type specified on the bizdoc content part.
+
+    * `$content.type.output` is the MIME media type that describes the format of 
+      the resulting translated content. For [JSON] content, a recognized 
+      [JSON] MIME media type, such as "application/json", must be specified.
+
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
       IData structure. Defaults to the parsing schema specified on the
@@ -1002,62 +1020,66 @@ Top-level services for the most common tasks:
 
 * #### tundra.tn.content:route
 
-    Routes arbitrary content specified as a string, byte array, input
-    stream, or IData document to Trading Networks.
+  Routes arbitrary content specified as a string, byte array, input
+  stream, or IData document to Trading Networks.
 
-    Correctly supports large documents, so any document considered
-    large will be routed as a large document in TN, unlike the
-    WmTN/wm.tn.doc.xml:routeXML service.
+  Correctly supports large documents, so any document considered
+  large will be routed as a large document in TN, unlike the
+  WmTN/wm.tn.doc.xml:routeXML service.
 
-    Also supports overriding the normally recognised document attributes,
-    such as sender, receiver, document ID, group ID, conversation ID,
-    and document type with the value specified in TN_parms for both XML
-    and flat files documents.
+  Also supports overriding the normally recognised document attributes,
+  such as sender, receiver, document ID, group ID, conversation ID,
+  and document type with the value specified in TN_parms for both XML
+  and flat files documents.
 
-    * Inputs:
-      * `$content` is string, byte array, input stream, or IData
-        document content to be routed to Trading Networks.
+  * Inputs:
+    * `$content` is string, byte array, input stream, or IData
+      document content to be routed to Trading Networks.
 
-    * `$schema` is an optional input which determines whether to serialize 
-      `$content` as [XML], [JSON], Flat File when provided as an IData document, 
-      and can have the following values:
+    * `$content.type` is the MIME media type that describes the format of the 
+      given content. For [JSON] content, a recognized [JSON] MIME media type, 
+      such as "application/json", must be specified.
+
+    * `$schema` is the fully-qualified name of the parsing schema to use when 
+      serializing `$content` when provided as an IData document to [XML] or Flat 
+      File content, and can have the following values:
       * For [XML] content, specify the fully-qualified name of the document 
-        reference that defines the [XML] format
-      * For [JSON] content specify the MIME media type "application/json"
+        reference that defines the [XML] format.
       * For Flat File content specify the fully-qualified name of the flat 
-        file schema that defines the Flat File format
+        file schema that defines the Flat File format.
 
-      Defaults to serializing `$content` as [XML], if no `$schema` is specified.
+      Defaults to serializing `$content` when provided as an IData document to 
+      [XML], if neither `$content.type` nor `$schema` are specified.
 
-      * `TN_parms` is an optional set of routing hints for Trading
-        Networks to use when routing `$content`. If specified, the
-        following values will overwrite the normal bizdoc recognised
-        values, allowing for sender, receiver, document ID, group ID,
-        conversation ID, and document type to be forced to have the
-        specified value (even for XML document types):
-        * `SenderID`
-        * `ReceiverID`
-        * `DocumentID`
-        * `DoctypeID`
-        * `DoctypeName`
-        * `GroupID`
-        * `ConversationID`
+    * `TN_parms` is an optional set of routing hints for Trading
+      Networks to use when routing `$content`. If specified, the
+      following values will overwrite the normal bizdoc recognised
+      values, allowing for sender, receiver, document ID, group ID,
+      conversation ID, and document type to be forced to have the
+      specified value (even for XML document types):
+      * `SenderID`
+      * `ReceiverID`
+      * `DocumentID`
+      * `DoctypeID`
+      * `DoctypeName`
+      * `GroupID`
+      * `ConversationID`
 
-      * `$strict?` is an optional boolean, which if true will abort
-        routing/processing rule execution of the document if any
-        any errors (such as validation errors) are encountered prior
-        to processing, and result in an exception being thrown.
-        Defaults to false.
+    * `$strict?` is an optional boolean, which if true will abort
+      routing/processing rule execution of the document if any
+      any errors (such as validation errors) are encountered prior
+      to processing, and result in an exception being thrown.
+      Defaults to false.
 
-    * Outputs:
-      * `$bizdoc` is the resulting Trading Networks document that was
-        routed.
-      * `$sender` is the Trading Networks profile of the sender of the
-        document.
-      * `$receiver` is the Trading Networks profile of the receiver of
-        the document.
-      * `TN_parms` is the routing hints used to route the document in
-        Trading Networks.
+  * Outputs:
+    * `$bizdoc` is the resulting Trading Networks document that was
+      routed.
+    * `$sender` is the Trading Networks profile of the sender of the
+      document.
+    * `$receiver` is the Trading Networks profile of the receiver of
+      the document.
+    * `TN_parms` is the routing hints used to route the document in
+      Trading Networks.
 
 ### Document
 
@@ -1433,17 +1455,17 @@ Bizdoc-related services:
   * Outputs:
     * `$document` is the parsed content part in an IData document representation.
 
+    * `$content.type` is the MIME media type that describes the format of the 
+      parsed content.
+
     * `$schema` is an optional output that specifies the fully-qualified name of 
       the document reference (for XML) or flat file schema (for Flat Files) 
-      declared on the associated document type, or the MIME media type 
-      "application/json" (for JSON).
+      declared on the associated document type.
 
     * `$schema.type` is an optional output that specifies whether `$schema` is an 
-      XML document reference or flat file schema, or whether a JSON parser
-      was used to parse the content, and is a choice of one of:
-      the following values:
+      XML document reference or flat file schema, and is a choice of one of the
+      following values:
       * Flat File
-      * JSON
       * XML
 
 * #### tundra.tn.document:relate
@@ -2274,6 +2296,9 @@ Document schemas and interface specifications:
       default name for this input parameter. The actual name of the parameter
       can be changed using the `TundraTN/tundra.tn:process` `$service.input`
       parameter.
+
+    * `$content.type` is the MIME media type that describes the format of the
+      bizdoc content.
 
     * `$schema` is the name of the Integration Server document reference or flat
       file schema used to parse the content into an IData structure.

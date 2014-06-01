@@ -155,6 +155,34 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
+          <value name="field_name">$content.type</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">string</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">false</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <null name="field_usereditable"/>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="is_public">false</value>
           <value name="field_name">$schema</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -189,7 +217,6 @@
           <value name="field_opt">true</value>
           <array name="field_options" type="value" depth="1">
             <value>Flat File</value>
-            <value>JSON</value>
             <value>XML</value>
           </array>
           <record name="field_content_type" javaclass="com.wm.util.Values">
@@ -197,11 +224,6 @@
               <record javaclass="com.wm.util.Values">
                 <value name="primitiveType">0</value>
                 <value name="lexRep">Flat File</value>
-                <value name="isList">false</value>
-              </record>
-              <record javaclass="com.wm.util.Values">
-                <value name="primitiveType">0</value>
-                <value name="lexRep">JSON</value>
                 <value name="isList">false</value>
               </record>
               <record javaclass="com.wm.util.Values">
@@ -273,17 +295,17 @@ configured on the associated document type.
 * Outputs:
   * $document is the parsed content part in an IData document representation.
 
+  * $content.type is the MIME media type that describes the format of the 
+    parsed content.
+
   * $schema is an optional output that specifies the fully-qualified name of 
     the document reference (for XML) or flat file schema (for Flat Files) 
-    declared on the associated document type, or the MIME media type 
-    "application/json" (for JSON).
+    declared on the associated document type.
 
   * $schema.type is an optional output that specifies whether $schema is an 
-    XML document reference or flat file schema, or whether a JSON parser
-    was used to parse the content, and is a choice of one of:
-    the following values:
+    XML document reference or flat file schema, and is a choice of one of the
+    following values:
     * Flat File
-    * JSON
     * XML
 
 [default charset]: &lt;http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()&gt;</value>
