@@ -829,13 +829,13 @@ Top-level services for the most common tasks:
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the splitting process.
 
-    * `$content.type.input` is the MIME media type that describes the format of 
-      the bizdoc content being split. For [JSON] content, a recognized [JSON] 
-      MIME media type, such as "application/json", must be specified. Defaults 
+    * `$content.type.input` is the MIME media type that describes the format of
+      the bizdoc content being split. For [JSON] content, a recognized [JSON]
+      MIME media type, such as "application/json", must be specified. Defaults
       to the content type specified on the bizdoc content part.
 
-    * `$content.type.output` is the MIME media type that describes the format of 
-      all the resulting split contents. For [JSON] content, a recognized 
+    * `$content.type.output` is the MIME media type that describes the format of
+      all the resulting split contents. For [JSON] content, a recognized
       [JSON] MIME media type, such as "application/json", must be specified.
 
     * `$schema.input` is the optional name of the Integration Server document
@@ -948,13 +948,13 @@ Top-level services for the most common tasks:
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the translation process.
 
-    * `$content.type.input` is the MIME media type that describes the format of 
-      the bizdoc content being translated. For [JSON] content, a recognized 
-      [JSON] MIME media type, such as "application/json", must be specified. 
+    * `$content.type.input` is the MIME media type that describes the format of
+      the bizdoc content being translated. For [JSON] content, a recognized
+      [JSON] MIME media type, such as "application/json", must be specified.
       Defaults to the content type specified on the bizdoc content part.
 
-    * `$content.type.output` is the MIME media type that describes the format of 
-      the resulting translated content. For [JSON] content, a recognized 
+    * `$content.type.output` is the MIME media type that describes the format of
+      the resulting translated content. For [JSON] content, a recognized
       [JSON] MIME media type, such as "application/json", must be specified.
 
     * `$schema.input` is the optional name of the Integration Server document
@@ -1036,19 +1036,19 @@ Top-level services for the most common tasks:
     * `$content` is string, byte array, input stream, or IData
       document content to be routed to Trading Networks.
 
-    * `$content.type` is the MIME media type that describes the format of the 
-      given content. For [JSON] content, a recognized [JSON] MIME media type, 
+    * `$content.type` is the MIME media type that describes the format of the
+      given content. For [JSON] content, a recognized [JSON] MIME media type,
       such as "application/json", must be specified.
 
-    * `$schema` is the fully-qualified name of the parsing schema to use when 
-      serializing `$content` when provided as an IData document to [XML] or Flat 
+    * `$schema` is the fully-qualified name of the parsing schema to use when
+      serializing `$content` when provided as an IData document to [XML] or Flat
       File content, and can have the following values:
-      * For [XML] content, specify the fully-qualified name of the document 
+      * For [XML] content, specify the fully-qualified name of the document
         reference that defines the [XML] format.
-      * For Flat File content specify the fully-qualified name of the flat 
+      * For Flat File content specify the fully-qualified name of the flat
         file schema that defines the Flat File format.
 
-      Defaults to serializing `$content` when provided as an IData document to 
+      Defaults to serializing `$content` when provided as an IData document to
       [XML], if neither `$content.type` nor `$schema` are specified.
 
     * `TN_parms` is an optional set of routing hints for Trading
@@ -1455,14 +1455,14 @@ Bizdoc-related services:
   * Outputs:
     * `$document` is the parsed content part in an IData document representation.
 
-    * `$content.type` is the MIME media type that describes the format of the 
+    * `$content.type` is the MIME media type that describes the format of the
       parsed content.
 
-    * `$schema` is an optional output that specifies the fully-qualified name of 
-      the document reference (for XML) or flat file schema (for Flat Files) 
+    * `$schema` is an optional output that specifies the fully-qualified name of
+      the document reference (for XML) or flat file schema (for Flat Files)
       declared on the associated document type.
 
-    * `$schema.type` is an optional output that specifies whether `$schema` is an 
+    * `$schema.type` is an optional output that specifies whether `$schema` is an
       XML document reference or flat file schema, and is a choice of one of the
       following values:
       * Flat File
@@ -1618,6 +1618,26 @@ Exception-related services:
 ### Profile
 
 Partner profile-related services:
+
+* #### tundra.tn.profile.cache:clear
+
+  Clears the local in-memory partner profile cache by removing
+  all cached partner profiles.
+
+* #### tundra.tn.profile.cache:list
+
+  Returns a list of all the partner profiles stored in the
+  local in-memory cache.
+
+* #### tundra.tn.profile.cache:refresh
+
+  Reloads each partner profile stored in the local in-memory
+  partner profile cache from the Trading Networks database.
+
+* #### tundra.tn.profile.cache:seed
+
+  Initializes the local in-memory partner profile cache with all
+  partner profiles from the Trading Networks database.
 
 * #### tundra.tn.profile.delivery:get
 
