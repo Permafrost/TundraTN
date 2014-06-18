@@ -881,6 +881,10 @@ Top-level services for the most common tasks:
       documents are returned by `$service`, an exception will be thrown and
       handled by the `$catch` service. Defaults to false.
 
+    * `$relate?` is an optional boolean indicating whether the original document
+      should be related to each of the individual split documents. Defaults to
+      true.
+
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
       prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
       when calling `$service`. When true `$service` should implement the
