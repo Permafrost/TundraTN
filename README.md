@@ -1416,6 +1416,9 @@ Bizdoc-related services:
   Returns the Trading Networks document (bizdoc) associated with the given
   internal ID, optionally including the document's content parts.
 
+  Unlike `WmTN/wm.tn.doc:viewAs`, this service does not throw an exception if
+  the given internal ID does not exist.
+
   * Inputs:
     * `$id` is the internal ID of the Trading Networks document (bizdoc) to be
       retrieved.

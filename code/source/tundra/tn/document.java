@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-06-23 14:47:31 EST
+// -----( CREATED: 2014-06-23 16:03:58 EST
 // -----( ON-HOST: 172.16.189.129
 
 import com.wm.data.*;
@@ -24,6 +24,39 @@ public final class document
 
 	// ---( server methods )---
 
+
+
+
+	public static final void get (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(get)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] field:0:optional $id
+		// [i] field:0:optional $content? {&quot;false&quot;,&quot;true&quot;}
+		IDataCursor cursor = pipeline.getCursor();
+		
+		try {
+		  String id = IDataUtil.getString(cursor, "$id");
+		  boolean content = Boolean.parseBoolean(IDataUtil.getString(cursor, "$content?"));
+		
+		  com.wm.app.tn.doc.BizDocEnvelope bizdoc = get(id, content);
+		
+		  if (bizdoc != null) {
+		    IDataUtil.put(cursor, "$bizdoc", bizdoc);
+		    IDataUtil.put(cursor, "$sender", tundra.tn.support.profile.get(bizdoc.getSenderId()));
+		    IDataUtil.put(cursor, "$receiver", tundra.tn.support.profile.get(bizdoc.getReceiverId()));
+		  }
+		} catch (java.io.IOException ex) {
+		  throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
+		} finally {
+		  cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+                
+	}
 
 
 
