@@ -1132,6 +1132,27 @@ Bizdoc-related services:
     * `newValues` is a list of parsed [java.util.Date] objects representing
       the same instants in time as the given input datetime string `values`.
 
+* #### tundra.tn.document.attribute.string.transformer:find
+
+  Trading Networks string transformer which returns whether the given Trading
+  Networks document attribute value or list of values includes the given [regular
+  expression pattern].
+
+  This service is intended to be invoked by Trading Networks as a custom
+  document type attribute transformer.
+
+  * Inputs:
+    * `values` is the list of strings to be matched against the [regular
+      expression pattern].
+    * `isArray` is a boolean indicating if the `values` argument contains multiple
+      items.
+    * `arg` is a [regular expression pattern].
+
+  * Outputs:
+    * `newValues` is a list boolean values indicating if the given input
+      string `values` were found to include the given [regular expression pattern]
+      `arg`.
+
 * #### tundra.tn.document.attribute.string.transformer:match
 
   Trading Networks string transformer which returns whether the given Trading

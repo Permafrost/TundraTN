@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="svc_type">flow</value>
+  <value name="svc_subtype">default</value>
+  <value name="svc_sigtype">java 3.5</value>
+  <value name="svc_spec">tundra.tn.schema.attribute.string:transformer</value>
+  <value name="node_comment">Trading Networks string transformer which returns whether the given Trading 
+Networks document attribute value or list of values includes the given [regular 
+expression pattern].
+
+This service is intended to be invoked by Trading Networks as a custom 
+document type attribute transformer.
+
+* Inputs:
+  * values is the list of strings to be matched against the [regular
+    expression pattern].
+  * isArray is a boolean indicating if the values argument contains multiple 
+    items.
+  * arg is a [regular expression pattern].
+
+* Outputs:
+  * newValues is a list boolean values indicating if the given input 
+    string values were found to include the given [regular expression pattern] 
+    arg.
+
+[regular expression pattern]: &lt;http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html&gt;</value>
+  <value name="stateless">no</value>
+  <value name="caching">no</value>
+  <value name="prefetch">no</value>
+  <value name="cache_ttl">15</value>
+  <value name="prefetch_level">1</value>
+  <value name="template">tundra_tn_document_attribute_string_transformer_match</value>
+  <value name="template_type">html</value>
+  <value name="audit_level">off</value>
+  <value name="check_internal_acls">no</value>
+  <value name="icontext_policy">$null</value>
+  <value name="system_service">no</value>
+  <value name="retry_max">0</value>
+  <value name="retry_interval">0</value>
+  <value name="svc_in_validator_options">default</value>
+  <value name="svc_out_validator_options">default</value>
+  <value name="auditoption">0</value>
+  <record name="auditsettings" javaclass="com.wm.util.Values">
+    <value name="document_data">0</value>
+    <value name="startExecution">false</value>
+    <value name="stopExecution">false</value>
+    <value name="onError">true</value>
+  </record>
+</Values>
