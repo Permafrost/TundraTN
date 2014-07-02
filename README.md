@@ -148,13 +148,15 @@ Top-level services for the most common tasks:
   a default branch statement to match any documents unmatched by more specific
   conditions.
 
-  Supported actions include all the TundraTN top-level processing services:
+  Supported actions include all the relevant TundraTN top-level processing
+  services:
   * `TundraTN/tundra.tn:chain`
   * `TundraTN/tundra.tn:deliver`
   * `TundraTN/tundra.tn:derive`
+  * `TundraTN/tundra.tn:enqueue`
   * `TundraTN/tundra.tn:process`
   * `TundraTN/tundra.tn:split`
-  * `TundraTN/tundra.tn:translate.`
+  * `TundraTN/tundra.tn:translate`
 
   This service is designed to be called directly from a Trading Networks
   bizdoc processing rule.
