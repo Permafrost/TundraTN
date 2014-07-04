@@ -958,10 +958,61 @@ Top-level services for the most common tasks:
 
 * #### tundra.tn:translate
 
-  One-to-one conversion of an XML or flat file Trading Networks document
-  (bizdoc) to another format. Calls the given translation service, passing the
-  parsed content as an input, and routing the translated content back to
-  Trading Networks as a new document automatically.
+  One-to-one conversion of [CSV], [JSON], pipe separated values, [TSV], [XML],
+  [YAML], or Flat File content in a Trading Networks document (bizdoc) to
+  another format. Calls the given translation service, passing the parsed
+  content as an input, and routing the translated content back to Trading
+  Networks as a new document automatically.
+
+  Parsing (deserialization) of the bizdoc content is determined in order of
+  precedence by the input variable `$schema.input`, the parsing schema
+  configured on the bizdoc's associated document type (`recordBlueprint` or
+  `ParsingSchema` for XML and flat files respectively), and the input variable
+  `$content.type.input`. If `$schema.input` is specified, or if the document type
+  specifies a parsing schema, then that reference will be used to parse the
+  content, and the type of reference (document reference versus flat file
+  schema reference) determines the parser implementation used (see below).
+  However, if `$schema.input` is not specified, nor is a parsing schema defined
+  on the associated document type, then `$content.type.input` will be used to
+  determine if the content the parser implementation to use for the
+  appropriate MIME media type. If `$schema.input` is not specified, and no
+  parsing schema is specified on the associated document type, and
+  `$content.type.input` is not specified, then the content will be parsed as
+  [XML] by default.
+
+  Parser implementions are as follows:
+  * CSV: `Tundra/tundra.csv:parse`
+  * Flat File: `WmFlatFile/pub.flatFile:convertToValues`
+  * JSON: `Tundra/tundra.json:parse`
+  * Pipe separated values: `Tundra/tundra.csv:parse`
+  * TSV: `Tundra/tundra.csv:parse`
+  * XML: `WmPublic/pub.xml:xmlStringToXMLNode, `pub.xml:xmlNodeToDocument`
+  * YAML: Tundra/tundra.yaml:parse`
+
+  Emitting (serialization) of the translated content is determined in order of
+  precedence by the input variable `$schema.output`, the `TN_parms/$schema`
+  returned by `$service`, the input variable `$content.type.output`, and the
+  `TN_parms/$contentType` returned by `$service`. If `$schema.output` is specified,
+  or if `$service` returned `TN_parms/$schema`, then that reference will be used
+  to parse the content, and the type of reference (document reference versus
+  flat file schema reference) determines the parser implementation used (see
+  below). However, if `$schema.output` is not specified, nor `TN_parms/$schema`
+  returned by `$service`, but `$content.type.output` is specified or
+  `TN_parms/$contentType` is returned by `$service` then it will be used to
+  determine if the content the parser implementation to use for the
+  appropriate MIME media type. If neither `$schema.output` is
+  specified, nor `TN_parms/$schema` is returned by `$service`, nor
+  `$content.type.output` is specified, nor `TN_parms/$contentType` is returned by
+  `$service`, then the content will be parsed as [XML] by default.
+
+  Emitter implementions are as follows:
+  * CSV: `Tundra/tundra.csv:emit`
+  * Flat File: `WmFlatFile/pub.flatFile:convertToString`
+  * JSON: `Tundra/tundra.json:emit`
+  * Pipe separated values: `Tundra/tundra.csv:emit`
+  * TSV: `Tundra/tundra.csv:emit`
+  * XML: `WmPublic/pub.xml:documentToXMLString`
+  * YAML: `Tundra/tundra.yaml:emit`
 
   Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
   are set to 'true' and the bizdoc contains errors for any of these classes,
@@ -1003,13 +1054,36 @@ Top-level services for the most common tasks:
       which can be used to influence the translation process.
 
     * `$content.type.input` is the MIME media type that describes the format of
-      the bizdoc content being translated. For [JSON] content, a recognized
-      [JSON] MIME media type, such as "application/json", must be specified.
-      Defaults to the content type specified on the bizdoc content part.
+      the bizdoc content being translated:
+      * For [CSV] content, a recognized [CSV] MIME media type, such as
+        "text/csv", must be specified.
+      * For [JSON] content, a recognized [JSON] MIME media type, such as
+        "application/json", must be specified.
+      * For pipe separated values content, a MIME media type "text/psv",
+        "text/pipe-separated-values", or a type that includes a "+psv" suffix,
+        must be specified.
+      * For [TSV] content, a recognized [TSV] MIME media type, such as
+        "text/tab-separated-values", must be specified.
+      * For [YAML] content, a recognized [YAML] MIME media type, such as
+        "application/yaml", must be specified.
+      Defaults the the content type of the relevant bizdoc content part, if
+      not specified.
 
     * `$content.type.output` is the MIME media type that describes the format of
-      the resulting translated content. For [JSON] content, a recognized
-      [JSON] MIME media type, such as "application/json", must be specified.
+      the resulting translated content:
+      * For [CSV] content, a recognized [CSV] MIME media type, such as
+        "text/csv", must be specified.
+      * For [JSON] content, a recognized [JSON] MIME media type, such as
+        "application/json", must be specified.
+      * For pipe separated values content, a MIME media type "text/psv",
+        "text/pipe-separated-values", or a type that includes a "+psv" suffix,
+        must be specified.
+      * For [TSV] content, a recognized [TSV] MIME media type, such as
+        "text/tab-separated-values", must be specified.
+      * For [YAML] content, a recognized [YAML] MIME media type, such as
+        "application/yaml", must be specified.
+      Defaults to the value in `TN_parms/$contentType` returned by `$service`, if
+      not specified.
 
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
@@ -1018,7 +1092,8 @@ Top-level services for the most common tasks:
 
     * `$schema.output` is the optional name of the Integration Server document
       reference or flat file schema to use to serialize the translated
-      document returned by `$service`.
+      document returned by `$service`. Defaults to the value in `TN_parms/$schema`
+      returned by `$service`, if not specified.
 
     * `$service.input` is the optional name of the input parameter used for the
       parsed bizdoc content in the input pipeline of the invocation of `$service`.
@@ -2546,9 +2621,14 @@ around.
 Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 
 [/dev/null]: <http://en.wikipedia.org/wiki//dev/null>
+[CSV]: <http://en.wikipedia.org/wiki/Comma-separated_values>
 [default charset]: <http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()>
 [ISO8601]: <http://en.wikipedia.org/wiki/ISO_8601>
 [java.text.SimpleDateFormat]: <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>
 [java.util.Date]: <http://docs.oracle.com/javase/6/docs/api/java/util/Date.html>
+[JSON]: <http://www.json.org>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
+[TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
+[XML]: <http://www.w3.org/XML/>
+[YAML]: <http://www.yaml.org>
