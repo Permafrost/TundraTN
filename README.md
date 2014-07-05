@@ -1149,66 +1149,101 @@ Top-level services for the most common tasks:
 
 * #### tundra.tn.content:route
 
-  Routes arbitrary content specified as a string, byte array, input
-  stream, or IData document to Trading Networks.
+  Routes arbitrary content specified as a string, byte array, input stream, or
+  IData document to Trading Networks.
 
-  Correctly supports large documents, so any document considered
-  large will be routed as a large document in TN, unlike the
-  WmTN/wm.tn.doc.xml:routeXML service.
+  Correctly supports large documents, so any document considered large will be
+  routed as a large document in TN, unlike the `WmTN/wm.tn.doc.xml:routeXML`
+  service which does not correctly use tspace when routing large documents.
 
-  Also supports overriding the normally recognised document attributes,
-  such as sender, receiver, document ID, group ID, conversation ID,
-  and document type with the value specified in TN_parms for both XML
-  and flat files documents.
+  Also supports overriding the normally recognised document attributes, unlike
+  `WmTN/wm.tn.doc.xml:routeXML`, such as sender, receiver, document ID, group
+  ID, conversation ID, and document type with the value specified in TN_parms
+  for both XML and flat files documents.
 
   * Inputs:
-    * `$content` is string, byte array, input stream, or IData
-      document content to be routed to Trading Networks.
+    * `$content` is string, byte array, input stream, or IData document content
+      to be routed to Trading Networks.
+
+      If `$content` is provided as an IData document, it will be serialized
+      using an emitter determined in order of precedence by `$schema` and
+      `$content.type`. If `$schema` is specified, the type of reference determines
+      the emitter to use: a document reference will use the XML emitter, a
+      flat file schema reference will use the Flat File emitter. If `$schema` is
+      not specified, `$content.type` is used to determine the most appropriate
+      emitter for the MIME media type in question. If neither `$schema`, nor
+      `$content.type` are specified, `$content` is serialized as XML by default.
+
+      Emitter implementions are as follows:
+      * CSV: `Tundra/tundra.csv:emit`
+      * Flat File: `WmFlatFile/pub.flatFile:convertToString`
+      * JSON: `Tundra/tundra.json:emit`
+      * Pipe separated values: `Tundra/tundra.csv:emit`
+      * TSV: `Tundra/tundra.csv:emit`
+      * XML: `WmPublic/pub.xml:documentToXMLString`
+      * YAML: `Tundra/tundra.yaml:emit`
 
     * `$content.type` is the MIME media type that describes the format of the
-      given content. For [JSON] content, a recognized [JSON] MIME media type,
-      such as "application/json", must be specified.
+      given content:
+      * For [CSV] content, a recognized [CSV] MIME media type, such as
+        "text/csv", "text/comma-separated-values", or a type that includes a
+        "+csv" suffix, must be specified.
+      * For [JSON] content, a recognized [JSON] MIME media type, such as
+        "application/json", or a type that includes a "+json" suffix, must be
+        specified.
+      * For pipe separated values content, a MIME media type "text/psv",
+        "text/pipe-separated-values", or a type that includes a "+psv" suffix,
+        must be specified.
+      * For [TSV] content, a recognized [TSV] MIME media type, such as
+        "text/tsv", "text/tab-separated-values", or a type that includes a
+        "+tsv" suffix, must be specified.
+      * For [YAML] content, a recognized [YAML] MIME media type, such as
+        "application/yaml", or a type that includes a "+yaml" suffix, must be
+        specified.
 
-    * `$schema` is the fully-qualified name of the parsing schema to use when
-      serializing `$content` when provided as an IData document to [XML] or Flat
-      File content, and can have the following values:
+    * `$encoding` is an optional character set to use when encoding the
+      resulting text data to a byte array or input stream. Defaults to the
+      Java virtual machine [default charset].
+
+    * `$schema` is the fully-qualified name of the parsing schema to use to
+      serialize `$content` when provided as an IData document to [XML] or
+      Flat File content, and can have the following values:
       * For [XML] content, specify the fully-qualified name of the document
         reference that defines the [XML] format.
       * For Flat File content specify the fully-qualified name of the flat
         file schema that defines the Flat File format.
 
-      Defaults to serializing `$content` when provided as an IData document to
-      [XML], if neither `$content.type` nor `$schema` are specified.
+      Defaults to serializing `$content` as [XML], if neither `$content.type` nor
+      `$schema` are specified.
 
-    * `TN_parms` is an optional set of routing hints for Trading
-      Networks to use when routing `$content`. If specified, the
-      following values will overwrite the normal bizdoc recognised
-      values, allowing for sender, receiver, document ID, group ID,
-      conversation ID, and document type to be forced to have the
-      specified value (even for XML document types):
-      * `SenderID`
-      * `ReceiverID`
-      * `DocumentID`
-      * `DoctypeID`
-      * `DoctypeName`
-      * `GroupID`
-      * `ConversationID`
+    * `TN_parms` is an optional set of routing hints for Trading Networks to use
+      when routing `$content`. If specified, the following values will overwrite
+      the normal bizdoc recognised values, allowing for sender, receiver,
+      document ID, group ID, conversation ID, and document type to be forced
+      to have the specified value (even for XML document types):
+      * `TN_parms/SenderID`
+      * `TN_parms/ReceiverID`
+      * `TN_parms/DocumentID`
+      * `TN_parms/DoctypeID`
+      * `TN_parms/DoctypeName`
+      * `TN_parms/GroupID`
+      * `TN_parms/ConversationID`
 
-    * `$strict?` is an optional boolean, which if true will abort
-      routing/processing rule execution of the document if any
-      any errors (such as validation errors) are encountered prior
-      to processing, and result in an exception being thrown.
-      Defaults to false.
+    * `$strict?` is an optional boolean, which if true will abort routing/
+      processing rule execution of the document if any errors (such as
+      validation errors) are encountered prior to processing, and result in an
+      exception being thrown. Defaults to false.
 
   * Outputs:
-    * `$bizdoc` is the resulting Trading Networks document that was
-      routed.
-    * `$sender` is the Trading Networks profile of the sender of the
+    * `$bizdoc` is the resulting Trading Networks document that was routed.
+
+    * `$sender` is the Trading Networks profile of the sender of the document.
+
+    * `$receiver` is the Trading Networks profile of the receiver of the
       document.
-    * `$receiver` is the Trading Networks profile of the receiver of
-      the document.
-    * `TN_parms` is the routing hints used to route the document in
-      Trading Networks.
+
+    * `TN_parms` is the routing hints used to route the document in Trading
+      Networks.
 
 ### Document
 
