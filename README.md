@@ -304,6 +304,37 @@ Top-level services for the most common tasks:
           `smtp://user:password@host:port`), defaults to the SMTP server
           configured in the Integration Server setting `watt.server.smtpServer`
 
+      * `sap+idoc`: sends an IDoc XML message to an SAP system. Both opaque 
+        and non-opaque URIs are allowed: opaque URIs are useful if the SAP 
+        Adapter alias contains characters not permitted in a normal domain 
+        name, such as underscores.
+
+        An example opaque sap+idoc URI is as follows, where sap_r3 is the 
+        SAP Adapter alias name, and the user and password are provided as 
+        query string parameters:
+
+            sap+idoc:sap_r3?user=aladdin&password=opensesame&client=200&language=en&queue=xyz
+
+        An example non-opaque sap+idoc URI is as follows, where sappr3 is the 
+        SAP Adapter alias name, and the user and password are provided in the 
+        authority section of the URI:
+
+            sap+idoc://aladdin:opensesame@sappr3?client=200&languange=en&queue=xyz
+
+        The following additional override options can be provided via the 
+        `$pipeline` document, and if specified will overrided the relevant 
+        parts of the destination URI:
+        * `$user` is the username used for the SAP session. Defaults to the 
+          SAP Adapter alias username, if not specified.
+        * `$password` is the password used for the SAP session. Defaults to 
+          the SAP Adapter alias password, if not specified.
+        * `$client` is the SAP client used for the SAP session. Defaults to 
+          the SAP Adapter alias client, if not specified.
+        * `$language` is the language used for the SAP session. Defaults to 
+          the SAP Adapter alias language, if not specified.
+        * `$queue` is the optional name of the SAP system inbound queue, 
+          required when using queued remote function calls (qRFC).
+
     * `$service` is an optional fully-qualified service name which, when
       specified, will be invoked prior to delivery, thus allowing a service to
       perform processing to influence the delivery (such as populating the
