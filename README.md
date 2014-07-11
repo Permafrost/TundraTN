@@ -280,31 +280,31 @@ Top-level services for the most common tasks:
         the `$pipeline` document:
         * `$mode`: append / write
 
-      * `ftp`: uploads the given content to the FTP server, directory and file 
+      * `ftp`: uploads the given content to the FTP server, directory and file
         specified by the destination URI. An example FTP URI is as follows:
 
             ftp://aladdin:opensesame@example.com:21/path/file?append=true&active=true&ascii=true
 
-        The following additional options can be provided via the `$pipeline` 
+        The following additional options can be provided via the `$pipeline`
         document:
-        * `$user` is the username used to log in to the FTP server. Defaults to 
-          the username specified in the authority section of the URI, if not 
+        * `$user` is the username used to log in to the FTP server. Defaults to
+          the username specified in the authority section of the URI, if not
           specified.
-        * `$password` is the password used to log in to the FTP server. Defaults 
-          to the password specified in the authority section of the URI, if 
+        * `$password` is the password used to log in to the FTP server. Defaults
+          to the password specified in the authority section of the URI, if
           not specified.
-        * `$active` is a boolean which when true indicates that the connection 
-          to the FTP server should be in active mode. Defaults to false 
+        * `$active` is a boolean which when true indicates that the connection
+          to the FTP server should be in active mode. Defaults to false
           (passive mode), if not specified.
-        * `$append` is a boolean which when true will append the given content 
-          to the file, rather than overwrite it, if the file already exists. 
+        * `$append` is a boolean which when true will append the given content
+          to the file, rather than overwrite it, if the file already exists.
           Defaults to false (overwriting), if not specified.
-        * `$ascii` is a boolean which when true indicates that the file transfer 
-          should be made in ascii mode. Defaults to false (binary mode), if 
+        * `$ascii` is a boolean which when true indicates that the file transfer
+          should be made in ascii mode. Defaults to false (binary mode), if
           not specified.
-        * `$timeout` is an optional XML duration string which specifies how long 
-          the client waits for a response from the server before timing out 
-          and terminating the request with an error. Defaults to PT60S, if not 
+        * `$timeout` is an optional XML duration string which specifies how long
+          the client waits for a response from the server before timing out
+          and terminating the request with an error. Defaults to PT60S, if not
           specified.
 
       * `http`: transmits the given content to the destination URI. The
@@ -331,35 +331,35 @@ Top-level services for the most common tasks:
           `smtp://user:password@host:port`), defaults to the SMTP server
           configured in the Integration Server setting `watt.server.smtpServer`
 
-      * `sap+idoc`: sends an IDoc XML message to an SAP system. Both opaque 
-        and non-opaque URIs are allowed: opaque URIs are useful if the SAP 
-        Adapter alias contains characters not permitted in a normal domain 
+      * `sap+idoc`: sends an IDoc XML message to an SAP system. Both opaque
+        and non-opaque URIs are allowed: opaque URIs are useful if the SAP
+        Adapter alias contains characters not permitted in a normal domain
         name, such as underscores.
 
-        An example opaque sap+idoc URI is as follows, where sap_r3 is the 
-        SAP Adapter alias name, and the user and password are provided as 
+        An example opaque sap+idoc URI is as follows, where sap_r3 is the
+        SAP Adapter alias name, and the user and password are provided as
         query string parameters:
 
             sap+idoc:sap_r3?user=aladdin&password=opensesame&client=200&language=en&queue=xyz
 
-        An example non-opaque sap+idoc URI is as follows, where sappr3 is the 
-        SAP Adapter alias name, and the user and password are provided in the 
+        An example non-opaque sap+idoc URI is as follows, where sappr3 is the
+        SAP Adapter alias name, and the user and password are provided in the
         authority section of the URI:
 
             sap+idoc://aladdin:opensesame@sappr3?client=200&languange=en&queue=xyz
 
-        The following additional override options can be provided via the 
-        `$pipeline` document, and if specified will overrided the relevant 
+        The following additional override options can be provided via the
+        `$pipeline` document, and if specified will overrided the relevant
         parts of the destination URI:
-        * `$user` is the username used for the SAP session. Defaults to the 
+        * `$user` is the username used for the SAP session. Defaults to the
           SAP Adapter alias username, if not specified.
-        * `$password` is the password used for the SAP session. Defaults to 
+        * `$password` is the password used for the SAP session. Defaults to
           the SAP Adapter alias password, if not specified.
-        * `$client` is the SAP client used for the SAP session. Defaults to 
+        * `$client` is the SAP client used for the SAP session. Defaults to
           the SAP Adapter alias client, if not specified.
-        * `$language` is the language used for the SAP session. Defaults to 
+        * `$language` is the language used for the SAP session. Defaults to
           the SAP Adapter alias language, if not specified.
-        * `$queue` is the optional name of the SAP system inbound queue, 
+        * `$queue` is the optional name of the SAP system inbound queue,
           required when using queued remote function calls (qRFC).
 
     * `$service` is an optional fully-qualified service name which, when
@@ -850,8 +850,8 @@ Top-level services for the most common tasks:
 
 * #### tundra.tn:retrieve
 
-  Retrieves arbitrary content (XML, flat files, binary) from the given `$source`
-  URI, and routes it to Trading Networks.
+  Retrieves arbitrary content from the given `$source` URI, and routes it to
+  Trading Networks.
 
   Additional retrieval protocols can be implemented by creating a service named
   for the URI scheme in the folder `Tundra/tundra.content.retrieve`.  Services in
@@ -866,20 +866,31 @@ Top-level services for the most common tasks:
         Networks. The file component of the URI can include wildcards
         or globs (such as `*.txt` or `*.j?r`) for matching multiple files at once.
 
-        The following example would process all `*.txt` files in the specified directory:
+        The following example would process all `*.txt` files in the specified
+        directory:
 
             file:////server:port/directory/*.txt
 
         To ensure each file processed is not locked or being written to by
-        another process, the file is first moved to an archive directory prior
-        to processing. The name of this directory can be configured by adding a
+        another process, the file is first moved to a working directory. The
+        name of this directory can be configured by adding a query string
+        parameter called `working` to the URI, for example:
+
+            file:////server:port/directory/*.txt?working=temp
+
+        In this example, files are first moved to a subdirectory named `temp`.
+        If not specified, the working directory defaults to a subdirectory
+        named `working`.
+
+        After successful processing, the file is then moved to an archive
+        directory. The name of this directory can be configured by adding a
         query string parameter called `archive` to the URI, for example:
 
             file:////server:port/directory/*.txt?archive=backup
 
-        In this example, files are first moved to a subdirectory named `backup`.
-        If not specified, the archive directory defaults to a subdirectory named
-        `archive`.
+        In this example, files are moved to a subdirectory named `backup` after
+        being successfully processed. If not specified, the archive directory
+        defaults to a subdirectory named `archive`.
 
     * `$limit` is an optional maximum number of content matches to be processed in
       a single execution. Defaults to 1000.

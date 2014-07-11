@@ -403,8 +403,8 @@ non-XML content:
       </array>
     </record>
   </record>
-  <value name="node_comment">Retrieves arbitrary content (XML, flat files, binary) from the given $source 
-URI, and routes it to Trading Networks. 
+  <value name="node_comment">Retrieves arbitrary content from the given $source URI, and routes it to 
+Trading Networks. 
 
 Additional retrieval protocols can be implemented by creating a service named 
 for the URI scheme in the folder Tundra/tundra.content.retrieve.  Services in 
@@ -418,21 +418,32 @@ specification.
     * file: routes each file matching the given $source URI to Trading 
       Networks. The file component of the URI can include wildcards 
       or globs (such as *.txt or *.j?r) for matching multiple files at once.
-
-      The following example would process all *.txt files in the specified directory:
+      
+      The following example would process all *.txt files in the specified 
+      directory:
 
           file:////server:port/directory/*.txt
 
       To ensure each file processed is not locked or being written to by 
-      another process, the file is first moved to an archive directory prior 
-      to processing. The name of this directory can be configured by adding a 
+      another process, the file is first moved to a working directory. The 
+      name of this directory can be configured by adding a query string 
+      parameter called working to the URI, for example:
+
+          file:////server:port/directory/*.txt?working=temp
+
+      In this example, files are first moved to a subdirectory named temp. 
+      If not specified, the working directory defaults to a subdirectory 
+      named working.
+
+      After successful processing, the file is then moved to an archive 
+      directory. The name of this directory can be configured by adding a 
       query string parameter called archive to the URI, for example:
 
-          file:////server:port/directory/*.txt?archive=backup 
+          file:////server:port/directory/*.txt?archive=backup
 
-      In this example, files are first moved to a subdirectory named backup. 
-      If not specified, the archive directory defaults to a subdirectory named 
-      archive.
+      In this example, files are moved to a subdirectory named backup after 
+      being successfully processed. If not specified, the archive directory 
+      defaults to a subdirectory named archive.
 
   * $limit is an optional maximum number of content matches to be processed in 
     a single execution. Defaults to 1000.
