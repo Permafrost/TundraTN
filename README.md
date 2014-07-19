@@ -2218,6 +2218,31 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * `logMsg` is an optional message describing the processing of the queue.
       This output variable is not used by this service.
 
+* #### tundra.tn.queue:disable
+
+  Disables the given Trading Networks queue for both queuing and delivery of
+  documents: no new documents can be added to the queue, nor will existing
+  queued documents be delivered.
+
+  When a queue is disabled or draining, delivery fails because Trading
+  Networks cannot place the delivery task in the queue. Trading Networks sets
+  the delivery task status to FAILED and logs a message to the activity log.
+
+  * Inputs:
+    * `$queue` is the name of the queue to be disabled.
+
+* #### tundra.tn.queue:drain
+
+  Drains the given Trading Networks queue: no new documents can be added to
+  the queue, but existing documents in the queue will still be delivered.
+
+  When a queue is disabled or draining, delivery fails because Trading
+  Networks cannot place the delivery task in the queue. Trading Networks sets
+  the delivery task status to FAILED and logs a message to the activity log.
+
+  * Inputs:
+    * `$queue` is the name of the queue to be drained.
+
 * #### tundra.tn.queue:each
 
   Invokes the given bizdoc processing service for each item in the given
@@ -2262,6 +2287,15 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `logMsg` is an optional message describing the processing of the queue.
       This output variable is not used by this service.
+
+* #### tundra.tn.queue:enable
+
+  Enables the given Trading Networks queue for both queuing and delivery of
+  documents: new documents can be added to the queue, and queued documents
+  will be delivered. This is the normal state for a queue.
+
+  * Inputs:
+    * `$queue` is the name of the queue to be enabled.
 
 * #### tundra.tn.queue:process
 
@@ -2392,6 +2426,18 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `logMsg` is an optional message describing the processing of the queue.
       This output variable is not used by this service.
+
+* #### tundra.tn.queue:suspend
+
+  Suspends the delivery of documents in the given Trading Networks queue. New
+  documents can be added to the queue, but no documents will be delivered by
+  the queue.
+
+  Queues can be suspended to minimise delivery errors when the receiver is
+  temporarily unable to receive documents.
+
+  * Inputs:
+    * `$queue` is the name of the queue to be suspended.
 
 * #### tundra.tn.queue:translate
 
