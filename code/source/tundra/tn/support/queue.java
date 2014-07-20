@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-06-23 10:06:34 EST
-// -----( ON-HOST: 172.16.189.129
+// -----( CREATED: 2014-07-20 14:04:41 EST
+// -----( ON-HOST: 172.16.189.136
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -61,6 +61,7 @@ public final class queue
 
 	// --- <<IS-START-SHARED>> ---
 	protected final static String EXECUTE_TASK_SERVICE_NAME = "tundra.tn.support.queue.task:execute";
+	protected final static String DELIVER_BATCH_SERVICE_NAME = "wm.tn.queuing:deliverBatch";
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
@@ -75,9 +76,9 @@ public final class queue
 	    com.wm.lang.ns.NSName executeTaskService = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
 	
 	    if (concurrency <= 1) {
-	      eachDirect(queueName, queue.getQueueType(), executeTaskService, service, pipeline, limit);
+	      eachDirect(queue, executeTaskService, service, pipeline, limit);
 	    } else {
-	      eachConcurrent(queueName, queue.getQueueType(), executeTaskService, service, pipeline, concurrency, limit);
+	      eachConcurrent(queue, executeTaskService, service, pipeline, concurrency, limit);
 	    }
 	  } catch (java.sql.SQLException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
@@ -88,18 +89,24 @@ public final class queue
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline
 	// on the current thread
-	protected static void eachDirect(String queueName, String queueType, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int limit) throws ServiceException {
+	protected static void eachDirect(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int limit) throws ServiceException {
 	  try {
+	    boolean invokedByTradingNetworks = invokedByTradingNetworks();
 	    int total = 0;
 	    while(total < limit) {
-	      com.wm.app.tn.delivery.GuaranteedJob task = com.wm.app.tn.db.DeliveryStore.dequeueOldestJob(queueName);
-	      if (task == null) {
-	        break; // if all threads have finished and there are no more tasks, then exit
+	      if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
+	        com.wm.app.tn.delivery.GuaranteedJob task = com.wm.app.tn.db.DeliveryStore.dequeueOldestJob(queue.getQueueName());
+	        if (task == null) {
+	          break; // if there are no more tasks, then exit
+	        } else {
+	          try {
+	            IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()));
+	          } catch (Exception ex) {}
+	          total++;
+	        }
+	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
 	      } else {
-	        try {
-	          IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queueName, queueType));
-	        } catch (Exception ex) {}
-	        total++;
+	        break; // if invoked by TN and queue is disabled or suspended, then exit
 	      }
 	    }
 	  } catch (Exception ex) {
@@ -109,8 +116,10 @@ public final class queue
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// tasks will be processed by a thread pool whose size is equal to the desired concurrency
-	protected static void eachConcurrent(String queueName, String queueType, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int concurrency, int limit) throws ServiceException {
+	protected static void eachConcurrent(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int concurrency, int limit) throws ServiceException {
 	  try {
+	    boolean invokedByTradingNetworks = invokedByTradingNetworks();
+	
 	    // upper bound on number of tasks submitted to thread pool at any one time
 	    int backlog = concurrency * 2;
 	    int total = 0;
@@ -118,35 +127,41 @@ public final class queue
 	    com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
 	    com.wm.app.b2b.server.InvokeState state = com.wm.app.b2b.server.InvokeState.getCurrentState();
 	
-	    java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queueName, state));
+	    java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queue.getQueueName(), state));
 	
 	    java.util.Queue<java.util.concurrent.Future<IData>> futures = new java.util.LinkedList<java.util.concurrent.Future<IData>>();
 	
 	    while(total < limit) {
-	      int size = futures.size();
-	
-	      if (size < backlog) {
-	        // submit another queued task
-	        com.wm.app.tn.delivery.GuaranteedJob task = com.wm.app.tn.db.DeliveryStore.dequeueOldestJob(queueName);
-	        if (task == null) {
-	          if (size > 0) {
-	            // wait for first thread to finish; once finished we'll loop again and see if there are now tasks on the queue
-	            awaitOldest(futures);
+	      if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
+	        int size = futures.size();
+	        if (size < backlog) {
+	          // submit another queued task
+	          com.wm.app.tn.delivery.GuaranteedJob task = com.wm.app.tn.db.DeliveryStore.dequeueOldestJob(queue.getQueueName());
+	          if (task == null) {
+	            if (size > 0) {
+	              // wait for first thread to finish; once finished we'll loop again and see if there are now tasks on the queue
+	              awaitOldest(futures);
+	            } else {
+	              // if all threads have finished and there are no more tasks, then exit
+	              break;
+	            }
 	          } else {
-	            // if all threads have finished and there are no more tasks, then exit
-	            break;
+	            futures.add(executor.submit(new CallableService(executeTaskService, session, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()))));
+	            total++;
 	          }
 	        } else {
-	          futures.add(executor.submit(new CallableService(executeTaskService, session, createTaskInputPipeline(task, service, pipeline, queueName, queueType))));
-	          total++;
+	          // wait for first thread to finish
+	          awaitOldest(futures);
 	        }
+	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
 	      } else {
-	        // wait for first thread to finish
-	        awaitOldest(futures);
+	        break; // if invoked by TN and queue is disabled or suspended, then exit
 	      }
 	    }
 	    executor.shutdown();
 	    awaitAll(futures);
+	  } catch (java.sql.SQLException ex) {
+	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } catch (java.io.IOException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } catch (com.wm.app.tn.delivery.DeliveryException ex) {
@@ -186,6 +201,17 @@ public final class queue
 	  cursor.destroy();
 	
 	  return output;
+	}
+	
+	// returns true if the invocation callstack includes the WmTN/wm.tn.queuing:deliverBatch service
+	protected static boolean invokedByTradingNetworks() {
+	  java.util.Iterator iterator = com.wm.app.b2b.server.InvokeState.getCurrentState().getCallStack().iterator();
+	  boolean result = false;
+	  while(iterator.hasNext()) {
+	    result = iterator.next().toString().equals(DELIVER_BATCH_SERVICE_NAME);
+	    if (result) break;
+	  }
+	  return result;
 	}
 	
 	// wraps a call to an IS service with a standard java.util.concurrent.callable interface, so that it can
