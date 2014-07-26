@@ -892,6 +892,18 @@ Top-level services for the most common tasks:
         being successfully processed. If not specified, the archive directory
         defaults to a subdirectory named `archive`.
 
+        Optionally, archived files older than a given age can be cleaned up 
+        automatically by the retrieve process by specifying a query string 
+        parameter called `purge` with an XML duration value representing the 
+        age an archived file must be before being purged, for example:
+
+            file:////server:port/directory/*.txt?purge=P14D
+
+        In this example, any files in the archive directory older than 14 days 
+        will be automatically deleted by the retrieve process. If the query 
+        string parameter `purge` is not specified, archived files will not be 
+        automatically cleaned up.
+
     * `$limit` is an optional maximum number of content matches to be processed in
       a single execution. Defaults to 1000.
 
