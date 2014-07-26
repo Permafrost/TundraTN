@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">get</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">SURhdGFDdXJzb3IgY3Vyc29yID0gcGlwZWxpbmUuZ2V0Q3Vyc29yKCk7Cgp0cnkgewogIElEYXRh
+IGJpemRvYyA9IElEYXRhVXRpbC5nZXRJRGF0YShjdXJzb3IsICIkYml6ZG9jIik7CiAgU3RyaW5n
+IHBhcnROYW1lID0gSURhdGFVdGlsLmdldFN0cmluZyhjdXJzb3IsICIkcGFydCIpOwoKICBDb250
+ZW50UGFydCBwYXJ0ID0gbmV3IENvbnRlbnRQYXJ0KGJpemRvYywgcGFydE5hbWUpOwogIGphdmEu
+aW8uSW5wdXRTdHJlYW0gY29udGVudCA9IHBhcnQuZ2V0Q29udGVudCgpOwoKICBpZiAoY29udGVu
+dCAhPSBudWxsKSB7CiAgICBJRGF0YVV0aWwucHV0KGN1cnNvciwgIiRjb250ZW50IiwgY29udGVu
+dCk7CiAgICBJRGF0YVV0aWwucHV0KGN1cnNvciwgIiRjb250ZW50LnR5cGUiLCBwYXJ0LmdldE1p
+bWVUeXBlKCkpOwogIH0KfSBmaW5hbGx5IHsKICBjdXJzb3IuZGVzdHJveSgpOwp9</value>
+</Values>
