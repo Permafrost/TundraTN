@@ -273,8 +273,9 @@ Top-level services for the most common tasks:
     * `bizdoc` is the Trading Networks document whose content is to be delivered.
 
     * `$destination` is either a URI, or a named destination (such as Receiver's
-      Preferred Protocol), to which the bizdoc content will be delivered.
-      Supports the following delivery protocols (URI schemes):
+      Preferred Protocol), to which the bizdoc content will be delivered. If not
+      specified, no delivery will be attempted. Supports the following delivery
+      protocols (URI schemes):
       * `file`: writes the given content to the file specified by the
         destination URI. The following additional options can be provided via
         the `$pipeline` document:
@@ -386,6 +387,9 @@ Top-level services for the most common tasks:
 
     * `$status.done` is an optional user status to use for the bizdoc when
       delivery has completed successfully. Defaults to DONE.
+
+    * `$status.ignored` is an optional user status to use for the bizdoc when no
+      delivery destination is provided. Defaults to IGNORED.
 
     * `$part` is an optional name of the bizdoc content part to be delivered.
       Defaults to the default content part when not specified (xmldata for XML
@@ -892,16 +896,16 @@ Top-level services for the most common tasks:
         being successfully processed. If not specified, the archive directory
         defaults to a subdirectory named `archive`.
 
-        Optionally, archived files older than a given age can be cleaned up 
-        automatically by the retrieve process by specifying a query string 
-        parameter called `purge` with an XML duration value representing the 
+        Optionally, archived files older than a given age can be cleaned up
+        automatically by the retrieve process by specifying a query string
+        parameter called `purge` with an XML duration value representing the
         age an archived file must be before being purged, for example:
 
             file:////server:port/directory/*.txt?purge=P14D
 
-        In this example, any files in the archive directory older than 14 days 
-        will be automatically deleted by the retrieve process. If the query 
-        string parameter `purge` is not specified, archived files will not be 
+        In this example, any files in the archive directory older than 14 days
+        will be automatically deleted by the retrieve process. If the query
+        string parameter `purge` is not specified, archived files will not be
         automatically cleaned up.
 
     * `$limit` is an optional maximum number of content matches to be processed in
