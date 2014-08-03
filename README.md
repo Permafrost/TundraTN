@@ -318,8 +318,30 @@ Top-level services for the most common tasks:
           the client waits for a response from the server before timing out
           and terminating the request with an error. Defaults to PT60S, if not
           specified.
-          
+
       * `https`: refer to http
+
+      * `jms`: sends the given content as a [JMS] [javax.jms.BytesMessage] to
+        the specified [JMS] alias and queue or topic. The following additional
+        settings can be specified:
+        * $headers/*: additional properties to be added to the [JMS] message
+          header, which can be used for filtering by [JMS] subscribers. Note
+          that all extracted bizdoc attributes are automatically included in
+          the JMS message header.
+
+        The following example will deliver the given content as a [JMS] bytes
+        message to the JMS alias DEFAULT_IS_JMS_CONNECTION, [JMS] topic
+        JMS::Temporary::Topic, with a time to live of 1 day, and with the
+        default priority of 4:
+
+            jms://DEFAULT_IS_JMS_CONNECTION?topic=JMS::Temporary::Topic&lifetime=P1D
+
+        The following example will deliver the given content as a [JMS] bytes
+        message to the [JMS] alias DEFAULT_IS_JMS_CONNECTION, [JMS] queue
+        JMS::Temporary::Queue, with no expiry, and with the specified priority
+        of 1:
+
+            jms://DEFAULT_IS_JMS_CONNECTION?queue=JMS::Temporary::Queue&priority=1
 
       * `mailto`: sends an email with the given content attached. An example
         mailto URI is as follows:
