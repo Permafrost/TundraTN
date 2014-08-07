@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-07-20 14:04:41 EST
-// -----( ON-HOST: 172.16.189.136
+// -----( CREATED: 2014-08-07 20:19:21 EST
+// -----( ON-HOST: 172.16.189.141
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -61,6 +61,7 @@ public final class queue
 
 	// --- <<IS-START-SHARED>> ---
 	protected final static String EXECUTE_TASK_SERVICE_NAME = "tundra.tn.support.queue.task:execute";
+	protected final static com.wm.lang.ns.NSName EXECUTE_TASK_SERVICE = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
 	protected final static String DELIVER_BATCH_SERVICE_NAME = "wm.tn.queuing:deliverBatch";
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
@@ -73,12 +74,10 @@ public final class queue
 	    com.wm.app.tn.delivery.DeliveryQueue queue = com.wm.app.tn.db.QueueOperations.selectByName(queueName);
 	    if (queue == null) throw new ServiceException("Queue '" + queueName + "' does not exist");
 	
-	    com.wm.lang.ns.NSName executeTaskService = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
-	
 	    if (concurrency <= 1) {
-	      eachDirect(queue, executeTaskService, service, pipeline, limit);
+	      eachDirect(queue, EXECUTE_TASK_SERVICE, service, pipeline, limit);
 	    } else {
-	      eachConcurrent(queue, executeTaskService, service, pipeline, concurrency, limit);
+	      eachConcurrent(queue, EXECUTE_TASK_SERVICE, service, pipeline, concurrency, limit);
 	    }
 	  } catch (java.sql.SQLException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
