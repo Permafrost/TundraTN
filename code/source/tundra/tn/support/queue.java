@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-08-07 20:19:21 EST
+// -----( CREATED: 2014-08-07 20:42:28 EST
 // -----( ON-HOST: 172.16.189.141
 
 import com.wm.data.*;
@@ -98,9 +98,7 @@ public final class queue
 	        if (task == null) {
 	          break; // if there are no more tasks, then exit
 	        } else {
-	          try {
-	            IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()));
-	          } catch (Exception ex) {}
+	          IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()));
 	          total++;
 	        }
 	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
@@ -129,6 +127,7 @@ public final class queue
 	    java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queue.getQueueName(), state));
 	
 	    java.util.Queue<java.util.concurrent.Future<IData>> futures = new java.util.LinkedList<java.util.concurrent.Future<IData>>();
+	    java.util.List<Exception> exceptions = new java.util.ArrayList<Exception>();
 	
 	    while(total < limit) {
 	      if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
@@ -139,7 +138,11 @@ public final class queue
 	          if (task == null) {
 	            if (size > 0) {
 	              // wait for first thread to finish; once finished we'll loop again and see if there are now tasks on the queue
-	              awaitOldest(futures);
+	              Exception exception = awaitOldest(futures);
+	              if (exception != null) {
+	                exceptions.add(exception);
+	                break;
+	              }
 	            } else {
 	              // if all threads have finished and there are no more tasks, then exit
 	              break;
@@ -150,7 +153,11 @@ public final class queue
 	          }
 	        } else {
 	          // wait for first thread to finish
-	          awaitOldest(futures);
+	          Exception exception = awaitOldest(futures);
+	          if (exception != null) {
+	            exceptions.add(exception);
+	            break;
+	          }
 	        }
 	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
 	      } else {
@@ -158,33 +165,57 @@ public final class queue
 	      }
 	    }
 	    executor.shutdown();
-	    awaitAll(futures);
+	    exceptions.addAll(awaitAll(futures));
+	    raise(exceptions);
 	  } catch (java.sql.SQLException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } catch (java.io.IOException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } catch (com.wm.app.tn.delivery.DeliveryException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
-	  } catch (java.lang.InterruptedException ex) {
-	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
+	  }
+	}
+	
+	// throws a new exception with a message built from the given list of exceptions
+	protected static void raise(java.util.List<Exception> exceptions) throws ServiceException {
+	  int size = exceptions.size();
+	  if (size > 0) {
+	    StringBuilder message = new StringBuilder();
+	    for (int i = 0; i < size; i++) {
+	      Exception exception = exceptions.get(i);
+	      if (i > 0) message.append("\n");
+	      message.append(exception.getClass().getName() + ": " + exception.getMessage());
+	    }
+	    throw new ServiceException(message.toString());
 	  }
 	}
 	
 	// waits for all futures in the given queue to complete
-	protected static <T> void awaitAll(java.util.Queue<java.util.concurrent.Future<T>> futures) throws InterruptedException {
+	protected static <T> java.util.List<Exception> awaitAll(java.util.Queue<java.util.concurrent.Future<T>> futures) {
+	  java.util.List<Exception> exceptions = new java.util.ArrayList<Exception>(futures.size());
 	  while(futures.size() > 0) {
-	    awaitOldest(futures);
+	    Exception exception = awaitOldest(futures);
+	    if (exception != null) exceptions.add(exception);
 	  }
+	  return exceptions;
 	}
 	
 	// waits for the first/head future in the given queue to complete
-	protected static <T> void awaitOldest(java.util.Queue<java.util.concurrent.Future<T>> futures) throws InterruptedException {
-	  await(futures.poll());
+	protected static <T> Exception awaitOldest(java.util.Queue<java.util.concurrent.Future<T>> futures) {
+	  return await(futures.poll());
 	}
 	
 	// waits for the given future to complete
-	protected static <T> void await(java.util.concurrent.Future<T> future) throws InterruptedException {
-	  try { future.get(); } catch (java.util.concurrent.ExecutionException ex) {}
+	protected static <T> Exception await(java.util.concurrent.Future<T> future) {
+	  Exception exception = null;
+	  try {
+	    future.get(); 
+	  } catch (java.util.concurrent.ExecutionException ex) {
+	    exception = ex;
+	  } catch(InterruptedException ex) {
+	    exception = ex;
+	  }
+	  return exception;
 	}
 	
 	// returns a new pipeline for the executeTaskService
