@@ -2081,6 +2081,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
 
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
+
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
@@ -2162,6 +2168,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
 
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
+
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       cleared.
@@ -2208,6 +2220,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
 
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
+
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
@@ -2252,6 +2270,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
+
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2323,6 +2347,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
 
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
+
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
@@ -2378,6 +2408,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
 
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
+
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
@@ -2410,6 +2446,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
+
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2461,6 +2503,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
+
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2525,6 +2573,12 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
+
+    * `$ordered?` is an optional boolean flag which when true processes tasks
+      in ascending task creation order. This flag is only applicable when
+      `$concurrency` is set to 1. Failed tasks are either retried a maximum of
+      127 times, or as per the retry settings on the receiver's profile.
+      Defaults to false, if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
