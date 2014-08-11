@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-08-11 09:40:27.757
+// -----( CREATED: 2014-08-12 09:25:09.463
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -290,7 +290,7 @@ public final class queue
 
 	// re-enqueues the given job for delivery, unless it has reached its retry limit
 	protected static boolean retry(com.wm.app.tn.delivery.GuaranteedJob job, int retryLimit, boolean ordered) throws java.sql.SQLException, java.io.IOException, ServiceException {
-	  boolean retry = false;
+	  boolean failed = false;
 
 	  if (ordered) {
 	    job = com.wm.app.tn.db.DeliveryStore.getAnyJob(job.getJobId(), true); // refetch job from DB
@@ -298,17 +298,24 @@ public final class queue
 	    int jobLimit = job.getRetryLimit();
 	    int retries = job.getRetries();
 	    String status = job.getStatus();
+	    String queueName = job.getQueueName();
+	    com.wm.app.tn.delivery.DeliveryQueue queue = tundra.tn.queue.get(queueName);
 
 	    boolean automaticRetry = jobLimit > 0;
+	    if (automaticRetry) retryLimit = jobLimit; // honour the retry settings on the task
+	    boolean exhausted = retries >= retryLimit;
 
-	    if (jobLimit > 0) {
-	      retry = retries < jobLimit && status.equals("QUEUED");
-	    } else {
-	      retry = retries < retryLimit && status.equals("FAILED");
-	    }
+	    failed = (jobLimit > 0 && status.equals("QUEUED")) || ((jobLimit <= 0 || exhausted) && status.equals("FAILED"));
 
-	    if (retry) {
-	      if (!automaticRetry) {
+	    if (failed) {
+	      if (exhausted) {
+	        // reset retries back to 0
+	        job.setRetries(0);
+	        job.setStatus(com.wm.app.tn.delivery.GuaranteedJob.QUEUED);
+	        job.setDefaultServerId();
+	        // suspend the queue
+	        tundra.tn.queue.suspend(queueName);
+	      } else if (!automaticRetry) {
 	        job.retryFailed();
 	        job.setStatus(com.wm.app.tn.delivery.GuaranteedJob.QUEUED);
 	        job.setDefaultServerId();
@@ -317,11 +324,22 @@ public final class queue
 	      update(job);
 
 	      com.wm.app.tn.doc.BizDocEnvelope bizdoc = job.getBizDocEnvelope();
-	      if (bizdoc != null) com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
+	      if (bizdoc != null) {
+	        if (exhausted) {
+	          com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "SUSPENDED");
+	          if (queue.getQueueType().equals("private")) {
+	            log(bizdoc, "WARNING", "Delivery", "Suspended receiver's private queue '" + queueName + "'", "Ordered delivery of receiver's private queue '" + queueName + "' was suspended due to task exhaustion");
+	          } else {
+	            log(bizdoc, "WARNING", "Delivery", "Suspended public queue '" + queueName + "'", "Ordered delivery of public queue '" + queueName + "' was suspended due to task exhaustion");
+	          }
+	        } else {
+	          com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
+	        }
+	      }
 	    }
 	  }
 
-	  return retry;
+	  return failed;
 	}
 
 	// saves the given job to the Trading Networks database
@@ -357,6 +375,28 @@ public final class queue
 	  } finally {
 	    com.wm.app.tn.db.SQLStatements.releaseStatement(statement);
 	    com.wm.app.tn.db.Datastore.releaseConnection(connection);
+	  }
+	}
+
+	protected static final String LOG_SERVICE_NAME = "tundra.tn:log";
+	protected static final com.wm.lang.ns.NSName LOG_SERVICE = com.wm.lang.ns.NSName.create(LOG_SERVICE_NAME);
+
+	protected static void log(com.wm.app.tn.doc.BizDocEnvelope bizdoc, String type, String klass, String summary, String message) throws ServiceException {
+	  IData input = IDataFactory.create();
+	  IDataCursor cursor = input.getCursor();
+	  IDataUtil.put(cursor, "$bizdoc", bizdoc);
+	  IDataUtil.put(cursor, "$type", type);
+	  IDataUtil.put(cursor, "$class", klass);
+	  IDataUtil.put(cursor, "$summary", summary);
+	  IDataUtil.put(cursor, "$message", message);
+	  cursor.destroy();
+
+	  try {
+	    Service.doInvoke(LOG_SERVICE, input);
+	  } catch (ServiceException ex) {
+	    throw ex;
+	  } catch (Exception ex) {
+	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  }
 	}
 	// --- <<IS-END-SHARED>> ---
