@@ -655,23 +655,25 @@ Top-level services for the most common tasks:
 
 * #### tundra.tn:log
 
-  Logs a message in the Trading Networks activity log, prefixed with the host
-  name on which the log was created for better diagnostics.
+  Logs a message in the Trading Networks activity log, appended with
+  information about the current execution context for better
+  diagnostics.
 
   * Inputs:
-    * `$bizdoc` is an optional Trading Networks document against which to log the
-      message.
-
-    * `$type` is an optional choice of MESSAGE, WARNING, or ERROR, which
-      describes the type of message being logged. Defaults to MESSAGE.
-
+    * `$bizdoc` is an optional Trading Networks document against which
+      to log the message.
+    * `$type` is an optional choice of `MESSAGE`, `WARNING`, or `ERROR`, which
+      describes the type of message being logged. Defaults to `MESSAGE`.
     * `$class` is an optional message class or category.
-
-    * `$summary` is an optional short title or summary of the message being
-      logged. If not specified, defaults to be the same as `$message`.
-
-    * `$message` is an optional message to be logged. If not specified, defaults
-      to an empty string.
+    * `$summary` is an optional short title or summary of the message
+      being logged. If not specified, defaults to be the same as
+      `$message`.
+    * `$message` is an optional message to be logged. If not specified,
+      defaults to an empty string.
+    * `$context` is an optional IData document containing arbitrary
+      information about the current execution context. The host name,
+      session, thread, and call stack are added, and it is then
+      serialized and appended to `$message` prior to logging.
 
 * #### tundra.tn:process
 

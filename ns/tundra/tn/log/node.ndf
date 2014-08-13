@@ -271,6 +271,50 @@
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
         </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$context</value>
+          <value name="field_type">record</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+          <array name="rec_fields" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="node_type">record</value>
+              <value name="node_comment"></value>
+              <record name="node_hints" javaclass="com.wm.util.Values">
+                <null name="field_usereditable"/>
+                <value name="field_largerEditor">false</value>
+                <value name="field_password">false</value>
+              </record>
+              <value name="field_name">Duration</value>
+              <value name="field_type">string</value>
+              <value name="field_dim">0</value>
+              <value name="field_opt">true</value>
+              <record name="field_content_type" javaclass="com.wm.util.Values">
+                <value name="contentType">1</value>
+                <value name="internalType">reference</value>
+                <value name="dataTypeVersion">dtVersion2</value>
+                <array name="targetNames" type="record" depth="1">
+                  <record javaclass="com.wm.util.Values">
+                    <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                    <value name="ncName">string</value>
+                  </record>
+                </array>
+              </record>
+              <value name="nillable">true</value>
+              <value name="form_qualified">false</value>
+              <value name="is_global">false</value>
+            </record>
+          </array>
+        </record>
       </array>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
@@ -284,23 +328,25 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Logs a message in the Trading Networks activity log, prefixed with the host 
-name on which the log was created for better diagnostics.
+  <value name="node_comment">Logs a message in the Trading Networks activity log, appended with 
+information about the current execution context for better 
+diagnostics.
 
 * Inputs:
-  * $bizdoc is an optional Trading Networks document against which to log the
-    message.
-
+  * $bizdoc is an optional Trading Networks document against which 
+    to log the message.
   * $type is an optional choice of MESSAGE, WARNING, or ERROR, which 
     describes the type of message being logged. Defaults to MESSAGE.
-
   * $class is an optional message class or category.
-
-  * $summary is an optional short title or summary of the message being 
-    logged. If not specified, defaults to be the same as $message.
-
-  * $message is an optional message to be logged. If not specified, defaults 
-    to an empty string.</value>
+  * $summary is an optional short title or summary of the message 
+    being logged. If not specified, defaults to be the same as 
+    $message.
+  * $message is an optional message to be logged. If not specified, 
+    defaults to an empty string.
+  * $context is an optional IData document containing arbitrary 
+    information about the current execution context. The host name, 
+    session, thread, and call stack are added, and it is then 
+    serialized and appended to $message prior to logging.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
