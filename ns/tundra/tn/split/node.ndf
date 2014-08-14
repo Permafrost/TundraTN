@@ -210,6 +210,40 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$namespace.input</value>
+          <value name="field_type">record</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+          <array name="rec_fields" type="record" depth="1">
+          </array>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$namespace.output</value>
+          <value name="field_type">record</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+          <array name="rec_fields" type="record" depth="1">
+          </array>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
             <null name="field_usereditable"/>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
@@ -811,6 +845,19 @@ bizdoc processing rule.
     all the resulting split contents. For [JSON] content, a recognized 
     [JSON] MIME media type, such as "application/json", must be specified.
 
+  * $namespace.input is a list of namespace prefixes and the URIs they 
+    map to, used when parsing the bizdoc content as [XML] with elements 
+    in one or more namespaces. Defaults to using the namespace prefixes 
+    declared on the associated Trading Networks document type.
+
+  * $namespace.output is a list of namespace prefixes and the URIs they 
+    map to, used when serializing the split documents returned by
+    $service to the same [XML] format with elements in one or more 
+    namespaces. If the list of split documents contain dissimilar formats, 
+    then $service should return a IData document list called $namespaces
+    of the same length as the split document list, where $namespaces[n] 
+    will be used to serialize $documents[n].
+
   * $schema.input is the optional name of the Integration Server document 
     reference or flat file schema to use to parse the bizdoc content into an 
     IData structure. Defaults to the parsing schema specified on the 
@@ -822,7 +869,7 @@ bizdoc processing rule.
     format. If the list of split documents contain dissimilar formats, then 
     $service should return a list of Integration Server document reference 
     or flat file schema names called $schemas of the same length as the 
-    split document list, and $schema[n] will be used to serialize 
+    split document list, where $schemas[n] will be used to serialize 
     $documents[n].
 
   * $service.input is the optional name of the input parameter used for the 

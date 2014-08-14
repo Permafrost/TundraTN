@@ -210,6 +210,40 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$namespace.input</value>
+          <value name="field_type">record</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+          <array name="rec_fields" type="record" depth="1">
+          </array>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$namespace.output</value>
+          <value name="field_type">record</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+          <array name="rec_fields" type="record" depth="1">
+          </array>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
             <null name="field_usereditable"/>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
@@ -853,6 +887,15 @@ bizdoc processing rule.
       "application/yaml", must be specified.
     Defaults to the value in TN_parms/$contentType returned by $service, if 
     not specified.
+
+  * $namespace.input is a list of namespace prefixes and the URIs they 
+    map to, used when parsing the bizdoc content as [XML] with elements 
+    in one or more namespaces. Defaults to using the namespace prefixes 
+    declared on the associated Trading Networks document type.
+
+  * $namespace.output is a list of namespace prefixes and the URIs they 
+    map to, used when serializing the translated document returned by
+    $service to [XML] content with elements in one or more namespaces.
 
   * $schema.input is the optional name of the Integration Server document 
     reference or flat file schema to use to parse the bizdoc content into an 

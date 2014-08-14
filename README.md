@@ -1001,6 +1001,19 @@ Top-level services for the most common tasks:
       all the resulting split contents. For [JSON] content, a recognized
       [JSON] MIME media type, such as "application/json", must be specified.
 
+    * `$namespace.input` is a list of namespace prefixes and the URIs they 
+      map to, used when parsing the bizdoc content as [XML] with elements 
+      in one or more namespaces. Defaults to using the namespace prefixes 
+      declared on the associated Trading Networks document type.
+
+    * `$namespace.output` is a list of namespace prefixes and the URIs they 
+      map to, used when serializing the split documents returned by
+      `$service` to the same [XML] format with elements in one or more 
+      namespaces. If the list of split documents contain dissimilar formats, 
+      then `$service` should return a IData document list called `$namespaces`
+      of the same length as the split document list, where `$namespaces[n]` 
+      will be used to serialize `$documents[n]`.      
+
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
       IData structure. Defaults to the parsing schema specified on the
@@ -1012,7 +1025,7 @@ Top-level services for the most common tasks:
       format. If the list of split documents contain dissimilar formats, then
       `$service` should return a list of Integration Server document reference
       or flat file schema names called `$schemas` of the same length as the
-      split document list, and `$schema[n]` will be used to serialize
+      split document list, and `$schemas[n]` will be used to serialize
       `$documents[n]`.
 
     * `$service.input` is the optional name of the input parameter used for the
@@ -1198,6 +1211,15 @@ Top-level services for the most common tasks:
       Defaults to the value in `TN_parms/$contentType` returned by `$service`, if
       not specified.
 
+    * `$namespace.input` is a list of namespace prefixes and the URIs they 
+      map to, used when parsing the bizdoc content as [XML] with elements 
+      in one or more namespaces. Defaults to using the namespace prefixes 
+      declared on the associated Trading Networks document type.
+
+    * `$namespace.output` is a list of namespace prefixes and the URIs they 
+      map to, used when serializing the translated document returned by
+      `$service` to [XML] content with elements in one or more namespaces.      
+
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
       IData structure. Defaults to the parsing schema specified on the
@@ -1313,6 +1335,10 @@ Top-level services for the most common tasks:
       * For [YAML] content, a recognized [YAML] MIME media type, such as
         "application/yaml", or a type that includes a "+yaml" suffix, must be
         specified.
+
+    * `$namespace` is a list of namespace prefixes and the URIs they map to,
+      used when serialize [XML] content with elements in one or more 
+      namespaces.
 
     * `$encoding` is an optional character set to use when encoding the
       resulting text data to a byte array or input stream. Defaults to the
@@ -1786,6 +1812,9 @@ Bizdoc-related services:
 
     * `$content.type` is the MIME media type that describes the format of the
       parsed content.
+
+    * `$namespaces` is the list of XML namespace prefixes and URIs declared on 
+      the associated document type and used when parsing the content.      
 
     * `$schema` is an optional output that specifies the fully-qualified name of
       the document reference (for XML) or flat file schema (for Flat Files)
@@ -2538,6 +2567,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$catch`
       * `$finally`
       * `$pipeline`
+      * `$content.type.input`
+      * `$content.type.output`
+      * `$namespace.input`
+      * `$namespace.output`     
       * `$schema.input`
       * `$schema.output`
       * `$service.input`
@@ -2615,6 +2648,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$catch`
       * `$finally`
       * `$pipeline`
+      * `$content.type.input`
+      * `$content.type.output`
+      * `$namespace.input`
+      * `$namespace.output`
       * `$schema.input`
       * `$schema.output`
       * `$service.input`
