@@ -1,30 +1,44 @@
 # TundraTN ❄
 
-A package of useful services for webMethods Trading Networks 7.1 and higher.
+A package of useful services for [webMethods Trading Networks] 7.1 and
+higher.
 
 ## Related
 
-See also [Tundra](https://github.com/Permafrost/Tundra), a package of useful services for webMethods Integration Server 7.1 and higher.
+See also [Tundra](https://github.com/Permafrost/Tundra), a package of useful
+services for [webMethods Integration Server] 7.1 and higher.
 
 ## Dependencies
 
-TundraTN is dependent on the following packages:
+[TundraTN] is compiled for Java 1.6, is dependent on the following
+[webMethods Integration Server] packages:
 
-* Tundra - https://github.com/Permafrost/Tundra.git
+* [Tundra]
 * WmTN
 
 ## Installation
 
-You have two choices for installing TundraTN: git or zip. If you are comfortable using git,
-I recommend this method as you can then easily switch between package versions using git
-checkout and download new versions using git fetch.
+You have two choices for installing [TundraTN]:
+
+* git
+* zip
+
+If you are comfortable using git, I recommend this method as you can then
+easily switch between package versions using git checkout and download new
+versions using git fetch.
 
 ### Using Git
 
 To install with this method, first make sure that:
-* Git is [installed](http://git-scm.com/downloads) on your Integration Server
-* Your Integration Server has internet access to https://github.com (for cloning the repository)
-* The dependent packages listed above are installed and enabled on your Integration Server
+
+* Git is [installed](http://git-scm.com/downloads) on your Integration
+  Server.
+* Your Integration Server has internet access to https://github.com (for
+  cloning the repository).
+* The dependent packages listed above are installed and enabled on your
+  Integration Server.
+* You have identified what version of [TundraTN] you'd like to install by
+  referring to the available [releases].
 
 From your Integration Server installation:
 
@@ -32,33 +46,43 @@ From your Integration Server installation:
 $ cd ./packages/
 $ git clone https://github.com/Permafrost/TundraTN.git
 $ cd ./TundraTN/
-$ git checkout v<n.n.n> # where <n.n.n> is the desired version
+$ git checkout v<n.n.n> # where <n.n.n> is the required version
 ```
 
-Then activate and enable the TundraTN package from the package management web page on your Integration Server
-web administration site.
+Then activate and enable the [TundraTN] package from the package management
+web page on your Integration Server web administration site.
 
 ### Using Zip
 
-1. Download a zip of the desired version of the package from https://github.com/Permafrost/TundraTN/releases
-2. Copy the TundraTN-vn.n.n.zip file to your Integration Server's ./replicate/inbound/ directory
-3. Install and activate the TundraTN package release (TundraTN-vn.n.n.zip) from the package management web page
-on your Integration Server's web administration site
+1. Download a pre-built zip of the desired version of the package from the
+   available [releases].
+2. Copy the `TundraTN-vn.n.n.zip` file to your Integration Server's
+   `./replicate/inbound/` directory.
+3. Install and activate the [TundraTN] package release `TundraTN-vn.n.n.zip`
+   from the package management web page on your Integration Server's web
+   administration site.
 
 ## Upgrading
 
-When upgrading you have to choose the same method used to originally install the package. Unfortunately, if git
-wasn't used to install the package then you can't use git to upgrade it either. However, if you want to switch
-to using git to manage the package, delete the installed package and start over using the git method for
-installation.
+When upgrading you have to choose the same method used to originally install
+the package. Unfortunately, if git wasn't used to install the package then
+you can't use git to upgrade it either. However, if you want to switch to
+using git to manage the package, delete the installed package and start over
+using the git method for installation.
 
 ### Using Git
 
 To upgrade with this method, first make sure that:
-* Git is [installed](http://git-scm.com/downloads) on your Integration Server
-* Your Integration Server has internet access to https://github.com (for fetching updates from the repository)
-* The dependent packages listed above are installed and enabled on your Integration Server
-* You originally installed TundraTN using the git method described above
+
+* Git is [installed](http://git-scm.com/downloads) on your Integration
+  Server.
+* Your Integration Server has internet access to https://github.com (for
+  fetching updates from the repository).
+* The dependent packages listed above are installed and enabled on your
+  Integration Server.
+* You have identified what version of [TundraTN] you'd like to upgrade to by
+  referring to the available [releases].
+* You originally installed [TundraTN] using the git method described above.
 
 From your Integration Server installation:
 
@@ -68,31 +92,48 @@ $ git fetch
 $ git checkout v<n.n.n> # where <n.n.n> is the desired updated version
 ```
 
-Then reload the TundraTN package from the package management web page on your Integration Server web administration
-site.
+Then reload the [TundraTN] package from the package management web page on
+your Integration Server web administration site.
 
 ### Using Zip
 
-1. Download a zip of the desired updated version of the package from https://github.com/Permafrost/TundraTN/releases
-2. Copy the TundraTN-vn.n.n.zip file to your Integration Server's ./replicate/inbound/ directory
-3. Install and activate the updated TundraTN package release (TundraTN-vn.n.n.zip) from the package management web page
-on your Integration Server's web administration site
+1. Download a pre-built zip of the desired updated version of the package
+   from the available [releases].
+2. Copy the `TundraTN-vn.n.n.zip` file to your Integration Server's
+   `./replicate/inbound/` directory.
+3. Install and activate the updated [TundraTN] package release
+   `TundraTN-vn.n.n.zip` from the package management web page on your
+   Integration Server's web administration site.
 
 ## Conventions
 
-1. All input and output pipeline arguments are prefixed with '$' as a poor-man's
-   scoping mechanism (typical user-space variables will be unprefixed), except
-   Trading Networks-specific arguments, such as bizdoc, sender and receiver
+1. Most input and output pipeline arguments are prefixed with '$' as a poor-
+   man's scoping mechanism, since typically user-space variables are
+   unprefixed. However some Trading Networks-specific arguments, such as
+   `TN_parms`, remain unprefixed.
 2. All boolean arguments are suffixed with a '?'
-3. Single-word argument names are preferred. Where multiple words are necessary,
-   words are separated with a '.'
-4. Service namespace is kept flat. Namespace folders are usually nouns. Service
-   names are usually verbs, indicating the action performed on the noun (parent
-   folder)
-5. All private elements are kept in the tundra.tn.support folder. All other
-   elements comprise the public API of the package. As the private
-   elements do not contribute to the public API, they are liable to change at
-   any time. Enter at your own risk
+3. Single-word argument names are preferred. Where multiple words are
+   necessary, words are separated with a '.'
+4. Service namespace is kept flat. Namespace folders are usually nouns.
+   Service names are usually verbs, indicating the action performed on the noun (parent folder).
+5. Services are written in Java where necessary, such as when dealing
+   directly with the Trading Networks Java API, and are *almost* always
+   overloaded by a backing method in the shared source, which provides the
+   actual implementation. This way, backing methods can be used by other
+   backing methods directly, without needing to deal with the
+   IData/IDataCursor/IDataUtil nastiness that a fronting Java service is
+   usually required to deal with.
+6. Services declare all inputs and outputs, always explicitly marked as
+   optional or required, use constrained types where possible, and enable
+   input and output pipeline validation, which minimises developer surprise.
+7. Services often declare their inputs as optional, and either apply an
+   appropriate default value, or take no action and return no output
+   (whatever is more appropriate), to minimise the need for existence
+   checking in flow map steps.
+8. All private elements are kept in the `tundra.tn.support` folder. All other
+   elements comprise the public API of the package. As the private elements
+   do not contribute to the public API, they are liable to change at any
+   time. **Enter at your own risk.**
 
 ## Services
 
@@ -1001,18 +1042,18 @@ Top-level services for the most common tasks:
       all the resulting split contents. For [JSON] content, a recognized
       [JSON] MIME media type, such as "application/json", must be specified.
 
-    * `$namespace.input` is a list of namespace prefixes and the URIs they 
-      map to, used when parsing the bizdoc content as [XML] with elements 
-      in one or more namespaces. Defaults to using the namespace prefixes 
+    * `$namespace.input` is a list of namespace prefixes and the URIs they
+      map to, used when parsing the bizdoc content as [XML] with elements
+      in one or more namespaces. Defaults to using the namespace prefixes
       declared on the associated Trading Networks document type.
 
-    * `$namespace.output` is a list of namespace prefixes and the URIs they 
+    * `$namespace.output` is a list of namespace prefixes and the URIs they
       map to, used when serializing the split documents returned by
-      `$service` to the same [XML] format with elements in one or more 
-      namespaces. If the list of split documents contain dissimilar formats, 
+      `$service` to the same [XML] format with elements in one or more
+      namespaces. If the list of split documents contain dissimilar formats,
       then `$service` should return a IData document list called `$namespaces`
-      of the same length as the split document list, where `$namespaces[n]` 
-      will be used to serialize `$documents[n]`.      
+      of the same length as the split document list, where `$namespaces[n]`
+      will be used to serialize `$documents[n]`.
 
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
@@ -1211,14 +1252,14 @@ Top-level services for the most common tasks:
       Defaults to the value in `TN_parms/$contentType` returned by `$service`, if
       not specified.
 
-    * `$namespace.input` is a list of namespace prefixes and the URIs they 
-      map to, used when parsing the bizdoc content as [XML] with elements 
-      in one or more namespaces. Defaults to using the namespace prefixes 
+    * `$namespace.input` is a list of namespace prefixes and the URIs they
+      map to, used when parsing the bizdoc content as [XML] with elements
+      in one or more namespaces. Defaults to using the namespace prefixes
       declared on the associated Trading Networks document type.
 
-    * `$namespace.output` is a list of namespace prefixes and the URIs they 
+    * `$namespace.output` is a list of namespace prefixes and the URIs they
       map to, used when serializing the translated document returned by
-      `$service` to [XML] content with elements in one or more namespaces.      
+      `$service` to [XML] content with elements in one or more namespaces.
 
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
@@ -1337,7 +1378,7 @@ Top-level services for the most common tasks:
         specified.
 
     * `$namespace` is a list of namespace prefixes and the URIs they map to,
-      used when serialize [XML] content with elements in one or more 
+      used when serialize [XML] content with elements in one or more
       namespaces.
 
     * `$encoding` is an optional character set to use when encoding the
@@ -1813,8 +1854,8 @@ Bizdoc-related services:
     * `$content.type` is the MIME media type that describes the format of the
       parsed content.
 
-    * `$namespaces` is the list of XML namespace prefixes and URIs declared on 
-      the associated document type and used when parsing the content.      
+    * `$namespaces` is the list of XML namespace prefixes and URIs declared on
+      the associated document type and used when parsing the content.
 
     * `$schema` is an optional output that specifies the fully-qualified name of
       the document reference (for XML) or flat file schema (for Flat Files)
@@ -2570,7 +2611,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$content.type.input`
       * `$content.type.output`
       * `$namespace.input`
-      * `$namespace.output`     
+      * `$namespace.output`
       * `$schema.input`
       * `$schema.output`
       * `$service.input`
@@ -2989,7 +3030,12 @@ Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 [java.util.Date]: <http://docs.oracle.com/javase/6/docs/api/java/util/Date.html>
 [JSON]: <http://www.json.org>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
+[releases]: <https://github.com/Permafrost/TundraTN/releases>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
+[Tundra]: <https://github.com/Permafrost/Tundra>
+[TundraTN]: <https://github.com/Permafrost/TundraTN>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
+[webMethods Integration Server]: <http://www.softwareag.com/corporate/products/wm/integration/products/ai/overview/default.asp>
+[webMethods Trading Networks]: <http://www.softwareag.com/corporate/products/wm/integration/products/b2b/overview/default.asp>
 [XML]: <http://www.w3.org/XML/>
 [YAML]: <http://www.yaml.org>
