@@ -5,7 +5,7 @@
 
   <!-- nodes -->
 
-<MAP NAME="init" MODE="STANDALONE">
+<MAP NAME="init" TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -383,7 +383,7 @@
               <value name="field_largerEditor">false</value>
               <value name="field_password">false</value>
             </record>
-            <value name="field_name">duration</value>
+            <value name="field_name">Duration</value>
             <value name="field_type">string</value>
             <value name="field_dim">0</value>
             <value name="field_opt">true</value>
@@ -394,7 +394,7 @@
               <array name="targetNames" type="record" depth="1">
                 <record javaclass="com.wm.util.Values">
                   <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                  <value name="ncName">duration</value>
+                  <value name="ncName">string</value>
                 </record>
               </array>
             </record>
@@ -414,18 +414,6 @@
 <MAPCOPY NAME="Link" FROM="/$bizdoc;2;0" TO="/$tundra.tn:log;2;0/$bizdoc;2;0">
 </MAPCOPY>
 
-<MAPCOPY NAME="Link" FROM="/$type;1;0" TO="/$tundra.tn:log;2;0/$type;1;0">
-</MAPCOPY>
-
-<MAPCOPY NAME="Link" FROM="/$class;1;0" TO="/$tundra.tn:log;2;0/$class;1;0">
-</MAPCOPY>
-
-<MAPCOPY NAME="Link" FROM="/$summary;1;0" TO="/$tundra.tn:log;2;0/$summary;1;0">
-</MAPCOPY>
-
-<MAPCOPY NAME="Link" FROM="/$message;1;0" TO="/$tundra.tn:log;2;0/$message;1;0">
-</MAPCOPY>
-
 <MAPDELETE NAME="Dropper" FIELD="/$bizdoc;2;0">
 </MAPDELETE>
 
@@ -441,11 +429,153 @@
 <MAPDELETE NAME="Dropper" FIELD="/$message;1;0">
 </MAPDELETE>
 
-<MAPCOPY NAME="Link" FROM="/$context;2;0" TO="/$tundra.tn:log;2;0/$context;2;0">
-</MAPCOPY>
-
 <MAPDELETE NAME="Dropper" FIELD="/$context;2;0">
 </MAPDELETE>
+
+<MAPINVOKE SERVICE="tundra.string:trim" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$message;1;0" TO="/$string;1;0">
+</MAPCOPY>
+</MAP>
+
+<MAP MODE="INVOKEOUTPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$string;1;0" TO="/$tundra.tn:log;2;0/$message;1;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
+
+<MAPINVOKE SERVICE="tundra.string:trim" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$summary;1;0" TO="/$string;1;0">
+</MAPCOPY>
+</MAP>
+
+<MAP MODE="INVOKEOUTPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$string;1;0" TO="/$tundra.tn:log;2;0/$summary;1;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
+
+<MAPINVOKE SERVICE="tundra.string:trim" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$class;1;0" TO="/$string;1;0">
+</MAPCOPY>
+</MAP>
+
+<MAP MODE="INVOKEOUTPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$string;1;0" TO="/$tundra.tn:log;2;0/$class;1;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
+
+<MAPINVOKE SERVICE="tundra.string:trim" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$type;1;0" TO="/$string;1;0">
+</MAPCOPY>
+</MAP>
+
+<MAP MODE="INVOKEOUTPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$string;1;0" TO="/$tundra.tn:log;2;0/$type;1;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
+
+<MAPINVOKE SERVICE="tundra.document.value:trim" VALIDATE-IN="$none" VALIDATE-OUT="$none" INVOKE-ORDER="0">
+
+  <!-- nodes -->
+
+<MAP MODE="INVOKEINPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$context;2;0" TO="/$document;2;0">
+</MAPCOPY>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$recurse?;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">true</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">false</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$recurse?</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <array name="field_options" type="value" depth="1">
+      <value>false</value>
+      <value>true</value>
+    </array>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">boolean</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+</MAP>
+
+<MAP MODE="INVOKEOUTPUT">
+
+  <!-- nodes -->
+
+<MAPCOPY NAME="Link" FROM="/$document;2;0" TO="/$tundra.tn:log;2;0/$context;2;0">
+</MAPCOPY>
+</MAP>
+</MAPINVOKE>
 </MAP>
 
 <SEQUENCE NAME="scope" SCOPE="$tundra.tn:log" TIMEOUT="" EXIT-ON="FAILURE">
@@ -453,7 +583,7 @@
 
   <!-- nodes -->
 
-<MAP NAME="init" MODE="STANDALONE">
+<MAP NAME="init" TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -515,13 +645,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$duration</value>
-        <value name="field_type">string</value>
+        <value name="node_type">record</value>
+        <value name="field_name">$context</value>
+        <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
       </record>
     </array>
   </record>
@@ -587,13 +719,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$duration</value>
-        <value name="field_type">string</value>
+        <value name="node_type">record</value>
+        <value name="field_name">$context</value>
+        <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
       </record>
     </array>
   </record>
@@ -605,14 +739,14 @@
 <MAPCOPY NAME="Link" FROM="/$message;1;0" TO="/$summary;1;0" CONDITION="!%$summary% and %$message%">
 </MAPCOPY>
 
-<MAPSET NAME="Setter" OVERWRITE="false" VARIABLES="false" FIELD="/$type;1;0">
+<MAPSET NAME="Setter" OVERWRITE="false" VARIABLES="false" FIELD="/$summary;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">MESSAGE</value>
+  <value name="xml"></value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
-    <value name="field_name">$type</value>
+    <value name="field_name">$summary</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -623,14 +757,14 @@
 </DATA>
 </MAPSET>
 
-<MAPSET NAME="Setter" OVERWRITE="false" VARIABLES="false" FIELD="/$summary;1;0">
+<MAPSET NAME="Setter" OVERWRITE="false" VARIABLES="false" FIELD="/$type;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml"></value>
+  <value name="xml">MESSAGE</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
-    <value name="field_name">$summary</value>
+    <value name="field_name">$type</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="nillable">true</value>
@@ -2520,7 +2654,7 @@
 
   <!-- nodes -->
 
-<MAP NAME="$null" MODE="STANDALONE">
+<MAP NAME="$null" TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
