@@ -111,16 +111,16 @@ your Integration Server web administration site.
    man's scoping mechanism, since typically user-space variables are
    unprefixed. However some Trading Networks-specific arguments, such as
    `TN_parms`, remain unprefixed.
-2. All boolean arguments are suffixed with a '?'
+2. All boolean arguments are suffixed with a '?'.
 3. Single-word argument names are preferred. Where multiple words are
-   necessary, words are separated with a '.'
+   necessary, words are separated with a '.'.
 4. Service namespace is kept flat. Namespace folders are usually nouns.
    Service names are usually verbs, indicating the action performed on the noun (parent folder).
 5. Services are written in Java where necessary, such as when dealing
-   directly with the Trading Networks Java API, and are *almost* always
-   overloaded by a backing method in the shared source, which provides the
-   actual implementation. This way, backing methods can be used by other
-   backing methods directly, without needing to deal with the
+   directly with the Trading Networks Java API. Java services are *almost*
+   always overloaded by a backing method in the shared source, which
+   provides the actual implementation. This way, backing methods can be used
+   by other backing methods directly, without needing to deal with the
    IData/IDataCursor/IDataUtil nastiness that a fronting Java service is
    usually required to deal with.
 6. Services declare all inputs and outputs, always explicitly marked as
