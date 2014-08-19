@@ -1134,14 +1134,14 @@ Top-level services for the most common tasks:
   Parsing (deserialization) of the bizdoc content is determined in order of
   precedence by the input variable `$schema.input`, the parsing schema
   configured on the bizdoc's associated document type (`recordBlueprint` or
-  `ParsingSchema` for XML and flat files respectively), and the input variable
-  `$content.type.input`. If `$schema.input` is specified, or if the document type
-  specifies a parsing schema, then that reference will be used to parse the
-  content, and the type of reference (document reference versus flat file
-  schema reference) determines the parser implementation used (see below).
-  However, if `$schema.input` is not specified, nor is a parsing schema defined
-  on the associated document type, then `$content.type.input` will be used to
-  determine if the content the parser implementation to use for the
+  `ParsingSchema` for XML and flat files respectively), and the input
+  variable `$content.type.input`. If `$schema.input` is specified, or if the
+  document type specifies a parsing schema, then that reference will be used
+  to parse the content, and the type of reference (document reference versus
+  flat file schema reference) determines the parser implementation used (see
+  below). However, if `$schema.input` is not specified, nor is a parsing
+  schema defined on the associated document type, then `$content.type.input`
+  will be used to determine the parser implementation to use for the
   appropriate MIME media type. If `$schema.input` is not specified, and no
   parsing schema is specified on the associated document type, and
   `$content.type.input` is not specified, then the content will be parsed as
@@ -1156,21 +1156,22 @@ Top-level services for the most common tasks:
   * XML: `WmPublic/pub.xml:xmlStringToXMLNode, `pub.xml:xmlNodeToDocument`
   * YAML: Tundra/tundra.yaml:parse`
 
-  Emitting (serialization) of the translated content is determined in order of
-  precedence by the input variable `$schema.output`, the `TN_parms/$schema`
+  Emitting (serialization) of the translated content is determined in order
+  of precedence by the input variable `$schema.output`, the `TN_parms/$schema`
   returned by `$service`, the input variable `$content.type.output`, and the
-  `TN_parms/$contentType` returned by `$service`. If `$schema.output` is specified,
-  or if `$service` returned `TN_parms/$schema`, then that reference will be used
-  to parse the content, and the type of reference (document reference versus
-  flat file schema reference) determines the parser implementation used (see
-  below). However, if `$schema.output` is not specified, nor `TN_parms/$schema`
-  returned by `$service`, but `$content.type.output` is specified or
-  `TN_parms/$contentType` is returned by `$service` then it will be used to
-  determine if the content the parser implementation to use for the
-  appropriate MIME media type. If neither `$schema.output` is
+  `TN_parms/$contentType` returned by `$service`. If `$schema.output` is
+  specified, or if `$service` returned `TN_parms/$schema`, then that
+  reference will be used to parse the content, and the type of reference
+  (document reference versus flat file schema reference) determines the
+  parser implementation used (see below). However, if `$schema.output` is
+  not specified, nor `TN_parms/$schema` returned by `$service`, but
+  `$content.type.output` is specified or `TN_parms/$contentType` is returned
+  by `$service` then it will be used to determine the parser implementation
+  to use for the appropriate MIME media type. If neither `$schema.output` is
   specified, nor `TN_parms/$schema` is returned by `$service`, nor
-  `$content.type.output` is specified, nor `TN_parms/$contentType` is returned by
-  `$service`, then the content will be parsed as [XML] by default.
+  `$content.type.output` is specified, nor `TN_parms/$contentType` is
+  returned by `$service`, then the content will be parsed as [XML] by
+  default.
 
   Emitter implementions are as follows:
   * CSV: `Tundra/tundra.csv:emit`
