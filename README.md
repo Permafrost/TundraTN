@@ -1,6 +1,6 @@
 # TundraTN ❄
 
-A package of useful services for [webMethods Trading Networks] 7.1 and
+A package of cool services for [webMethods Trading Networks] 7.1 and
 higher.
 
 ## Related
