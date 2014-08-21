@@ -1,8 +1,8 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-07-26 18:32:13 EST
-// -----( ON-HOST: 172.16.189.176
+// -----( CREATED: 2014-08-21 15:16:26.915
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -33,10 +33,9 @@ public final class content
 		// --- <<IS-START(get)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] record:0:required $bizdoc
+		// [i] record:0:optional $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] field:0:optional $part
-		// [o] field:0:optional $part
 		// [o] object:0:optional $content
 		// [o] field:0:optional $content.type
 		IDataCursor cursor = pipeline.getCursor();
@@ -45,12 +44,14 @@ public final class content
 		  IData bizdoc = IDataUtil.getIData(cursor, "$bizdoc");
 		  String partName = IDataUtil.getString(cursor, "$part");
 		
-		  ContentPart part = new ContentPart(bizdoc, partName);
-		  java.io.InputStream content = part.getContent();
+		  if (bizdoc != null) {
+		    ContentPart part = new ContentPart(bizdoc, partName);
+		    java.io.InputStream content = part.getContent();
 		
-		  if (content != null) {
-		    IDataUtil.put(cursor, "$content", content);
-		    IDataUtil.put(cursor, "$content.type", part.getMimeType());
+		    if (content != null) {
+		      IDataUtil.put(cursor, "$content", content);
+		      IDataUtil.put(cursor, "$content.type", part.getMimeType());
+		    }
 		  }
 		} finally {
 		  cursor.destroy();
@@ -82,16 +83,19 @@ public final class content
 	    this.bizdoc = bizdoc;
 	
 	    if (bizdoc != null) {
-	      com.wm.app.tn.doc.BizDocContentPart[] parts = bizdoc.getContentParts();
-	      if (parts != null) {
-	        for (com.wm.app.tn.doc.BizDocContentPart part : parts) {
-	          String name = part.getPartName();
-	          if (partName == null && (name.equals("xmldata") || name.equals("ffdata") || name.equals("bytes"))) {
-	            this.part = part;
-	            break;
-	          } else if (partName.equals(name)) {
-	            this.part = part;
-	          }
+	      if (partName != null) {
+	        this.part = bizdoc.getContentPart(partName);
+	      } else {
+	        com.wm.app.tn.doc.BizDocType type = bizdoc.getDocType();
+	
+	        if (type != null && type instanceof com.wm.app.tn.doc.XMLDocType) {
+	          this.part = bizdoc.getContentPart("xmldata");
+	        } else if (type != null && type instanceof com.wm.app.tn.doc.FFDocType) {
+	          this.part = bizdoc.getContentPart("ffdata");
+	        } else {
+	          this.part = bizdoc.getContentPart("xmldata");
+	          if (this.part == null) this.part = bizdoc.getContentPart("ffdata");
+	          if (this.part == null) this.part = bizdoc.getContentPart("bytes");
 	        }
 	      }
 	    }
