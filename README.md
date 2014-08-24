@@ -2156,16 +2156,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2215,16 +2219,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2263,16 +2271,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2322,16 +2334,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2380,16 +2396,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2463,16 +2483,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2531,16 +2555,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2577,16 +2605,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2645,16 +2677,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
@@ -2726,16 +2762,20 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
     * `$ordered?` is an optional boolean flag which when true processes tasks
       in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
+      `$concurrency` is set to 1, and defaults to false, if not specified.
 
       Once all retries for a task have failed, it is considered exhausted. The
       exhausted task's retry count is reset to 0, the task is requeued, and
       the queue is suspended, requiring manual intervention is to resolve the
       queue processing errors.
+
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
 
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
