@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-01-28 17:23:02.053
-// -----( ON-HOST: -
+// -----( CREATED: 2014-08-25 19:29:33 EST
+// -----( ON-HOST: 172.16.189.132
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -66,6 +66,38 @@ public final class exception
 	  }
 	
 	  throw ex;
+	}
+	
+	// throws a new ServiceException with the given message
+	public static void raise(String message) throws ServiceException {
+	  throw new ServiceException(message == null ? "" : message);
+	}
+	
+	// throws a new ServiceException with the class and message from the given Throwable, which
+	// is useful because java services are hard-wired to only throw ServiceExceptions
+	public static void raise(Throwable exception) throws ServiceException {
+	  if (exception != null) {
+	    if (exception instanceof ServiceException) {
+	      throw (ServiceException)exception;
+	    } else {
+	      raise(message(exception));
+	    }
+	  }
+	}
+	
+	// returns an exception as a string
+	public static String message(Throwable exception) {
+	  String message = "";
+	
+	  if (exception != null) {
+	    if (exception instanceof ServiceException) {
+	      message = exception.getMessage();
+	    } else {
+	      message = exception.getClass().getName() + ": " + exception.getMessage();
+	    }
+	  }
+	
+	  return message;
 	}
 	
 	// security exception, thrown when a user doesn't have appropriate rights
