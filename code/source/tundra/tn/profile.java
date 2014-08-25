@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-05-15 13:25:29.932
-// -----( ON-HOST: EBZDEVWAP37.ebiztest.qr.com.au
+// -----( CREATED: 2014-08-25 20:41:10 EST
+// -----( ON-HOST: 172.16.189.132
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -42,11 +42,11 @@ public final class profile
 		  String type = IDataUtil.getString(cursor, "$type");
 		
 		  if (id != null) {
-		    IData profile = tundra.tn.support.profile.get(id, type);
+		    IData profile = tundra.tn.support.profile.cache.get(id, type);
 		    if (profile != null) IDataUtil.put(cursor, "$profile", profile);
 		  }
 		} catch (java.io.IOException ex) {
-		  tundra.tn.support.profile.raise(ex);
+		  tundra.tn.exception.raise(ex);
 		} finally {
 		  cursor.destroy();
 		}
@@ -66,10 +66,10 @@ public final class profile
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		  IData[] list = tundra.tn.support.profile.list();
+		  IData[] list = tundra.tn.support.profile.cache.seed();
 		  if (list != null) IDataUtil.put(cursor, "$profiles", list);
 		} catch (java.io.IOException ex) {
-		  tundra.tn.support.profile.raise(ex);
+		  tundra.tn.exception.raise(ex);
 		} finally {
 		  cursor.destroy();
 		}
@@ -89,10 +89,10 @@ public final class profile
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		  IData profile = tundra.tn.support.profile.self();
+		  IData profile = tundra.tn.support.profile.cache.self();
 		  if (profile != null) IDataUtil.put(cursor, "$profile", profile);
 		} catch (java.io.IOException ex) {
-		  tundra.tn.support.profile.raise(ex);
+		  tundra.tn.exception.raise(ex);
 		} finally {
 		  cursor.destroy();
 		}
