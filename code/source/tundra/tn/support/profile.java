@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-08-25 20:44:49 EST
-// -----( ON-HOST: 172.16.189.132
+// -----( CREATED: 2014-08-26 13:59:02.987
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -51,6 +51,8 @@ public final class profile
 		
 		try {
 		  IDataUtil.put(cursor, "$cache", cache.list());
+		} catch(java.io.IOException ex) {
+		  tundra.tn.exception.raise(ex);
 		} finally {
 		  cursor.destroy();
 		}
@@ -69,8 +71,6 @@ public final class profile
 		// @sigtype java 3.5
 		try {
 		  cache.refresh();
-		} catch (com.wm.app.tn.profile.ProfileStoreException ex) {
-		  tundra.tn.exception.raise(ex);
 		} catch (java.io.IOException ex) {
 		  tundra.tn.exception.raise(ex);
 		}
@@ -89,8 +89,6 @@ public final class profile
 		// @sigtype java 3.5
 		try {
 		  cache.seed();
-		} catch (com.wm.app.tn.profile.ProfileStoreException ex) {
-		  tundra.tn.exception.raise(ex);
 		} catch (java.io.IOException ex) {
 		  tundra.tn.exception.raise(ex);
 		}
@@ -419,23 +417,20 @@ public final class profile
 	  }
 	
 	  // seeds the local partner profile cache with all partners
-	  public static IData[] seed() throws com.wm.app.tn.profile.ProfileStoreException, java.io.IOException {
+	  public static void seed() throws com.wm.app.tn.profile.ProfileStoreException, java.io.IOException {
 	    java.util.List summaries = com.wm.app.tn.profile.ProfileStore.getProfileSummaryList(false, false);
-	    java.util.List<IData> output = new java.util.ArrayList<IData>(summaries.size());
 	    java.util.Iterator iterator = summaries.iterator();
-	
-	    clear();
 	
 	    while(iterator.hasNext()) {
 	      com.wm.app.tn.profile.ProfileSummary summary = (com.wm.app.tn.profile.ProfileSummary)iterator.next();
-	      output.add(get(new ProfileID(summary.getProfileID()), true));
+	      get(new ProfileID(summary.getProfileID()));
 	    }
-	
-	    return output.toArray(new IData[0]);
 	  }
 	
-	  // returns a list of all the locally cached partner profiles
-	  public static IData[] list() {
+	  // returns a list of all the locally cached partner profiles, optionally seeded from the Trading Networks database
+	  public static IData[] list(boolean seed) throws com.wm.app.tn.profile.ProfileStoreException, java.io.IOException {
+	    if (seed) seed();
+	
 	    java.util.List<IData> list = new java.util.ArrayList(profiles.size());
 	    java.util.Iterator<ProfileID> iterator = profiles.keySet().iterator();
 	
@@ -446,6 +441,11 @@ public final class profile
 	    }
 	
 	    return (IData[])list.toArray(new IData[0]);
+	  }
+	
+	  // returns a list of all the locally cached partner profiles
+	  public static IData[] list() throws com.wm.app.tn.profile.ProfileStoreException, java.io.IOException {
+	    return list(false);
 	  }
 	
 	  // returns the given profile from the cache, if it exists

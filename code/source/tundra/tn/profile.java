@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-08-25 20:41:10 EST
-// -----( ON-HOST: 172.16.189.132
+// -----( CREATED: 2014-08-26 13:52:20.781
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -66,7 +66,7 @@ public final class profile
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		  IData[] list = tundra.tn.support.profile.cache.seed();
+		  IData[] list = tundra.tn.support.profile.cache.list(true);
 		  if (list != null) IDataUtil.put(cursor, "$profiles", list);
 		} catch (java.io.IOException ex) {
 		  tundra.tn.exception.raise(ex);
