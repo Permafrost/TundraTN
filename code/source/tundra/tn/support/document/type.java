@@ -1,7 +1,7 @@
-package tundra.tn.document;
+package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2013-09-05 17:36:33.218
+// -----( CREATED: 2014-08-26 14:14:46.915
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -52,8 +52,32 @@ public final class type
                 
 	}
 
+
+
+	public static final void normalize (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(normalize)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		IDataCursor cursor = pipeline.getCursor();
+		
+		try {
+		  IData type = IDataUtil.getIData(cursor, "$type");
+		  if (type != null) {
+		    com.wm.app.tn.doc.BizDocType normalizedType = normalize(type, true);
+		    if (normalizedType != null) IDataUtil.put(cursor, "$type", normalizedType.getIData());
+		  }
+		} finally {
+		  cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+                
+	}
+
 	// --- <<IS-START-SHARED>> ---
-	// returns the Trading Networks document type given the ID
+	// returns the Trading Networks document type given the ID or name
 	public static com.wm.app.tn.doc.BizDocType get(String id, String name) {
 	  com.wm.app.tn.doc.BizDocType type = null;
 	  if (id != null) {
@@ -62,6 +86,31 @@ public final class type
 	    type = com.wm.app.tn.db.BizDocTypeStore.getByName(name, true, true);
 	  }
 	  return type;
+	}
+	
+	// returns the Trading Networks document type given the ID
+	public static com.wm.app.tn.doc.BizDocType get(String id) {
+	  return get(id, null);
+	}
+	
+	// returns the given IData if its already a BizDocType, otherwise converts 
+	// it to a BizDocType object
+	public static com.wm.app.tn.doc.BizDocType normalize(IData input, boolean x) {
+	  com.wm.app.tn.doc.BizDocType output = null;
+	
+	  if (input instanceof com.wm.app.tn.doc.BizDocType) {
+	    output = (com.wm.app.tn.doc.BizDocType)input;
+	  } else {
+	    IDataCursor cursor = input.getCursor();
+	    String id = IDataUtil.getString(cursor, "TypeID");
+	    cursor.destroy();
+	
+	    if (id == null) throw new IllegalArgumentException("TypeID is required");
+	
+	    output = get(id);
+	  }
+	
+	  return output;
 	}
 	// --- <<IS-END-SHARED>> ---
 }

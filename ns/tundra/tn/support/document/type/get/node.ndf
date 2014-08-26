@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Values version="2.0">
-  <value name="svc_type">flow</value>
-  <value name="svc_subtype">default</value>
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
   <value name="svc_sigtype">java 3.5</value>
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
@@ -96,38 +96,16 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Returns the Trading Networks document type associated with the given ID or 
-name as an IData document.
+  <value name="node_comment">The supporting implementation for TundraTN/tundra.tn.document.type:get. 
 
-Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN 
-service returns an object of type com.wm.app.tn.doc.BizDocType which, 
-despite looking like one, is not a normal IData document and therefore 
-causes problems in Flow services. For example, you cannot branch on fields 
-in the com.wm.app.tn.doc.BizDocType document.
-
-Also, unlike WmTN/wm.tn.doctype:view, this service does not throw an 
-exception if the document type does not exist.
-
-* Inputs:
-  * $id is an optional internal ID that identifies the Trading Networks 
-    document type to be returned. If both $id and $name are specified, $id 
-    takes precedence.
-
-  * $name is an optional Trading Networks document type name that identifies 
-    the document type to be returned. If both $id and $name are specified, 
-    $id takes precedence.
-
-* Outputs:
-  * $type is the Trading Networks document type identified by either $id or  
-    $name, returned as an IData document with the WmTN/wm.tn.rec:BizDocType 
-    structure. If no document type exists with the given $id or $name, 
-    nothing will be returned by this service, nor will an exception be 
-    thrown.</value>
+This service should not be invoked directly by any services; use 
+TundraTN/tundra.tn.document.type:get instead.</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
+  <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
   <value name="icontext_policy">$null</value>
