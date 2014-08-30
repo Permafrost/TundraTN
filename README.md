@@ -5,7 +5,7 @@ higher.
 
 ## Related
 
-See also [Tundra](https://github.com/Permafrost/Tundra), a package of useful
+See also [Tundra](https://github.com/Permafrost/Tundra), a package of cool
 services for [webMethods Integration Server] 7.1 and higher.
 
 ## Dependencies
@@ -1953,7 +1953,7 @@ Bizdoc-related services:
 
 * #### tundra.tn.document.type:normalize
 
-  Returns the given Trading Networks document type. When the given type is a 
+  Returns the given Trading Networks document type. When the given type is a
   subset (only the `TypeID` is required), the full type will be returned.
 
   * Inputs:
