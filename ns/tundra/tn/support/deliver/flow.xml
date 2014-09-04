@@ -5,7 +5,7 @@
 
   <!-- nodes -->
 
-<MAP NAME="init" MODE="STANDALONE">
+<MAP NAME="init" TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -197,6 +197,15 @@
             </record>
           </array>
         </record>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -584,6 +593,24 @@
 
 <MAPDELETE NAME="Dropper" FIELD="/$bizdoc;2;0">
 </MAPDELETE>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$password.redacted;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">********</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">record</value>
+    <value name="field_name">$password.redacted</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
 
 <MAPSET NAME="Setter" OVERWRITE="false" VARIABLES="false" FIELD="/$status.done;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
@@ -3155,6 +3182,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -3215,22 +3251,6 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
         <value name="field_name">bizdoc</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
@@ -3254,6 +3274,22 @@
         <value name="field_name">receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -3330,7 +3366,7 @@
 
   <!-- nodes -->
 
-<MAP NAME="init" MODE="STANDALONE">
+<MAP NAME="init" TIMEOUT="" MODE="STANDALONE">
   <COMMENT>save $mode and $pipeline variables, if they exist in the pipeline</COMMENT>
   <MAPTARGET>
 
@@ -3537,6 +3573,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -3587,22 +3632,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -3668,6 +3697,22 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
         <value name="field_name">$document</value>
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
@@ -3704,6 +3749,23 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -4006,6 +4068,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -4056,22 +4127,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -4137,6 +4192,22 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
         <value name="field_name">$document</value>
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
@@ -4173,6 +4244,23 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -7609,7 +7697,7 @@
 </MAP>
 </INVOKE>
 
-<MAP NAME="drop" MODE="STANDALONE">
+<MAP NAME="drop" TIMEOUT="" MODE="STANDALONE">
   <COMMENT>restore $mode and $pipeline variables if they existed in the pipeline</COMMENT>
   <MAPTARGET>
 
@@ -7657,33 +7745,6 @@
           <value>Secondary HTTP</value>
           <value>Secondary HTTPS</value>
         </array>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$service</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
         <record name="field_content_type" javaclass="com.wm.util.Values">
           <value name="contentType">1</value>
           <value name="internalType">reference</value>
@@ -7816,6 +7877,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -7876,22 +7946,6 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
         <value name="field_name">bizdoc</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
@@ -7899,6 +7953,16 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="rec_ref">wm.tn.rec:BizDocEnvelope</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">sender</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
@@ -7922,7 +7986,7 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="field_name">sender</value>
+        <value name="field_name">receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -7932,9 +7996,15 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
-        <value name="field_name">receiver</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -7983,6 +8053,23 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -8285,6 +8372,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -8335,22 +8431,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -8416,6 +8496,22 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
         <value name="field_name">$document</value>
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
@@ -8452,6 +8548,23 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -11358,7 +11471,7 @@
   <!-- nodes -->
 
 <INVOKE NAME="$default" TIMEOUT="" SERVICE="tundra.uri:emit" VALIDATE-IN="$none" VALIDATE-OUT="$none">
-  <COMMENT>redact user/password from URI used for logging</COMMENT>
+  <COMMENT>redact password from URI used for logging</COMMENT>
 
   <!-- nodes -->
 
@@ -11893,6 +12006,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -11943,22 +12065,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -12073,6 +12179,15 @@
                 <array name="rec_fields" type="record" depth="1">
                   <record javaclass="com.wm.util.Values">
                     <value name="node_type">unknown</value>
+                    <value name="field_name">user</value>
+                    <value name="field_type">string</value>
+                    <value name="field_dim">0</value>
+                    <value name="nillable">true</value>
+                    <value name="form_qualified">false</value>
+                    <value name="is_global">false</value>
+                  </record>
+                  <record javaclass="com.wm.util.Values">
+                    <value name="node_type">unknown</value>
                     <value name="field_name">host</value>
                     <value name="field_type">string</value>
                     <value name="field_dim">0</value>
@@ -12133,6 +12248,22 @@
             <value name="is_global">false</value>
           </record>
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -12319,6 +12450,12 @@
 </MAPCOPY>
 
 <MAPCOPY NAME="Link" FROM="/$uri.original;2;0/authority;2;0/server;2;0/port;1;0" TO="/$uri;2;0/authority;2;0/server;2;0/port;1;0">
+</MAPCOPY>
+
+<MAPCOPY NAME="Link" FROM="/$uri.original;2;0/authority;2;0/server;2;0/user;1;0" TO="/$uri;2;0/authority;2;0/server;2;0/user;1;0">
+</MAPCOPY>
+
+<MAPCOPY NAME="Link" FROM="/$password.redacted;1;0" TO="/$uri;2;0/authority;2;0/server;2;0/password;1;0">
 </MAPCOPY>
 </MAP>
 
@@ -12589,6 +12726,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -12639,22 +12785,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -12723,6 +12853,22 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -13153,6 +13299,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -13203,22 +13358,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -13287,6 +13426,22 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -13623,6 +13778,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -13673,22 +13837,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -13757,6 +13905,22 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -14122,6 +14286,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -14172,22 +14345,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -14261,28 +14418,17 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$content.type</value>
-        <value name="field_type">string</value>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">false</value>
+        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -14323,6 +14469,33 @@
             <value name="is_global">false</value>
           </record>
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$content.type</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -14624,6 +14797,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -14674,22 +14856,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -14758,6 +14924,22 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -15158,6 +15340,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -15208,22 +15399,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -15297,28 +15472,17 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$content.type</value>
-        <value name="field_type">string</value>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">false</value>
+        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -15370,6 +15534,33 @@
             <value name="is_global">false</value>
           </record>
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$content.type</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -15703,6 +15894,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -15753,22 +15953,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -15853,6 +16037,33 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$document.original</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
           <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
@@ -15875,17 +16086,6 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$document.original</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -16250,6 +16450,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -16300,22 +16509,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -16400,6 +16593,22 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
           <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
@@ -16425,6 +16634,17 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
+        <value name="field_name">$document</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
           <value name="field_largerEditor">false</value>
@@ -16434,17 +16654,6 @@
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$document</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -16734,6 +16943,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -16784,22 +17002,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -16884,6 +17086,33 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$document.original</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
           <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
@@ -16906,17 +17135,6 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$document.original</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -17247,6 +17465,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -17297,22 +17524,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -17465,6 +17676,22 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
           <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
@@ -17490,6 +17717,17 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
+        <value name="field_name">$document</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
           <value name="field_largerEditor">false</value>
@@ -17499,17 +17737,6 @@
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$document</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -17852,6 +18079,122 @@
 
   <!-- nodes -->
 
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">Service 'tundra.tn:deliver' attempting to deliver document to '%$destination.redacted%'</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <null name="field_usereditable"/>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$message</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$summary;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">Document delivery attempt</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <null name="field_usereditable"/>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$summary</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">Delivery</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$class</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <array name="field_options" type="value" depth="1">
+      <value>General</value>
+      <value>Processing</value>
+      <value>Delivery</value>
+      <value>Transient</value>
+      <value>Unrecoverable</value>
+      <value>Validation</value>
+    </array>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$type;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
@@ -17923,122 +18266,6 @@
         <value name="dataTypeVersion">dtVersion2</value>
       </record>
       <value name="dataTypeVersion">dtVersion2</value>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">Delivery</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$class</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <array name="field_options" type="value" depth="1">
-      <value>General</value>
-      <value>Processing</value>
-      <value>Delivery</value>
-      <value>Transient</value>
-      <value>Unrecoverable</value>
-      <value>Validation</value>
-    </array>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$summary;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">Document delivery attempt</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <null name="field_usereditable"/>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$summary</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">Service 'tundra.tn:deliver' attempting to deliver document to '%$destination.redacted%'</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <null name="field_usereditable"/>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$message</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
     </record>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
@@ -18273,6 +18500,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -18323,22 +18559,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -18412,6 +18632,22 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
           <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
@@ -18437,6 +18673,17 @@
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
+        <value name="field_name">$document</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
           <value name="field_largerEditor">false</value>
@@ -18446,17 +18693,6 @@
         <value name="field_type">record</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$document</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -18787,6 +19023,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -18837,22 +19082,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -18926,28 +19155,17 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$content.type</value>
-        <value name="field_type">string</value>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">false</value>
+        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -18957,7 +19175,7 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$schema</value>
+        <value name="field_name">$content.type</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -18986,6 +19204,50 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$schema</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -19290,6 +19552,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -19313,22 +19584,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -19402,28 +19657,17 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$content.type</value>
-        <value name="field_type">string</value>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">false</value>
+        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -19433,7 +19677,7 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$schema</value>
+        <value name="field_name">$content.type</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -19462,6 +19706,50 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$schema</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -19529,6 +19817,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -19566,15 +19863,6 @@
           </array>
         </record>
         <value name="nillable">false</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
       </record>
@@ -19830,6 +20118,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -19853,22 +20150,6 @@
           <value name="field_password">false</value>
         </record>
         <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
-        <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$receiver</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -19942,28 +20223,17 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
-          <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$content.type</value>
-        <value name="field_type">string</value>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <record name="field_content_type" javaclass="com.wm.util.Values">
-          <value name="contentType">1</value>
-          <value name="internalType">reference</value>
-          <value name="dataTypeVersion">dtVersion2</value>
-          <array name="targetNames" type="record" depth="1">
-            <record javaclass="com.wm.util.Values">
-              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-              <value name="ncName">string</value>
-            </record>
-          </array>
-        </record>
-        <value name="nillable">false</value>
+        <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -19973,7 +20243,7 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$schema</value>
+        <value name="field_name">$content.type</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -20002,6 +20272,50 @@
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
         </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$schema</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -20069,6 +20383,15 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -20079,15 +20402,6 @@
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -31784,7 +32098,7 @@
 </SEQUENCE>
 </BRANCH>
 
-<MAP NAME="drop" MODE="STANDALONE">
+<MAP NAME="drop" TIMEOUT="" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
@@ -31797,6 +32111,17 @@
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$headers</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
     </array>
   </record>
 </Values>
@@ -31821,17 +32146,6 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <value name="rec_ref">wm.tn.rec:BizDocEnvelope</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$context</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -31990,20 +32304,13 @@
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="node_comment"></value>
-        <record name="node_hints" javaclass="com.wm.util.Values">
-          <value name="field_largerEditor">false</value>
-          <value name="field_password">false</value>
-        </record>
-        <value name="field_name">$sender</value>
-        <value name="field_type">recref</value>
+        <value name="node_type">unknown</value>
+        <value name="field_name">$password.redacted</value>
+        <value name="field_type">string</value>
         <value name="field_dim">0</value>
-        <value name="field_opt">true</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-        <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -32012,7 +32319,7 @@
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
         </record>
-        <value name="field_name">$receiver</value>
+        <value name="field_name">$sender</value>
         <value name="field_type">recref</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -32086,6 +32393,50 @@
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$receiver</value>
+        <value name="field_type">recref</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <value name="rec_ref">tundra.tn.schema:profile</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$document</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$namespace</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
           <null name="field_usereditable"/>
           <value name="field_largerEditor">false</value>
           <value name="field_password">false</value>
@@ -32108,17 +32459,6 @@
         <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">record</value>
-        <value name="field_name">$document</value>
-        <value name="field_type">record</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-        <array name="rec_fields" type="record" depth="1">
-        </array>
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
@@ -32238,6 +32578,15 @@
 </MAPDELETE>
 
 <MAPDELETE NAME="Dropper" FIELD="/$schema.type;1;0">
+</MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/$password.redacted;1;0">
+</MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/$namespace;2;0">
+</MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/$headers;2;0">
 </MAPDELETE>
 </MAP>
 </FLOW>
