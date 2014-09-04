@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="svc_type">flow</value>
+  <value name="svc_subtype">default</value>
+  <value name="svc_sigtype">java 3.5</value>
+  <value name="svc_spec">tundra.tn.schema.attribute.string:transformer</value>
+  <value name="node_comment">Trading Networks string transformer which returns the currently 
+logged on username. This transformer can be used to extract the user 
+that submitted the document as an attribute of the document.
+
+This service is intended to be invoked by Trading Networks as a 
+custom document type attribute transformer.
+
+* Inputs:
+  * values is a list of arbitrary strings, their values are ignored 
+    by this service and are therefore irrelevant.
+  * isArray is a boolean indicating if the values argument contains 
+    multiple items.
+  * arg is not used by this service, and therefore not required.
+
+* Outputs:
+  * newValues is a list the same length as the input values list, 
+    but where every item is the currently loggged on username.</value>
+  <value name="stateless">no</value>
+  <value name="caching">no</value>
+  <value name="prefetch">no</value>
+  <value name="cache_ttl">15</value>
+  <value name="prefetch_level">1</value>
+  <value name="template">tundra_tn_document_attribute_string_transformer_profile_self</value>
+  <value name="template_type">html</value>
+  <value name="audit_level">off</value>
+  <value name="check_internal_acls">no</value>
+  <value name="icontext_policy">$null</value>
+  <value name="system_service">no</value>
+  <value name="retry_max">0</value>
+  <value name="retry_interval">0</value>
+  <value name="svc_in_validator_options">default</value>
+  <value name="svc_out_validator_options">default</value>
+  <value name="auditoption">0</value>
+  <record name="auditsettings" javaclass="com.wm.util.Values">
+    <value name="document_data">0</value>
+    <value name="startExecution">false</value>
+    <value name="stopExecution">false</value>
+    <value name="onError">true</value>
+  </record>
+</Values>

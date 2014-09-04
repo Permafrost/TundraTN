@@ -1570,6 +1570,26 @@ Bizdoc-related services:
   * Outputs:
     * `newValues` is a list of URI encoded items from the input values list.
 
+* #### tundra.tn.document.attribute.string.transformer.user:current
+
+  Trading Networks string transformer which returns the currently 
+  logged on username. This transformer can be used to extract the user 
+  that submitted the document as an attribute of the document.
+
+  This service is intended to be invoked by Trading Networks as a 
+  custom document type attribute transformer.
+
+  * Inputs:
+    * `values` is a list of arbitrary strings, their values are ignored 
+      by this service and are therefore irrelevant.
+    * `isArray` is a boolean indicating if the `values` argument contains 
+      multiple items.
+    * `arg` is not used by this service, and therefore not required.
+
+  * Outputs:
+    * `newValues` is a list the same length as the input values list, 
+      but where every item is the currently loggged on username.
+
 * #### tundra.tn.document.content:add
 
   Adds a content part with the given name and content, specified as a string,
