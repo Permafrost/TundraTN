@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-08-24 18:08:52 EST
-// -----( ON-HOST: 172.16.189.132
+// -----( CREATED: 2014-09-13 12:12:24 EST
+// -----( ON-HOST: 172.16.189.176
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -147,11 +147,8 @@ public final class queue
 	
 	  com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
 	  com.wm.app.b2b.server.InvokeState state = com.wm.app.b2b.server.InvokeState.getCurrentState();
-	
 	  java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queue.getQueueName(), state));
-	
 	  java.util.Queue<java.util.concurrent.Future<IData>> futures = new java.util.LinkedList<java.util.concurrent.Future<IData>>();
-	  java.util.List<Exception> exceptions = new java.util.ArrayList<Exception>();
 	
 	  try {
 	    while(total < batchLimit) {
