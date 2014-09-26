@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-08-26 13:59:02.987
+// -----( CREATED: 2014-09-26 16:26:55.599
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -457,13 +457,14 @@ public final class profile
 	        profile = profiles.get(id);
 	      } else {
 	        profile = tundra.tn.support.profile.get(id);
+	        if (profile != null) {
+	          if (id.isExternal()) {
+	            put(id, profile); // cache profile against external ID
+	            id = id.toInternalID();
+	          }
 	
-	        if (id.isExternal()) {
-	          put(id, profile); // cache profile against external ID
-	          id = id.toInternalID();
+	          if (id != null) put(id, profile); // cache profile against internal ID
 	        }
-	
-	        if (id != null) put(id, profile); // cache profile against internal ID
 	      }
 	    }
 	
