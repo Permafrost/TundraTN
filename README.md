@@ -10,7 +10,7 @@ services for [webMethods Integration Server] 7.1 and higher.
 
 ## Dependencies
 
-[TundraTN] is compiled for Java 1.6, is dependent on the following
+[TundraTN] is compiled for Java 1.6, and is dependent on the following
 [webMethods Integration Server] packages:
 
 * [Tundra]
@@ -1516,39 +1516,39 @@ Bizdoc-related services:
 
 * #### tundra.tn.document.attribute.string.transformer.profile:get
 
-  Trading Networks string transformer which returns the internal ID 
-  associated with a Trading Networks partner profile. This transformer 
-  can be used to force the sender or receiver of a document to always 
-  be a specific partner profile, regardless of the value of the 
+  Trading Networks string transformer which returns the internal ID
+  associated with a Trading Networks partner profile. This transformer
+  can be used to force the sender or receiver of a document to always
+  be a specific partner profile, regardless of the value of the
   extracted attribute.
 
-  This service is intended to be invoked by Trading Networks as a 
+  This service is intended to be invoked by Trading Networks as a
   custom document type attribute transformer.
 
   * Inputs:
-    * `values` is a list of arbitrary strings, their values are ignored 
+    * `values` is a list of arbitrary strings, their values are ignored
       by this service and are therefore irrelevant.
-    * `isArray` is a boolean indicating if the `values` argument contains 
+    * `isArray` is a boolean indicating if the `values` argument contains
       multiple items.
-    * `arg` is either the internal ID for a specific partner profile, or 
-      a [YAML] or [JSON] formatted string containing the external ID 
-      description and value to be used to look up a specific partner 
-      profile. 
+    * `arg` is either the internal ID for a specific partner profile, or
+      a [YAML] or [JSON] formatted string containing the external ID
+      description and value to be used to look up a specific partner
+      profile.
 
-      For example, the following [YAML] formatted value in `arg` will 
-      look up a partner profile with an External ID "User Defined 1" 
+      For example, the following [YAML] formatted value in `arg` will
+      look up a partner profile with an External ID "User Defined 1"
       equal to "ABCDEFG":
 
           User Defined 1: ABCDEFG
 
-      Similarly, the following [JSON] formatted value in `arg` will look 
+      Similarly, the following [JSON] formatted value in `arg` will look
       up the exact same partner profile:
 
           { "User Defined 1" : "ABCDEFG" }
 
   * Outputs:
-    * `newValues` is a list the same length as the input values list, 
-      but where every item is the internal ID of the desired Trading 
+    * `newValues` is a list the same length as the input values list,
+      but where every item is the internal ID of the desired Trading
       Networks partner profile.
 
 * #### tundra.tn.document.attribute.string.transformer.profile:self
@@ -1609,22 +1609,22 @@ Bizdoc-related services:
 
 * #### tundra.tn.document.attribute.string.transformer.user:current
 
-  Trading Networks string transformer which returns the currently 
-  logged on username. This transformer can be used to extract the user 
+  Trading Networks string transformer which returns the currently
+  logged on username. This transformer can be used to extract the user
   that submitted the document as an attribute of the document.
 
-  This service is intended to be invoked by Trading Networks as a 
+  This service is intended to be invoked by Trading Networks as a
   custom document type attribute transformer.
 
   * Inputs:
-    * `values` is a list of arbitrary strings, their values are ignored 
+    * `values` is a list of arbitrary strings, their values are ignored
       by this service and are therefore irrelevant.
-    * `isArray` is a boolean indicating if the `values` argument contains 
+    * `isArray` is a boolean indicating if the `values` argument contains
       multiple items.
     * `arg` is not used by this service, and therefore not required.
 
   * Outputs:
-    * `newValues` is a list the same length as the input values list, 
+    * `newValues` is a list the same length as the input values list,
       but where every item is the currently loggged on username.
 
 * #### tundra.tn.document.content:add
