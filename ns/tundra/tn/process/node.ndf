@@ -585,16 +585,18 @@ bizdoc processing rule.
     be converted to an IData document named 'example' containing a String 
     list named 'item' with it's first value set accordingly.
 
-  * $service.input is an optional name to be used when adding the parsed 
-    bizdoc content to the input pipeline of the call to $service. Defaults 
-    to $document. Not used if $parse? is false.
+  * $service.input is an optional name used when adding either the bizdoc 
+    content to the input pipeline of the call to $service. Defaults to 
+    $document when $parse? is true, and $content when $parse is false.
 
   * $status.done is an optional user status to use for the bizdoc when 
     processing has completed successfully. Defaults to DONE.
 
-  * $parse? is an optional boolean flag indicating whether the specified 
-    bizdoc content part should be parsed to an IData document and added to 
-    the input pipeline of the call to $service. Defaults to true.
+  * $parse? is an optional boolean flag which when true will parse the
+    bizdoc content part to an IData document which is added to the input
+    pipeline of the call to $service, and when false will instead add the 
+    bizdoc content part as an input stream to the input pipeline. Defaults 
+    to true.
 
   * $prefix? is an optional boolean flag indicating whether to use the '$' 
     prefix on the standard input arguments (bizdoc, sender, and receiver) 
