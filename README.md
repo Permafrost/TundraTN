@@ -1420,7 +1420,7 @@ Top-level services for the most common tasks:
     * `$strict?` is an optional boolean, which if true will abort routing/
       processing rule execution of the document if any errors (such as
       validation errors) are encountered prior to processing, and result in an
-      exception being thrown. Defaults to false.
+      exception being thrown. Defaults to true.
 
   * Outputs:
     * `$bizdoc` is the resulting Trading Networks document that was routed.
