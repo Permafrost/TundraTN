@@ -252,8 +252,8 @@ Top-level services for the most common tasks:
       be converted to an IData document named `example` containing a String
       list named `item` with it's first value set accordingly.
 
-    * `$service.input` is an optional name used when adding either the bizdoc 
-      content to the input pipeline of the call to `$service`. Defaults to 
+    * `$service.input` is an optional name used when adding either the bizdoc
+      content to the input pipeline of the call to `$service`. Defaults to
       `$document` when `$parse?` is true, and `$content` when `$parse` is false.
 
     * `$status.done` is an optional user status to use for the bizdoc when
@@ -261,8 +261,8 @@ Top-level services for the most common tasks:
 
     * `$parse?` is an optional boolean flag which when true will parse the
       bizdoc content part to an IData document which is added to the input
-      pipeline of the call to `$service`, and when false will instead add the 
-      bizdoc content part as an input stream to the input pipeline. Defaults 
+      pipeline of the call to `$service`, and when false will instead add the
+      bizdoc content part as an input stream to the input pipeline. Defaults
       to true.
 
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
@@ -767,8 +767,8 @@ Top-level services for the most common tasks:
       converted to an IData document named `example` containing a String list
       named `item` with it's first value set accordingly.
 
-    * `$service.input` is an optional name used when adding either the bizdoc 
-      content to the input pipeline of the call to `$service`. Defaults to 
+    * `$service.input` is an optional name used when adding either the bizdoc
+      content to the input pipeline of the call to `$service`. Defaults to
       `$document` when `$parse?` is true, and `$content` when `$parse` is false.
 
     * `$status.done` is an optional user status to use for the bizdoc when
@@ -776,8 +776,8 @@ Top-level services for the most common tasks:
 
     * `$parse?` is an optional boolean flag which when true will parse the
       bizdoc content part to an IData document which is added to the input
-      pipeline of the call to `$service`, and when false will instead add the 
-      bizdoc content part as an input stream to the input pipeline. Defaults 
+      pipeline of the call to `$service`, and when false will instead add the
+      bizdoc content part as an input stream to the input pipeline. Defaults
       to true.
 
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
@@ -1381,6 +1381,9 @@ Top-level services for the most common tasks:
       * For [YAML] content, a recognized [YAML] MIME media type, such as
         "application/yaml", or a type that includes a "+yaml" suffix, must be
         specified.
+      * For [XML] content, a recognized [XML] MIME media type, such as
+        "text/xml" or "application/xml", or a type that includes a
+        "+xml" suffix, must be specified.
 
     * `$namespace` is a list of namespace prefixes and the URIs they map to,
       used when serialize [XML] content with elements in one or more
@@ -2968,23 +2971,23 @@ Document schemas and interface specifications:
     * `$receiver` is the Trading Networks partner profile associated with the
       receiver of the bizdoc.
 
-    * `$document` is the parsed bizdoc content for processing. This is the 
-      default name for this input parameter. The actual name of the parameter 
-      can be changed using the `TundraTN/tundra.tn:process` `$service.input` 
-      parameter. This input is only provided when the `TundraTN/tundra.tn:process` 
+    * `$document` is the parsed bizdoc content for processing. This is the
+      default name for this input parameter. The actual name of the parameter
+      can be changed using the `TundraTN/tundra.tn:process` `$service.input`
+      parameter. This input is only provided when the `TundraTN/tundra.tn:process`
       `$parse?` parameter is true.
 
     * `$content` is the raw bizdoc content as an input stream for processing.
       This is the default name for this input parameter. The actual name of
       the parameter can be changed using the `TundraTN/tundra.tn:process`
-      `$service.input` parameter. This input is only provided when the 
+      `$service.input` parameter. This input is only provided when the
       `TundraTN/tundra.tn:process` `$parse?` parameter is false.
 
     * `$content.type` is the MIME media type that describes the format of the
       bizdoc content.
 
-    * `$namespaces` is the list of XML namespace prefixes and URIs declared on 
-      the associated document type and used when parsing the content.      
+    * `$namespaces` is the list of XML namespace prefixes and URIs declared on
+      the associated document type and used when parsing the content.
 
     * `$schema` is the name of the Integration Server document reference or flat
       file schema used to parse the content into an IData structure.
