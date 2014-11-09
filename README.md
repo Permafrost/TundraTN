@@ -225,12 +225,10 @@ Top-level services for the most common tasks:
 
   * Inputs:
     * `bizdoc` is the Trading Networks document to be processed.
-
     * `$services` is a list of fully-qualified service names to be called
       sequentially to process the bizdoc. Refer to the
       `TundraTN/tundra.tn.schema:processor` specification as a guide to the
       inputs and outputs required of the processing service.
-
     * `$catch` is an optional fully-qualified service name which, when
       specified, will be invoked if an exception is thrown while attempting to
       process the bizdoc. The input pipeline will include the following
@@ -239,11 +237,9 @@ Top-level services for the most common tasks:
       `$exception.message`, and `$exception.stack`. If not specified, defaults to
       `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
       handler.
-
     * `$finally` is an optional fully-qualified service name which, when
       specified, will be invoked after processing, and whether or not an
       exception is encountered during processing.
-
     * `$pipeline` is an optional IData document containing additional arbitrary
       input arguments for `$service` (or `WmPublic/pub.flatFile:convertToValues`,
       `WmPublic/pub.xml:xmlStringToXMLNode`, or `WmPublic/pub.xml:xmlNodeToDocument`
@@ -251,37 +247,30 @@ Top-level services for the most common tasks:
       handled correctly, for example an argument named `example/item[0]` will
       be converted to an IData document named `example` containing a String
       list named `item` with it's first value set accordingly.
-
     * `$service.input` is an optional name used when adding either the bizdoc
       content to the input pipeline of the call to `$service`. Defaults to
       `$document` when `$parse?` is true, and `$content` when `$parse` is false.
-
     * `$status.done` is an optional user status to use for the bizdoc when
       processing has completed successfully. Defaults to DONE.
-
     * `$parse?` is an optional boolean flag which when true will parse the
       bizdoc content part to an IData document which is added to the input
       pipeline of the call to `$service`, and when false will instead add the
       bizdoc content part as an input stream to the input pipeline. Defaults
       to true.
-
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
       prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
       when calling `$service`. When true `$service` should implement the
       `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
       should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
       Defaults to true.
-
     * `$part` is an optional name identifying the bizdoc content part to be
       parsed and added to the input pipeline of the call to `$service`. Defaults
       to the default content part (xmldata for XML documents, ffdata for Flat
       File documents). Not used if `$parse?` is false.
-
     * `$encoding` optional character encoding to be used when reading the bizdoc
       content part bytes. If not specified, defaults to the character set
       specified in the MIME content type of the content part being parsed, or
-      failing that the Java virtual machine [default charset].
-
+      failing that [UTF-8].
     * `$strict` is an optional set of boolean flags which when true abort the
       processing of the bizdoc when it contains any errors with the associated
       class.
@@ -314,7 +303,6 @@ Top-level services for the most common tasks:
 
   * Inputs:
     * `bizdoc` is the Trading Networks document whose content is to be delivered.
-
     * `$destination` is either a URI, or a named destination (such as Receiver's
       Preferred Protocol), to which the bizdoc content will be delivered. If not
       specified, no delivery will be attempted. Supports the following delivery
@@ -323,7 +311,6 @@ Top-level services for the most common tasks:
         destination URI. The following additional options can be provided via
         the `$pipeline` document:
         * `$mode`: append / write
-
       * `ftp`: uploads the given content to the FTP server, directory and file
         specified by the destination URI. An example FTP URI is as follows:
 
@@ -350,7 +337,6 @@ Top-level services for the most common tasks:
           the client waits for a response from the server before timing out
           and terminating the request with an error. Defaults to PT60S, if not
           specified.
-
       * `http`: transmits the given content to the destination URI. The
         following additional options can be provided via the `$pipeline` document:
         * `$method`: get / put / post / delete / head / trace / options
@@ -361,9 +347,7 @@ Top-level services for the most common tasks:
           the client waits for a response from the server before timing out
           and terminating the request with an error. Defaults to PT60S, if not
           specified.
-
       * `https`: refer to http
-
       * `jms`: sends the given content as a [JMS] [javax.jms.BytesMessage] to
         the specified [JMS] alias and queue or topic. The following additional
         settings can be specified:
@@ -400,7 +384,6 @@ Top-level services for the most common tasks:
         * `$smtp`: an SMTP URI specifying the SMTP server to use (for example,
           `smtp://user:password@host:port`), defaults to the SMTP server
           configured in the Integration Server setting `watt.server.smtpServer`
-
       * `sap+idoc`: sends an IDoc XML message to an SAP system. Both opaque
         and non-opaque URIs are allowed: opaque URIs are useful if the SAP
         Adapter alias contains characters not permitted in a normal domain
@@ -431,12 +414,10 @@ Top-level services for the most common tasks:
           the SAP Adapter alias language, if not specified.
         * `$queue` is the optional name of the SAP system inbound queue,
           required when using queued remote function calls (qRFC).
-
     * `$service` is an optional fully-qualified service name which, when
       specified, will be invoked prior to delivery, thus allowing a service to
       perform processing to influence the delivery (such as populating the
       pipeline with configuration variables at runtime).
-
     * `$catch` is an optional fully-qualified service name which, when
       specified, will be invoked if an exception is thrown while attempting
       delivery. The input pipeline will include the variables described in
@@ -444,44 +425,34 @@ Top-level services for the most common tasks:
       normal catch service invoked by `Tundra/tundra.service:ensure`. Defaults
       to `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
       handler, when not specified.
-
     * `$finally` is an optional fully-qualified service name which, when
       specified, will be invoked after delivery, and whether or not an
       exception is encountered during delivery.
-
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the delivery. See the `$destination`
       description above for transport-specific options which can be provided
       via this IData document.
-
     * `$status.done` is an optional user status to use for the bizdoc when
       delivery has completed successfully. Defaults to DONE.
-
     * `$status.ignored` is an optional user status to use for the bizdoc when no
       delivery destination is provided. Defaults to IGNORED.
-
     * `$part` is an optional name of the bizdoc content part to be delivered.
       Defaults to the default content part when not specified (xmldata for XML
       document types, ffdata for Flat File document types).
-
     * `$parse?` is an optional boolean flag which when true parses the bizdoc
       content part identified by `$part` using the parsing schema configured on
       the Trading Networks document type, prior to both invoking `$service`, if
       specified, and content delivery. The parsed document content can then be
       used in conjunction with variable substitution for influencing the
       delivery URI based on the content of the document. Defaults to false.
-
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
       prefix on the standard input arguments (bizdoc, sender, and receiver)
       when calling `$service`. When true `$service` should implement the
       `TundraTN/tundra.tn.schema:processor` specification; when false `$service`
       should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
       Defaults to true.
-
     * `$encoding` is an optional character set to use when to encode text
-      content for delivery. Defaults to the Java virtual machine
-      [default charset].
-
+      content for delivery. Defaults to [UTF-8].
     * `$strict` is an optional set of boolean flags that control 'strict' mode
       processing of bizdocs: if any error classes are set to 'true' and the
       bizdoc contains errors for those classes, the bizdoc will not be
@@ -496,7 +467,6 @@ Top-level services for the most common tasks:
 
       The following flags are supported, and all default to true if not
       specified:
-
       * `Recognition`
       * `Verification`
       * `Validation`
@@ -741,11 +711,9 @@ Top-level services for the most common tasks:
 
   * Inputs:
     * `bizdoc` is the Trading Networks document to be processed.
-
     * `$service` is the fully-qualified service name to be called to process the
       bizdoc. Refer to the `TundraTN/tundra.tn.schema:processor` specification
       as a guide to the inputs and outputs required of the processing service.
-
     * `$catch` is an optional fully-qualified service name which, when
       specified, will be invoked if an exception is thrown while attempting to
       process the bizdoc. The input pipeline will include the following
@@ -754,49 +722,40 @@ Top-level services for the most common tasks:
       `$exception.message`, and `$exception.stack`. If not specified, defaults to
       `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
       handler.
-
     * `$finally` is an optional fully-qualified service name which, when
       specified, will be invoked after processing, and whether or not an
       exception is encountered during processing.
-
     * `$pipeline` is an optional IData document containing additional arbitrary
       input arguments for `$service` (or `WmPublic/pub.flatFile:convertToValues`,
       `WmPublic/pub.xml:xmlStringToXMLNode`, or `WmPublic/pub.xml:xmlNodeToDocument` via
       `Tundra/tundra.tn.document:parse`). Fully-qualified names will be handled
       correctly, for example an argument named `example/item[0]` will be
       converted to an IData document named `example` containing a String list
-      named `item` with it's first value set accordingly.
-
+      named `item` with it's first value set accordingly
     * `$service.input` is an optional name used when adding either the bizdoc
       content to the input pipeline of the call to `$service`. Defaults to
       `$document` when `$parse?` is true, and `$content` when `$parse` is false.
-
     * `$status.done` is an optional user status to use for the bizdoc when
       processing has completed successfully. Defaults to DONE.
-
     * `$parse?` is an optional boolean flag which when true will parse the
       bizdoc content part to an IData document which is added to the input
       pipeline of the call to `$service`, and when false will instead add the
       bizdoc content part as an input stream to the input pipeline. Defaults
       to true.
-
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
       prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
       when calling `$service`. When true `$service` should implement the
       `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
       should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
       Defaults to true.
-
     * `$part` is an optional name identifying the bizdoc content part to be
       parsed and added to the input pipeline of the call to `$service`. Defaults
       to the default content part (xmldata for XML documents, ffdata for Flat
       File documents). Not used if `$parse?` is false.
-
     * `$encoding` optional character encoding to be used when reading the bizdoc
       content part bytes. If not specified, defaults to the character set
       specified in the MIME content type of the content part being parsed, or
-      failing that the Java virtual machine [default charset].
-
+      failing that [UTF-8].
     * `$strict` is an optional set of boolean flags which when true abort the
       processing of the bizdoc when it contains any errors with the associated
       class.
@@ -847,23 +806,19 @@ Top-level services for the most common tasks:
       to true. To disable 'strict' mode when using HTTP, include
       strict=false as part of the query string of the receive URL:
       http://localhost:5555/invoke/tundra.tn/receive?strict=false.
-
     * `TN_parms` is an optional set of routing hints for Trading
       Networks to use when routing the received content. If not
       specified by the caller, the following TN_parms are set
       automatically as follows:
-
       * `$contentType` is an optional mime media type of the received
         content. Defaults to the transport content type returned by
         `WmPublic/pub.flow:getTransportInfo`, or failing that 'text/xml'
         if a node object is present in the pipeline, or failing that
         'application/octet-stream'.
-
       * `$contentEncoding` is an optional character encoding used by
-        the received content, for example 'UTF-16'. Defaults to the
+        the received content, for example UTF-16. Defaults to the
         encoding specified as the charset property in the content
-        type, or failing that defaults to 'UTF-8'.
-
+        type, or failing that defaults to [UTF-8].
       * `$contentName` is an optional logical label or name for the
         received content, typically the filename for flat files.
         For HTTP transports, defaults to the the filename specified
@@ -871,34 +826,27 @@ Top-level services for the most common tasks:
         filename part of the request URI. For non-HTTP transports,
         defaults to the filename returned by
         `WmPublic/pub.flow:getTransportInfo`.
-
       * `$contentSchema` is an optional Integration Server document
         reference or flat file schema the received content conforms
         to. Defaults to the value of the `$schema` variable, if
         specified in the pipeline.
-
       * `$user` is the user that sent the received content. Defaults
         to the currently logged on user.
-
       * `SenderID` is an optional Trading Networks profile external ID
         which identifies the sender of the content. For flat files
         only, defaults to the currently logged on user.
-
       * `ReceiverID` is an optional Trading Networks profile external ID
         which identifies the receiver of the content. For flat files
         only, defaults to the value of the HTTP header 'X-Recipient',
         or failing that the required External ID value of the My
         Enterprise profile.
-
       * `DocumentID` is an optional ID used to identify the content in
         Trading Networks. For flat files only, defaults to the value
         of the HTTP header 'Message-ID', or failing that an [UUID] is
         automatically generated.
-
       * `GroupID` is an optional ID used to identify the group this
         content belongs to in Trading Networks. For flat files only,
         defaults to the value of `TN_parms/DocumentID`.
-
   * Outputs:
     * `id` is the internal/native ID assigned by Trading Networks to
       the resulting bizdoc.
@@ -1013,14 +961,12 @@ Top-level services for the most common tasks:
   * Inputs:
     * `bizdoc` is the Trading Networks document whose content is to be
       split.
-
     * `$service` is the fully-qualified name of the service which will be
       invoked to split the parsed bizdoc content. The splitting service
       must accept a single IData document and return an IData[] document list,
       and optionally TN_parms. Refer to the `TundraTN/tundra.tn.schema:splitter`
       specification as a guide to the inputs and outputs required of the
       translation service.
-
     * `$catch` is an optional fully-qualified service name which, when
       specified, will be invoked if an exception is thrown while attempting to
       split the bizdoc content. The input pipeline will include the following
@@ -1029,28 +975,22 @@ Top-level services for the most common tasks:
       `$exception.message` and `$exception.stack`. If not specified, defaults to
       `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
       handler.
-
     * `$finally` is an optional fully-qualified service name which, when
       specified, will be invoked after translation, and whether or not an
       exception is encountered during translation.
-
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the splitting process.
-
     * `$content.type.input` is the MIME media type that describes the format of
       the bizdoc content being split. For [JSON] content, a recognized [JSON]
       MIME media type, such as "application/json", must be specified. Defaults
       to the content type specified on the bizdoc content part.
-
     * `$content.type.output` is the MIME media type that describes the format of
       all the resulting split contents. For [JSON] content, a recognized
       [JSON] MIME media type, such as "application/json", must be specified.
-
     * `$namespace.input` is a list of namespace prefixes and the URIs they
       map to, used when parsing the bizdoc content as [XML] with elements
       in one or more namespaces. Defaults to using the namespace prefixes
       declared on the associated Trading Networks document type.
-
     * `$namespace.output` is a list of namespace prefixes and the URIs they
       map to, used when serializing the split documents returned by
       `$service` to the same [XML] format with elements in one or more
@@ -1058,12 +998,10 @@ Top-level services for the most common tasks:
       then `$service` should return a IData document list called `$namespaces`
       of the same length as the split document list, where `$namespaces[n]`
       will be used to serialize `$documents[n]`.
-
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
       IData structure. Defaults to the parsing schema specified on the
       associated Trading Networks document type.
-
     * `$schema.output` is the optional name of the Integration Server document
       reference or flat file schema to use to serialize the split documents
       returned by `$service`, if all the documents returned are of the same
@@ -1072,51 +1010,39 @@ Top-level services for the most common tasks:
       or flat file schema names called `$schemas` of the same length as the
       split document list, and `$schemas[n]` will be used to serialize
       `$documents[n]`.
-
     * `$service.input` is the optional name of the input parameter used for the
       parsed bizdoc content in the input pipeline of the invocation of
       `$service`. Defaults to `$document`.
-
     * `$service.output` is the optional name of the output parameter used by
       `$service` to return the translated documents in its output pipeline.
       Defaults to `$documents`.
-
     * `$encoding.input` is an optional character set to use when decoding the
       content part data. If not specified, defaults to the character set
       specified in the MIME content type of the content part being parsed, or
-      failing that the Java virtual machine [default charset].
-
+      failing that [UTF-8].
     * `$encoding.output` is an optional character set to use when serializing
-      the split documents. If not specified, defaults to the Java virtual
-      machine [default charset].
-
+      the split documents. If not specified, defaults to [UTF-8].
     * `$status.done` is an optional user status to use for the bizdoc when
       it has been split successfully. Defaults to DONE.
-
     * `$status.ignored` is an optional user status to use for the bizdoc when no
       split documents are returned by `$service` and `$required` is false.
       Defaults to IGNORED.
-
     * `$required?` is an optional boolean indicating whether $service is
       required to return a one or more split documents. If true, and no
       documents are returned by `$service`, an exception will be thrown and
       handled by the `$catch` service. Defaults to false.
-
     * `$relate?` is an optional boolean indicating whether the original document
       should be related to each of the individual split documents. Defaults to
       true.
-
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
       prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
       when calling `$service`. When true `$service` should implement the
       `TundraTN/tundra.tn.schema:splitter` specification, when false `$service`
       should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
       Defaults to true.
-
     * `$part` is the optional name of the bizdoc content part to be split.
       Defaults to the default content part when not specified (xmldata for XML
       document types, ffdata for Flat File document types).
-
     * `$strict` is an optional set of boolean flags which when true abort the
       processing of the bizdoc when it contains any errors with the associated
       class.
@@ -1201,14 +1127,12 @@ Top-level services for the most common tasks:
   * Inputs:
     * `bizdoc` is the Trading Networks document whose content is to be
       translated.
-
     * `$service` is the fully-qualified name of the service which will be
       invoked to translate the parsed bizdoc content. The translation service
       must accept a single IData document and return a single IData document,
       and optionally TN_parms. Refer to the
       `TundraTN/tundra.tn.schema:translator` specification as a guide to the
       inputs and outputs required of the translation service.
-
     * `$catch` is an optional fully-qualified service name which, when
       specified, will be invoked if an exception is thrown while attempting to
       translate the bizdoc content. The input pipeline will include the
@@ -1217,14 +1141,11 @@ Top-level services for the most common tasks:
       `$exception.message` and `$exception.stack`. If not specified, defaults to
       `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
       handler.
-
     * `$finally` is an optional fully-qualified service name which, when
       specified, will be invoked after translation, and whether or not an
       exception is encountered during translation.
-
     * `$pipeline` is an optional IData document containing arbitrary variables
       which can be used to influence the translation process.
-
     * `$content.type.input` is the MIME media type that describes the format of
       the bizdoc content being translated:
       * For [CSV] content, a recognized [CSV] MIME media type, such as
@@ -1240,7 +1161,6 @@ Top-level services for the most common tasks:
         "application/yaml", must be specified.
       Defaults the the content type of the relevant bizdoc content part, if
       not specified.
-
     * `$content.type.output` is the MIME media type that describes the format of
       the resulting translated content:
       * For [CSV] content, a recognized [CSV] MIME media type, such as
@@ -1256,66 +1176,51 @@ Top-level services for the most common tasks:
         "application/yaml", must be specified.
       Defaults to the value in `TN_parms/$contentType` returned by `$service`, if
       not specified.
-
     * `$namespace.input` is a list of namespace prefixes and the URIs they
       map to, used when parsing the bizdoc content as [XML] with elements
       in one or more namespaces. Defaults to using the namespace prefixes
       declared on the associated Trading Networks document type.
-
     * `$namespace.output` is a list of namespace prefixes and the URIs they
       map to, used when serializing the translated document returned by
       `$service` to [XML] content with elements in one or more namespaces.
-
     * `$schema.input` is the optional name of the Integration Server document
       reference or flat file schema to use to parse the bizdoc content into an
       IData structure. Defaults to the parsing schema specified on the
       associated Trading Networks document type.
-
     * `$schema.output` is the optional name of the Integration Server document
       reference or flat file schema to use to serialize the translated
       document returned by `$service`. Defaults to the value in `TN_parms/$schema`
       returned by `$service`, if not specified.
-
     * `$service.input` is the optional name of the input parameter used for the
       parsed bizdoc content in the input pipeline of the invocation of `$service`.
       Defaults to `$document`.
-
     * `$service.output` is the optional name of the output parameter used by
       `$service` to return the translated document in its output pipeline.
       Defaults to `$translation`.
-
     * `$encoding.input` is an optional character set to use when decoding the
       content part data. If not specified, defaults to the character set
       specified in the MIME content type of the content part being parsed, or
-      failing that the Java virtual machine [default charset].
-
+      failing that [UTF-8].
     * `$encoding.output` is an optional character set to use when serializing
-      the translated document. If not specified, defaults to the Java virtual
-      machine [default charset].
-
+      the translated document. If not specified, defaults to [UTF-8].
     * `$status.done` is an optional user status to use for the bizdoc when
       it has been translated successfully. Defaults to DONE.
-
     * `$status.ignored` is an optional user status to use for the bizdoc when no
       translation is returned by `$service` and `$required` is false. Defaults to
       IGNORED.
-
     * `$required?` is an optional boolean indicating whether `$service` is
       required to return a translated document. If true, and no translation is
       returned by `$service`, an exception will be thrown and handled by the
       `$catch` service. Defaults to false.
-
     * `$prefix?` is an optional boolean flag indicating whether to use the '$'
       prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
       when calling `$service`. When true `$service` should implement the
       `TundraTN/tundra.tn.schema:translator` specification, when false `$service`
       should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
       Defaults to true.
-
     * `$part` is the optional name of the bizdoc content part to be translated.
       Defaults to the default content part when not specified (xmldata for XML
       document types, ffdata for Flat File document types).
-
     * `$strict` is an optional set of boolean flags which when true abort the
       processing of the bizdoc when it contains any errors with the associated
       class.
@@ -1363,7 +1268,6 @@ Top-level services for the most common tasks:
       * TSV: `Tundra/tundra.csv:emit`
       * XML: `WmPublic/pub.xml:documentToXMLString`
       * YAML: `Tundra/tundra.yaml:emit`
-
     * `$content.type` is the MIME media type that describes the format of the
       given content:
       * For [CSV] content, a recognized [CSV] MIME media type, such as
@@ -1384,15 +1288,11 @@ Top-level services for the most common tasks:
       * For [XML] content, a recognized [XML] MIME media type, such as
         "text/xml" or "application/xml", or a type that includes a
         "+xml" suffix, must be specified.
-
     * `$namespace` is a list of namespace prefixes and the URIs they map to,
       used when serialize [XML] content with elements in one or more
       namespaces.
-
     * `$encoding` is an optional character set to use when encoding the
-      resulting text data to a byte array or input stream. Defaults to the
-      Java virtual machine [default charset].
-
+      resulting text data to a byte array or input stream. Defaults to [UTF-8].
     * `$schema` is the fully-qualified name of the parsing schema to use to
       serialize `$content` when provided as an IData document to [XML] or
       Flat File content, and can have the following values:
@@ -1403,7 +1303,6 @@ Top-level services for the most common tasks:
 
       Defaults to serializing `$content` as [XML], if neither `$content.type` nor
       `$schema` are specified.
-
     * `TN_parms` is an optional set of routing hints for Trading Networks to use
       when routing `$content`. If specified, the following values will overwrite
       the normal bizdoc recognised values, allowing for sender, receiver,
@@ -1416,20 +1315,15 @@ Top-level services for the most common tasks:
       * `TN_parms/DoctypeName`
       * `TN_parms/GroupID`
       * `TN_parms/ConversationID`
-
     * `$strict?` is an optional boolean, which if true will abort routing/
       processing rule execution of the document if any errors (such as
       validation errors) are encountered prior to processing, and result in an
       exception being thrown. Defaults to true.
-
   * Outputs:
     * `$bizdoc` is the resulting Trading Networks document that was routed.
-
     * `$sender` is the Trading Networks profile of the sender of the document.
-
     * `$receiver` is the Trading Networks profile of the receiver of the
       document.
-
     * `TN_parms` is the routing hints used to route the document in Trading
       Networks.
 
@@ -1643,20 +1537,16 @@ Bizdoc-related services:
     * `$bizdoc` is the Trading Networks document to add the content part to.
       Only the internal ID of the bizdoc must be specified, with the remainder
       of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
-
     * `$part` is the name of the content part to be added to the Trading
       Networks document, and uniquely identifies the part being added.
-
     * `$content` is the content part data to be added, specified as a string,
       byte array, or input stream.
-
     * `$content.type` is an optional MIME media type describing the type of content
       being added. Defaults to application/octet-stream (the default MIME media
       type for arbitrary binary data) if not specified.
-
     * `$encoding` is the optional character set used to encode `$content` when
       specified as a byte array or input stream and representing text data.
-      Defaults to the Java virtual machine [default charset].
+      Defaults to [UTF-8].
 
 * #### tundra.tn.document.content:exists
 
@@ -1902,30 +1792,23 @@ Bizdoc-related services:
       Only the internal ID of the bizdoc must be specified, with the remainder
       of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional. If the
       specified bizdoc does not exist, an exception will be thrown.
-
     * `$part` is an optional content part name to be parsed. If not specified,
       the default content part (xmldata for XML, ffdata for Flat Files) will
       be parsed. If the specified content part name does not exist, an
       exception will be thrown.
-
     * `$encoding` is an optional character set to use when decoding the content
       part data. If not specified, defaults to the character set specified in
       the MIME content type of the content part being parsed, or failing that
-      the Java virtual machine [default charset][1].
-
+      [UTF-8].
   * Outputs:
     * `$document` is the parsed content part in an IData document representation.
-
     * `$content.type` is the MIME media type that describes the format of the
       parsed content.
-
     * `$namespaces` is the list of XML namespace prefixes and URIs declared on
       the associated document type and used when parsing the content.
-
     * `$schema` is an optional output that specifies the fully-qualified name of
       the document reference (for XML) or flat file schema (for Flat Files)
       declared on the associated document type.
-
     * `$schema.type` is an optional output that specifies whether `$schema` is an
       XML document reference or flat file schema, and is a choice of one of the
       following values:
@@ -3120,6 +3003,7 @@ Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
 [TundraTN]: <https://github.com/Permafrost/TundraTN>
+[UTF-8]: <http://en.wikipedia.org/wiki/UTF-8>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
 [webMethods Integration Server]: <http://www.softwareag.com/corporate/products/wm/integration/products/ai/overview/default.asp>
 [webMethods Trading Networks]: <http://www.softwareag.com/corporate/products/wm/integration/products/b2b/overview/default.asp>
