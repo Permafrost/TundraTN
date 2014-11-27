@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-09-26 16:26:55.599
-// -----( ON-HOST: -
+// -----( CREATED: 2014-11-27 20:03:05 EST
+// -----( ON-HOST: 172.16.189.176
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -437,7 +437,7 @@ public final class profile
 	    while(iterator.hasNext()) {
 	      ProfileID id = iterator.next();
 	      // only return the profiles associated with an internal ID
-	      if (id.isInternal()) list.add(profiles.get(id));
+	      if (id.isInternal()) list.add(normalize(profiles.get(id), true));
 	    }
 	
 	    return (IData[])list.toArray(new IData[0]);
@@ -468,7 +468,7 @@ public final class profile
 	      }
 	    }
 	
-	    return profile;
+	    return normalize(profile, true);
 	  }
 	
 	  // returns the given profile from the cache, if it exists
