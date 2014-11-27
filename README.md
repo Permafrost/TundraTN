@@ -1758,6 +1758,28 @@ Bizdoc-related services:
     * `$receiver` is the Trading Networks partner profile of the receiver of the
       returned bizdoc.
 
+* #### tundra.tn.document.namespace:get
+
+  Returns the namespace declarations associated with the given Trading
+  Networks document (bizdoc) in a format useful when parsing the
+  content using `WmPublic/pub.xml:xmlStringToXMLNode` and
+  `WmPublic/pub.xml:xmlNodeToDocument`.
+
+  Note that the special Trading Networks namespace prefix `prefix0`,
+  which represents the default namespace, is automatically copied
+  to Integration Server's default namespace prefix `ns`.
+
+  * Inputs:
+    * `$bizdoc` is the Trading Networks document to retrieve the
+      namespace declarations from. Only the internal ID of the bizdoc
+      must be specified, with the remainder of the
+      `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+  * Outputs:
+    * `$namespace` is an IData document containing the namespace
+      declarations associated with the given `$bizdoc`, where the keys
+      in the document are the namespace prefixes and the values are
+      the namespace URIs.
+
 * #### tundra.tn.document:normalize
 
   Returns the given Trading Networks document (bizdoc) and its associated
