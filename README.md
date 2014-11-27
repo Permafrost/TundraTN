@@ -436,6 +436,11 @@ Top-level services for the most common tasks:
       delivery has completed successfully. Defaults to DONE.
     * `$status.ignored` is an optional user status to use for the bizdoc when no
       delivery destination is provided. Defaults to IGNORED.
+    * `$substitute?` is an optional boolean flag which when true will perform
+      variable substitution on all variables in the pipeline (after invoking
+      `$service`, if applicable), which allows variables to be set dynamically
+      using other values in the pipeline (or values returned by `$service`, if
+      applicable). Defaults to true.
     * `$part` is an optional name of the bizdoc content part to be delivered.
       Defaults to the default content part when not specified (xmldata for XML
       document types, ffdata for Flat File document types).
@@ -2255,6 +2260,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$finally`
       * `$pipeline`
       * `$status.done`
+      * `$status.ignored`
+      * `$substitute?`
       * `$parse?`
       * `$prefix?`
       * `$part`
