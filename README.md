@@ -351,21 +351,21 @@ Top-level services for the most common tasks:
       * `jms`: sends the given content as a [JMS] [javax.jms.BytesMessage] to
         the specified [JMS] alias and queue or topic. The following additional
         settings can be specified:
-        * $headers/*: additional properties to be added to the [JMS] message
+        * `$headers/*`: additional properties to be added to the [JMS] message
           header, which can be used for filtering by [JMS] subscribers. Note
           that all extracted bizdoc attributes are automatically included in
           the JMS message header.
 
         The following example will deliver the given content as a [JMS] bytes
-        message to the JMS alias DEFAULT_IS_JMS_CONNECTION, [JMS] topic
-        JMS::Temporary::Topic, with a time to live of 1 day, and with the
+        message to the JMS alias `DEFAULT_IS_JMS_CONNECTION`, [JMS] topic
+        `JMS::Temporary::Topic`, with a time to live of 1 day, and with the
         default priority of 4:
 
             jms://DEFAULT_IS_JMS_CONNECTION?topic=JMS::Temporary::Topic&lifetime=P1D
 
         The following example will deliver the given content as a [JMS] bytes
-        message to the [JMS] alias DEFAULT_IS_JMS_CONNECTION, [JMS] queue
-        JMS::Temporary::Queue, with no expiry, and with the specified priority
+        message to the [JMS] alias `DEFAULT_IS_JMS_CONNECTION`, [JMS] queue
+        `JMS::Temporary::Queue`, with no expiry, and with the specified priority
         of 1:
 
             jms://DEFAULT_IS_JMS_CONNECTION?queue=JMS::Temporary::Queue&priority=1
@@ -389,13 +389,13 @@ Top-level services for the most common tasks:
         Adapter alias contains characters not permitted in a normal domain
         name, such as underscores.
 
-        An example opaque sap+idoc URI is as follows, where sap_r3 is the
+        An example opaque `sap+idoc` URI is as follows, where `sap_r3` is the
         SAP Adapter alias name, and the user and password are provided as
         query string parameters:
 
             sap+idoc:sap_r3?user=aladdin&password=opensesame&client=200&language=en&queue=xyz
 
-        An example non-opaque sap+idoc URI is as follows, where sappr3 is the
+        An example non-opaque `sap+idoc` URI is as follows, where `sappr3` is the
         SAP Adapter alias name, and the user and password are provided in the
         authority section of the URI:
 
@@ -3026,6 +3026,8 @@ Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 [ISO8601]: <http://en.wikipedia.org/wiki/ISO_8601>
 [java.text.SimpleDateFormat]: <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>
 [java.util.Date]: <http://docs.oracle.com/javase/6/docs/api/java/util/Date.html>
+[javax.jms.BytesMessage]: <http://docs.oracle.com/javaee/1.4/api/javax/jms/BytesMessage.html>
+[JMS]: <http://en.wikipedia.org/wiki/Java_Message_Service>
 [JSON]: <http://www.json.org>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
