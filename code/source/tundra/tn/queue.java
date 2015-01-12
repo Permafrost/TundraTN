@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-07-19 13:05:36 EST
-// -----( ON-HOST: 172.16.189.136
+// -----( CREATED: 2015-01-12 11:59:11.577
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -90,6 +90,31 @@ public final class queue
 
 
 
+	public static final void list (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(list)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [o] record:1:optional $queues
+		// [o] - field:0:required name
+		// [o] - field:0:required type
+		// [o] - field:0:required status
+		IDataCursor cursor = pipeline.getCursor();
+		
+		try {
+		  IData[] list = list();
+		  if (list != null) IDataUtil.put(cursor, "$queues", list);
+		} finally {
+		  cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+                
+	}
+
+
+
 	public static final void suspend (IData pipeline)
         throws ServiceException
 	{
@@ -125,6 +150,48 @@ public final class queue
 	  }
 	
 	  return queue;
+	}
+	
+	// returns a list of all registered queues
+	public static IData[] list() throws ServiceException {
+	  IData[] output = null;
+	  try {
+	    output = toIData(com.wm.app.tn.db.QueueOperations.select(null));
+	  } catch(java.sql.SQLException ex) {
+	    tundra.tn.exception.raise(ex);
+	  } catch(java.io.IOException ex) {
+	    tundra.tn.exception.raise(ex);
+	  }
+	  return output;
+	}
+	
+	// converts the given delivery queue object to an IData object
+	public static IData toIData(com.wm.app.tn.delivery.DeliveryQueue input) {
+	  if (input == null) return null;
+	
+	  IData output = IDataFactory.create();
+	  IDataCursor cursor = output.getCursor();
+	
+	  IDataUtil.put(cursor, "name", input.getQueueName());
+	  IDataUtil.put(cursor, "type", input.getQueueType());
+	  IDataUtil.put(cursor, "status", input.getState());
+	
+	  cursor.destroy();
+	
+	  return output;
+	}
+	
+	// converts the given delivery queue object to an IData object
+	public static IData[] toIData(com.wm.app.tn.delivery.DeliveryQueue[] input) {
+	  if (input == null) return null;
+	
+	  IData[] output = new IData[input.length];
+	
+	  for (int i = 0; i < input.length; i++) {
+	    output[i] = toIData(input[i]);
+	  }
+	
+	  return output;
 	}
 	
 	// enables the delivery of the queue associated with the given name

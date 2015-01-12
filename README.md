@@ -2477,6 +2477,24 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   * Inputs:
     * `$queue` is the name of the queue to be enabled.
 
+* #### tundra.tn.queue:list
+
+  Returns a list of all registered Trading Networks delivery queues.
+
+  * Outputs:
+    * `$queues` is an `IData[]` document list containing one item per 
+      registered Trading Networks delivery queue.
+      * `name` is the unique name of the queue.
+      * `type` is the type of queue, and is one of the following values:
+        * `private`
+        * `public`
+      * `status` is the current status of the queue, and is one of the
+        following values:
+        * `disabled`
+        * `draining`
+        * `enabled`
+        * `suspended`
+
 * #### tundra.tn.queue:process
 
   Invokes `TundraTN/tundra.tn:process` for each item in the given Trading
