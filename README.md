@@ -2505,6 +2505,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
         * `draining`
         * `enabled`
         * `suspended`
+      * `length` is the number of tasks with a status of `QUEUED` or
+        `DELIVERING` currently in the queue.
 
 * #### tundra.tn.queue:process
 
