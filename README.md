@@ -2477,12 +2477,23 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   * Inputs:
     * `$queue` is the name of the queue to be enabled.
 
+* #### tundra.tn.queue:length
+
+  Returns the number of tasks with a status of `QUEUED` or `DELIVERING`
+  in the given Trading Networks delivery queue.
+
+  * Inputs:
+    * `$queue` is the name of the queue whose length is to be returned.
+  * Outputs:
+    * `$length` is the number of tasks with with a status of `QUEUED` or
+      `DELIVERING` in the given queue.
+
 * #### tundra.tn.queue:list
 
   Returns a list of all registered Trading Networks delivery queues.
 
   * Outputs:
-    * `$queues` is an `IData[]` document list containing one item per 
+    * `$queues` is an `IData[]` document list containing one item per
       registered Trading Networks delivery queue.
       * `name` is the unique name of the queue.
       * `type` is the type of queue, and is one of the following values:
