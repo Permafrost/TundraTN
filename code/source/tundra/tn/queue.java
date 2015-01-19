@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-01-19 08:34:20.334
+// -----( CREATED: 2015-01-19 12:46:13.297
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -123,7 +123,7 @@ public final class queue
 		// [o] - field:0:required name
 		// [o] - field:0:required type
 		// [o] - field:0:required status
-		// [o] - field:0:optional length
+		// [o] - field:0:required length
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
@@ -297,7 +297,11 @@ public final class queue
 	  IDataUtil.put(cursor, "queue", queue);
 	  cursor.destroy();
 
-	  wm.tn.queuing.updateQueue(pipeline);
+	  try {
+	    Service.doInvoke("wm.tn.queuing", "updateQueue", pipeline);
+	  } catch(Exception ex) {
+	    tundra.tn.exception.raise(ex);
+	  }
 	}
 	// --- <<IS-END-SHARED>> ---
 }
