@@ -292,6 +292,15 @@ Top-level services for the most common tasks:
   be called prior to variable substitution and thus can be used to populate
   the pipeline with variables to be used by the substitution.
 
+  When using variable substitution in a URI, because it uses `%` characters
+  to delineate substitution statements but it is special character in URIs
+  (used for the escape sequence of [URL-encoded] characters), it needs to be
+  [URL-encoded] as `%25`. For example, to include the variable substitution
+  statement `%$bizdoc/DocType/TypeName%` in a mailto URI, the `%` characters
+  need to be encoded as the `%25` escape sequence as follows:
+
+      mailto:john.doe@example.com?subject=%25$bizdoc/DocType/TypeName%25
+
   This service leverages the service `Tundra/tundra.content:deliver`. Therefore,
   additional delivery protocols can be implemented by creating a service named
   for the URI scheme in the folder `tundra.content.deliver`.  Services in this
@@ -3065,6 +3074,7 @@ Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
 [TundraTN]: <https://github.com/Permafrost/TundraTN>
+[URL-encoded]: <http://en.wikipedia.org/wiki/Percent-encoding>
 [UTF-8]: <http://en.wikipedia.org/wiki/UTF-8>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
 [webMethods Integration Server]: <http://www.softwareag.com/corporate/products/wm/integration/products/ai/overview/default.asp>
