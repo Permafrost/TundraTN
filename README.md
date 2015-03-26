@@ -2135,50 +2135,23 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:branch` for details on the following inputs:
       * `$branches`
       * `$catch`
       * `$finally`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:chain
 
@@ -2186,9 +2159,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:chain` for details on the following inputs:
       * `$services`
       * `$catch`
@@ -2201,91 +2171,40 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$part`
       * `$encoding`
       * `$strict`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:clear
 
   Clears all items from the given Trading Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      cleared.
-
     * `$status` is the user status that will be set on each dequeued bizdoc. If not
-      specified, defaults to DONE.
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+      specified, defaults to `DONE`.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      cleared.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:deliver
 
@@ -2293,9 +2212,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:deliver` for details on the following inputs:
       * `$destination`
       * `$service`
@@ -2310,43 +2226,19 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$part`
       * `$encoding`
       * `$strict`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:derive
 
@@ -2354,9 +2246,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:derive` for details on the following inputs:
       * `$service`
       * `$catch`
@@ -2368,43 +2257,19 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$prefix?`
       * `$part`
       * `$strict`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:disable
 
@@ -2442,18 +2307,16 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   * Inputs:
     * `queue` is the name of the Trading Networks queue from which tasks will be
       dequeued and processed.
-
     * `$service` is the fully-qualified service name of the bizdoc processing
       service, which will be invoked for each task on the given queue. The
       service is required to implement the `WmTN/wm.tn.rec:ProcessingService`
       specification.
-
     * `$pipeline` is an optional input pipeline to be used when invoking the
       given `$service` bizdoc processing service. Defaults to using the pipeline
       itself as the input pipeline for `$service`, if not specified.
-
     * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
+      queue tasks.  Defaults to 1 if not specified, and has no effect if $ordered?
+      is true.
 
       If a `$concurrency` > 1 is specified, a thread pool will be created with a
       size equal to the given value. These threads are not managed by the
@@ -2468,24 +2331,26 @@ Queue processing service versions of the tundra.tn:* meta processing services:
 
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * `$ordered?` is an optional boolean flag which when `true` processes tasks
+      in ascending task creation order. When `true`, the `$concurrency` setting
+      has no effect, because ordered processing necessarily requires a
+      single thread of execution. Defaults to `false`, if not specified.
+    * `$suspend?` is an optional boolean flag which when `true` and `$ordered?`
+      is also `true`, will automatically suspend the queue when all retries
+      of a task are exhausted. At this point, the exhausted task's retry
+      count is reset to 0, the task is requeued to the front of the queue,
+      and the queue is suspended, requiring manual intervention is to resolve
+      the queue processing error. This flag has no effect when `$ordered?`
+      is `false`, and defaults to `false` if not specifed.
+    * `$retries` is the number of times a failed task will be retried if no
+      retry settings are present on the receiver's profile. Defaults to 0 (no
+      retries), if not specified.
+    * `$limit` is the maximum number of items in the queue that will be
+      processed by one invocation of this service. Defaults to 2,147,483,647
+      (the maximum value of a 32-bit signed integer), if not specified.
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
-
     * `logMsg` is an optional message describing the processing of the queue.
       This output variable is not used by this service.
 
@@ -2535,9 +2400,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:process` for details on the following inputs:
       * `$service`
       * `$catch`
@@ -2550,43 +2412,19 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$part`
       * `$encoding`
       * `$strict`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:reroute
 
@@ -2594,45 +2432,19 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:split
 
@@ -2640,9 +2452,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:split` for details on the following inputs:
       * `$service`
       * `$catch`
@@ -2664,43 +2473,19 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$prefix?`
       * `$part`
       * `$strict`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 * #### tundra.tn.queue:suspend
 
@@ -2720,9 +2505,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
   Networks queue.
 
   * Inputs:
-    * `queue` is the name of the Trading Networks queue from which tasks will be
-      dequeued and processed.
-
     * Refer to `TundraTN/tundra.tn:translate` for details on the following
       inputs:
       * `$service`
@@ -2745,43 +2527,19 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$prefix?`
       * `$part`
       * `$strict`
-
-    * `$concurrency` is an optional number of threads to be used for processing
-      queue tasks. Defaults to 1, if not specified.
-
-      If a `$concurrency` > 1 is specified, a thread pool will be created with a
-      size equal to the given value. These threads are not managed by the
-      normal Integration Server thread pools, and therefore are not restricted
-      by Integration Server thread pool settings. As such, please ensure that
-      the sum of all the `$concurrency` values for all Trading Networks queues
-      that specify a value > 1, plus the configured Integration Server thread
-      pool maximum is supported by the amount of free memory available on your
-      server:
-
-          ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-      If a `$concurrency` <= 1 is specified, tasks will be processed
-      sequentially on the main thread.
-
-    * `$ordered?` is an optional boolean flag which when true processes tasks
-      in ascending task creation order. This flag is only applicable when
-      `$concurrency` is set to 1. Defaults to false, if not specified.
-
-      Failed tasks are either retried as per the retry settings on the
-      receiver's profile, or a default of 127 times if no retry settings are
-      specified on the receiver's profile.
-
-      Once all retries for a task have failed, it is considered exhausted. The
-      exhausted task's retry count is reset to 0, the task is requeued, and
-      the queue is suspended, requiring manual intervention is to resolve the
-      queue processing errors.
-
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      inputs:
+      * `queue`
+      * `$concurrency`
+      * `$ordered?`
+      * `$suspend?`
+      * `$retries`
+      * `$limit`
   * Outputs:
-    * `queue` is the name of the Trading Networks queue from which tasks were
-      dequeued and processed.
-
-    * `logMsg` is an optional message describing the processing of the queue.
-      This output variable is not used by this service.
+    * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+      outputs:
+      * `queue`
+      * `logMsg`
 
 ### Reliable
 
