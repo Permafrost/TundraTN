@@ -2142,12 +2142,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2175,12 +2173,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2201,7 +2197,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2231,12 +2226,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2263,12 +2256,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2349,12 +2340,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * `$retries` is the number of times a failed task will be retried if no
       retry settings are present on the receiver's profile. Defaults to 0 (no
       retries), if not specified.
-    * `$status.exhausted` is an optional user status the bizdoc will be set
-      to if `$retries` is greater than zero, and all retries of the queued
-      task failed. Defaults to `EXHAUSTED`.
-    * `$limit` is the maximum number of items in the queue that will be
-      processed by one invocation of this service. Defaults to 2,147,483,647
-      (the maximum value of a 32-bit signed integer), if not specified.
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
@@ -2422,12 +2407,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2447,7 +2430,6 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2484,12 +2466,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2539,12 +2519,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       inputs:
       * `queue`
-      * `$status.exhausted`
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
       * `$retries`
-      * `$limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:

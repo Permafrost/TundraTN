@@ -96,34 +96,6 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$status.exhausted</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
           <value name="field_name">$concurrency</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -228,34 +200,6 @@
               <record javaclass="com.wm.util.Values">
                 <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
                 <value name="ncName">nonNegativeInteger</value>
-              </record>
-            </array>
-          </record>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">$limit</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">positiveInteger</value>
               </record>
             </array>
           </record>
@@ -387,14 +331,6 @@ service to process items in a Trading Networks delivery queue.
   * $retries is the number of times a failed task will be retried if no
     retry settings are present on the receiver's profile. Defaults to 0 (no 
     retries), if not specified.
-
-  * $status.exhausted is an optional user status the bizdoc will be set
-    to if $retries is greater than zero, and all retries of the queued 
-    task failed. Defaults to EXHAUSTED.
-
-  * $limit is the maximum number of items in the queue that will be 
-    processed by one invocation of this service. Defaults to 2,147,483,647 
-    (the maximum value of a 32-bit signed integer), if not specified.
 
 * Outputs:
   * queue is the name of the Trading Networks queue from which tasks were 

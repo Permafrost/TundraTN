@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-03-26 19:47:52 EST
+// -----( CREATED: 2015-03-27 17:27:51 EST
 // -----( ON-HOST: WIN-34RAS9HJLBT
 
 import com.wm.data.*;
@@ -36,12 +36,10 @@ public final class queue
 		// [i] field:0:required queue
 		// [i] field:0:required $service
 		// [i] record:0:optional $pipeline
-		// [i] field:0:optional $status.exhausted
 		// [i] field:0:optional $concurrency
 		// [i] field:0:optional $ordered? {"false","true"}
 		// [i] field:0:optional $suspend? {"false","true"}
 		// [i] field:0:optional $retries
-		// [i] field:0:optional $limit
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
@@ -54,8 +52,6 @@ public final class queue
 		  String sOrdered = IDataUtil.getString(cursor, "$ordered?");
 		  String sSuspend = IDataUtil.getString(cursor, "$suspend?");
 		  String sRetries = IDataUtil.getString(cursor, "$retries");
-		  String sLimit = IDataUtil.getString(cursor, "$limit");
-		  String exhaustedStatus = IDataUtil.getString(cursor, "$status.exhausted");
 		
 		  int concurrency = 1;
 		  if (sConcurrency != null) concurrency = Integer.parseInt(sConcurrency);
@@ -66,13 +62,10 @@ public final class queue
 		  boolean suspend = false;
 		  if (sSuspend != null) suspend = Boolean.parseBoolean(sSuspend);
 		
-		  int limit = 0;
-		  if (sLimit != null) limit = Integer.parseInt(sLimit);
-		
 		  int retries = 0;
 		  if (sRetries != null) retries = Integer.parseInt(sRetries);
 		
-		  each(queue, service, scope == null? pipeline : scope, concurrency, limit, retries, ordered, suspend, exhaustedStatus);
+		  each(queue, service, scope == null? pipeline : scope, concurrency, retries, ordered, suspend);
 		} finally {
 		  cursor.destroy();
 		}
@@ -86,6 +79,14 @@ public final class queue
 	protected final static com.wm.lang.ns.NSName EXECUTE_TASK_SERVICE = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
 	protected final static String DELIVER_BATCH_SERVICE_NAME = "wm.tn.queuing:deliverBatch";
 	protected static final String DELIVERY_JOB_UPDATE_SQL_STATEMENT = "deliver.job.update";
+	
+	
+	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
+	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
+	// otherwise they will be processed on the current thread
+	public static void each(String queueName, String service, IData pipeline, int concurrency, int retryLimit, boolean ordered, boolean suspend) throws ServiceException {
+		each(queueName, service, pipeline, concurrency, -1, retryLimit, ordered, suspend, null);
+	}
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
@@ -363,8 +364,6 @@ public final class queue
 	        }
 	
 	        breakLoop = true;
-	      } else {
-	        if (bizdoc != null && retryLimit > 0) com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "DONE W/ ERRORS", exhaustedStatus);
 	      }
 	    } else if (automaticRetry) {
 	      if (bizdoc != null) com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
