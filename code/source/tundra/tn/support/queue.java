@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-03-29 10:06:21 EST
+// -----( CREATED: 2015-03-29 18:10:03 EST
 // -----( ON-HOST: WIN-34RAS9HJLBT
 
 import com.wm.data.*;
@@ -77,32 +77,23 @@ public final class queue
 	}
 
 	// --- <<IS-START-SHARED>> ---
-	protected final static String EXECUTE_TASK_SERVICE_NAME = "tundra.tn.support.queue.task:execute";
-	protected final static com.wm.lang.ns.NSName EXECUTE_TASK_SERVICE = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
-	protected final static String DELIVER_BATCH_SERVICE_NAME = "wm.tn.queuing:deliverBatch";
+	protected static final String EXECUTE_TASK_SERVICE_NAME = "tundra.tn.support.queue.task:execute";
+	protected static final com.wm.lang.ns.NSName EXECUTE_TASK_SERVICE = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
+	protected static final String DELIVER_BATCH_SERVICE_NAME = "wm.tn.queuing:deliverBatch";
 	protected static final String DELIVERY_JOB_UPDATE_SQL_STATEMENT = "deliver.job.update";
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
 	// otherwise they will be processed on the current thread
 	public static void each(String queueName, String service, IData pipeline, int concurrency, int retryLimit, boolean ordered, boolean suspend) throws ServiceException {
-		each(queueName, service, pipeline, concurrency, -1, retryLimit, ordered, suspend, null);
-	}
-	
-	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
-	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
-	// otherwise they will be processed on the current thread
-	public static void each(String queueName, String service, IData pipeline, int concurrency, int batchLimit, int retryLimit, boolean ordered, boolean suspend, String exhaustedStatus) throws ServiceException {
 	  try {
-	    if (batchLimit <= 0) batchLimit = Integer.MAX_VALUE;
-	
 	    com.wm.app.tn.delivery.DeliveryQueue queue = com.wm.app.tn.db.QueueOperations.selectByName(queueName);
 	    if (queue == null) throw new ServiceException("Queue '" + queueName + "' does not exist");
 	
-	    if (concurrency <= 1 || ordered) {
-	      eachDirect(queue, EXECUTE_TASK_SERVICE, service, pipeline, batchLimit, retryLimit, ordered, suspend, exhaustedStatus);
+	    if (concurrency <= 1) {
+	      eachDirect(queue, EXECUTE_TASK_SERVICE, service, pipeline, Integer.MAX_VALUE, retryLimit, ordered, suspend);
 	    } else {
-	      eachConcurrent(queue, EXECUTE_TASK_SERVICE, service, pipeline, concurrency, batchLimit, retryLimit);
+	      eachConcurrent(queue, EXECUTE_TASK_SERVICE, service, pipeline, concurrency, Integer.MAX_VALUE, retryLimit, ordered, suspend);
 	    }
 	  } catch (java.sql.SQLException ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
@@ -113,7 +104,7 @@ public final class queue
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline
 	// on the current thread
-	protected static void eachDirect(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int batchLimit, int retryLimit, boolean ordered, boolean suspend, String exhaustedStatus) throws ServiceException {
+	protected static void eachDirect(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int batchLimit, int retryLimit, boolean ordered, boolean suspend) throws ServiceException {
 	  boolean invokedByTradingNetworks = invokedByTradingNetworks();
 	  int total = 0;
 	
@@ -127,7 +118,7 @@ public final class queue
 	          IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()));
 	          total++;
 	
-	          if (retry(task, retryLimit, ordered, suspend, exhaustedStatus) && ordered) { 
+	          if (retry(task, retryLimit, ordered, suspend) && ordered) { 
 	            break; // if the task needs to be retried and the queue is being processed in-order, exit so as not to retry the same task immediately
 	          }
 	        }
@@ -147,11 +138,11 @@ public final class queue
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// tasks will be processed by a thread pool whose size is equal to the desired concurrency
-	protected static void eachConcurrent(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int concurrency, int batchLimit, int retryLimit) throws ServiceException {
+	protected static void eachConcurrent(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int concurrency, int batchLimit, int retryLimit, boolean ordered, boolean suspend) throws ServiceException {
 	  boolean invokedByTradingNetworks = invokedByTradingNetworks();
 	
 	  // upper bound on number of tasks submitted to thread pool at any one time
-	  int backlog = concurrency * 2;
+	  int backlog = concurrency + 1;
 	  int total = 0;
 	
 	  com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
@@ -169,7 +160,7 @@ public final class queue
 	          if (task == null) {
 	            if (size > 0) {
 	              // wait for first thread to finish; once finished we'll loop again and see if there are now tasks on the queue
-	              awaitOldest(futures, retryLimit);
+	              awaitOldest(futures, retryLimit, ordered, suspend);
 	            } else {
 	              // if all threads have finished and there are no more tasks, then exit
 	              break;
@@ -180,7 +171,7 @@ public final class queue
 	          }
 	        } else {
 	          // wait for first thread to finish
-	          awaitOldest(futures, retryLimit);
+	          awaitOldest(futures, retryLimit, ordered, suspend);
 	        }
 	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
 	      } else {
@@ -195,16 +186,16 @@ public final class queue
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  } finally {
 	    executor.shutdown();
-	    awaitAll(futures, retryLimit);
+	    awaitAll(futures, retryLimit, ordered, suspend);
 	  }
 	}
 	
 	// waits for all futures in the given queue to complete
-	protected static java.util.List<IData> awaitAll(java.util.Queue<java.util.concurrent.Future<IData>> futures, int retryLimit) {
+	protected static java.util.List<IData> awaitAll(java.util.Queue<java.util.concurrent.Future<IData>> futures, int retryLimit, boolean ordered, boolean suspend) {
 	  java.util.List<IData> results = new java.util.ArrayList<IData>(futures.size());
 	  while(futures.size() > 0) {
 	    try {
-	      results.add(awaitOldest(futures, retryLimit));
+	      results.add(awaitOldest(futures, retryLimit, ordered, suspend));
 	    } catch (Exception ex) {
 	      // ignore exceptions
 	    }
@@ -213,12 +204,12 @@ public final class queue
 	}
 	
 	// waits for the first/head future in the given queue to complete
-	protected static IData awaitOldest(java.util.Queue<java.util.concurrent.Future<IData>> futures, int retryLimit) throws java.sql.SQLException, java.io.IOException, ServiceException {
-	  return await(futures.poll(), retryLimit);
+	protected static IData awaitOldest(java.util.Queue<java.util.concurrent.Future<IData>> futures, int retryLimit, boolean ordered, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
+	  return await(futures.poll(), retryLimit, ordered, suspend);
 	}
 	
 	// waits for the given future to complete
-	protected static IData await(java.util.concurrent.Future<IData> future, int retryLimit) throws java.sql.SQLException, java.io.IOException, ServiceException {
+	protected static IData await(java.util.concurrent.Future<IData> future, int retryLimit, boolean ordered, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
 	  IData output = null;
 	  try {
 	    output = future.get();
@@ -228,7 +219,7 @@ public final class queue
 	      Object task = IDataUtil.get(cursor, "task");
 	      cursor.destroy();
 	
-	      if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) retry((com.wm.app.tn.delivery.GuaranteedJob)task, retryLimit);
+	      if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) retry((com.wm.app.tn.delivery.GuaranteedJob)task, retryLimit, ordered, suspend);
 	    }
 	  } catch (java.util.concurrent.ExecutionException ex) {
 	    // ignore exceptions
@@ -316,15 +307,7 @@ public final class queue
 	}
 	
 	// re-enqueues the given job for delivery, unless it has reached its retry limit
-	protected static boolean retry(com.wm.app.tn.delivery.GuaranteedJob job, int retryLimit) throws java.sql.SQLException, java.io.IOException, ServiceException {
-	  return retry(job, retryLimit, false, false, null);
-	}
-	
-	protected final static String DEFAULT_EXHAUSTED_STATUS = "EXHAUSTED";
-	
-	// re-enqueues the given job for delivery, unless it has reached its retry limit
-	protected static boolean retry(com.wm.app.tn.delivery.GuaranteedJob job, int retryLimit, boolean ordered, boolean suspend, String exhaustedStatus) throws java.sql.SQLException, java.io.IOException, ServiceException {
-	  if (exhaustedStatus == null) exhaustedStatus = DEFAULT_EXHAUSTED_STATUS;
+	protected static boolean retry(com.wm.app.tn.delivery.GuaranteedJob job, int retryLimit, boolean ordered, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
 	  job = com.wm.app.tn.db.DeliveryStore.getAnyJob(job.getJobId(), true); // refetch job from DB
 	  com.wm.app.tn.doc.BizDocEnvelope bizdoc = job.getBizDocEnvelope();
 	
@@ -344,12 +327,12 @@ public final class queue
 	
 	  if (failed) {
 	    if (exhausted) {
-	      if (ordered && suspend) {
+	      if (suspend) {
 	        // reset retries back to 0
 	        job.setRetries(0);
 	        job.setStatus(com.wm.app.tn.delivery.GuaranteedJob.QUEUED);
 	        job.setDefaultServerId();
-	        job.setTimeUpdated(job.getTimeCreated()); // force this job to the front of the queue
+	        if (ordered) job.setTimeUpdated(job.getTimeCreated()); // force this job to the front of the queue
 	        update(job);
 	
 	        // suspend the queue

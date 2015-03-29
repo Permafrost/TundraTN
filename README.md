@@ -2327,16 +2327,13 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       If a `$concurrency` <= 1 is specified, tasks will be processed
       sequentially on the main thread.
     * `$ordered?` is an optional boolean flag which when `true` processes tasks
-      in ascending task creation order. When `true`, the `$concurrency` setting
-      has no effect, because ordered processing necessarily requires a
-      single thread of execution. Defaults to `false`, if not specified.
-    * `$suspend?` is an optional boolean flag which when `true` and `$ordered?`
-      is also `true`, will automatically suspend the queue when all retries
-      of a task are exhausted. At this point, the exhausted task's retry
-      count is reset to 0, the task is requeued to the front of the queue,
-      and the queue is suspended, requiring manual intervention is to resolve
-      the queue processing error. This flag has no effect when `$ordered?`
-      is `false`, and defaults to `false` if not specifed.
+      in ascending task creation order. Defaults to `false`, if not specified.
+    * `$suspend?` is an optional boolean flag which when `true` will automatically
+      suspend the queue when all retries of a task are exhausted. At this point,
+      the exhausted task's retry count is reset to 0, the task is requeued to
+      the front of the queue, and the queue is suspended, requiring manual
+      intervention to resolve the queue processing error. Defaults to `false`
+      if not specifed.
     * `$retry.limit` is the number of times a failed task will be retried if no
       retry settings are present on the receiver's profile. Defaults to 0 (no
       retries), if not specified.
