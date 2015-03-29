@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-03-27 17:27:51 EST
+// -----( CREATED: 2015-03-29 10:06:21 EST
 // -----( ON-HOST: WIN-34RAS9HJLBT
 
 import com.wm.data.*;
@@ -39,7 +39,7 @@ public final class queue
 		// [i] field:0:optional $concurrency
 		// [i] field:0:optional $ordered? {"false","true"}
 		// [i] field:0:optional $suspend? {"false","true"}
-		// [i] field:0:optional $retries
+		// [i] field:0:optional $retry.limit
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
@@ -51,7 +51,9 @@ public final class queue
 		  String sConcurrency = IDataUtil.getString(cursor, "$concurrency");
 		  String sOrdered = IDataUtil.getString(cursor, "$ordered?");
 		  String sSuspend = IDataUtil.getString(cursor, "$suspend?");
-		  String sRetries = IDataUtil.getString(cursor, "$retries");
+		  String sRetryLimit = IDataUtil.getString(cursor, "$retry.limit");
+		  // support $retries for backwards-compatibility
+		  if (sRetryLimit == null) sRetryLimit = IDataUtil.getString(cursor, "$retries");
 		
 		  int concurrency = 1;
 		  if (sConcurrency != null) concurrency = Integer.parseInt(sConcurrency);
@@ -62,10 +64,10 @@ public final class queue
 		  boolean suspend = false;
 		  if (sSuspend != null) suspend = Boolean.parseBoolean(sSuspend);
 		
-		  int retries = 0;
-		  if (sRetries != null) retries = Integer.parseInt(sRetries);
+		  int retryLimit = 0;
+		  if (sRetryLimit != null) retryLimit = Integer.parseInt(sRetryLimit);
 		
-		  each(queue, service, scope == null? pipeline : scope, concurrency, retries, ordered, suspend);
+		  each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, ordered, suspend);
 		} finally {
 		  cursor.destroy();
 		}
@@ -79,7 +81,6 @@ public final class queue
 	protected final static com.wm.lang.ns.NSName EXECUTE_TASK_SERVICE = com.wm.lang.ns.NSName.create(EXECUTE_TASK_SERVICE_NAME);
 	protected final static String DELIVER_BATCH_SERVICE_NAME = "wm.tn.queuing:deliverBatch";
 	protected static final String DELIVERY_JOB_UPDATE_SQL_STATEMENT = "deliver.job.update";
-	
 	
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,

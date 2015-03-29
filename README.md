@@ -2145,7 +2145,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2176,7 +2176,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2196,7 +2196,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2229,7 +2229,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2259,7 +2259,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2337,7 +2337,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       and the queue is suspended, requiring manual intervention is to resolve
       the queue processing error. This flag has no effect when `$ordered?`
       is `false`, and defaults to `false` if not specifed.
-    * `$retries` is the number of times a failed task will be retried if no
+    * `$retry.limit` is the number of times a failed task will be retried if no
       retry settings are present on the receiver's profile. Defaults to 0 (no
       retries), if not specified.
   * Outputs:
@@ -2410,7 +2410,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2429,7 +2429,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2469,7 +2469,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2522,7 +2522,7 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$concurrency`
       * `$ordered?`
       * `$suspend?`
-      * `$retries`
+      * `$retry.limit`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
