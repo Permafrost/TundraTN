@@ -2146,6 +2146,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2177,6 +2179,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2197,6 +2201,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2230,6 +2236,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2260,6 +2268,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2337,6 +2347,15 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * `$retry.limit` is the number of times a failed task will be retried if no
       retry settings are present on the receiver's profile. Defaults to 0 (no
       retries), if not specified.
+    * `$retry.wait` is an optional time to wait between retries if no retry
+      settings are present on the receiver's profile, specified as
+      an XML duration string. Defaults to a zero wait between retries if not
+      specified.
+    * `$retry.factor` is an optional factor to use to increase the time to wait
+      between each subsequent retry if no retry settings are present on the
+      receiver's profile. The time to wait for a retry is calculated as:
+      `(($retry.factor ^ retry count) * $retry.wait)`. Defaults to 1 if not
+      specified.
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
@@ -2408,6 +2427,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2427,6 +2448,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2467,6 +2490,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
@@ -2520,6 +2545,8 @@ Queue processing service versions of the tundra.tn:* meta processing services:
       * `$ordered?`
       * `$suspend?`
       * `$retry.limit`
+      * `$retry.wait`
+      * `$retry.factor`
   * Outputs:
     * Refer to `TundraTN/tundra.tn.queue:each` for details on the following
       outputs:
