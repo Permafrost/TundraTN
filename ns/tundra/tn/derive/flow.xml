@@ -207,6 +207,17 @@
             <value name="form_qualified">false</value>
             <value name="is_global">false</value>
           </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="field_name">$task</value>
+            <value name="field_type">record</value>
+            <value name="field_dim">0</value>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+            <array name="rec_fields" type="record" depth="1">
+            </array>
+          </record>
         </array>
       </record>
     </array>
@@ -264,6 +275,17 @@
             <value name="form_qualified">false</value>
             <value name="is_global">false</value>
           </record>
+        </array>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="field_name">$task</value>
+        <value name="field_type">record</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+        <array name="rec_fields" type="record" depth="1">
         </array>
       </record>
       <record javaclass="com.wm.util.Values">
@@ -807,6 +829,12 @@
 </Values>
 </DATA>
 </MAPSET>
+
+<MAPCOPY NAME="Link" FROM="/$task;2;0" TO="/$pipeline;2;0/$task;2;0">
+</MAPCOPY>
+
+<MAPDELETE NAME="Dropper" FIELD="/$task;2;0">
+</MAPDELETE>
 </MAP>
 
 <MAP MODE="OUTPUT">
@@ -929,6 +957,17 @@
           <record javaclass="com.wm.util.Values">
             <value name="node_type">record</value>
             <value name="field_name">$bizdoc</value>
+            <value name="field_type">record</value>
+            <value name="field_dim">0</value>
+            <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+            <array name="rec_fields" type="record" depth="1">
+            </array>
+          </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="field_name">$task</value>
             <value name="field_type">record</value>
             <value name="field_dim">0</value>
             <value name="nillable">true</value>

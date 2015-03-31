@@ -2315,7 +2315,11 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * `$service` is the fully-qualified service name of the bizdoc processing
       service, which will be invoked for each task on the given queue. The
       service is required to implement the `WmTN/wm.tn.rec:ProcessingService`
-      specification.
+      specification. Additionally, the queued task which is being processed
+      will also be added to the input pipeline of `$service` as a variable
+      named `$task` whose structure is as per `WmTN/wm.tn.rec:Task`, which
+      allows `$service` to access properties on the task such as the current
+      retry count.
     * `$pipeline` is an optional input pipeline to be used when invoking the
       given `$service` bizdoc processing service. Defaults to using the pipeline
       itself as the input pipeline for `$service`, if not specified.
