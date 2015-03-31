@@ -2354,8 +2354,10 @@ Queue processing service versions of the tundra.tn:* meta processing services:
     * `$retry.factor` is an optional factor to use to increase the time to wait
       between each subsequent retry if no retry settings are present on the
       receiver's profile. The time to wait for a retry is calculated as:
-      `(($retry.factor ^ retry count) * $retry.wait)`. Defaults to 1 if not
-      specified.
+
+          ($retry.factor ^ (retry count - 1)) * $retry.wait
+
+      Defaults to 1 if not specified.
   * Outputs:
     * `queue` is the name of the Trading Networks queue from which tasks were
       dequeued and processed.
