@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-03-31 19:59:06 EST
+// -----( CREATED: 2015-04-01 06:45:37 EST
 // -----( ON-HOST: WIN-34RAS9HJLBT
 
 import com.wm.data.*;
@@ -40,8 +40,8 @@ public final class queue
 		// [i] field:0:optional $ordered? {"false","true"}
 		// [i] field:0:optional $suspend? {"false","true"}
 		// [i] field:0:optional $retry.limit
-		// [i] field:0:optional $retry.factor
 		// [i] field:0:optional $retry.wait
+		// [i] field:0:optional $retry.factor
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
@@ -503,19 +503,21 @@ public final class queue
 				timeToWait = receiver.getDeliveryWait();
 			}
 	
-			task.setRetryLimit(retryLimit);
-			task.setRetryFactor(retryFactor);
-			task.setTTW(timeToWait);
+			if (taskRetryLimit != retryLimit || taskRetryFactor != retryFactor || taskTTW != timeToWait) {
+				task.setRetryLimit(retryLimit);
+				task.setRetryFactor(retryFactor);
+				task.setTTW(timeToWait);
 	
-	    connection = com.wm.app.tn.db.Datastore.getConnection();
-	    statement = connection.prepareStatement(UPDATE_DELIVER_JOB_RETRY_STRATEGY);
-	    statement.clearParameters();
-	    statement.setInt(1, task.getRetryLimit());
-	    statement.setInt(2, task.getRetryFactor());
-	    statement.setInt(3, (int)task.getTTW());
-	    com.wm.app.tn.db.SQLWrappers.setCharString(statement, 4, task.getJobId());
-	    statement.executeUpdate();
-	    connection.commit();
+		    connection = com.wm.app.tn.db.Datastore.getConnection();
+		    statement = connection.prepareStatement(UPDATE_DELIVER_JOB_RETRY_STRATEGY);
+		    statement.clearParameters();
+		    statement.setInt(1, task.getRetryLimit());
+		    statement.setInt(2, task.getRetryFactor());
+		    statement.setInt(3, (int)task.getTTW());
+		    com.wm.app.tn.db.SQLWrappers.setCharString(statement, 4, task.getJobId());
+		    statement.executeUpdate();
+		    connection.commit();
+			}
 	  } catch (java.sql.SQLException ex) {
 	    connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
 	  	tundra.tn.exception.raise(ex);
