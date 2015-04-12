@@ -2846,7 +2846,7 @@ around.
 
 ## Copyright
 
-Copyright © 2012 Lachlan Dowding. See license.txt for further details.
+Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 
 [/dev/null]: <http://en.wikipedia.org/wiki//dev/null>
 [CSV]: <http://en.wikipedia.org/wiki/Comma-separated_values>
@@ -2857,6 +2857,7 @@ Copyright © 2012 Lachlan Dowding. See license.txt for further details.
 [javax.jms.BytesMessage]: <http://docs.oracle.com/javaee/1.4/api/javax/jms/BytesMessage.html>
 [JMS]: <http://en.wikipedia.org/wiki/Java_Message_Service>
 [JSON]: <http://www.json.org>
+[LICENSE]: <https://github.com/Permafrost/TundraTN/blob/master/LICENSE>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
