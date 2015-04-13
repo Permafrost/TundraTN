@@ -590,7 +590,9 @@ bizdoc processing rule.
     $document when $parse? is true, and $content when $parse is false.
 
   * $status.done is an optional user status to use for the bizdoc when 
-    processing has completed successfully. Defaults to DONE.
+    processing has completed successfully. If $service returns an output
+    pipeline argument named $status.done or it changes the status itself,
+    this takes precedence over any value specified here. Defaults to DONE.
 
   * $parse? is an optional boolean flag which when true will parse the
     bizdoc content part to an IData document which is added to the input
