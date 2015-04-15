@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-04-01 08:00:14.609
+// -----( CREATED: 2015-04-15 09:01:02.744
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -217,7 +217,9 @@ public final class queue
 	      Object task = IDataUtil.get(cursor, "task");
 	      cursor.destroy();
 
-	      if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) retry((com.wm.app.tn.delivery.GuaranteedJob)task, suspend);
+	      if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) {
+	        retry((com.wm.app.tn.delivery.GuaranteedJob)task, suspend);
+	      }
 	    }
 	  } catch (java.util.concurrent.ExecutionException ex) {
 	    // ignore exceptions
@@ -308,7 +310,7 @@ public final class queue
 
 	// re-enqueues the given job for delivery, unless it has reached its retry limit
 	protected static void retry(com.wm.app.tn.delivery.GuaranteedJob job, boolean suspend) throws ServiceException {
-	  job = com.wm.app.tn.db.DeliveryStore.getAnyJob(job.getJobId(), true); // refetch job from DB
+	  job = refreshTask(job);
 	  com.wm.app.tn.doc.BizDocEnvelope bizdoc = job.getBizDocEnvelope();
 
 	  int retryLimit = job.getRetryLimit();
@@ -317,11 +319,15 @@ public final class queue
 	  String queueName = job.getQueueName();
 	  com.wm.app.tn.delivery.DeliveryQueue queue = tundra.tn.queue.get(queueName);
 
-	  boolean exhausted = retries >= retryLimit;
-	  boolean failed = (retries > 0 && status.equals("QUEUED")) || (exhausted && status.equals("FAILED"));
+	  boolean exhausted = retries >= retryLimit && status.equals("FAILED");
+	  boolean failed = (retries > 0 && status.equals("QUEUED")) || exhausted;
 
 	  if (failed) {
 	    if (exhausted) {
+	      if (bizdoc != null) {
+	          log(bizdoc, "ERROR", "Delivery", java.text.MessageFormat.format("Exhausted all retries ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Exhausted all retries ({0} of {1}) of delivery task ''{2}''", retries, retryLimit, job.getJobId()));
+	      }
+
 	      if (suspend) {
 	        // reset retries back to 0
 	        job.setRetries(0);
@@ -349,8 +355,7 @@ public final class queue
 
 	      if (bizdoc != null) {
 	        com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
-	        String message = "Next retry scheduled no earlier than " + DATE_FORMATTER.format(new java.util.Date(nextRetry));
-	        log(bizdoc, "MESSAGE", "Delivery", "Next retry scheduled", message);
+	        log(bizdoc, "MESSAGE", "Delivery", java.text.MessageFormat.format("Next retry scheduled ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Next retry ({0} of {1}) scheduled no earlier than ''{2}''", retries, retryLimit, DATE_FORMATTER.format(new java.util.Date(nextRetry))));
 	      }
 	    }
 	  }
@@ -530,6 +535,12 @@ public final class queue
 	protected static final String LOG_SERVICE_NAME = "tundra.tn:log";
 	protected static final com.wm.lang.ns.NSName LOG_SERVICE = com.wm.lang.ns.NSName.create(LOG_SERVICE_NAME);
 
+
+	// add an activity log statement to the given task's bizdoc
+	protected static void log(com.wm.app.tn.delivery.GuaranteedJob task, String type, String klass, String summary, String message) throws ServiceException {
+	  log(task.getBizDocEnvelope(), type, klass, summary, message);
+	}
+
 	// add an activity log statement to the given bizdoc
 	protected static void log(com.wm.app.tn.doc.BizDocEnvelope bizdoc, String type, String klass, String summary, String message) throws ServiceException {
 	  IData input = IDataFactory.create();
@@ -548,6 +559,11 @@ public final class queue
 	  } catch (Exception ex) {
 	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	  }
+	}
+
+	// returns the given task refreshed
+	protected static com.wm.app.tn.delivery.GuaranteedJob refreshTask(com.wm.app.tn.delivery.GuaranteedJob task) {
+	  return com.wm.app.tn.db.DeliveryStore.getAnyJob(task.getJobId(), com.wm.app.tn.manage.OmiUtils.isOmiEnabled());
 	}
 	// --- <<IS-END-SHARED>> ---
 }
