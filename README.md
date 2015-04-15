@@ -1563,6 +1563,9 @@ Bizdoc-related services:
     * `$encoding` is the optional character set used to encode `$content` when
       specified as a byte array or input stream and representing text data.
       Defaults to [UTF-8].
+    * `$overwrite?` is an optional boolean flag indicating whether to overwrite
+      an existing content part with the same name, if one exists. Defaults to
+      `false`.
 
 * #### tundra.tn.document.content:exists
 
