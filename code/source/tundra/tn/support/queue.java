@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-04-15 09:01:02.744
+// -----( CREATED: 2015-04-17 14:33:34.887
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -486,8 +486,8 @@ public final class queue
 	  }
 	}
 
-	// update the retry settings on the given task to be the retry settings on the receiver's profile, or the
-	// given default settings if the receiver profile has no retry settings configured
+	// update the retry settings on the given task using the given settings, or the retry settings on the receiver's profile
+	// if the given retryLimit <= 0
 	protected static void updateRetryStrategy(com.wm.app.tn.delivery.GuaranteedJob task, int retryLimit, int retryFactor, int timeToWait) throws ServiceException {
 	  if (task == null) return;
 
@@ -502,7 +502,7 @@ public final class queue
 	    com.wm.app.tn.doc.BizDocEnvelope bizdoc = task.getBizDocEnvelope();
 	    com.wm.app.tn.profile.ProfileSummary receiver = com.wm.app.tn.profile.ProfileStore.getProfileSummary(bizdoc.getReceiverId());
 
-	    if (receiver.getDeliveryRetries() > 0) {
+	    if (retryLimit <= 0 && receiver.getDeliveryRetries() > 0) {
 	      retryLimit = receiver.getDeliveryRetries();
 	      retryFactor = receiver.getRetryFactor();
 	      timeToWait = receiver.getDeliveryWait();
