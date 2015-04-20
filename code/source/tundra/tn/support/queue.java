@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-04-17 14:33:34.887
+// -----( CREATED: 2015-04-20 08:41:48.978
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -324,7 +324,7 @@ public final class queue
 
 	  if (failed) {
 	    if (exhausted) {
-	      if (bizdoc != null) {
+	      if (retryLimit > 0 && bizdoc != null) {
 	          log(bizdoc, "ERROR", "Delivery", java.text.MessageFormat.format("Exhausted all retries ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Exhausted all retries ({0} of {1}) of delivery task ''{2}''", retries, retryLimit, job.getJobId()));
 	      }
 
