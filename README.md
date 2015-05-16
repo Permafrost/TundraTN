@@ -1594,7 +1594,7 @@ Bizdoc-related services:
       from. Only the internal ID of the bizdoc must be specified, with the
       remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
 
-    * $part` is an optional name of the content part to be returned. If not
+    * `$part` is an optional name of the content part to be returned. If not
       specified, the default content part (xmldata for XML; ffdata for Flat
       Files) is returned.
 
