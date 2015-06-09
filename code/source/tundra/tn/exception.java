@@ -2,7 +2,7 @@ package tundra.tn;
 
 // -----( IS Java Code Template v1.2
 // -----( CREATED: 2014-08-25 19:29:33 EST
-// -----( ON-HOST: 172.16.189.132
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -36,27 +36,27 @@ public final class exception
 		// [i] field:0:optional $message
 		// [i] field:0:optional $type {&quot;security&quot;,&quot;strict&quot;}
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		  String message = IDataUtil.getString(cursor, "$message");
 		  String type = IDataUtil.getString(cursor, "$type");
-		
+
 		  raise(message, type);
 		} finally {
 		  cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 	// --- <<IS-START-SHARED>> ---
-	// throws a new security exception 
+	// throws a new security exception
 	public static void raise(String message, String type) throws ServiceException {
 	  if (message == null) message = "";
-	
+
 	  ServiceException ex = null;
-	
+
 	  if (type != null && type.equals("security")) {
 	    ex = new SecurityException(message);
 	  } else if (type != null && type.equals("strict")) {
@@ -64,15 +64,15 @@ public final class exception
 	  } else {
 	    ex = new ServiceException(message);
 	  }
-	
+
 	  throw ex;
 	}
-	
+
 	// throws a new ServiceException with the given message
 	public static void raise(String message) throws ServiceException {
 	  throw new ServiceException(message == null ? "" : message);
 	}
-	
+
 	// throws a new ServiceException with the class and message from the given Throwable, which
 	// is useful because java services are hard-wired to only throw ServiceExceptions
 	public static void raise(Throwable exception) throws ServiceException {
@@ -84,11 +84,11 @@ public final class exception
 	    }
 	  }
 	}
-	
+
 	// returns an exception as a string
 	public static String message(Throwable exception) {
 	  String message = "";
-	
+
 	  if (exception != null) {
 	    if (exception instanceof ServiceException) {
 	      message = exception.getMessage();
@@ -96,35 +96,35 @@ public final class exception
 	      message = exception.getClass().getName() + ": " + exception.getMessage();
 	    }
 	  }
-	
+
 	  return message;
 	}
-	
+
 	// security exception, thrown when a user doesn't have appropriate rights
 	public static class SecurityException extends com.wm.app.b2b.server.ServiceException {
 	  public SecurityException() {
 	    super();
 	  }
-	
+
 	  public SecurityException(String message) {
 	    super(message);
 	  }
-	
+
 	  public SecurityException(java.lang.Throwable exception) {
 	    super(exception);
 	  }
 	}
-	
+
 	// document strictness check exception, thrown when a strictness check fails
 	public static class StrictException extends com.wm.app.b2b.server.ServiceException {
 	  public StrictException() {
 	    super();
 	  }
-	
+
 	  public StrictException(String message) {
 	    super(message);
 	  }
-	
+
 	  public StrictException(java.lang.Throwable exception) {
 	    super(exception);
 	  }
