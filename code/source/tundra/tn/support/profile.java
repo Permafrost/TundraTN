@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-11-27 20:03:05 EST
+// -----( CREATED: 2015-06-10 16:29:33.927
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -509,7 +509,14 @@ public final class profile
 	  // returns the my enterprise profile from the profile cache if cached, or from the Trading Networks database if
 	  // not cached (at which time it will be lazily cached)
 	  public static IData self(boolean reload) throws com.wm.app.tn.profile.ProfileStoreException, java.io.IOException {
-	    return get(new ProfileID(com.wm.app.tn.profile.ProfileStore.getMyID()), reload);
+	    IData output = null;
+
+	    String id = com.wm.app.tn.profile.ProfileStore.getMyID();
+	    if (id != null) {
+	      output = get(new ProfileID(id), reload);
+	    }
+
+	    return output;
 	  }
 
 	  // returns the my enterprise profile from the profile cache if cached, or from the Trading Networks database if
