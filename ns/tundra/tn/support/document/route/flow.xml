@@ -3683,6 +3683,11 @@ non-XML content:
 </MAP>
 </INVOKE>
 
+<SEQUENCE NAME="sanitize" TIMEOUT="" EXIT-ON="FAILURE">
+  <COMMENT>transport info can contain some sensitive and/or potentially large items that should be sanitized before logging</COMMENT>
+
+  <!-- nodes -->
+
 <BRANCH TIMEOUT="" SWITCH="/$transport.requestHdrs/Authorization">
   <COMMENT></COMMENT>
 
@@ -3966,7 +3971,7 @@ non-XML content:
 </BRANCH>
 
 <MAP TIMEOUT="" MODE="STANDALONE">
-  <COMMENT>headers</COMMENT>
+  <COMMENT>sanitize HTTP headers, drop email content</COMMENT>
   <MAPTARGET>
 
 <Values version="2.0">
@@ -4429,7 +4434,11 @@ non-XML content:
 
 <MAPCOPY NAME="Link" FROM="/$transport.requestHdrs;2;0" TO="/transport;4;0;pub.flow:transportInfo/http;2;0/requestHdrs;2;0">
 </MAPCOPY>
+
+<MAPDELETE NAME="Dropper" FIELD="/transport;4;0;pub.flow:transportInfo/email;2;0/content;3;0">
+</MAPDELETE>
 </MAP>
+</SEQUENCE>
 
 <INVOKE TIMEOUT="" SERVICE="tundra.content:emit" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
