@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-01-19 12:46:13.297
+// -----( CREATED: 2015-06-25 08:27:46.405
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -90,13 +90,43 @@ public final class queue
 
 
 
+	public static final void get (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(get)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] field:0:optional $queue
+		// [o] record:0:optional $queue.properties
+		// [o] - field:0:required name
+		// [o] - field:0:required type
+		// [o] - field:0:required status
+		// [o] - field:0:required length
+		// [o] field:0:required $queue.exists?
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		  String queueName = IDataUtil.getString(cursor, "$queue");
+		  IData properties = toIData(get(queueName));
+		  if (properties != null) IDataUtil.put(cursor, "$queue.properties", properties);
+		  IDataUtil.put(cursor, "$queue.exists?", "" + (properties != null));
+		} finally {
+		  cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
+
+
+
 	public static final void length (IData pipeline)
         throws ServiceException
 	{
 		// --- <<IS-START(length)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] field:0:required $queue
+		// [i] field:0:optional $queue
 		// [o] field:0:required $length
 		IDataCursor cursor = pipeline.getCursor();
 

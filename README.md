@@ -2533,6 +2533,35 @@ will be delivered. This is the normal state for a queue.
 
 ---
 
+### tundra.tn.queue:get
+
+Returns the properties for the Trading Networks delivery queue with
+the given name.
+
+#### Inputs:
+
+* `$queue` is the name of the Trading Networks delivery queue whose
+  properties are to be returned.
+
+#### Outputs:
+
+* `$queue.properties` is an IData document containing the properties
+  of the Trading Networks delivery queue with the given name.
+  * `name` is the unique name of the queue.
+  * `type` is the type of queue, and is one of the following values:
+    * `private`
+    * `public`
+  * `status` is the current status of the queue, and is one of the
+    following values:
+    * `disabled`
+    * `draining`
+    * `enabled`
+    * `suspended`
+  * length is the number of tasks with a status of `QUEUED` or
+    `DELIVERING` currently in the queue.
+
+---
+
 ### tundra.tn.queue:length
 
 Returns the number of tasks with a status of `QUEUED` or `DELIVERING`
