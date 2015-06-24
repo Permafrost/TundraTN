@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-06-10 16:29:33.927
+// -----( CREATED: 2015-06-24 15:04:30.184
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -114,21 +114,25 @@ public final class profile
 
 	  public boolean equals(Object obj) {
 	    boolean result = false;
-	    if (obj != null) {
-	      if (obj.getClass() == this.getClass()) {
-	        ProfileID other = (ProfileID)obj;
-	        result = ((this.getType() == null && other.getType() == null) || (this.getType().equals(other.getType()))) && (this.getValue().equals(other.getValue()));
-	      }
+	    if (obj instanceof ProfileID) {
+	      ProfileID other = (ProfileID)obj;
+	      result = ((this.getType() == null && other.getType() == null) || this.getType().equals(other.getType())) && ((this.getValue() == null && other.getValue() == null) || this.getValue().equals(other.getValue()));
 	    }
 	    return result;
 	  }
 
 	  public int hashCode() {
-	    String type = this.getType();
 	    String value = this.getValue();
+	    int hash = 0;
 
-	    int hash = value.hashCode();
-	    if (type != null) hash = hash ^ type.hashCode(); // xor the two hashes
+	    if (value != null) {
+	      hash = value.hashCode();
+
+	      String type = this.getType();
+	      if (type != null) {
+	        hash = hash ^ type.hashCode(); // xor the two hashes
+	      }
+	    }
 
 	    return hash;
 	  }
