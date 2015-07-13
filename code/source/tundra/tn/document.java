@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-06-24 09:24:17.350
+// -----( CREATED: 2015-07-13 10:24:30.711
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -45,8 +45,8 @@ public final class document
 
 		  if (bizdoc != null) {
 		    IDataUtil.put(cursor, "$bizdoc", bizdoc);
-		    IDataUtil.put(cursor, "$sender", tundra.tn.support.profile.get(bizdoc.getSenderId()));
-		    IDataUtil.put(cursor, "$receiver", tundra.tn.support.profile.get(bizdoc.getReceiverId()));
+		    IDataUtil.put(cursor, "$sender", tundra.tn.support.profile.cache.get(bizdoc.getSenderId()));
+		    IDataUtil.put(cursor, "$receiver", tundra.tn.support.profile.cache.get(bizdoc.getReceiverId()));
 		  }
 		} catch (java.io.IOException ex) {
 		  throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
