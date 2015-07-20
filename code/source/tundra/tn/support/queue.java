@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-04-20 08:41:48.978
+// -----( CREATED: 2015-07-20 16:01:01.432
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -372,7 +372,7 @@ public final class queue
 
 	  if (ttw > 0) {
 	    if (retryFactor > 1 && retryCount > 1) {
-	      nextRetry = now + (ttw * (long)Math.pow(retryFactor, retryCount - 1));
+	      nextRetry = now + (long)(ttw * Math.pow(retryFactor, retryCount - 1));
 	    } else {
 	      nextRetry = now + ttw;
 	    }
