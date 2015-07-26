@@ -861,44 +861,44 @@ non-XML content:
   </record>
   <value name="node_comment">### tundra.tn.schema:splitter
 
-Splitting services used by `TundraTN/tundra.tn:split` can implement this
+Splitting services used by TundraTN/tundra.tn:split can implement this
 specification.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document whose content is to be
+* $bizdoc is the Trading Networks document whose content is to be
   split.
-* `$sender` is the Trading Networks partner profile associated with the
+* $sender is the Trading Networks partner profile associated with the
   sender of the bizdoc.
-* `$receiver` is the Trading Networks partner profile associated with the
+* $receiver is the Trading Networks partner profile associated with the
   receiver of the bizdoc.
-* `$document` is the parsed bizdoc content for splitting. This is the
+* $document is the parsed bizdoc content for splitting. This is the
   default name for this input parameter. The actual name of the parameter
-  can be changed using the `TundraTN/tundra.tn:split` `$service.input`
-  parameter, which allows the use of `TundraTN/tundra.tn:split` with
+  can be changed using the TundraTN/tundra.tn:split $service.input
+  parameter, which allows the use of TundraTN/tundra.tn:split with
   existing mapping services.
-* `$schema` is the name of the Integration Server document reference or flat
+* $schema is the name of the Integration Server document reference or flat
   file schema used to parse the content into an IData structure.
 
 #### Outputs:
 
-* `$documents` is the split list of content with which each item of the
+* $documents is the split list of content with which each item of the
   list will be routed back to Trading Networks as individual new
   documents. This is the default name for this output parameter. The
   actual name of the parameter can be changed using the
-  `TundraTN/tundra.tn:split` `$service.output` parameter, which allows the
-  use of `TundraTN/tundra.tn:split` with existing mapping services.
-* `$schemas` is the list of Integration Server document references or flat
-  file schemas that each `$documents` item conforms to. The length of
-  `$schemas` must match the length of `$documents`, and `$schema[n]` is used to
-  serialize `$document[n]` to an input stream for routing to Trading
+  TundraTN/tundra.tn:split $service.output parameter, which allows the
+  use of TundraTN/tundra.tn:split with existing mapping services.
+* $schemas is the list of Integration Server document references or flat
+  file schemas that each $documents item conforms to. The length of
+  $schemas must match the length of $documents, and $schema[n] is used to
+  serialize $document[n] to an input stream for routing to Trading
   Networks.
-* `TN_parms` provides routing hints for Trading Networks. It can be
+* TN_parms provides routing hints for Trading Networks. It can be
   specified as either a singleton IData or an IData list. If specified as
-  a singleton, it will be used when routing every item in the `$documents`
-  list. If specified as a list, the length of `TN_parms` must match the
-  length of `$documents`, and `TN_parms[n]` will be used when routing
-  `$documents[n]` to Trading Networks.
+  a singleton, it will be used when routing every item in the $documents
+  list. If specified as a list, the length of TN_parms must match the
+  length of $documents, and TN_parms[n] will be used when routing
+  $documents[n] to Trading Networks.
 
 </value>
   <value name="stateless">no</value>

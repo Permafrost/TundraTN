@@ -377,14 +377,14 @@
 Enqueues a Trading Networks document to the given queue for deferred
 processing by that queue.
 
-Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
+Supports 'strict' mode processing of bizdocs: if any $strict error classes
 are set to 'true' and the bizdoc contains errors for any of these classes,
 the bizdoc will not be processed; instead an exception will be thrown and
-handled by the `$catch` service. For example, if you have enabled duplicate
+handled by the $catch service. For example, if you have enabled duplicate
 document checking on the Trading Networks document type and do not wish to
-process duplicates, set the `$strict/Saving` error class to 'true' and
+process duplicates, set the $strict/Saving error class to 'true' and
 duplicate documents will not be processed and will instead have their user
-status set to 'ABORTED' (when using the standard `$catch` service).
+status set to 'ABORTED' (when using the standard $catch service).
 
 This service is designed to be called directly from a Trading Networks
 bizdoc processing rule.
@@ -392,30 +392,30 @@ bizdoc processing rule.
 #### Inputs:
 
 * bizdoc is the Trading Networks document to be enqueued.
-* `$queue` is either the name of the Trading Networks public queue
+* $queue is either the name of the Trading Networks public queue
   the document should be enqueued to, or the value "Receiver's Queue"
   in which case the document will be enqueued to the delivery queue
   associated with the receiver partner profile.
-* `$catch` is an optional fully-qualified service name which, when
+* $catch is an optional fully-qualified service name which, when
   specified, will be invoked if an exception is thrown while attempting to
   process the bizdoc. The input pipeline will include the following
   variables, as per a normal catch service invoked by
-  `Tundra/tundra.service:ensure`: `$exception`, `$exception?`, `$exception.class`,
-  `$exception.message`, and `$exception.stack`. If not specified, defaults to
-  `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
+  Tundra/tundra.service:ensure: $exception, $exception?, $exception.class,
+  $exception.message, and $exception.stack. If not specified, defaults to
+  TundraTN/tundra.tn.exception:handle, the standard TundraTN exception
   handler.
-* `$finally` is an optional fully-qualified service name which, when
+* $finally is an optional fully-qualified service name which, when
   specified, will be invoked after processing, and whether or not an
   exception is encountered during processing.
-* `$strict` is an optional set of boolean flags which when true abort the
+* $strict is an optional set of boolean flags which when true abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
-  * `Recognition`
-  * `Verification`
-  * `Validation`
-  * `Persistence`
-  * `Saving`
-  * `Routing`
+  * Recognition
+  * Verification
+  * Validation
+  * Persistence
+  * Saving
+  * Routing
 
 </value>
   <value name="stateless">no</value>

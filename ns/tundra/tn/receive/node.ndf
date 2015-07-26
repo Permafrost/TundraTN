@@ -431,56 +431,56 @@ the transport in question.
 
 #### Inputs:
 
-* `strict` is an optional boolean flag indicating whether 'strict'
+* strict is an optional boolean flag indicating whether 'strict'
   mode routing should be used for the received content. Defaults
   to true. To disable 'strict' mode when using HTTP, include
   strict=false as part of the query string of the receive URL:
   http://localhost:5555/invoke/tundra.tn/receive?strict=false.
-* `TN_parms` is an optional set of routing hints for Trading
+* TN_parms is an optional set of routing hints for Trading
   Networks to use when routing the received content. If not
   specified by the caller, the following TN_parms are set
   automatically as follows:
-  * `$contentType` is an optional mime media type of the received
+  * $contentType is an optional mime media type of the received
     content. Defaults to the transport content type returned by
-    `WmPublic/pub.flow:getTransportInfo`, or failing that 'text/xml'
+    WmPublic/pub.flow:getTransportInfo, or failing that 'text/xml'
     if a node object is present in the pipeline, or failing that
     'application/octet-stream'.
-  * `$contentEncoding` is an optional character encoding used by
+  * $contentEncoding is an optional character encoding used by
     the received content, for example UTF-16. Defaults to the
     encoding specified as the charset property in the content
     type, or failing that defaults to [UTF-8].
-  * `$contentName` is an optional logical label or name for the
+  * $contentName is an optional logical label or name for the
     received content, typically the filename for flat files.
     For HTTP transports, defaults to the the filename specified
     in the Content-Disposition header, or failing that the
     filename part of the request URI. For non-HTTP transports,
     defaults to the filename returned by
-    `WmPublic/pub.flow:getTransportInfo`.
-  * `$contentSchema` is an optional Integration Server document
+    WmPublic/pub.flow:getTransportInfo.
+  * $contentSchema is an optional Integration Server document
     reference or flat file schema the received content conforms
-    to. Defaults to the value of the `$schema` variable, if
+    to. Defaults to the value of the $schema variable, if
     specified in the pipeline.
-  * `$user` is the user that sent the received content. Defaults
+  * $user is the user that sent the received content. Defaults
     to the currently logged on user.
-  * `SenderID` is an optional Trading Networks profile external ID
+  * SenderID is an optional Trading Networks profile external ID
     which identifies the sender of the content. For flat files
     only, defaults to the currently logged on user.
-  * `ReceiverID` is an optional Trading Networks profile external ID
+  * ReceiverID is an optional Trading Networks profile external ID
     which identifies the receiver of the content. For flat files
     only, defaults to the value of the HTTP header 'X-Recipient',
     or failing that the required External ID value of the My
     Enterprise profile.
-  * `DocumentID` is an optional ID used to identify the content in
+  * DocumentID is an optional ID used to identify the content in
     Trading Networks. For flat files only, defaults to the value
     of the HTTP header 'Message-ID', or failing that an [UUID] is
     automatically generated.
-  * `GroupID` is an optional ID used to identify the group this
+  * GroupID is an optional ID used to identify the group this
     content belongs to in Trading Networks. For flat files only,
-    defaults to the value of `TN_parms/DocumentID`.
+    defaults to the value of TN_parms/DocumentID.
 
 #### Outputs:
 
-* `id` is the internal/native ID assigned by Trading Networks to
+* id is the internal/native ID assigned by Trading Networks to
   the resulting bizdoc.
 
 [UTF-8]: &lt;http://en.wikipedia.org/wiki/UTF-8&gt;
