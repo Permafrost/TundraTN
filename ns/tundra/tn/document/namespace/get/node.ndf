@@ -94,25 +94,32 @@
       <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment">Returns the namespace declarations associated with the given Trading
-Networks document (bizdoc) in a format useful when parsing the
-content using WmPublic/pub.xml:xmlStringToXMLNode and 
-WmPublic/pub.xml:xmlNodeToDocument.
+  <value name="node_comment">### tundra.tn.document.namespace:get
 
-Note that the special Trading Networks namespace prefix `prefix0`, 
-which represents the default namespace, is automatically copied 
+Returns the namespace declarations associated with the given Trading
+Networks document (bizdoc) in a format useful when parsing the
+content using `WmPublic/pub.xml:xmlStringToXMLNode` and
+`WmPublic/pub.xml:xmlNodeToDocument`.
+
+Note that the special Trading Networks namespace prefix `prefix0`,
+which represents the default namespace, is automatically copied
 to Integration Server's default namespace prefix `ns`.
 
-* Inputs:
-  * $bizdoc is the Trading Networks document to retrieve the 
-    namespace declarations from. Only the internal ID of the bizdoc 
-    must be specified, with the remainder of the 
-    WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
-* Outputs:
-  * $namespace is an IData document containing the namespace 
-    declarations associated with the given $bizdoc, where the keys 
-    in the document are the namespace prefixes and the values are 
-    the namespace URIs.</value>
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document to retrieve the
+  namespace declarations from. Only the internal ID of the bizdoc
+  must be specified, with the remainder of the
+  `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+
+#### Outputs:
+
+* `$namespace` is an IData document containing the namespace
+  declarations associated with the given `$bizdoc`, where the keys
+  in the document are the namespace prefixes and the values are
+  the namespace URIs.
+
+</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

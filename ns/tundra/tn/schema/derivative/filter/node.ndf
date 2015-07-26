@@ -262,31 +262,32 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Filter services used by TundraTN/tundra.tn:derive must implement this 
+  <value name="node_comment">### tundra.tn.schema.derivative:filter
+
+Filter services used by `TundraTN/tundra.tn:derive` must implement this
 specification.
 
-* Inputs:
-  * $bizdoc is the Trading Networks document being processed.
+#### Inputs:
 
-  * $sender is the Trading Networks partner profile associated with the 
-    sender of the bizdoc.
+* `$bizdoc` is the Trading Networks document being processed.
+* `$sender` is the Trading Networks partner profile associated with the
+  sender of the bizdoc.
+* `$receiver` is the Trading Networks partner profile associated with the
+  receiver of the bizdoc.
+* `$document` is the parsed bizdoc content for processing.
+* `$schema` is the name of the Integration Server document reference or flat
+  file schema used to parse the content into an IData structure.
+* `$derivative` is the derivative rule to be filtered. The filter service is
+  allowed to edit the `$derivative` rule, so that it may, for example,
+  disable the rule by setting `$derivative/enabled?` to `false`, or specify
+  a different sender and/or receiver.
 
-  * $receiver is the Trading Networks partner profile associated with the 
-    receiver of the bizdoc.
+#### Outputs:
 
-  * $document is the parsed bizdoc content for processing.
+* `$derivative` is the derivative rule after filtering. The filter service
+  is required to return the rule whether it makes changes to it or not.
 
-  * $schema is the name of the Integration Server document reference or flat 
-    file schema used to parse the content into an IData structure.
-
-  * $derivative is the derivative rule to be filtered. The filter service is 
-    allowed to edit the $derivative rule, so that it may, for example, 
-    disable the rule by setting $derivative/enabled? to 'false', or specify 
-    a different sender and/or receiver.
-
-* Outputs:
-  * $derivative is the derivative rule after filtering. The filter service 
-    is required to return the rule whether it makes changes to it or not.</value>
+</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

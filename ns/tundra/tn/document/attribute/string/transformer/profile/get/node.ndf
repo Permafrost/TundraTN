@@ -5,40 +5,44 @@
   <value name="svc_subtype">default</value>
   <value name="svc_sigtype">java 3.5</value>
   <value name="svc_spec">tundra.tn.schema.attribute.string:transformer</value>
-  <value name="node_comment">Trading Networks string transformer which returns the internal ID 
-associated with a Trading Networks partner profile. This transformer 
-can be used to force the sender or receiver of a document to always 
-be a specific partner profile, regardless of the value of the 
+  <value name="node_comment">### tundra.tn.document.attribute.string.transformer.profile:get
+
+Trading Networks string transformer which returns the internal ID
+associated with a Trading Networks partner profile. This transformer
+can be used to force the sender or receiver of a document to always
+be a specific partner profile, regardless of the value of the
 extracted attribute.
 
-This service is intended to be invoked by Trading Networks as a 
+This service is intended to be invoked by Trading Networks as a
 custom document type attribute transformer.
 
-* Inputs:
-  * values is a list of arbitrary strings, their values are ignored 
-    by this service and are therefore irrelevant.
-  * isArray is a boolean indicating if the values argument contains 
-    multiple items.
-  * arg is either the internal ID for a specific partner profile, or 
-    a [YAML] or [JSON] formatted string containing the external ID 
-    description and value to be used to look up a specific partner 
-    profile. 
+#### Inputs:
 
-    For example, the following [YAML] formatted value in arg will 
-    look up a partner profile with an External ID "User Defined 1" 
-    equal to "ABCDEFG":
+* `values` is a list of arbitrary strings, their values are ignored
+  by this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either the internal ID for a specific partner profile, or
+  a [YAML] or [JSON] formatted string containing the external ID
+  description and value to be used to look up a specific partner
+  profile.
 
-        User Defined 1: ABCDEFG
+  For example, the following [YAML] formatted value in `arg` will
+  look up a partner profile with an External ID "User Defined 1"
+  equal to "ABCDEFG":
 
-    Similarly, the following [JSON] formatted value in arg will look 
-    up the exact same partner profile:
+      User Defined 1: ABCDEFG
 
-        { "User Defined 1" : "ABCDEFG" }
+  Similarly, the following [JSON] formatted value in `arg` will look
+  up the exact same partner profile:
 
-* Outputs:
-  * newValues is a list the same length as the input values list, 
-    but where every item is the internal ID of the desired Trading 
-    Networks partner profile.
+      { "User Defined 1" : "ABCDEFG" }
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input values list,
+  but where every item is the internal ID of the desired Trading
+  Networks partner profile.
 
 [JSON]: &lt;http://www.json.org&gt;
 [YAML]: &lt;http://www.yaml.org&gt;</value>

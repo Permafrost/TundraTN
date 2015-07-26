@@ -5,25 +5,31 @@
   <value name="svc_subtype">default</value>
   <value name="svc_sigtype">java 3.5</value>
   <value name="svc_spec">tundra.tn.schema.attribute.string:transformer</value>
-  <value name="node_comment">Trading Networks string transformer which returns the Trading Networks My 
-Enterprise profile's internal ID. This transformer can be used to force the 
-sender or receiver of a document to always be the My Enterprise profile, 
+  <value name="node_comment">### tundra.tn.document.attribute.string.transformer.profile:self
+
+Trading Networks string transformer which returns the Trading Networks My
+Enterprise profile's internal ID. This transformer can be used to force the
+sender or receiver of a document to always be the My Enterprise profile,
 regardless of the value of the extracted attribute.
 
-This service is intended to be invoked by Trading Networks as a custom 
+This service is intended to be invoked by Trading Networks as a custom
 document type attribute transformer.
 
-* Inputs:
-  * values is a list of arbitrary strings, their values are ignored by this
-    service and are therefore irrelevant.
-  * isArray is a boolean indicating if the values argument contains multiple 
-    items.
-  * arg is not used by this service, and therefore not required.
+#### Inputs:
 
-* Outputs:
-  * newValues is a list the same length as the input values list, but where
-    every item is the internal ID for the Trading Networks My Enterprise 
-    profile.</value>
+* `values` is a list of arbitrary strings, their values are ignored by this
+  service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the `values` argument contains multiple
+  items.
+* `arg` is not used by this service, and therefore not required.
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input `values` list, but where
+  every item is the internal ID for the Trading Networks My Enterprise
+  profile.
+
+</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

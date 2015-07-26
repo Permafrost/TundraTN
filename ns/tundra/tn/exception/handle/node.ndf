@@ -134,23 +134,28 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">Handles a Trading Networks document processing error by logging the 
-error against the document in the activity log, and setting the user 
+  <value name="node_comment">### tundra.tn.exception:handle
+
+Handles a Trading Networks document processing error by logging the
+error against the document in the activity log, and setting the user
 status to either 'ABORTED' for security or strictness exceptions,
-or 'ERROR' for any other exceptions. 
+or 'ERROR' for any other exceptions.
 
-This service can be used as a standard catch service for Trading Networks 
-document processing services in conjunction with Tundra/tundra.service:ensure.
+This service can be used as a standard catch service for Trading Networks
+document processing services in conjunction with `Tundra/tundra.service:ensure`.
 
-* Inputs:
-  * bizdoc is the Trading Networks document being processed that 
-    caused the error.
-  * $exception is the Java exception object that was thrown by the
-    processing service.
-  * $exception.class is the Java class name of the exception object
-    that was thrown by the processing service.
-  * $exception.message is the error message related to the Java
-    exception object that was thrown by the processing service.</value>
+#### Inputs:
+
+* `bizdoc` is the Trading Networks document being processed that
+  caused the error.
+* `$exception` is the Java exception object that was thrown by the
+  processing service.
+* `$exception.class` is the Java class name of the exception object
+  that was thrown by the processing service.
+* `$exception.message` is the error message related to the Java
+  exception object that was thrown by the processing service.
+
+</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

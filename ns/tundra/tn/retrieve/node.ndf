@@ -403,69 +403,70 @@ non-XML content:
       </array>
     </record>
   </record>
-  <value name="node_comment">Retrieves arbitrary content from the given $source URI, and routes it to 
-Trading Networks. 
+  <value name="node_comment">### tundra.tn:retrieve
 
-Additional retrieval protocols can be implemented by creating a service named 
-for the URI scheme in the folder Tundra/tundra.content.retrieve.  Services in 
-this folder must implement the Tundra/tundra.schema.content.retrieve:handler 
+Retrieves arbitrary content from the given `$source` URI, and routes it to
+Trading Networks.
+
+Additional retrieval protocols can be implemented by creating a service named
+for the URI scheme in the folder `Tundra/tundra.content.retrieve`.  Services in
+this folder must implement the `Tundra/tundra.schema.content.retrieve:handler`
 specification.
 
-* Inputs:
-  * $source is a URI identifying the location from which content is to be 
-    retrieved. Supports the following retrieval protocols / URI schemes:
+#### Inputs:
 
-    * file: routes each file matching the given $source URI to Trading 
-      Networks. The file component of the URI can include wildcards 
-      or globs (such as *.txt or *.j?r) for matching multiple files at once.
-      
-      The following example would process all *.txt files in the specified 
-      directory:
+* `$source` is a URI identifying the location from which content is to be
+  retrieved. Supports the following retrieval protocols / URI schemes:
+  * `file:` routes each file matching the given `$source` URI to Trading
+    Networks. The file component of the URI can include wildcards
+    or globs (such as `*.txt` or `*.j?r`) for matching multiple files at once.
 
-          file:////server:port/directory/*.txt
+    The following example would process all `*.txt` files in the specified
+    directory:
 
-      To ensure each file processed is not locked or being written to by 
-      another process, the file is first moved to a working directory. The 
-      name of this directory can be configured by adding a query string 
-      parameter called working to the URI, for example:
+        file:////server:port/directory/*.txt
 
-          file:////server:port/directory/*.txt?working=temp
+    To ensure each file processed is not locked or being written to by
+    another process, the file is first moved to a working directory. The
+    name of this directory can be configured by adding a query string
+    parameter called `working` to the URI, for example:
 
-      In this example, files are first moved to a subdirectory named temp. 
-      If not specified, the working directory defaults to a subdirectory 
-      named working.
+        file:////server:port/directory/*.txt?working=temp
 
-      After successful processing, the file is then moved to an archive 
-      directory. The name of this directory can be configured by adding a 
-      query string parameter called archive to the URI, for example:
+    In this example, files are first moved to a subdirectory named `temp`.
+    If not specified, the working directory defaults to a subdirectory
+    named `working`.
 
-          file:////server:port/directory/*.txt?archive=backup
+    After successful processing, the file is then moved to an archive
+    directory. The name of this directory can be configured by adding a
+    query string parameter called `archive` to the URI, for example:
 
-      In this example, files are moved to a subdirectory named backup after 
-      being successfully processed. If not specified, the archive directory 
-      defaults to a subdirectory named archive.
+        file:////server:port/directory/*.txt?archive=backup
 
-      Optionally, archived files older than a given age can be cleaned up 
-      automatically by the retrieve process by specifying a query string 
-      parameter called purge with an XML duration value representing the 
-      age an archived file must be before being purged, for example:
+    In this example, files are moved to a subdirectory named `backup` after
+    being successfully processed. If not specified, the archive directory
+    defaults to a subdirectory named `archive`.
 
-          file:////server:port/directory/*.txt?purge=P14D
+    Optionally, archived files older than a given age can be cleaned up
+    automatically by the retrieve process by specifying a query string
+    parameter called `purge` with an XML duration value representing the
+    age an archived file must be before being purged, for example:
 
-      In this example, any files in the archive directory older than 14 days 
-      will be automatically deleted by the retrieve process. If the query 
-      string parameter purge is not specified, archived files will not be 
-      automatically cleaned up.
+        file:////server:port/directory/*.txt?purge=P14D
 
-  * $limit is an optional maximum number of content matches to be processed in 
-    a single execution. Defaults to 1000.
+    In this example, any files in the archive directory older than 14 days
+    will be automatically deleted by the retrieve process. If the query
+    string parameter `purge` is not specified, archived files will not be
+    automatically cleaned up.
+* `$limit` is an optional maximum number of content matches to be processed in
+  a single execution. Defaults to 1000.
+* `$strict?` is an optional boolean, which if true will abort routing/
+  processing rule execution of the document if any any errors (such as
+  validation errors) are encountered prior to processing. Defaults to false.
+* `TN_parms` is an optional set of routing hints for Trading Networks to use
+  when routing the retrieved content.
 
-  * $strict? is an optional boolean, which if true will abort routing/
-    processing rule execution of the document if any any errors (such as 
-    validation errors) are encountered prior to processing. Defaults to false.
-
-  * TN_parms is an optional set of routing hints for Trading Networks to use 
-    when routing the retrieved content.</value>
+</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
