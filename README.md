@@ -1466,6 +1466,37 @@ document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer.dns:self
+
+Trading Networks string transformer which returns the domain name, host
+name, or IP address of the localhost on which it runs. This transformer
+can be used to record the name or address of the server on which the
+related bizdoc was received and routed in an extracted attribute.
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored by this
+  service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains multiple
+  items.
+* `arg` is an optional choice of the following values, and determines whether
+  the domain name, host name, or IP address is returned respectively. If not
+  specified, defaults to `domain`:
+  * `domain`
+  * `host`
+  * `address`
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input `values` list, but where
+  every item is either the localhost's domain name, host name, or IP address,
+  depending on the value of arg provided.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.profile:get
 
 Trading Networks string transformer which returns the internal ID
