@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-07-20 16:01:01.432
+// -----( CREATED: 2015-09-03 11:08:13.606
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -47,39 +47,39 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		  String queue = IDataUtil.getString(cursor, "queue");
-		  String service = IDataUtil.getString(cursor, "$service");
-		  IData scope = IDataUtil.getIData(cursor, "$pipeline");
-		  String sConcurrency = IDataUtil.getString(cursor, "$concurrency");
-		  String sOrdered = IDataUtil.getString(cursor, "$ordered?");
-		  String sSuspend = IDataUtil.getString(cursor, "$suspend?");
-		  String sRetryLimit = IDataUtil.getString(cursor, "$retry.limit");
-		  // support $retries for backwards-compatibility
-		  if (sRetryLimit == null) sRetryLimit = IDataUtil.getString(cursor, "$retries");
-		  String sRetryFactor = IDataUtil.getString(cursor, "$retry.factor");
-		  String sRetryWait = IDataUtil.getString(cursor, "$retry.wait");
+		    String queue = IDataUtil.getString(cursor, "queue");
+		    String service = IDataUtil.getString(cursor, "$service");
+		    IData scope = IDataUtil.getIData(cursor, "$pipeline");
+		    String sConcurrency = IDataUtil.getString(cursor, "$concurrency");
+		    String sOrdered = IDataUtil.getString(cursor, "$ordered?");
+		    String sSuspend = IDataUtil.getString(cursor, "$suspend?");
+		    String sRetryLimit = IDataUtil.getString(cursor, "$retry.limit");
+		    // support $retries for backwards-compatibility
+		    if (sRetryLimit == null) sRetryLimit = IDataUtil.getString(cursor, "$retries");
+		    String sRetryFactor = IDataUtil.getString(cursor, "$retry.factor");
+		    String sRetryWait = IDataUtil.getString(cursor, "$retry.wait");
 
-		  int concurrency = 1;
-		  if (sConcurrency != null) concurrency = Integer.parseInt(sConcurrency);
+		    int concurrency = 1;
+		    if (sConcurrency != null) concurrency = Integer.parseInt(sConcurrency);
 
-		  boolean ordered = false;
-		  if (sOrdered != null) ordered = Boolean.parseBoolean(sOrdered);
+		    boolean ordered = false;
+		    if (sOrdered != null) ordered = Boolean.parseBoolean(sOrdered);
 
-		  boolean suspend = false;
-		  if (sSuspend != null) suspend = Boolean.parseBoolean(sSuspend);
+		    boolean suspend = false;
+		    if (sSuspend != null) suspend = Boolean.parseBoolean(sSuspend);
 
-		  int retryLimit = 0;
-		  if (sRetryLimit != null) retryLimit = Integer.parseInt(sRetryLimit);
+		    int retryLimit = 0;
+		    if (sRetryLimit != null) retryLimit = Integer.parseInt(sRetryLimit);
 
-		  int retryFactor = 1;
-		  if (sRetryFactor != null) retryFactor = Integer.parseInt(sRetryFactor);
+		    int retryFactor = 1;
+		    if (sRetryFactor != null) retryFactor = Integer.parseInt(sRetryFactor);
 
-		  int retryWait = 0;
-		  if (sRetryWait != null) retryWait = Integer.parseInt(sRetryWait);
+		    int retryWait = 0;
+		    if (sRetryWait != null) retryWait = Integer.parseInt(sRetryWait);
 
-		  each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, ordered, suspend);
+		    each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, ordered, suspend);
 		} finally {
-		  cursor.destroy();
+		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
@@ -100,436 +100,448 @@ public final class queue
 	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
 	// otherwise they will be processed on the current thread
 	public static void each(String queueName, String service, IData pipeline, int concurrency, int retryLimit, int retryFactor, int ttw, boolean ordered, boolean suspend) throws ServiceException {
-	  try {
-	    com.wm.app.tn.delivery.DeliveryQueue queue = com.wm.app.tn.db.QueueOperations.selectByName(queueName);
-	    if (queue == null) throw new ServiceException("Queue '" + queueName + "' does not exist");
+	    try {
+	        com.wm.app.tn.delivery.DeliveryQueue queue = com.wm.app.tn.db.QueueOperations.selectByName(queueName);
+	        if (queue == null) throw new ServiceException("Queue '" + queueName + "' does not exist");
 
-	    if (concurrency <= 1) {
-	      eachDirect(queue, EXECUTE_TASK_SERVICE, service, pipeline, retryLimit, retryFactor, ttw, ordered, suspend);
-	    } else {
-	      eachConcurrent(queue, EXECUTE_TASK_SERVICE, service, pipeline, concurrency, retryLimit, retryFactor, ttw, ordered, suspend);
+	        if (concurrency <= 1) {
+	            eachDirect(queue, EXECUTE_TASK_SERVICE, service, pipeline, retryLimit, retryFactor, ttw, ordered, suspend);
+	        } else {
+	            eachConcurrent(queue, EXECUTE_TASK_SERVICE, service, pipeline, concurrency, retryLimit, retryFactor, ttw, ordered, suspend);
+	        }
+	    } catch (java.sql.SQLException ex) {
+	        throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
+	    } catch (java.io.IOException ex) {
+	        throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	    }
-	  } catch (java.sql.SQLException ex) {
-	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
-	  } catch (java.io.IOException ex) {
-	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
-	  }
 	}
 
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline
 	// on the current thread
 	protected static void eachDirect(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int retryLimit, int retryFactor, int ttw, boolean ordered, boolean suspend) throws ServiceException {
-	  boolean invokedByTradingNetworks = invokedByTradingNetworks();
+	    boolean invokedByTradingNetworks = invokedByTradingNetworks();
 
-	  try {
-	    while(true) {
-	      if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
-	        com.wm.app.tn.delivery.GuaranteedJob task = pop(queue.getQueueName(), ordered);
-	        if (task == null) {
-	          break; // if there are no more tasks, then exit
-	        } else {
-	          updateRetryStrategy(task, retryLimit, retryFactor, ttw);
-	          IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()));
-	          retry(task, suspend);
+	    try {
+	        while(true) {
+	            if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
+	                com.wm.app.tn.delivery.GuaranteedJob task = pop(queue.getQueueName(), ordered);
+	                if (task == null) {
+	                    break; // if there are no more tasks, then exit
+	                } else {
+	                    updateRetryStrategy(task, retryLimit, retryFactor, ttw);
+	                    IData output = com.wm.app.b2b.server.Service.doInvoke(executeTaskService, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()));
+	                    retry(task, suspend);
+	                }
+	                if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
+	            } else {
+	                break; // if invoked by TN and queue is disabled or suspended, then exit
+	            }
 	        }
-	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
-	      } else {
-	        break; // if invoked by TN and queue is disabled or suspended, then exit
-	      }
+	    } catch (Exception ex) {
+	        tundra.tn.exception.raise(ex);
 	    }
-	  } catch (Exception ex) {
-	    tundra.tn.exception.raise(ex);
-	  }
 	}
 
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// tasks will be processed by a thread pool whose size is equal to the desired concurrency
 	protected static void eachConcurrent(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int concurrency, int retryLimit, int retryFactor, int ttw, boolean ordered, boolean suspend) throws ServiceException {
-	  boolean invokedByTradingNetworks = invokedByTradingNetworks();
+	    boolean invokedByTradingNetworks = invokedByTradingNetworks();
 
-	  com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
-	  com.wm.app.b2b.server.InvokeState state = com.wm.app.b2b.server.InvokeState.getCurrentState();
-	  java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queue.getQueueName(), state));
-	  java.util.Queue<java.util.concurrent.Future<IData>> futures = new java.util.LinkedList<java.util.concurrent.Future<IData>>();
+	    com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
+	    com.wm.app.b2b.server.InvokeState state = com.wm.app.b2b.server.InvokeState.getCurrentState();
+	    java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queue.getQueueName(), state));
+	    java.util.Queue<java.util.concurrent.Future<IData>> futures = new java.util.LinkedList<java.util.concurrent.Future<IData>>();
 
-	  try {
-	    while(true) {
-	      if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
-	        int size = futures.size();
-	        if (size < concurrency) {
-	          // submit another queued task
-	          com.wm.app.tn.delivery.GuaranteedJob task = pop(queue.getQueueName(), ordered);
-	          if (task == null) {
-	            if (size > 0) {
-	              // wait for first thread to finish; once finished we'll loop again and see if there are now tasks on the queue
-	              awaitOldest(futures, suspend);
+	    try {
+	        while(true) {
+	            if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
+	                int size = futures.size();
+	                if (size < concurrency) {
+	                    // submit another queued task
+	                    com.wm.app.tn.delivery.GuaranteedJob task = pop(queue.getQueueName(), ordered);
+	                    if (task == null) {
+	                        if (size > 0) {
+	                            // wait for first thread to finish; once finished we'll loop again and see if there are now tasks on the queue
+	                            awaitOldest(futures, suspend);
+	                        } else {
+	                            // if all threads have finished and there are no more tasks, then exit
+	                            break;
+	                        }
+	                    } else {
+	                        updateRetryStrategy(task, retryLimit, retryFactor, ttw);
+	                        futures.add(executor.submit(new CallableService(executeTaskService, session, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()))));
+	                    }
+	                } else {
+	                    // wait for first thread to finish
+	                    awaitOldest(futures, suspend);
+	                }
+	                if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
 	            } else {
-	              // if all threads have finished and there are no more tasks, then exit
-	              break;
+	                break; // if invoked by TN and queue is disabled or suspended, then exit
 	            }
-	          } else {
-	            updateRetryStrategy(task, retryLimit, retryFactor, ttw);
-	            futures.add(executor.submit(new CallableService(executeTaskService, session, createTaskInputPipeline(task, service, pipeline, queue.getQueueName(), queue.getQueueType()))));
-	          }
-	        } else {
-	          // wait for first thread to finish
-	          awaitOldest(futures, suspend);
 	        }
-	        if (invokedByTradingNetworks) queue = com.wm.app.tn.db.QueueOperations.selectByName(queue.getQueueName());
-	      } else {
-	        break; // if invoked by TN and queue is disabled or suspended, then exit
-	      }
+	    } catch (Exception ex) {
+	        tundra.tn.exception.raise(ex);
+	    } finally {
+	        executor.shutdown();
+	        awaitAll(futures, suspend);
+	        executor.shutdownNow();
 	    }
-	  } catch (Exception ex) {
-	    tundra.tn.exception.raise(ex);
-	  } finally {
-	    executor.shutdown();
-	    awaitAll(futures, suspend);
-	  }
 	}
 
 	// waits for all futures in the given queue to complete
 	protected static java.util.List<IData> awaitAll(java.util.Queue<java.util.concurrent.Future<IData>> futures, boolean suspend) {
-	  java.util.List<IData> results = new java.util.ArrayList<IData>(futures.size());
-	  while(futures.size() > 0) {
-	    try {
-	      results.add(awaitOldest(futures, suspend));
-	    } catch (Exception ex) {
-	      // ignore exceptions
+	    java.util.List<IData> results = new java.util.ArrayList<IData>(futures.size());
+	    while(futures.size() > 0) {
+	        try {
+	            results.add(awaitOldest(futures, suspend));
+	        } catch (Exception ex) {
+	            // ignore exceptions
+	        }
 	    }
-	  }
-	  return results;
+	    return results;
 	}
 
 	// waits for the first/head future in the given queue to complete
 	protected static IData awaitOldest(java.util.Queue<java.util.concurrent.Future<IData>> futures, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
-	  return await(futures.poll(), suspend);
+	    return await(futures.poll(), suspend);
 	}
 
 	// waits for the given future to complete
 	protected static IData await(java.util.concurrent.Future<IData> future, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
-	  IData output = null;
-	  try {
-	    output = future.get();
+	    IData output = null;
+	    try {
+	        output = future.get();
 
-	    if (output != null) {
-	      IDataCursor cursor = output.getCursor();
-	      Object task = IDataUtil.get(cursor, "task");
-	      cursor.destroy();
+	        if (output != null) {
+	            IDataCursor cursor = output.getCursor();
+	            Object task = IDataUtil.get(cursor, "task");
+	            cursor.destroy();
 
-	      if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) {
-	        retry((com.wm.app.tn.delivery.GuaranteedJob)task, suspend);
-	      }
+	            if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) {
+	                retry((com.wm.app.tn.delivery.GuaranteedJob)task, suspend);
+	            }
+	        }
+	    } catch (java.util.concurrent.ExecutionException ex) {
+	        // ignore exceptions
+	    } catch(InterruptedException ex) {
+	        // ignore exceptions
 	    }
-	  } catch (java.util.concurrent.ExecutionException ex) {
-	    // ignore exceptions
-	  } catch(InterruptedException ex) {
-	    // ignore exceptions
-	  }
-	  return output;
+	    return output;
 	}
 
 	// returns a new pipeline for the executeTaskService
 	protected static IData createTaskInputPipeline(com.wm.app.tn.delivery.GuaranteedJob task, String service, IData pipeline, String queueName, String queueType) throws java.io.IOException {
-	  IData output = IDataFactory.create();
-	  IDataCursor cursor = output.getCursor();
-	  IDataUtil.put(cursor, "task", task);
-	  IDataUtil.put(cursor, "timeDequeued", System.currentTimeMillis());
-	  IDataUtil.put(cursor, "$service", service);
-	  IDataUtil.put(cursor, "$pipeline", IDataUtil.deepClone(pipeline));
-	  IDataUtil.put(cursor, "queue", queueName);
-	  IDataUtil.put(cursor, "queue.type", queueType);
-	  cursor.destroy();
+	    IData output = IDataFactory.create();
+	    IDataCursor cursor = output.getCursor();
+	    IDataUtil.put(cursor, "task", task);
+	    IDataUtil.put(cursor, "timeDequeued", System.currentTimeMillis());
+	    IDataUtil.put(cursor, "$service", service);
+	    IDataUtil.put(cursor, "$pipeline", IDataUtil.deepClone(pipeline));
+	    IDataUtil.put(cursor, "queue", queueName);
+	    IDataUtil.put(cursor, "queue.type", queueType);
+	    cursor.destroy();
 
-	  return output;
+	    return output;
 	}
 
 	// returns true if the invocation callstack includes the WmTN/wm.tn.queuing:deliverBatch service
 	protected static boolean invokedByTradingNetworks() {
-	  java.util.Iterator iterator = com.wm.app.b2b.server.InvokeState.getCurrentState().getCallStack().iterator();
-	  boolean result = false;
-	  while(iterator.hasNext()) {
-	    result = iterator.next().toString().equals(DELIVER_BATCH_SERVICE_NAME);
-	    if (result) break;
-	  }
-	  return result;
+	    java.util.Iterator iterator = com.wm.app.b2b.server.InvokeState.getCurrentState().getCallStack().iterator();
+	    boolean result = false;
+	    while(iterator.hasNext()) {
+	        result = iterator.next().toString().equals(DELIVER_BATCH_SERVICE_NAME);
+	        if (result) break;
+	    }
+	    return result;
 	}
 
 	// wraps a call to an IS service with a standard java.util.concurrent.callable interface, so that it can
 	// be used by java.util.concurrent executors
 	public static class CallableService implements java.util.concurrent.Callable<IData> {
-	  protected com.wm.lang.ns.NSName service;
-	  protected IData input;
-	  protected com.wm.app.b2b.server.Session session;
+	    protected com.wm.lang.ns.NSName service;
+	    protected IData input;
+	    protected com.wm.app.b2b.server.Session session;
 
-	  public CallableService(String service, com.wm.app.b2b.server.Session session, IData input) {
-	    this(com.wm.lang.ns.NSName.create(service), session, input);
-	  }
+	    public CallableService(String service, com.wm.app.b2b.server.Session session, IData input) {
+	        this(com.wm.lang.ns.NSName.create(service), session, input);
+	    }
 
-	  public CallableService(com.wm.lang.ns.NSName service, com.wm.app.b2b.server.Session session, IData input) {
-	    this.service = service;
-	    this.input = input;
-	    this.session = session;
-	  }
+	    public CallableService(com.wm.lang.ns.NSName service, com.wm.app.b2b.server.Session session, IData input) {
+	        this.service = service;
+	        this.input = input;
+	        this.session = session;
+	    }
 
-	  public IData call() throws Exception {
-	    return com.wm.app.b2b.server.Service.doInvoke(service, session, input);
-	  }
+	    public IData call() throws Exception {
+	        return com.wm.app.b2b.server.Service.doInvoke(service, session, input);
+	    }
 	}
 
 	// a thread factory which creates IS threads with the given invoke state
 	public static class ServerThreadFactory implements java.util.concurrent.ThreadFactory {
-	  String queue;
-	  protected com.wm.app.b2b.server.InvokeState state;
-	  protected long count = 1;
+	    String queue;
+	    protected com.wm.app.b2b.server.InvokeState state;
+	    protected long count = 1;
 
-	  public ServerThreadFactory(String queue, com.wm.app.b2b.server.InvokeState state) {
-	    this.queue = queue;
-	    this.state = state;
-	  }
-
-	  public Thread newThread(Runnable r) {
-	    com.wm.app.b2b.server.ServerThread thread = new com.wm.app.b2b.server.ServerThread(r);
-	    thread.setInvokeState(cloneInvokeStateWithStack());
-	    thread.setName("TundraTN/Queue '" + queue + "' Thread#" + String.format("%03d", count++));
-	    return thread;
-	  }
-
-	  protected com.wm.app.b2b.server.InvokeState cloneInvokeStateWithStack() {
-	    com.wm.app.b2b.server.InvokeState outputState = (com.wm.app.b2b.server.InvokeState)state.clone();
-	    java.util.Stack stack = (java.util.Stack)state.getCallStack().clone();
-	    while(!stack.empty()) {
-	      com.wm.lang.ns.NSService service = (com.wm.lang.ns.NSService)stack.remove(0);
-	      outputState.pushService(service);
+	    public ServerThreadFactory(String queue, com.wm.app.b2b.server.InvokeState state) {
+	        this.queue = queue;
+	        this.state = state;
 	    }
-	    return outputState;
-	  }
+
+	    public Thread newThread(Runnable r) {
+	        com.wm.app.b2b.server.ServerThread thread = new com.wm.app.b2b.server.ServerThread(r);
+	        thread.setInvokeState(cloneInvokeStateWithStack());
+	        thread.setName("TundraTN/Queue '" + queue + "' Thread#" + String.format("%03d", count++));
+	        return thread;
+	    }
+
+	    protected com.wm.app.b2b.server.InvokeState cloneInvokeStateWithStack() {
+	        com.wm.app.b2b.server.InvokeState outputState = (com.wm.app.b2b.server.InvokeState)state.clone();
+	        java.util.Stack stack = (java.util.Stack)state.getCallStack().clone();
+	        while(!stack.empty()) {
+	            com.wm.lang.ns.NSService service = (com.wm.lang.ns.NSService)stack.remove(0);
+	            outputState.pushService(service);
+	        }
+	        return outputState;
+	    }
 	}
 
 	protected static final java.text.SimpleDateFormat DATE_FORMATTER = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
 	// re-enqueues the given job for delivery, unless it has reached its retry limit
 	protected static void retry(com.wm.app.tn.delivery.GuaranteedJob job, boolean suspend) throws ServiceException {
-	  job = refreshTask(job);
-	  com.wm.app.tn.doc.BizDocEnvelope bizdoc = job.getBizDocEnvelope();
+	    job = refreshTask(job);
+	    com.wm.app.tn.doc.BizDocEnvelope bizdoc = job.getBizDocEnvelope();
 
-	  int retryLimit = job.getRetryLimit();
-	  int retries = job.getRetries();
-	  String status = job.getStatus();
-	  String queueName = job.getQueueName();
-	  com.wm.app.tn.delivery.DeliveryQueue queue = tundra.tn.queue.get(queueName);
+	    int retryLimit = job.getRetryLimit();
+	    int retries = job.getRetries();
+	    String status = job.getStatus();
+	    String queueName = job.getQueueName();
+	    com.wm.app.tn.delivery.DeliveryQueue queue = tundra.tn.queue.get(queueName);
 
-	  boolean exhausted = retries >= retryLimit && status.equals("FAILED");
-	  boolean failed = (retries > 0 && status.equals("QUEUED")) || exhausted;
+	    boolean exhausted = retries >= retryLimit && status.equals("FAILED");
+	    boolean failed = (retries > 0 && status.equals("QUEUED")) || exhausted;
 
-	  if (failed) {
-	    if (exhausted) {
-	      if (retryLimit > 0 && bizdoc != null) {
-	          log(bizdoc, "ERROR", "Delivery", java.text.MessageFormat.format("Exhausted all retries ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Exhausted all retries ({0} of {1}) of delivery task ''{2}''", retries, retryLimit, job.getJobId()));
-	      }
+	    if (failed) {
+	        if (exhausted) {
+	            if (retryLimit > 0 && bizdoc != null) {
+	                log(bizdoc, "ERROR", "Delivery", java.text.MessageFormat.format("Exhausted all retries ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Exhausted all retries ({0} of {1}) of delivery task ''{2}''", retries, retryLimit, job.getJobId()));
+	            }
 
-	      if (suspend) {
-	        // reset retries back to 0
-	        job.setRetries(0);
-	        job.setStatus(com.wm.app.tn.delivery.GuaranteedJob.QUEUED);
-	        job.setDefaultServerId();
-	        job.setTimeUpdated(waitForNextRetry(job));
-	        update(job);
+	            if (suspend) {
+	                // reset retries back to 1
+	                retries = 1;
+	                job.setRetries(retries);
+	                job.setStatus(com.wm.app.tn.delivery.GuaranteedJob.QUEUED);
+	                job.setDefaultServerId();
 
-	        // suspend the queue
-	        tundra.tn.queue.suspend(queueName);
+	                long nextRetry = waitForNextRetry(job);
+	                job.setTimeUpdated(nextRetry);
+	                update(job);
 
-	        if (bizdoc != null) {
-	          com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "SUSPENDED");
-	          if (queue.getQueueType().equals("private")) {
-	            log(bizdoc, "WARNING", "Delivery", "Suspended receiver's private queue '" + queueName + "'", "Ordered delivery of receiver's private queue '" + queueName + "' was suspended due to task exhaustion");
-	          } else {
-	            log(bizdoc, "WARNING", "Delivery", "Suspended public queue '" + queueName + "'", "Ordered delivery of public queue '" + queueName + "' was suspended due to task exhaustion");
-	          }
+	                boolean isSuspended = queue.isSuspended();
+
+	                if (!isSuspended) {
+	                    // suspend the queue if not already suspended
+	                    tundra.tn.queue.suspend(queueName);
+
+	                    if (bizdoc != null) {
+	                        if (queue.getQueueType().equals("private")) {
+	                            log(bizdoc, "WARNING", "Delivery", "Suspended receiver's private queue '" + queueName + "'", "Delivery of receiver's private queue '" + queueName + "' was suspended due to task exhaustion");
+	                        } else {
+	                            log(bizdoc, "WARNING", "Delivery", "Suspended public queue '" + queueName + "'", "Delivery of public queue '" + queueName + "' was suspended due to task exhaustion");
+	                        }
+	                    }
+	                }
+
+	                if (bizdoc != null) {
+	                    com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", isSuspended ? "REQUEUED" : "SUSPENDED");
+	                    log(bizdoc, "MESSAGE", "Delivery", java.text.MessageFormat.format("Retries reset ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Retries reset to ensure task is processed upon queue delivery resumption; if this task is not required to be processed again, it should be manually deleted. Next retry ({0} of {1}) scheduled no earlier than ''{2}''", retries, retryLimit, DATE_FORMATTER.format(new java.util.Date(nextRetry))));
+	                }
+	            }
+	        } else {
+	            long nextRetry = waitForNextRetry(job);
+	            job.setTimeUpdated(nextRetry); // force this job to wait for its next retry
+	            update(job);
+
+	            if (bizdoc != null) {
+	                com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
+	                log(bizdoc, "MESSAGE", "Delivery", java.text.MessageFormat.format("Next retry scheduled ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Next retry ({0} of {1}) scheduled no earlier than ''{2}''", retries, retryLimit, DATE_FORMATTER.format(new java.util.Date(nextRetry))));
+	            }
 	        }
-	      }
-	    } else {
-	      long nextRetry = waitForNextRetry(job);
-	      job.setTimeUpdated(nextRetry); // force this job to wait for its next retry
-	      update(job);
-
-	      if (bizdoc != null) {
-	        com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
-	        log(bizdoc, "MESSAGE", "Delivery", java.text.MessageFormat.format("Next retry scheduled ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Next retry ({0} of {1}) scheduled no earlier than ''{2}''", retries, retryLimit, DATE_FORMATTER.format(new java.util.Date(nextRetry))));
-	      }
 	    }
-	  }
 	}
 
 	// calculates the next time the given task should be retried using the retry settings in the task
 	protected static long waitForNextRetry(com.wm.app.tn.delivery.GuaranteedJob job) {
-	  long now = new java.util.Date().getTime();
-	  long nextRetry = now;
+	    long now = new java.util.Date().getTime();
+	    long nextRetry = now;
 
-	  int retryCount = job.getRetries();
-	  int retryFactor = job.getRetryFactor();
-	  int ttw = (int)job.getTTW();
+	    int retryCount = job.getRetries();
+	    int retryFactor = job.getRetryFactor();
+	    int ttw = (int)job.getTTW();
 
-	  if (ttw > 0) {
-	    if (retryFactor > 1 && retryCount > 1) {
-	      nextRetry = now + (long)(ttw * Math.pow(retryFactor, retryCount - 1));
-	    } else {
-	      nextRetry = now + ttw;
+	    if (ttw > 0) {
+	        if (retryFactor > 1 && retryCount > 1) {
+	            nextRetry = now + (long)(ttw * Math.pow(retryFactor, retryCount - 1));
+	        } else {
+	            nextRetry = now + ttw;
+	        }
 	    }
-	  }
 
-	  return nextRetry;
+	    return nextRetry;
 	}
 
 	// saves the given job to the Trading Networks database
 	protected static void update(com.wm.app.tn.delivery.GuaranteedJob job) throws ServiceException {
-	  java.sql.Connection connection = null;
-	  java.sql.PreparedStatement statement = null;
+	    java.sql.Connection connection = null;
+	    java.sql.PreparedStatement statement = null;
 
-	  try {
-	    connection = com.wm.app.tn.db.Datastore.getConnection();
-	    statement = com.wm.app.tn.db.SQLStatements.prepareStatement(connection, UPDATE_DELIVER_JOB);
-	    statement.clearParameters();
+	    try {
+	        connection = com.wm.app.tn.db.Datastore.getConnection();
+	        statement = com.wm.app.tn.db.SQLStatements.prepareStatement(connection, UPDATE_DELIVER_JOB);
+	        statement.clearParameters();
 
-	    // instead of setting TimeUpdated to now, set it to the time in the job object
-	    com.wm.app.tn.db.SQLWrappers.setTimestamp(statement, 1, new java.sql.Timestamp(job.getTimeUpdated()));
+	        // instead of setting TimeUpdated to now, set it to the time in the job object
+	        com.wm.app.tn.db.SQLWrappers.setTimestamp(statement, 1, new java.sql.Timestamp(job.getTimeUpdated()));
 
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 2, job.getStatus(), "DeliveryJob.JobStatus");
-	    statement.setInt(3, job.getRetries());
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 4, job.getTransportStatus(), "DeliveryJob.TransportStatus");
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 5, job.getTransportStatusMessage(), "DeliveryJob.TransportStatusMessage");
-	    statement.setInt(6, (int)job.getTransportTime());
-	    com.wm.app.tn.db.SQLWrappers.setBinaryStream(statement, 7, job.getOutputData());
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 8, job.getServerId(), "DeliveryJob.ServerID");
-	    com.wm.app.tn.db.SQLWrappers.setBinaryStream(statement, 9, job.getDBIData());
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 10, job.getQueueName(), "DeliveryQueue.QueueName");
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 11, job.getInvokeAsUser(), "DeliveryJob.UserName");
-	    com.wm.app.tn.db.SQLWrappers.setCharString(statement, 12, job.getJobId());
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 2, job.getStatus(), "DeliveryJob.JobStatus");
+	        statement.setInt(3, job.getRetries());
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 4, job.getTransportStatus(), "DeliveryJob.TransportStatus");
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 5, job.getTransportStatusMessage(), "DeliveryJob.TransportStatusMessage");
+	        statement.setInt(6, (int)job.getTransportTime());
+	        com.wm.app.tn.db.SQLWrappers.setBinaryStream(statement, 7, job.getOutputData());
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 8, job.getServerId(), "DeliveryJob.ServerID");
+	        com.wm.app.tn.db.SQLWrappers.setBinaryStream(statement, 9, job.getDBIData());
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 10, job.getQueueName(), "DeliveryQueue.QueueName");
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 11, job.getInvokeAsUser(), "DeliveryJob.UserName");
+	        com.wm.app.tn.db.SQLWrappers.setCharString(statement, 12, job.getJobId());
 
-	    statement.executeUpdate();
-	    connection.commit();
-	  } catch (java.sql.SQLException ex) {
-	    connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
-	    tundra.tn.exception.raise(ex);
-	  } catch (java.io.IOException ex) {
-	    tundra.tn.exception.raise(ex);
-	  } finally {
-	    com.wm.app.tn.db.SQLStatements.releaseStatement(statement);
-	    com.wm.app.tn.db.Datastore.releaseConnection(connection);
-	  }
+	        statement.executeUpdate();
+	        connection.commit();
+	    } catch (java.sql.SQLException ex) {
+	        connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
+	        tundra.tn.exception.raise(ex);
+	    } catch (java.io.IOException ex) {
+	        tundra.tn.exception.raise(ex);
+	    } finally {
+	        com.wm.app.tn.db.SQLStatements.releaseStatement(statement);
+	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
+	    }
 	}
 
 	// returns the head of the given queue without dequeuing it
 	public static com.wm.app.tn.delivery.GuaranteedJob peek(String queueName, boolean ordered) throws ServiceException {
-	  java.sql.Connection connection = null;
-	  java.sql.PreparedStatement statement = null;
-	  java.sql.ResultSet results = null;
-	  com.wm.app.tn.delivery.GuaranteedJob task = null;
+	    java.sql.Connection connection = null;
+	    java.sql.PreparedStatement statement = null;
+	    java.sql.ResultSet results = null;
+	    com.wm.app.tn.delivery.GuaranteedJob task = null;
 
-	  try {
-	    connection = com.wm.app.tn.db.Datastore.getConnection();
-	    statement = connection.prepareStatement(ordered ? SELECT_NEXT_DELIVER_JOB_ORDERED : SELECT_NEXT_DELIVER_JOB_UNORDERED);
-	    statement.clearParameters();
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 1, queueName, "DeliveryQueue.QueueName");
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 2, queueName, "DeliveryQueue.QueueName");
-	    com.wm.app.tn.db.SQLWrappers.setTimestamp(statement, 3, new java.sql.Timestamp(new java.util.Date().getTime()));
-	    results = statement.executeQuery();
-	    if (results.next()) {
-	      String id = results.getString(1);
-	      task = com.wm.app.tn.db.DeliveryOperations.getAnyJob(id, false);
+	    try {
+	        connection = com.wm.app.tn.db.Datastore.getConnection();
+	        statement = connection.prepareStatement(ordered ? SELECT_NEXT_DELIVER_JOB_ORDERED : SELECT_NEXT_DELIVER_JOB_UNORDERED);
+	        statement.clearParameters();
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 1, queueName, "DeliveryQueue.QueueName");
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 2, queueName, "DeliveryQueue.QueueName");
+	        com.wm.app.tn.db.SQLWrappers.setTimestamp(statement, 3, new java.sql.Timestamp(new java.util.Date().getTime()));
+	        results = statement.executeQuery();
+	        if (results.next()) {
+	            String id = results.getString(1);
+	            task = com.wm.app.tn.db.DeliveryOperations.getAnyJob(id, false);
+	        }
+	        connection.commit();
+	    } catch (java.sql.SQLException ex) {
+	        connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
+	        tundra.tn.exception.raise(ex);
+	    } catch (java.io.IOException ex) {
+	        tundra.tn.exception.raise(ex);
+	    } finally {
+	        com.wm.app.tn.db.SQLWrappers.close(results);
+	        com.wm.app.tn.db.SQLWrappers.close(statement);
+	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
 	    }
-	    connection.commit();
-	  } catch (java.sql.SQLException ex) {
-	    connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
-	    tundra.tn.exception.raise(ex);
-	  } catch (java.io.IOException ex) {
-	    tundra.tn.exception.raise(ex);
-	  } finally {
-	    com.wm.app.tn.db.SQLWrappers.close(results);
-	    com.wm.app.tn.db.SQLWrappers.close(statement);
-	    com.wm.app.tn.db.Datastore.releaseConnection(connection);
-	  }
 
-	  return task;
+	    return task;
 	}
 
 
 	// dequeues a task from the given queue
 	public static com.wm.app.tn.delivery.GuaranteedJob pop(String queueName, boolean ordered) throws ServiceException {
-	  com.wm.app.tn.delivery.GuaranteedJob task = peek(queueName, ordered);
-	  setDelivering(task);
-	  return task;
+	    com.wm.app.tn.delivery.GuaranteedJob task = peek(queueName, ordered);
+	    setDelivering(task);
+	    return task;
 	}
 
 	// update the given task status to DELIVERING
 	protected static void setDelivering(com.wm.app.tn.delivery.GuaranteedJob task) throws ServiceException {
-	  if (task == null) return;
+	    if (task == null) return;
 
-	  java.sql.Connection connection = null;
-	  java.sql.PreparedStatement statement = null;
+	    java.sql.Connection connection = null;
+	    java.sql.PreparedStatement statement = null;
 
-	  try {
-	    connection = com.wm.app.tn.db.Datastore.getConnection();
-	    statement = com.wm.app.tn.db.SQLStatements.prepareStatement(connection, UPDATE_DELIVER_JOB_DELIVERING);
-	    statement.clearParameters();
-	    com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 1, com.wm.app.tn.delivery.JobMgr.getJobMgr().getServerId(), "DeliveryJob.ServerID");
-	    com.wm.app.tn.db.SQLWrappers.setCharString(statement, 2, task.getJobId());
-	    statement.executeUpdate();
-	    task.delivering();
-	    connection.commit();
-	  } catch (java.sql.SQLException ex) {
-	    connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
-	    tundra.tn.exception.raise(ex);
-	  } finally {
-	    com.wm.app.tn.db.SQLStatements.releaseStatement(statement);
-	    com.wm.app.tn.db.Datastore.releaseConnection(connection);
-	  }
+	    try {
+	        connection = com.wm.app.tn.db.Datastore.getConnection();
+	        statement = com.wm.app.tn.db.SQLStatements.prepareStatement(connection, UPDATE_DELIVER_JOB_DELIVERING);
+	        statement.clearParameters();
+	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 1, com.wm.app.tn.delivery.JobMgr.getJobMgr().getServerId(), "DeliveryJob.ServerID");
+	        com.wm.app.tn.db.SQLWrappers.setCharString(statement, 2, task.getJobId());
+	        statement.executeUpdate();
+	        task.delivering();
+	        connection.commit();
+	    } catch (java.sql.SQLException ex) {
+	        connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
+	        tundra.tn.exception.raise(ex);
+	    } finally {
+	        com.wm.app.tn.db.SQLStatements.releaseStatement(statement);
+	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
+	    }
 	}
 
 	// update the retry settings on the given task using the given settings, or the retry settings on the receiver's profile
 	// if the given retryLimit <= 0
 	protected static void updateRetryStrategy(com.wm.app.tn.delivery.GuaranteedJob task, int retryLimit, int retryFactor, int timeToWait) throws ServiceException {
-	  if (task == null) return;
+	    if (task == null) return;
 
-	  java.sql.Connection connection = null;
-	  java.sql.PreparedStatement statement = null;
+	    java.sql.Connection connection = null;
+	    java.sql.PreparedStatement statement = null;
 
-	  try {
-	    int taskRetryLimit = task.getRetryLimit();
-	    int taskRetryFactor = task.getRetryFactor();
-	    int taskTTW = (int)task.getTTW();
+	    try {
+	        int taskRetryLimit = task.getRetryLimit();
+	        int taskRetryFactor = task.getRetryFactor();
+	        int taskTTW = (int)task.getTTW();
 
-	    com.wm.app.tn.doc.BizDocEnvelope bizdoc = task.getBizDocEnvelope();
-	    com.wm.app.tn.profile.ProfileSummary receiver = com.wm.app.tn.profile.ProfileStore.getProfileSummary(bizdoc.getReceiverId());
+	        com.wm.app.tn.doc.BizDocEnvelope bizdoc = task.getBizDocEnvelope();
+	        com.wm.app.tn.profile.ProfileSummary receiver = com.wm.app.tn.profile.ProfileStore.getProfileSummary(bizdoc.getReceiverId());
 
-	    if (retryLimit <= 0 && receiver.getDeliveryRetries() > 0) {
-	      retryLimit = receiver.getDeliveryRetries();
-	      retryFactor = receiver.getRetryFactor();
-	      timeToWait = receiver.getDeliveryWait();
+	        if (retryLimit <= 0 && receiver.getDeliveryRetries() > 0) {
+	            retryLimit = receiver.getDeliveryRetries();
+	            retryFactor = receiver.getRetryFactor();
+	            timeToWait = receiver.getDeliveryWait();
+	        }
+
+	        if (taskRetryLimit != retryLimit || taskRetryFactor != retryFactor || taskTTW != timeToWait) {
+	            task.setRetryLimit(retryLimit);
+	            task.setRetryFactor(retryFactor);
+	            task.setTTW(timeToWait);
+
+	            connection = com.wm.app.tn.db.Datastore.getConnection();
+	            statement = connection.prepareStatement(UPDATE_DELIVER_JOB_RETRY_STRATEGY);
+	            statement.clearParameters();
+	            statement.setInt(1, task.getRetryLimit());
+	            statement.setInt(2, task.getRetryFactor());
+	            statement.setInt(3, (int)task.getTTW());
+	            com.wm.app.tn.db.SQLWrappers.setCharString(statement, 4, task.getJobId());
+	            statement.executeUpdate();
+	            connection.commit();
+	        }
+	    } catch (java.sql.SQLException ex) {
+	        connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
+	        tundra.tn.exception.raise(ex);
+	    } finally {
+	        com.wm.app.tn.db.SQLWrappers.close(statement);
+	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
 	    }
-
-	    if (taskRetryLimit != retryLimit || taskRetryFactor != retryFactor || taskTTW != timeToWait) {
-	      task.setRetryLimit(retryLimit);
-	      task.setRetryFactor(retryFactor);
-	      task.setTTW(timeToWait);
-
-	      connection = com.wm.app.tn.db.Datastore.getConnection();
-	      statement = connection.prepareStatement(UPDATE_DELIVER_JOB_RETRY_STRATEGY);
-	      statement.clearParameters();
-	      statement.setInt(1, task.getRetryLimit());
-	      statement.setInt(2, task.getRetryFactor());
-	      statement.setInt(3, (int)task.getTTW());
-	      com.wm.app.tn.db.SQLWrappers.setCharString(statement, 4, task.getJobId());
-	      statement.executeUpdate();
-	      connection.commit();
-	    }
-	  } catch (java.sql.SQLException ex) {
-	    connection = com.wm.app.tn.db.Datastore.handleSQLException(connection, ex);
-	    tundra.tn.exception.raise(ex);
-	  } finally {
-	    com.wm.app.tn.db.SQLWrappers.close(statement);
-	    com.wm.app.tn.db.Datastore.releaseConnection(connection);
-	  }
 	}
 
 	protected static final String LOG_SERVICE_NAME = "tundra.tn:log";
@@ -538,32 +550,32 @@ public final class queue
 
 	// add an activity log statement to the given task's bizdoc
 	protected static void log(com.wm.app.tn.delivery.GuaranteedJob task, String type, String klass, String summary, String message) throws ServiceException {
-	  log(task.getBizDocEnvelope(), type, klass, summary, message);
+	    log(task.getBizDocEnvelope(), type, klass, summary, message);
 	}
 
 	// add an activity log statement to the given bizdoc
 	protected static void log(com.wm.app.tn.doc.BizDocEnvelope bizdoc, String type, String klass, String summary, String message) throws ServiceException {
-	  IData input = IDataFactory.create();
-	  IDataCursor cursor = input.getCursor();
-	  IDataUtil.put(cursor, "$bizdoc", bizdoc);
-	  IDataUtil.put(cursor, "$type", type);
-	  IDataUtil.put(cursor, "$class", klass);
-	  IDataUtil.put(cursor, "$summary", summary);
-	  IDataUtil.put(cursor, "$message", message);
-	  cursor.destroy();
+	    IData input = IDataFactory.create();
+	    IDataCursor cursor = input.getCursor();
+	    IDataUtil.put(cursor, "$bizdoc", bizdoc);
+	    IDataUtil.put(cursor, "$type", type);
+	    IDataUtil.put(cursor, "$class", klass);
+	    IDataUtil.put(cursor, "$summary", summary);
+	    IDataUtil.put(cursor, "$message", message);
+	    cursor.destroy();
 
-	  try {
-	    Service.doInvoke(LOG_SERVICE, input);
-	  } catch (ServiceException ex) {
-	    throw ex;
-	  } catch (Exception ex) {
-	    throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
-	  }
+	    try {
+	        Service.doInvoke(LOG_SERVICE, input);
+	    } catch (ServiceException ex) {
+	        throw ex;
+	    } catch (Exception ex) {
+	        throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
+	    }
 	}
 
 	// returns the given task refreshed
 	protected static com.wm.app.tn.delivery.GuaranteedJob refreshTask(com.wm.app.tn.delivery.GuaranteedJob task) {
-	  return com.wm.app.tn.db.DeliveryStore.getAnyJob(task.getJobId(), com.wm.app.tn.manage.OmiUtils.isOmiEnabled());
+	    return com.wm.app.tn.db.DeliveryStore.getAnyJob(task.getJobId(), com.wm.app.tn.manage.OmiUtils.isOmiEnabled());
 	}
 	// --- <<IS-END-SHARED>> ---
 }
