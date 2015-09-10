@@ -464,9 +464,20 @@ specification.
   processing rule execution of the document if any any errors (such as
   validation errors) are encountered prior to processing. Defaults to false.
 * TN_parms is an optional set of routing hints for Trading Networks to use
-  when routing the retrieved content.
+  when routing the retrieved content. The following TN_parms are set 
+  automatically, if no other value is provided:
+  * DocumentID is set to a generated [UUID] unique for each retrieved content.
+  * GroupID is set to a generated [UUID] and groups all content retrieved per
+    invocation of this service.
+  * $contentType is the MIME media type of the content.
+  * $contentEncoding is the character set of the content.
+  * Content Name is the name associated with the retrieved content, for example
+    the file name for content retrieved from a file URI.
+  * Content Source is the source location from which the content was retrieved.
+  * Content Archive is the archive location to which the content was archived.
+  * User is the user under which this service was invoked.
 
-</value>
+[UUID]: &lt;http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html&gt;</value>
   <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
