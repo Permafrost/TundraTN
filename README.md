@@ -3127,6 +3127,7 @@ Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 [CSV]: <http://en.wikipedia.org/wiki/Comma-separated_values>
 [default charset]: <http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()>
 [ISO8601]: <http://en.wikipedia.org/wiki/ISO_8601>
+[JAR]: <http://en.wikipedia.org/wiki/JAR_(file_format)>
 [java.text.SimpleDateFormat]: <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>
 [java.util.Date]: <http://docs.oracle.com/javase/6/docs/api/java/util/Date.html>
 [javax.jms.BytesMessage]: <http://docs.oracle.com/javaee/1.4/api/javax/jms/BytesMessage.html>
