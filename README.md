@@ -20,8 +20,8 @@ services for [webMethods Integration Server] 7.1 and higher.
 which provide the underlying implementation for the Java services, and are
 included in the [TundraTN] package as [JAR] files in the following locations:
 
-* `./code/jars/static/Tundra.jar` - http://github.com/Permafrost/Tundra.java
-* `./code/jars/static/TundraTN.jar` - http://github.com/Permafrost/TundraTN.java
+* `./code/jars/Tundra.jar` - http://github.com/Permafrost/Tundra.java
+* `./code/jars/TundraTN.jar` - http://github.com/Permafrost/TundraTN.java
 
 ## Installation
 
