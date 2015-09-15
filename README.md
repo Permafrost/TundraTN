@@ -16,11 +16,12 @@ services for [webMethods Integration Server] 7.1 and higher.
 * [Tundra]
 * WmTN
 
-[TundraTN] is also dependent on the [TundraTN.java] project, which provides the
-underlying implementation for the Java services, and is included in the
-[TundraTN] package as a [JAR] library in the following location:
+[TundraTN] is also dependent on the following open source Java libraries,
+which provide the underlying implementation for the Java services, and are
+included in the [TundraTN] package as [JAR] files in the following locations:
 
-* `./code/jars/static/TundraTN.jar`
+* `./code/jars/static/Tundra.jar` - http://github.com/Permafrost/Tundra.java
+* `./code/jars/static/TundraTN.jar` - http://github.com/Permafrost/TundraTN.java
 
 ## Installation
 
@@ -3138,6 +3139,7 @@ Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
+[Tundra.java]: <https://github.com/Permafrost/Tundra.java>
 [TundraTN]: <https://github.com/Permafrost/TundraTN>
 [TundraTN.java]: <https://github.com/Permafrost/TundraTN.java>
 [URL-encoded]: <http://en.wikipedia.org/wiki/Percent-encoding>
