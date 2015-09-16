@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-09-13 16:35:20 EST
+// -----( CREATED: 2015-09-16 20:46:42 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -108,6 +108,7 @@ public final class queue
 		
 		try {
 		    String queueName = IDataUtil.getString(cursor, "$queue");
+		
 		    IData properties = QueueHelper.toIData(QueueHelper.get(queueName));
 		    if (properties != null) IDataUtil.put(cursor, "$queue.properties", properties);
 		    IDataUtil.put(cursor, "$queue.exists?", "" + (properties != null));

@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-09-13 16:37:20 EST
+// -----( CREATED: 2015-09-16 20:07:21 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -9,7 +9,7 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
-import permafrost.tundra.tn.queue.QueueHelper;
+import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class queue
@@ -319,7 +319,7 @@ public final class queue
 	    int retries = job.getRetries();
 	    String status = job.getStatus();
 	    String queueName = job.getQueueName();
-	    com.wm.app.tn.delivery.DeliveryQueue queue = QueueHelper.get(queueName);
+	    com.wm.app.tn.delivery.DeliveryQueue queue = DeliveryQueueHelper.get(queueName);
 	
 	    boolean exhausted = retries >= retryLimit && status.equals("FAILED");
 	    boolean failed = (retries > 0 && status.equals("QUEUED")) || exhausted;
@@ -345,7 +345,7 @@ public final class queue
 	
 	                if (!isSuspended) {
 	                    // suspend the queue if not already suspended
-	                    QueueHelper.suspend(QueueHelper.get(queueName));
+	                    DeliveryQueueHelper.suspend(DeliveryQueueHelper.get(queueName));
 	
 	                    if (bizdoc != null) {
 	                        if (queue.getQueueType().equals("private")) {

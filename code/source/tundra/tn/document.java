@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-09-08 20:47:32 EST
+// -----( CREATED: 2015-09-16 20:43:16 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -11,7 +11,7 @@ import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
 import com.wm.app.tn.doc.BizDocEnvelope;
 import permafrost.tundra.lang.BooleanHelper;
-import permafrost.tundra.tn.document.BizDocHelper;
+import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
 import permafrost.tundra.tn.profile.ProfileCache;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -45,7 +45,7 @@ public final class document
 		    String id = IDataUtil.getString(cursor, "$id");
 		    boolean content = BooleanHelper.parse(IDataUtil.getString(cursor, "$content?"));
 		
-		    BizDocEnvelope bizdoc = BizDocHelper.get(id, content);
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.get(id, content);
 		
 		    if (bizdoc != null) {
 		        IDataUtil.put(cursor, "$bizdoc", bizdoc);
@@ -79,7 +79,7 @@ public final class document
 		    boolean sender = BooleanHelper.parse(IDataUtil.getString(cursor, "$sender?"));
 		    boolean receiver = BooleanHelper.parse(IDataUtil.getString(cursor, "$receiver?"));
 		
-		    BizDocEnvelope output = BizDocHelper.normalize(input, content);
+		    BizDocEnvelope output = BizDocEnvelopeHelper.normalize(input, content);
 		
 		    if (output != null) {
 		        IDataUtil.put(cursor, "$bizdoc", output);
