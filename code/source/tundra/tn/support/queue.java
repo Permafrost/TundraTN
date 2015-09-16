@@ -1,15 +1,15 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-09-16 20:07:21 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2015-09-17 08:40:30.931
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
-import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
+import permafrost.tundra.tn.queue.QueueHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class queue
@@ -46,7 +46,7 @@ public final class queue
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    String queue = IDataUtil.getString(cursor, "queue");
 		    String service = IDataUtil.getString(cursor, "$service");
@@ -59,32 +59,32 @@ public final class queue
 		    if (sRetryLimit == null) sRetryLimit = IDataUtil.getString(cursor, "$retries");
 		    String sRetryFactor = IDataUtil.getString(cursor, "$retry.factor");
 		    String sRetryWait = IDataUtil.getString(cursor, "$retry.wait");
-		
+
 		    int concurrency = 1;
 		    if (sConcurrency != null) concurrency = Integer.parseInt(sConcurrency);
-		
+
 		    boolean ordered = false;
 		    if (sOrdered != null) ordered = Boolean.parseBoolean(sOrdered);
-		
+
 		    boolean suspend = false;
 		    if (sSuspend != null) suspend = Boolean.parseBoolean(sSuspend);
-		
+
 		    int retryLimit = 0;
 		    if (sRetryLimit != null) retryLimit = Integer.parseInt(sRetryLimit);
-		
+
 		    int retryFactor = 1;
 		    if (sRetryFactor != null) retryFactor = Integer.parseInt(sRetryFactor);
-		
+
 		    int retryWait = 0;
 		    if (sRetryWait != null) retryWait = Integer.parseInt(sRetryWait);
-		
+
 		    each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, ordered, suspend);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 	// --- <<IS-START-SHARED>> ---
@@ -96,7 +96,7 @@ public final class queue
 	protected static final String UPDATE_DELIVER_JOB_RETRY_STRATEGY = "UPDATE DeliveryJob SET RetryLimit = ?, RetryFactor = ?, TimeToWait = ? WHERE JobID = ?";
 	protected static final String SELECT_NEXT_DELIVER_JOB_ORDERED = "SELECT JobID FROM DeliveryJob WHERE QueueName = ? AND JobStatus = 'QUEUED' AND TimeCreated = (SELECT MIN(TimeCreated) FROM DeliveryJob WHERE QueueName = ? AND JobStatus = 'QUEUED') AND TimeUpdated <= ?";
 	protected static final String SELECT_NEXT_DELIVER_JOB_UNORDERED = "SELECT JobID FROM DeliveryJob WHERE QueueName = ? AND JobStatus = 'QUEUED' AND TimeCreated = (SELECT MIN(TimeCreated) FROM DeliveryJob WHERE QueueName = ? AND JobStatus = 'QUEUED' AND TimeUpdated <= ?)";
-	
+
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// if concurrency > 1, tasks will be processed by a thread pool whose size is equal to the desired concurrency,
 	// otherwise they will be processed on the current thread
@@ -104,7 +104,7 @@ public final class queue
 	    try {
 	        com.wm.app.tn.delivery.DeliveryQueue queue = com.wm.app.tn.db.QueueOperations.selectByName(queueName);
 	        if (queue == null) throw new ServiceException("Queue '" + queueName + "' does not exist");
-	
+
 	        if (concurrency <= 1) {
 	            eachDirect(queue, EXECUTE_TASK_SERVICE, service, pipeline, retryLimit, retryFactor, ttw, ordered, suspend);
 	        } else {
@@ -116,12 +116,12 @@ public final class queue
 	        throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	    }
 	}
-	
+
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline
 	// on the current thread
 	protected static void eachDirect(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int retryLimit, int retryFactor, int ttw, boolean ordered, boolean suspend) throws ServiceException {
 	    boolean invokedByTradingNetworks = invokedByTradingNetworks();
-	
+
 	    try {
 	        while(true) {
 	            if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
@@ -142,17 +142,17 @@ public final class queue
 	        tundra.tn.exception.raise(ex);
 	    }
 	}
-	
+
 	// dequeues each task on the given TN queue, and processes the task using the given service and input pipeline;
 	// tasks will be processed by a thread pool whose size is equal to the desired concurrency
 	protected static void eachConcurrent(com.wm.app.tn.delivery.DeliveryQueue queue, com.wm.lang.ns.NSName executeTaskService, String service, IData pipeline, int concurrency, int retryLimit, int retryFactor, int ttw, boolean ordered, boolean suspend) throws ServiceException {
 	    boolean invokedByTradingNetworks = invokedByTradingNetworks();
-	
+
 	    com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
 	    com.wm.app.b2b.server.InvokeState state = com.wm.app.b2b.server.InvokeState.getCurrentState();
 	    java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(concurrency, new ServerThreadFactory(queue.getQueueName(), state));
 	    java.util.Queue<java.util.concurrent.Future<IData>> futures = new java.util.LinkedList<java.util.concurrent.Future<IData>>();
-	
+
 	    try {
 	        while(true) {
 	            if (!invokedByTradingNetworks || queue.isEnabled() || queue.isDraining()) {
@@ -189,7 +189,7 @@ public final class queue
 	        executor.shutdownNow();
 	    }
 	}
-	
+
 	// waits for all futures in the given queue to complete
 	protected static java.util.List<IData> awaitAll(java.util.Queue<java.util.concurrent.Future<IData>> futures, boolean suspend) {
 	    java.util.List<IData> results = new java.util.ArrayList<IData>(futures.size());
@@ -202,23 +202,23 @@ public final class queue
 	    }
 	    return results;
 	}
-	
+
 	// waits for the first/head future in the given queue to complete
 	protected static IData awaitOldest(java.util.Queue<java.util.concurrent.Future<IData>> futures, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
 	    return await(futures.poll(), suspend);
 	}
-	
+
 	// waits for the given future to complete
 	protected static IData await(java.util.concurrent.Future<IData> future, boolean suspend) throws java.sql.SQLException, java.io.IOException, ServiceException {
 	    IData output = null;
 	    try {
 	        output = future.get();
-	
+
 	        if (output != null) {
 	            IDataCursor cursor = output.getCursor();
 	            Object task = IDataUtil.get(cursor, "task");
 	            cursor.destroy();
-	
+
 	            if (task != null && task instanceof com.wm.app.tn.delivery.GuaranteedJob) {
 	                retry((com.wm.app.tn.delivery.GuaranteedJob)task, suspend);
 	            }
@@ -230,7 +230,7 @@ public final class queue
 	    }
 	    return output;
 	}
-	
+
 	// returns a new pipeline for the executeTaskService
 	protected static IData createTaskInputPipeline(com.wm.app.tn.delivery.GuaranteedJob task, String service, IData pipeline, String queueName, String queueType) throws java.io.IOException {
 	    IData output = IDataFactory.create();
@@ -242,10 +242,10 @@ public final class queue
 	    IDataUtil.put(cursor, "queue", queueName);
 	    IDataUtil.put(cursor, "queue.type", queueType);
 	    cursor.destroy();
-	
+
 	    return output;
 	}
-	
+
 	// returns true if the invocation callstack includes the WmTN/wm.tn.queuing:deliverBatch service
 	protected static boolean invokedByTradingNetworks() {
 	    java.util.Iterator iterator = com.wm.app.b2b.server.InvokeState.getCurrentState().getCallStack().iterator();
@@ -256,47 +256,47 @@ public final class queue
 	    }
 	    return result;
 	}
-	
+
 	// wraps a call to an IS service with a standard java.util.concurrent.callable interface, so that it can
 	// be used by java.util.concurrent executors
 	public static class CallableService implements java.util.concurrent.Callable<IData> {
 	    protected com.wm.lang.ns.NSName service;
 	    protected IData input;
 	    protected com.wm.app.b2b.server.Session session;
-	
+
 	    public CallableService(String service, com.wm.app.b2b.server.Session session, IData input) {
 	        this(com.wm.lang.ns.NSName.create(service), session, input);
 	    }
-	
+
 	    public CallableService(com.wm.lang.ns.NSName service, com.wm.app.b2b.server.Session session, IData input) {
 	        this.service = service;
 	        this.input = input;
 	        this.session = session;
 	    }
-	
+
 	    public IData call() throws Exception {
 	        return com.wm.app.b2b.server.Service.doInvoke(service, session, input);
 	    }
 	}
-	
+
 	// a thread factory which creates IS threads with the given invoke state
 	public static class ServerThreadFactory implements java.util.concurrent.ThreadFactory {
 	    String queue;
 	    protected com.wm.app.b2b.server.InvokeState state;
 	    protected long count = 1;
-	
+
 	    public ServerThreadFactory(String queue, com.wm.app.b2b.server.InvokeState state) {
 	        this.queue = queue;
 	        this.state = state;
 	    }
-	
+
 	    public Thread newThread(Runnable r) {
 	        com.wm.app.b2b.server.ServerThread thread = new com.wm.app.b2b.server.ServerThread(r);
 	        thread.setInvokeState(cloneInvokeStateWithStack());
 	        thread.setName("TundraTN/Queue '" + queue + "' Thread#" + String.format("%03d", count++));
 	        return thread;
 	    }
-	
+
 	    protected com.wm.app.b2b.server.InvokeState cloneInvokeStateWithStack() {
 	        com.wm.app.b2b.server.InvokeState outputState = (com.wm.app.b2b.server.InvokeState)state.clone();
 	        java.util.Stack stack = (java.util.Stack)state.getCallStack().clone();
@@ -307,46 +307,46 @@ public final class queue
 	        return outputState;
 	    }
 	}
-	
+
 	protected static final java.text.SimpleDateFormat DATE_FORMATTER = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-	
+
 	// re-enqueues the given job for delivery, unless it has reached its retry limit
 	protected static void retry(com.wm.app.tn.delivery.GuaranteedJob job, boolean suspend) throws ServiceException {
 	    job = refreshTask(job);
 	    com.wm.app.tn.doc.BizDocEnvelope bizdoc = job.getBizDocEnvelope();
-	
+
 	    int retryLimit = job.getRetryLimit();
 	    int retries = job.getRetries();
 	    String status = job.getStatus();
 	    String queueName = job.getQueueName();
-	    com.wm.app.tn.delivery.DeliveryQueue queue = DeliveryQueueHelper.get(queueName);
-	
+	    com.wm.app.tn.delivery.DeliveryQueue queue = QueueHelper.get(queueName);
+
 	    boolean exhausted = retries >= retryLimit && status.equals("FAILED");
 	    boolean failed = (retries > 0 && status.equals("QUEUED")) || exhausted;
-	
+
 	    if (failed) {
 	        if (exhausted) {
 	            if (retryLimit > 0 && bizdoc != null) {
 	                log(bizdoc, "ERROR", "Delivery", java.text.MessageFormat.format("Exhausted all retries ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Exhausted all retries ({0} of {1}) of delivery task ''{2}''", retries, retryLimit, job.getJobId()));
 	            }
-	
+
 	            if (suspend) {
 	                // reset retries back to 1
 	                retries = 1;
 	                job.setRetries(retries);
 	                job.setStatus(com.wm.app.tn.delivery.GuaranteedJob.QUEUED);
 	                job.setDefaultServerId();
-	
+
 	                long nextRetry = waitForNextRetry(job);
 	                job.setTimeUpdated(nextRetry);
 	                update(job);
-	
+
 	                boolean isSuspended = queue.isSuspended();
-	
+
 	                if (!isSuspended) {
 	                    // suspend the queue if not already suspended
-	                    DeliveryQueueHelper.suspend(DeliveryQueueHelper.get(queueName));
-	
+	                    QueueHelper.suspend(QueueHelper.get(queueName));
+
 	                    if (bizdoc != null) {
 	                        if (queue.getQueueType().equals("private")) {
 	                            log(bizdoc, "WARNING", "Delivery", "Suspended receiver's private queue '" + queueName + "'", "Delivery of receiver's private queue '" + queueName + "' was suspended due to task exhaustion");
@@ -355,7 +355,7 @@ public final class queue
 	                        }
 	                    }
 	                }
-	
+
 	                if (bizdoc != null) {
 	                    com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", isSuspended ? "REQUEUED" : "SUSPENDED");
 	                    log(bizdoc, "MESSAGE", "Delivery", java.text.MessageFormat.format("Retries reset ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Retries reset to ensure task is processed upon queue delivery resumption; if this task is not required to be processed again, it should be manually deleted. Next retry ({0} of {1}) scheduled no earlier than ''{2}''", retries, retryLimit, DATE_FORMATTER.format(new java.util.Date(nextRetry))));
@@ -365,7 +365,7 @@ public final class queue
 	            long nextRetry = waitForNextRetry(job);
 	            job.setTimeUpdated(nextRetry); // force this job to wait for its next retry
 	            update(job);
-	
+
 	            if (bizdoc != null) {
 	                com.wm.app.tn.db.BizDocStore.changeStatus(bizdoc, "QUEUED", "REQUEUED");
 	                log(bizdoc, "MESSAGE", "Delivery", java.text.MessageFormat.format("Next retry scheduled ({0}/{1})", retries, retryLimit), java.text.MessageFormat.format("Next retry ({0} of {1}) scheduled no earlier than ''{2}''", retries, retryLimit, DATE_FORMATTER.format(new java.util.Date(nextRetry))));
@@ -373,16 +373,16 @@ public final class queue
 	        }
 	    }
 	}
-	
+
 	// calculates the next time the given task should be retried using the retry settings in the task
 	protected static long waitForNextRetry(com.wm.app.tn.delivery.GuaranteedJob job) {
 	    long now = new java.util.Date().getTime();
 	    long nextRetry = now;
-	
+
 	    int retryCount = job.getRetries();
 	    int retryFactor = job.getRetryFactor();
 	    int ttw = (int)job.getTTW();
-	
+
 	    if (ttw > 0) {
 	        if (retryFactor > 1 && retryCount > 1) {
 	            nextRetry = now + (long)(ttw * Math.pow(retryFactor, retryCount - 1));
@@ -390,23 +390,23 @@ public final class queue
 	            nextRetry = now + ttw;
 	        }
 	    }
-	
+
 	    return nextRetry;
 	}
-	
+
 	// saves the given job to the Trading Networks database
 	protected static void update(com.wm.app.tn.delivery.GuaranteedJob job) throws ServiceException {
 	    java.sql.Connection connection = null;
 	    java.sql.PreparedStatement statement = null;
-	
+
 	    try {
 	        connection = com.wm.app.tn.db.Datastore.getConnection();
 	        statement = com.wm.app.tn.db.SQLStatements.prepareStatement(connection, UPDATE_DELIVER_JOB);
 	        statement.clearParameters();
-	
+
 	        // instead of setting TimeUpdated to now, set it to the time in the job object
 	        com.wm.app.tn.db.SQLWrappers.setTimestamp(statement, 1, new java.sql.Timestamp(job.getTimeUpdated()));
-	
+
 	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 2, job.getStatus(), "DeliveryJob.JobStatus");
 	        statement.setInt(3, job.getRetries());
 	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 4, job.getTransportStatus(), "DeliveryJob.TransportStatus");
@@ -418,7 +418,7 @@ public final class queue
 	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 10, job.getQueueName(), "DeliveryQueue.QueueName");
 	        com.wm.app.tn.db.SQLWrappers.setChoppedString(statement, 11, job.getInvokeAsUser(), "DeliveryJob.UserName");
 	        com.wm.app.tn.db.SQLWrappers.setCharString(statement, 12, job.getJobId());
-	
+
 	        statement.executeUpdate();
 	        connection.commit();
 	    } catch (java.sql.SQLException ex) {
@@ -431,14 +431,14 @@ public final class queue
 	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
 	    }
 	}
-	
+
 	// returns the head of the given queue without dequeuing it
 	public static com.wm.app.tn.delivery.GuaranteedJob peek(String queueName, boolean ordered) throws ServiceException {
 	    java.sql.Connection connection = null;
 	    java.sql.PreparedStatement statement = null;
 	    java.sql.ResultSet results = null;
 	    com.wm.app.tn.delivery.GuaranteedJob task = null;
-	
+
 	    try {
 	        connection = com.wm.app.tn.db.Datastore.getConnection();
 	        statement = connection.prepareStatement(ordered ? SELECT_NEXT_DELIVER_JOB_ORDERED : SELECT_NEXT_DELIVER_JOB_UNORDERED);
@@ -462,25 +462,25 @@ public final class queue
 	        com.wm.app.tn.db.SQLWrappers.close(statement);
 	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
 	    }
-	
+
 	    return task;
 	}
-	
-	
+
+
 	// dequeues a task from the given queue
 	public static com.wm.app.tn.delivery.GuaranteedJob pop(String queueName, boolean ordered) throws ServiceException {
 	    com.wm.app.tn.delivery.GuaranteedJob task = peek(queueName, ordered);
 	    setDelivering(task);
 	    return task;
 	}
-	
+
 	// update the given task status to DELIVERING
 	protected static void setDelivering(com.wm.app.tn.delivery.GuaranteedJob task) throws ServiceException {
 	    if (task == null) return;
-	
+
 	    java.sql.Connection connection = null;
 	    java.sql.PreparedStatement statement = null;
-	
+
 	    try {
 	        connection = com.wm.app.tn.db.Datastore.getConnection();
 	        statement = com.wm.app.tn.db.SQLStatements.prepareStatement(connection, UPDATE_DELIVER_JOB_DELIVERING);
@@ -498,34 +498,34 @@ public final class queue
 	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
 	    }
 	}
-	
+
 	// update the retry settings on the given task using the given settings, or the retry settings on the receiver's profile
 	// if the given retryLimit <= 0
 	protected static void updateRetryStrategy(com.wm.app.tn.delivery.GuaranteedJob task, int retryLimit, int retryFactor, int timeToWait) throws ServiceException {
 	    if (task == null) return;
-	
+
 	    java.sql.Connection connection = null;
 	    java.sql.PreparedStatement statement = null;
-	
+
 	    try {
 	        int taskRetryLimit = task.getRetryLimit();
 	        int taskRetryFactor = task.getRetryFactor();
 	        int taskTTW = (int)task.getTTW();
-	
+
 	        com.wm.app.tn.doc.BizDocEnvelope bizdoc = task.getBizDocEnvelope();
 	        com.wm.app.tn.profile.ProfileSummary receiver = com.wm.app.tn.profile.ProfileStore.getProfileSummary(bizdoc.getReceiverId());
-	
+
 	        if (retryLimit <= 0 && receiver.getDeliveryRetries() > 0) {
 	            retryLimit = receiver.getDeliveryRetries();
 	            retryFactor = receiver.getRetryFactor();
 	            timeToWait = receiver.getDeliveryWait();
 	        }
-	
+
 	        if (taskRetryLimit != retryLimit || taskRetryFactor != retryFactor || taskTTW != timeToWait) {
 	            task.setRetryLimit(retryLimit);
 	            task.setRetryFactor(retryFactor);
 	            task.setTTW(timeToWait);
-	
+
 	            connection = com.wm.app.tn.db.Datastore.getConnection();
 	            statement = connection.prepareStatement(UPDATE_DELIVER_JOB_RETRY_STRATEGY);
 	            statement.clearParameters();
@@ -544,16 +544,16 @@ public final class queue
 	        com.wm.app.tn.db.Datastore.releaseConnection(connection);
 	    }
 	}
-	
+
 	protected static final String LOG_SERVICE_NAME = "tundra.tn:log";
 	protected static final com.wm.lang.ns.NSName LOG_SERVICE = com.wm.lang.ns.NSName.create(LOG_SERVICE_NAME);
-	
-	
+
+
 	// add an activity log statement to the given task's bizdoc
 	protected static void log(com.wm.app.tn.delivery.GuaranteedJob task, String type, String klass, String summary, String message) throws ServiceException {
 	    log(task.getBizDocEnvelope(), type, klass, summary, message);
 	}
-	
+
 	// add an activity log statement to the given bizdoc
 	protected static void log(com.wm.app.tn.doc.BizDocEnvelope bizdoc, String type, String klass, String summary, String message) throws ServiceException {
 	    IData input = IDataFactory.create();
@@ -564,7 +564,7 @@ public final class queue
 	    IDataUtil.put(cursor, "$summary", summary);
 	    IDataUtil.put(cursor, "$message", message);
 	    cursor.destroy();
-	
+
 	    try {
 	        Service.doInvoke(LOG_SERVICE, input);
 	    } catch (ServiceException ex) {
@@ -573,7 +573,7 @@ public final class queue
 	        throw new ServiceException(ex.getClass().getName() + ": " + ex.getMessage());
 	    }
 	}
-	
+
 	// returns the given task refreshed
 	protected static com.wm.app.tn.delivery.GuaranteedJob refreshTask(com.wm.app.tn.delivery.GuaranteedJob task) {
 	    return com.wm.app.tn.db.DeliveryStore.getAnyJob(task.getJobId(), com.wm.app.tn.manage.OmiUtils.isOmiEnabled());
