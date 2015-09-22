@@ -1516,6 +1516,35 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer.id:generate
+
+Trading Networks string transformer which returns newly generated
+immutable universally unique identifiers ([UUID]). This transformer
+can be used to assign a generated identifier to an extracted
+attribute, such as GroupID.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored
+  by this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is an optional choice which determines how the [UUID] is
+  converted to a string. Defaults to `string`, if not specified:
+  * `string` returns the [UUID] in the string representation as per
+    [RFC 4122], and is the default.
+  * `base64` returns the [UUID] as a [Base64] encoded string.
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input `values` list,
+  but where every item is a newly generated [UUID].
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.profile:get
 
 Trading Networks string transformer which returns the internal ID
@@ -3125,6 +3154,7 @@ around.
 Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 
 [/dev/null]: <http://en.wikipedia.org/wiki//dev/null>
+[Base64]: <http://en.wikipedia.org/wiki/Base64>
 [CSV]: <http://en.wikipedia.org/wiki/Comma-separated_values>
 [default charset]: <http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()>
 [ISO8601]: <http://en.wikipedia.org/wiki/ISO_8601>
@@ -3137,6 +3167,7 @@ Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 [LICENSE]: <https://github.com/Permafrost/TundraTN/blob/master/LICENSE>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
+[RFC 4122]: <http://www.ietf.org/rfc/rfc4122.txt>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
 [Tundra.java]: <https://github.com/Permafrost/Tundra.java>
