@@ -1612,6 +1612,27 @@ document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer:unique
+
+Trading Networks string transformer which returns only the unique values
+in the given list of extracted string values.
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to transformed.
+* `isArray` is a boolean indicating if the values argument contains multiple
+  items.
+* `arg` is not used by this service, and therefore not required.
+
+#### Outputs:
+
+* `newValues` is a list of only the unique strings from the given `values` list.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.uri:decode
 
 Trading Networks string transformer which URI decodes the given Trading
