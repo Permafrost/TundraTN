@@ -1542,6 +1542,28 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer:last
+
+Trading Networks string transformer which returns only the last item
+in the given list of extracted string values.
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to transformed.
+* `isArray` is a boolean indicating if the values argument contains multiple
+  items.
+* `arg` is not used by this service, and therefore not required.
+
+#### Outputs:
+
+* `newValues` is a string list which contains only the last item from the
+  given `values` list.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer:length
 
 Trading Networks string transformer which returns only the length of
