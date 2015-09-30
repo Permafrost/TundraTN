@@ -1476,7 +1476,6 @@ document type attribute transformer.
   items.
 * `arg` is a [regular expression pattern].
 
-
 #### Outputs:
 
 * `newValues` is a list boolean values indicating if the given input
