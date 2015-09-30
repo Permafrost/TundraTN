@@ -1434,55 +1434,6 @@ document type attribute transformer.
 
 ---
 
-### tundra.tn.document.attribute.string.transformer:find
-
-Trading Networks string transformer which returns whether the given Trading
-Networks document attribute value or list of values includes the given [regular
-expression pattern].
-
-This service is intended to be invoked by Trading Networks as a custom
-document type attribute transformer.
-
-#### Inputs:
-
-* `values` is the list of strings to be matched against the [regular
-  expression pattern].
-* `isArray` is a boolean indicating if the `values` argument contains multiple
-  items.
-* `arg` is a [regular expression pattern].
-
-#### Outputs:
-
-* `newValues` is a list boolean values indicating if the given input
-  string `values` were found to include the given [regular expression pattern]
-  `arg`.
-
----
-
-### tundra.tn.document.attribute.string.transformer:match
-
-Trading Networks string transformer which returns whether the given Trading
-Networks document attribute value or list of values match the given [regular
-expression pattern].
-
-This service is intended to be invoked by Trading Networks as a custom
-document type attribute transformer.
-
-#### Inputs:
-
-* `values` is the list of strings to be matched against the [regular
-  expression pattern].
-* `isArray` is a boolean indicating if the `values` argument contains multiple
-  items.
-* `arg` is a [regular expression pattern].
-
-#### Outputs:
-
-* `newValues` is a list boolean values indicating if the given input
-  string `values` match the given [regular expression pattern] `arg`.
-
----
-
 ### tundra.tn.document.attribute.string.transformer.dns:self
 
 Trading Networks string transformer which returns the domain name,
@@ -1515,6 +1466,31 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer:find
+
+Trading Networks string transformer which returns whether the given Trading
+Networks document attribute value or list of values includes the given [regular
+expression pattern].
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be matched against the [regular
+  expression pattern].
+* `isArray` is a boolean indicating if the `values` argument contains multiple
+  items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list boolean values indicating if the given input
+  string `values` were found to include the given [regular expression pattern]
+  `arg`.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.id:generate
 
 Trading Networks string transformer which returns newly generated
@@ -1541,6 +1517,52 @@ custom document type attribute transformer.
 
 * `newValues` is a list the same length as the input `values` list,
   but where every item is a newly generated [UUID].
+
+---
+
+### tundra.tn.document.attribute.string.transformer:length
+
+Trading Networks string transformer which returns only the length of
+the given list of extracted string values.
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to transformed.
+* `isArray` is a boolean indicating if the values argument contains multiple
+  items.
+* `arg` is not used by this service, and therefore not required.
+
+#### Outputs:
+
+* `newValues` is a string list which contains only a single item: the length
+  of the given `values` list.
+
+---
+
+### tundra.tn.document.attribute.string.transformer:match
+
+Trading Networks string transformer which returns whether the given Trading
+Networks document attribute value or list of values match the given [regular
+expression pattern].
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be matched against the [regular
+  expression pattern].
+* `isArray` is a boolean indicating if the `values` argument contains multiple
+  items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list boolean values indicating if the given input
+  string `values` match the given [regular expression pattern] `arg`.
 
 ---
 
