@@ -1345,6 +1345,11 @@ for both XML and flat files documents.
   * For [XML] content, a recognized [XML] MIME media type, such as
     "text/xml" or "application/xml", or a type that includes a
     "+xml" suffix, must be specified.
+* `$attributes` is a list of attributes to be set on the resulting
+  Trading Networks document, and can be used to override the values
+  of any extracted attributes, or to set the values of additional
+  attributes not extracted by Trading Networks when it recognizes
+  the type of document being routed.
 * `$namespace` is a list of namespace prefixes and the URIs they map to,
   used when serialize [XML] content with elements in one or more
   namespaces.
