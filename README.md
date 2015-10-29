@@ -662,10 +662,22 @@ bizdoc processing rule.
 #### Inputs:
 
 * bizdoc is the Trading Networks document to be enqueued.
-* `$queue` is either the name of the Trading Networks public queue
-  the document should be enqueued to, or the value "Receiver's Queue"
-  in which case the document will be enqueued to the delivery queue
-  associated with the receiver partner profile.
+* `$queues` is a list of enqueuing rules which will be applied to this
+  document.
+  * `name` is is either the name of the Trading Networks public queue
+    the document should be enqueued to, or the value "Receiver's Queue"
+    in which case the document will be enqueued to the delivery queue
+    associated with the receiver partner profile.
+  * `condition` is an optional `Tundra/tundra.condition:evaluate` conditional
+    statement, which is evaluated against a pipeline containing `$bizdoc`,
+    `$sender`, `$receiver`, and `$document` (the parsed bizdoc content), and
+    only if the condition evaluates to true will the document be enqueued
+    to this queue. If not specified, the document will always be enqueued
+    to this queue.
+  * `enabled?` is an optional boolean flag indicating whether this
+    enqueuing rule will be applied to the document. When `false`, this
+    enqueuing rule is inactive and ignored. Defaults to `true` when not
+    specified.
 * `$catch` is an optional fully-qualified service name which, when
   specified, will be invoked if an exception is thrown while attempting to
   process the bizdoc. The input pipeline will include the following
