@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-09-16 20:46:42 EST
+// -----( CREATED: 2015-10-31 18:05:12 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -9,7 +9,7 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
-import permafrost.tundra.tn.queue.QueueHelper;
+import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class queue
@@ -38,7 +38,7 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    QueueHelper.disable(QueueHelper.get(IDataUtil.getString(cursor, "$queue")));
+		    DeliveryQueueHelper.disable(DeliveryQueueHelper.get(IDataUtil.getString(cursor, "$queue")));
 		} finally {
 		    cursor.destroy();
 		}
@@ -59,7 +59,7 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    QueueHelper.drain(QueueHelper.get(IDataUtil.getString(cursor, "$queue")));
+		    DeliveryQueueHelper.drain(DeliveryQueueHelper.get(IDataUtil.getString(cursor, "$queue")));
 		} finally {
 		    cursor.destroy();
 		}
@@ -80,7 +80,7 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    QueueHelper.enable(QueueHelper.get(IDataUtil.getString(cursor, "$queue")));
+		    DeliveryQueueHelper.enable(DeliveryQueueHelper.get(IDataUtil.getString(cursor, "$queue")));
 		} finally {
 		    cursor.destroy();
 		}
@@ -109,7 +109,7 @@ public final class queue
 		try {
 		    String queueName = IDataUtil.getString(cursor, "$queue");
 		
-		    IData properties = QueueHelper.toIData(QueueHelper.get(queueName));
+		    IData properties = DeliveryQueueHelper.toIData(DeliveryQueueHelper.get(queueName));
 		    if (properties != null) IDataUtil.put(cursor, "$queue.properties", properties);
 		    IDataUtil.put(cursor, "$queue.exists?", "" + (properties != null));
 		} finally {
@@ -134,7 +134,7 @@ public final class queue
 		
 		try {
 		    String queueName = IDataUtil.getString(cursor, "$queue");
-		    IDataUtil.put(cursor, "$length", "" + QueueHelper.length(QueueHelper.get(queueName)));
+		    IDataUtil.put(cursor, "$length", "" + DeliveryQueueHelper.length(DeliveryQueueHelper.get(queueName)));
 		} finally {
 		    cursor.destroy();
 		}
@@ -159,7 +159,7 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    IData[] list = QueueHelper.toIDataArray(QueueHelper.list());
+		    IData[] list = DeliveryQueueHelper.toIDataArray(DeliveryQueueHelper.list());
 		    if (list != null) IDataUtil.put(cursor, "$queues", list);
 		} finally {
 		    cursor.destroy();
@@ -181,7 +181,7 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    QueueHelper.suspend(QueueHelper.get(IDataUtil.getString(cursor, "$queue")));
+		    DeliveryQueueHelper.suspend(DeliveryQueueHelper.get(IDataUtil.getString(cursor, "$queue")));
 		} finally {
 		    cursor.destroy();
 		}
