@@ -160,7 +160,7 @@ configured on the TN document type if not specified), the amendments are
 applied via the `$amendments` {key, value} pairs, the amended IData document
 is then emitted as stream then added to the bizdoc as a new content part
 identified by `$part.output` (or 'amendment' if not specified), and the bizdoc
-user status is updated to 'AMENDED'.
+user status is updated to 'DONE'.
 
 This service is designed to be used in conjunction with other TN processing
 rule actions, such as the 'Deliver document by' action, which can use the
@@ -262,6 +262,8 @@ bizdoc processing rule.
   `$document` when `$parse?` is true, and `$content` when `$parse` is false.
 * `$status.done` is an optional user status to use for the bizdoc when
   processing has completed successfully. Defaults to DONE.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$parse?` is an optional boolean flag which when true will parse the
   bizdoc content part to an IData document which is added to the input
   pipeline of the call to `$service`, and when false will instead add the
@@ -458,6 +460,8 @@ bizdoc processing rule.
   delivery has completed successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
   delivery destination is provided. Defaults to IGNORED.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$substitute?` is an optional boolean flag which when true will perform
   variable substitution on all variables in the pipeline (after invoking
   `$service`, if applicable), which allows variables to be set dynamically
@@ -609,6 +613,8 @@ bizdoc processing rule.
   derivatives have been created successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
   derivatives are created due to filtering. Defaults to IGNORED.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$prefix?` is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (bizdoc, sender, and receiver)
   when calling `$service`. When true `$service` should implement the
@@ -689,6 +695,12 @@ bizdoc processing rule.
 * `$finally` is an optional fully-qualified service name which, when
   specified, will be invoked after processing, and whether or not an
   exception is encountered during processing.
+* `$status.done` is an optional user status to use for the bizdoc when
+  enqueue has completed successfully. Defaults to `QUEUED`.
+* `$status.ignored` is an optional user status to use for the bizdoc when no
+  enqueuing occurs. Defaults to `IGNORED`.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$strict` is an optional set of boolean flags which when true abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
@@ -778,6 +790,8 @@ bizdoc processing rule.
   processing has completed successfully. If `$service` returns an output
   pipeline argument named `$status.done` or it changes the status itself,
   this takes precedence over any value specified here. Defaults to `DONE`.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$parse?` is an optional boolean flag which when true will parse the
   bizdoc content part to an IData document which is added to the input
   pipeline of the call to `$service`, and when false will instead add the
@@ -1092,6 +1106,8 @@ bizdoc processing rule.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
   split documents are returned by `$service` and `$required` is false.
   Defaults to IGNORED.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$required?` is an optional boolean indicating whether $service is
   required to return a one or more split documents. If true, and no
   documents are returned by `$service`, an exception will be thrown and
@@ -1276,6 +1292,8 @@ bizdoc processing rule.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
   translation is returned by `$service` and `$required` is false. Defaults to
   IGNORED.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 * `$required?` is an optional boolean indicating whether `$service` is
   required to return a translated document. If true, and no translation is
   returned by `$service`, an exception will be thrown and handled by the
@@ -2192,7 +2210,10 @@ Sets user status on the given Trading Networks document.
 * `$bizdoc` is the Trading Networks document to set the user status on. Only
   the internal ID of the bizdoc must be specified, with the remainder of
   the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
-* `$status` is the user status string to be set on the given bizdoc.
+* `$status` is an optional user status string to be set on the given document.
+  If not specified, the document's user status will not be changed.
+* `$status.silence?` is an optional boolean which when `true` will cause this
+  service not to change the status on the document. Defaults to `false`.
 
 ---
 

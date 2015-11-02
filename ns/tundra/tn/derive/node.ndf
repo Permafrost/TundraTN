@@ -233,6 +233,37 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="field_name">$status.silence?</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>false</value>
+            <value>true</value>
+          </array>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">boolean</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_usereditable">false</value>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
           <value name="field_name">$prefix?</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -605,6 +636,8 @@ bizdoc processing rule.
   derivatives have been created successfully. Defaults to DONE.
 * $status.ignored is an optional user status to use for the bizdoc when no
   derivatives are created due to filtering. Defaults to IGNORED.
+* $status.silence? is an optional boolean which when true will cause this
+  service not to change the status on the document. Defaults to false.
 * $prefix? is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (bizdoc, sender, and receiver)
   when calling $service. When true $service should implement the

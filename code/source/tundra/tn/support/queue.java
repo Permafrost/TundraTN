@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-11-01 14:29:11 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2015-11-03 09:30:23.107
+// -----( ON-HOST: EBZDEVWAP37.ebiztest.qr.com.au
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -40,6 +40,7 @@ public final class queue
 		// [i] field:0:required queue
 		// [i] field:0:required $service
 		// [i] record:0:optional $pipeline
+		// [i] field:0:optional $status.silence? {&quot;false&quot;,&quot;true&quot;}
 		// [i] field:0:optional $concurrency
 		// [i] field:0:optional $ordered? {&quot;false&quot;,&quot;true&quot;}
 		// [i] field:0:optional $suspend? {&quot;false&quot;,&quot;true&quot;}
@@ -54,6 +55,7 @@ public final class queue
 		    String queue = IDataUtil.getString(cursor, "queue");
 		    String service = IDataUtil.getString(cursor, "$service");
 		    IData scope = IDataUtil.getIData(cursor, "$pipeline");
+		    boolean statusSilence = BooleanHelper.parse(IDataUtil.getString(cursor, "$status.silence?"));
 		    int concurrency = IntegerHelper.parse(IDataUtil.getString(cursor, "$concurrency"), 1);
 		    boolean ordered = BooleanHelper.parse(IDataUtil.getString(cursor, "$ordered?"));
 		    boolean suspend = BooleanHelper.parse(IDataUtil.getString(cursor, "$suspend?"));
@@ -62,7 +64,7 @@ public final class queue
 		    int retryFactor = IntegerHelper.parse(IDataUtil.getString(cursor, "$retry.factor"), 1);
 		    int retryWait = IntegerHelper.parse(IDataUtil.getString(cursor, "$retry.wait"));
 		
-		    DeliveryQueueHelper.each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, ordered, suspend);
+		    DeliveryQueueHelper.each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, ordered, suspend, statusSilence);
 		} finally {
 		    cursor.destroy();
 		}
