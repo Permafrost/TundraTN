@@ -685,6 +685,10 @@ bizdoc processing rule.
     only if the condition evaluates to true will the document be enqueued
     to this queue. If not specified, the document will always be enqueued
     to this queue.
+  * `force?` is an optional boolean flag: when true the document will always
+    be enqueued even if an existing task for the same queue already exists;
+    when false the document will only be enqueued if there is no existing
+    task for the same queue. Defaults to false, if not specified.
   * `enabled?` is an optional boolean flag indicating whether this
     enqueuing rule will be applied to the document. When `false`, this
     enqueuing rule is inactive and ignored. Defaults to `true` when not
