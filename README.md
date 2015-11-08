@@ -606,6 +606,11 @@ bizdoc processing rule.
       bizdoc.
   * `TN_parms` is an optional IData document containing routing hints used
     when routing the derivative bizdoc.
+  * `force?` is an optional boolean flag: when true a new derivative will
+    always be created even if an existing derivative for the same sender
+    and receiver already exists; when false a new derivative will only
+    be created if there is no existing derivative with the same sender
+    and receiver. Defaults to false, if not specified.
   * `enabled?` is an optional boolean flag, when true this derivative rule
     is active, when false, this derivative rule is inactive and ignored.
     Defaults to true when not specified.
@@ -1977,14 +1982,14 @@ document to Trading Networks.
       bizdoc.
   * `TN_parms` is an optional IData document containing routing hints used
     when routing the derivative bizdoc.
+  * `force?` is an optional boolean flag: when true a new derivative will
+    always be created even if an existing derivative for the same sender
+    and receiver already exists; when false a new derivative will only
+    be created if there is no existing derivative with the same sender
+    and receiver. Defaults to false, if not specified.
   * `enabled?` is an optional boolean flag, when true this derivative rule
     is active, when false, this derivative rule is inactive and ignored.
     Defaults to true when not specified.
-* `$force?` is an optional boolean flag: when true a new derivative will
-  always be created even if an existing derivative for the same sender/
-  receiver already exists; when false a new derivative will only be
-  created if there is no existing derivative with the same sender/
-  receiver. Defaults to true, if not specified.
 * `$part` is an optional name of the bizdoc content part to be copied to the
   resulting derivative. If not specified, the default content part is
   copied (xmldata for XML document types, ffdata for Flat File document
