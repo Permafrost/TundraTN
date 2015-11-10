@@ -673,6 +673,10 @@ bizdoc processing rule.
 #### Inputs:
 
 * bizdoc is the Trading Networks document to be enqueued.
+* `$queue` is an optional name of the Trading Networks delivery queue
+  to which this document will be enqueued. This input argument is
+  included for backwards-compatibility only, and is deprecated. Use
+  the `$queues` input argument instead.
 * `$queues` is a list of enqueuing rules which will be applied to this
   document.
   * `name` is is either the name of the Trading Networks public queue
