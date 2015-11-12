@@ -3280,6 +3280,20 @@ specification.
 * `TN_parms` is an optional set of routing hints used when routing the
   translated document to Trading Networks.
 
+---
+
+### tundra.tn.task:restart
+
+Restarts the given task. This service, unlike `wm.tn.task:restartTask`,
+does not require the task status to be `STOPPED` or `FAILED`, and will
+restart the given task regardless of its status.
+
+#### Inputs:
+
+* `$task` is the Trading Networks task to be restarted. Only the `TaskId`
+  of the task must be specified, with the remainder of the
+  `WmTN/wm.tn.rec:Task` structure purely optional.
+
 ## Contributions
 
 1. Check out the latest master to make sure the feature hasn't been implemented
