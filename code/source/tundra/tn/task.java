@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-11-12 15:31:40.509
+// -----( CREATED: 2015-11-12 16:17:45.823
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -9,7 +9,6 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
-import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.tn.delivery.GuaranteedJobHelper;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -37,7 +36,14 @@ public final class task
 		// @sigtype java 3.5
 		// [i] record:0:optional $task
 		// [i] - field:0:required TaskId
-		GuaranteedJobHelper.restart(GuaranteedJobHelper.get((String)IDataHelper.get(pipeline, "$task/TaskId")));
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    IData task = IDataUtil.getIData(cursor, "$task");
+		    GuaranteedJobHelper.restart(GuaranteedJobHelper.normalize(task));
+		} finally {
+		    cursor.destroy();
+		}
 		// --- <<IS-END>> ---
 
 
