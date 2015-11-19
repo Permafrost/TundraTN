@@ -1332,6 +1332,33 @@ bizdoc processing rule.
 
 ---
 
+### tundra.tn.content:recognize
+
+Recognizes the given content against the defined set of Trading 
+Networks document types, and returns a new Trading Networks document
+(BizDocEnvelope) for that document type and the given content.
+
+#### Inputs:
+
+* `$content` is string, byte array, input stream, or IData document 
+  content to be recognized by Trading Networks.
+* `$namespace` is an optional list of namespace prefixes and the URIs 
+  they map to, used when `$content` is provided as an IData document 
+  to be serialized to [XML] with elements in one or more namespaces.
+* `TN_parms` is an optional set of routing hints for Trading Networks
+  to use when recognizing `$content`.
+
+#### Outputs:
+
+* `$content` is the recognized content returned as a byte array.
+* `$bizdoc` is a new Trading Networks document (BizDocEnvelope) 
+  representing the recognized content, but not yet routed to Trading 
+  Networks for processing.
+* `TN_parms` is the set of routing hints Trading Networks used when 
+  recognizing the given content.
+
+---
+
 ### tundra.tn.content:route
 
 Routes arbitrary content specified as a string, byte array, input stream, or
@@ -1392,10 +1419,15 @@ for both XML and flat files documents.
   Trading Networks document, and can be used to override the values
   of any extracted attributes, or to set the values of additional
   attributes not extracted by Trading Networks when it recognizes
-  the type of document being routed.
-* `$namespace` is a list of namespace prefixes and the URIs they map to,
-  used when serialize [XML] content with elements in one or more
-  namespaces.
+  the type of document being routed. Attribute values that include
+  percent-delimited variable substitutions will have their value
+  resolved against the pipeline. If any variable substitution includes
+  references to `$document`, the content will first be parsed and added
+  to the pipeline as `$document` to support substituting attribute 
+  values based on the content being routed.
+* `$namespace` is an optional list of namespace prefixes and the URIs 
+  they map to, used when `$content` is provided as an IData document 
+  to be serialized to [XML] with elements in one or more namespaces.
 * `$encoding` is an optional character set to use when encoding the
   resulting text data to a byte array or input stream. Defaults to [UTF-8].
 * `$schema` is the fully-qualified name of the parsing schema to use to

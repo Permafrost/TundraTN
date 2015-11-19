@@ -578,7 +578,12 @@ for both XML and flat files documents.
   Trading Networks document, and can be used to override the value
   of any extracted attributes, or to set the values of additional
   attributes not extracted by Trading Networks when it recognizes
-  the type of document being routed.
+  the type of document being routed. Attribute values that include
+  percent-delimited variable substitutions will have their value
+  resolved against the pipeline. If any variable substitution includes
+  references to `$document`, the content will first be parsed and added
+  to the pipeline as `$document` to support substituting attribute 
+  values based on the content being routed.
 * $namespace is a list of namespace prefixes and the URIs they map to,
   used when serialize [XML] content with elements in one or more
   namespaces.
