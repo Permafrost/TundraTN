@@ -2180,6 +2180,9 @@ configured on the associated document type.
   part data. If not specified, defaults to the character set specified in
   the MIME content type of the content part being parsed, or failing that
   [UTF-8].
+* `$validate?` is an optional boolean flag which when `true` will validate
+  the parsed content against the given `$schema`, and throw an exception
+  if the content is invalid. Defaults to `false`.
 
 #### Outputs:
 
