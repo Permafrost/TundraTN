@@ -58,6 +58,7 @@
           <array name="field_options" type="value" depth="1">
             <value>security</value>
             <value>strict</value>
+            <value>validation</value>
           </array>
           <record name="field_content_type" javaclass="com.wm.util.Values">
             <array name="enumeration" type="record" depth="1">
@@ -133,13 +134,15 @@ Throws a new exception with the given message.
 * $message is an optional error message to use when constructing the
   new exception object to be thrown. If not specified, an empty message
   will be used to construct the exception object.
-* $type is an optional choice of 'security' or 'strict', which if
-  specified will throw one of the following subclasses of
+* $type is an optional choice of 'security', 'strict', or 'validation',
+  which if specified will throw one of the following subclasses of
   com.wm.app.b2b.server.ServiceException respectively:
-  * tundra.tn.exception$SecurityException - used to indicate a user
+  * permafrost.tundra.lang.SecurityException - used to indicate a security
     access error.
-  * tundra.tn.exception$StrictException - used to indicate a document
+  * permafrost.tundra.lang.StrictException - used to indicate a document
     strictness error.
+  * permafrost.tundra.lang.ValidationException - used to indicate a document
+    validation error.
 
   If not specified, a com.wm.app.b2b.server.ServiceException exception
   object will be thrown.

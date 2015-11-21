@@ -1114,6 +1114,12 @@ bizdoc processing rule.
   failing that [UTF-8].
 * `$encoding.output` is an optional character set to use when serializing
   the split documents. If not specified, defaults to [UTF-8].
+* `$validate.input?` is an optional boolean flag which when true will
+  validate the input content against the given $schema.input, and throw
+  an exception if the content is invalid. Defaults to false.
+* `$validate.output?` is an optional boolean flag which when true will
+  validate each output content against the appropriate schema, and throw
+  an exception if the content is invalid. Defaults to false.
 * `$status.done` is an optional user status to use for the bizdoc when
   it has been split successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
@@ -1173,15 +1179,6 @@ parsing schema is specified on the associated document type, and
 `$content.type.input` is not specified, then the content will be parsed as
 [XML] by default.
 
-Parser implementions are as follows:
-* CSV: `Tundra/tundra.csv:parse`
-* Flat File: `WmFlatFile/pub.flatFile:convertToValues`
-* JSON: `Tundra/tundra.json:parse`
-* Pipe separated values: `Tundra/tundra.csv:parse`
-* TSV: `Tundra/tundra.csv:parse`
-* XML: `WmPublic/pub.xml:xmlStringToXMLNode, `pub.xml:xmlNodeToDocument`
-* YAML: Tundra/tundra.yaml:parse`
-
 Emitting (serialization) of the translated content is determined in order
 of precedence by the input variable `$schema.output`, the `TN_parms/$schema`
 returned by `$service`, the input variable `$content.type.output`, and the
@@ -1198,15 +1195,6 @@ specified, nor `TN_parms/$schema` is returned by `$service`, nor
 `$content.type.output` is specified, nor `TN_parms/$contentType` is
 returned by `$service`, then the content will be parsed as [XML] by
 default.
-
-Emitter implementions are as follows:
-* CSV: `Tundra/tundra.csv:emit`
-* Flat File: `WmFlatFile/pub.flatFile:convertToString`
-* JSON: `Tundra/tundra.json:emit`
-* Pipe separated values: `Tundra/tundra.csv:emit`
-* TSV: `Tundra/tundra.csv:emit`
-* XML: `WmPublic/pub.xml:documentToXMLString`
-* YAML: `Tundra/tundra.yaml:emit`
 
 Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
 are set to 'true' and the bizdoc contains errors for any of these classes,
@@ -1244,35 +1232,11 @@ bizdoc processing rule.
 * `$pipeline` is an optional IData document containing arbitrary variables
   which can be used to influence the translation process.
 * `$content.type.input` is the MIME media type that describes the format of
-  the bizdoc content being translated:
-  * For [CSV] content, a recognized [CSV] MIME media type, such as
-    "text/csv", must be specified.
-  * For [JSON] content, a recognized [JSON] MIME media type, such as
-    "application/json", must be specified.
-  * For pipe separated values content, a MIME media type "text/psv",
-    "text/pipe-separated-values", or a type that includes a "+psv" suffix,
-    must be specified.
-  * For [TSV] content, a recognized [TSV] MIME media type, such as
-    "text/tab-separated-values", must be specified.
-  * For [YAML] content, a recognized [YAML] MIME media type, such as
-    "application/yaml", must be specified.
-  Defaults the the content type of the relevant bizdoc content part, if
-  not specified.
+  the bizdoc content being translated. Defaults the the content type of the
+  relevant bizdoc content part, if not specified.
 * `$content.type.output` is the MIME media type that describes the format of
-  the resulting translated content:
-  * For [CSV] content, a recognized [CSV] MIME media type, such as
-    "text/csv", must be specified.
-  * For [JSON] content, a recognized [JSON] MIME media type, such as
-    "application/json", must be specified.
-  * For pipe separated values content, a MIME media type "text/psv",
-    "text/pipe-separated-values", or a type that includes a "+psv" suffix,
-    must be specified.
-  * For [TSV] content, a recognized [TSV] MIME media type, such as
-    "text/tab-separated-values", must be specified.
-  * For [YAML] content, a recognized [YAML] MIME media type, such as
-    "application/yaml", must be specified.
-  Defaults to the value in `TN_parms/$contentType` returned by `$service`, if
-  not specified.
+  the resulting translated content. Defaults to the value in
+  `TN_parms/$contentType` returned by `$service`, if not specified.
 * `$namespace.input` is a list of namespace prefixes and the URIs they
   map to, used when parsing the bizdoc content as [XML] with elements
   in one or more namespaces. Defaults to using the namespace prefixes
@@ -1300,6 +1264,12 @@ bizdoc processing rule.
   failing that [UTF-8].
 * `$encoding.output` is an optional character set to use when serializing
   the translated document. If not specified, defaults to [UTF-8].
+* `$validate.input?` is an optional boolean flag which when true will
+  validate the input content against the given `$schema.input`, and throw
+  an exception if the content is invalid. Defaults to false.
+* `$validate.output?` is an optional boolean flag which when true will
+  validate the output content against the given `$schema.output`, and throw
+  an exception if the content is invalid. Defaults to false.
 * `$status.done` is an optional user status to use for the bizdoc when
   it has been translated successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
@@ -1334,16 +1304,16 @@ bizdoc processing rule.
 
 ### tundra.tn.content:recognize
 
-Recognizes the given content against the defined set of Trading 
+Recognizes the given content against the defined set of Trading
 Networks document types, and returns a new Trading Networks document
 (BizDocEnvelope) for that document type and the given content.
 
 #### Inputs:
 
-* `$content` is string, byte array, input stream, or IData document 
+* `$content` is string, byte array, input stream, or IData document
   content to be recognized by Trading Networks.
-* `$namespace` is an optional list of namespace prefixes and the URIs 
-  they map to, used when `$content` is provided as an IData document 
+* `$namespace` is an optional list of namespace prefixes and the URIs
+  they map to, used when `$content` is provided as an IData document
   to be serialized to [XML] with elements in one or more namespaces.
 * `TN_parms` is an optional set of routing hints for Trading Networks
   to use when recognizing `$content`.
@@ -1351,10 +1321,10 @@ Networks document types, and returns a new Trading Networks document
 #### Outputs:
 
 * `$content` is the recognized content returned as a byte array.
-* `$bizdoc` is a new Trading Networks document (BizDocEnvelope) 
-  representing the recognized content, but not yet routed to Trading 
+* `$bizdoc` is a new Trading Networks document (BizDocEnvelope)
+  representing the recognized content, but not yet routed to Trading
   Networks for processing.
-* `TN_parms` is the set of routing hints Trading Networks used when 
+* `TN_parms` is the set of routing hints Trading Networks used when
   recognizing the given content.
 
 ---
@@ -1423,10 +1393,10 @@ for both XML and flat files documents.
   percent-delimited variable substitutions will have their value
   resolved against the pipeline. If any variable substitution includes
   references to `$document`, the content will first be parsed and added
-  to the pipeline as `$document` to support substituting attribute 
+  to the pipeline as `$document` to support substituting attribute
   values based on the content being routed.
-* `$namespace` is an optional list of namespace prefixes and the URIs 
-  they map to, used when `$content` is provided as an IData document 
+* `$namespace` is an optional list of namespace prefixes and the URIs
+  they map to, used when `$content` is provided as an IData document
   to be serialized to [XML] with elements in one or more namespaces.
 * `$encoding` is an optional character set to use when encoding the
   resulting text data to a byte array or input stream. Defaults to [UTF-8].
@@ -2343,8 +2313,9 @@ error against the document in the activity log, and setting the user
 status to either 'ABORTED' for security or strictness exceptions,
 or 'ERROR' for any other exceptions.
 
-This service can be used as a standard catch service for Trading Networks
-document processing services in conjunction with `Tundra/tundra.service:ensure`.
+This service can be used as a standard catch service for Trading
+Networks document processing services in conjunction with
+`Tundra/tundra.service:ensure`.
 
 #### Inputs:
 
@@ -2368,13 +2339,15 @@ Throws a new exception with the given message.
 * `$message` is an optional error message to use when constructing the
   new exception object to be thrown. If not specified, an empty message
   will be used to construct the exception object.
-* `$type` is an optional choice of 'security' or 'strict', which if
-  specified will throw one of the following subclasses of
+* `$type` is an optional choice of 'security', 'strict', or 'validation',
+  which if specified will throw one of the following subclasses of
   com.wm.app.b2b.server.ServiceException respectively:
-  * tundra.tn.exception$SecurityException - used to indicate a user
+  * permafrost.tundra.lang.SecurityException - used to indicate a security
     access error.
-  * tundra.tn.exception$StrictException - used to indicate a document
+  * permafrost.tundra.lang.StrictException - used to indicate a document
     strictness error.
+  * permafrost.tundra.lang.ValidationException - used to indicate a document
+    validation error.
 
   If not specified, a com.wm.app.b2b.server.ServiceException exception
   object will be thrown.
