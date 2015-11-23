@@ -1115,11 +1115,15 @@ bizdoc processing rule.
 * `$encoding.output` is an optional character set to use when serializing
   the split documents. If not specified, defaults to [UTF-8].
 * `$validate.input?` is an optional boolean flag which when true will
-  validate the input content against the given $schema.input, and throw
-  an exception if the content is invalid. Defaults to false.
+  validate the input content against the given `$schema.input`, or the
+  parsing schema specified on the associated Trading Networks document
+  type if `$schema.input` is not specified, and throw an exception to abort
+  processing if the content is invalid. Defaults to false.
 * `$validate.output?` is an optional boolean flag which when true will
-  validate each output content against the appropriate schema, and throw
-  an exception if the content is invalid. Defaults to false.
+  validate each output content against the appropriate schema (`$schema.output`
+  if specified, otherwise `$schemas[n]` returned by `$service`), and throw
+  an exception to abort processing if the content is invalid. Defaults to
+  false.
 * `$status.done` is an optional user status to use for the bizdoc when
   it has been split successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
