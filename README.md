@@ -2227,28 +2227,6 @@ document.
 
 ---
 
-### tundra.tn.document.status:complete
-
-Sets the completed user status on the given Trading Networks
-document.
-
-#### Inputs:
-
-* `$bizdoc` is the Trading Networks document to set the user status
-  on. Only the internal ID of the bizdoc must be specified, with the
-  remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
-  optional.
-* `$status` is an optional user status string to be set on the given
-  document. Defaults to "DONE", if not specified. If errors exist on
-  the given Trading Networks document, and the specified user status
-  is not "ABORTED", "ERROR", or "EXHAUSTED", and does not end with
-  "W/ ERRORS", then it is automatically suffixed with "W/ ERRORS".
-* `$status.silence?` is an optional boolean which when `true` will cause
-  this service not to change the status on the document. Defaults to
-  `false`.
-
----
-
 ### tundra.tn.document.status:set
 
 Sets user status on the given Trading Networks document.
@@ -2259,6 +2237,8 @@ Sets user status on the given Trading Networks document.
   the internal ID of the bizdoc must be specified, with the remainder of
   the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
 * `$status` is an optional user status string to be set on the given document.
+  If errors exist on the given Trading Networks document, and the specified
+  user status is "DONE", then it is automatically suffixed with "W/ ERRORS".
   If not specified, the document's user status will not be changed.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
