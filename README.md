@@ -1159,6 +1159,49 @@ bizdoc processing rule.
 
 ---
 
+### tundra.tn:status
+
+Updates the user status on a Trading Networks document.
+
+Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
+are set to 'true' and the bizdoc contains errors for any of these classes,
+the bizdoc will not be processed; instead an exception will be thrown and
+handled by the `$catch` service. For example, if you have enabled duplicate
+document checking on the Trading Networks document type and do not wish to
+process duplicates, set the `$strict/Saving` error class to 'true' and
+duplicate documents will not be processed and will instead have their user
+status set to 'ABORTED' (when using the standard `$catch` service).
+
+This service is designed to be called directly from a Trading Networks
+bizdoc processing rule.
+
+# Inputs:
+
+* `bizdoc` is the Trading Networks document whose status will be updated.
+* `$status.user` is user status used to update the bizdoc.
+* `$catch` is an optional fully-qualified service name which, when
+  specified, will be invoked if an exception is thrown while attempting to
+  process the bizdoc. The input pipeline will include the following
+  variables, as per a normal catch service invoked by
+  `Tundra/tundra.service:ensure`: `$exception`, `$exception?`, `$exception.class`,
+  `$exception.message`, and `$exception.stack`. If not specified, defaults to
+  `TundraTN/tundra.tn.exception:handle`, the standard TundraTN exception
+  handler.
+* `$finally` is an optional fully-qualified service name which, when
+  specified, will be invoked after processing, and whether or not an
+  exception is encountered during processing.
+* `$strict` is an optional set of boolean flags which when true abort the
+  processing of the bizdoc when it contains any errors with the associated
+  class.
+  * `Recognition`
+  * `Verification`
+  * `Validation`
+  * `Persistence`
+  * `Saving`
+  * `Routing`
+
+---
+
 ### tundra.tn:translate
 
 One-to-one conversion of [CSV], [JSON], pipe separated values, [TSV], [XML],
@@ -2505,6 +2548,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2543,6 +2587,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2570,6 +2615,7 @@ Clears all items from the given Trading Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2610,6 +2656,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2647,6 +2694,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2755,6 +2803,9 @@ queue.
 
   Defaults to the retry factor on the receiver's profile, or `1` if
   the receiver's profile has no retry factor configured.
+* `$thread.priority` is an optional priority used by the threads
+  processing queued tasks. Defaults to [Thread.NORM_PRIORITY],
+  if not specified.
 
 #### Outputs:
 
@@ -2873,6 +2924,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2899,6 +2951,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -2946,6 +2999,39 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
+
+#### Outputs:
+
+* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+  outputs:
+  * `queue`
+  * `logMsg`
+
+---
+
+### tundra.tn.queue:status
+
+Invokes `TundraTN/tundra.tn:status` for each item in the given Trading
+Networks queue.
+
+#### Inputs:
+
+* Refer to `TundraTN/tundra.tn:status` for details on the following inputs:
+  * `$status.user`
+  * `$catch`
+  * `$finally`
+  * `$strict`
+* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+  inputs:
+  * `queue`
+  * `$concurrency`
+  * `$ordered?`
+  * `$suspend?`
+  * `$retry.limit`
+  * `$retry.factor`
+  * `$retry.wait`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -3009,6 +3095,7 @@ Networks queue.
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
+  * `$thread.priority`
 
 #### Outputs:
 
@@ -3347,6 +3434,7 @@ Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
 [RFC 4122]: <http://www.ietf.org/rfc/rfc4122.txt>
+[Thread.NORM_PRIORITY]: <http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.html#NORM_PRIORITY>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
 [Tundra.java]: <https://github.com/Permafrost/Tundra.java>
