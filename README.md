@@ -408,6 +408,14 @@ bizdoc processing rule.
     * `$smtp`: an SMTP URI specifying the SMTP server to use (for example,
       `smtp://user:password@host:port`), defaults to the SMTP server
       configured in the Integration Server setting `watt.server.smtpServer`
+  * `pipeline`: retrieves the value of the destination URI to be delivered
+    to dynamically from the pipeline using the specified key. For example
+    if an opaque pipeline URI is specified as follows:
+
+        pipeline:foo/bar[0]/baz
+
+    The value of the destination URI will be set to the value associated
+    with the key `foo/bar[0]/baz` from the pipeline.
   * `sap+idoc`: sends an IDoc XML message to an SAP system. Both opaque
     and non-opaque URIs are allowed: opaque URIs are useful if the SAP
     Adapter alias contains characters not permitted in a normal domain
