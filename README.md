@@ -1932,6 +1932,9 @@ given part name as a stream.
 * `$part` is an optional name of the content part to be returned. If not
   specified, the default content part (xmldata for XML; ffdata for Flat
   Files) is returned.
+* `$mode` is an optional choice of `stream`, `bytes`, or `string`, which
+  determines the type of `$content` returned by this service. Defaults
+  to `stream`.
 
 #### Outputs:
 
