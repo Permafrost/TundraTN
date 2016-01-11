@@ -1545,6 +1545,162 @@ document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.number.transformer:add
+
+Trading Networks number transformer which returns the sum of the
+extracted numeric values.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of extracted numeric values to be transformed.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either the precision or number of decimal places used to
+  calculate the result , or a [YAML] or [JSON] formatted string
+  containing the precision and rounding algorithm to be used.
+  The rounding algorithms available and how to identify the
+  algorithm to be used is as per the `Tundra/tundra.decimal:add`
+  `$rounding` input argument.
+
+  For example, the following [YAML] formatted value in arg will
+  calculate will round the result to 2 decimal places using the
+  HALF_UP algorithm:
+
+      precision: 2
+      rounding: HALF_UP
+
+  Similarly, the following [JSON] formatted value in arg will use
+  the exact same values for precision and rounding:
+
+      { "precision" : 2, "rounding": "HALF_UP" }
+
+#### Outputs:
+
+* `newValues` is a list containing a single value representing the
+  total sum of all the given `values`.
+
+---
+
+### tundra.tn.document.attribute.number.transformer:average
+
+Trading Networks number transformer which calculates the average
+of the extracted numeric values.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of extracted numeric values to be transformed.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either the precision or number of decimal places used to
+  calculate the result , or a [YAML] or [JSON] formatted string
+  containing the precision and rounding algorithm to be used.
+  The rounding algorithms available and how to identify the
+  algorithm to be used is as per the `Tundra/tundra.decimal:add`
+  `$rounding` input argument.
+
+  For example, the following [YAML] formatted value in arg will
+  calculate will round the result to 2 decimal places using the
+  HALF_UP algorithm:
+
+      precision: 2
+      rounding: HALF_UP
+
+  Similarly, the following [JSON] formatted value in arg will use
+  the exact same values for precision and rounding:
+
+      { "precision" : 2, "rounding": "HALF_UP" }
+
+#### Outputs:
+
+* `newValues` is a list containing a single value representing the
+  average of all the given `values`.
+
+---
+
+### tundra.tn.document.attribute.number.transformer:maximum
+
+Trading Networks number transformer which returns the maximum
+of the extracted numeric values.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of extracted numeric values to be transformed.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either the precision or number of decimal places used to
+  calculate the result , or a [YAML] or [JSON] formatted string
+  containing the precision and rounding algorithm to be used.
+  The rounding algorithms available and how to identify the
+  algorithm to be used is as per the `Tundra/tundra.decimal:add`
+  `$rounding` input argument.
+
+  For example, the following [YAML] formatted value in arg will
+  calculate will round the result to 2 decimal places using the
+  HALF_UP algorithm:
+
+      precision: 2
+      rounding: HALF_UP
+
+  Similarly, the following [JSON] formatted value in arg will use
+  the exact same values for precision and rounding:
+
+      { "precision" : 2, "rounding": "HALF_UP" }
+
+#### Outputs:
+
+* `newValues` is a list containing a single value representing the
+  maximum of all the given `values`.
+
+---
+
+### tundra.tn.document.attribute.number.transformer:minimum
+
+Trading Networks number transformer which returns the minimum
+of the extracted numeric values.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of extracted numeric values to be transformed.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either the precision or number of decimal places used to
+  calculate the result , or a [YAML] or [JSON] formatted string
+  containing the precision and rounding algorithm to be used.
+  The rounding algorithms available and how to identify the
+  algorithm to be used is as per the `Tundra/tundra.decimal:add`
+  `$rounding` input argument.
+
+  For example, the following [YAML] formatted value in arg will
+  calculate will round the result to 2 decimal places using the
+  HALF_UP algorithm:
+
+      precision: 2
+      rounding: HALF_UP
+
+  Similarly, the following [JSON] formatted value in arg will use
+  the exact same values for precision and rounding:
+
+      { "precision" : 2, "rounding": "HALF_UP" }
+
+#### Outputs:
+
+* `newValues` is a list containing a single value representing the
+  minimum of all the given `values`.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.dns:self
 
 Trading Networks string transformer which returns the domain name,
@@ -3200,46 +3356,6 @@ Refer to `tundra.tn:translate` for futher details.
 
 ---
 
-### tundra.tn.schema.attribute.datetime:transformer
-
-An improved version of the `WmTN/wm.tn.rec:DateAttributeTransformService`
-specification with type constraints provided for the input and output
-arguments.
-
-#### Inputs:
-
-  * `values` is the list of extracted values to be transformed.
-  * `isArray` is a boolean indicating if the values argument contains multiple
-    items.
-  * `arg` is an optional argument that can be used to influence the
-    transformation.
-
-#### Outputs:
-
-  * `newValues` is a list of transformed items from the input `values` list.
-
----
-
-### tundra.tn.schema.attribute.string:transformer
-
-An improved version of the `WmTN/wm.tn.rec:StringAttributeTransformService`
-specification with type constraints provided for the input and output
-arguments.
-
-#### Inputs:
-
-* `values` is the list of extracted values to be transformed.
-* `isArray` is a boolean indicating if the `values` argument contains multiple
-  items.
-* `arg` is an optional argument that can be used to influence the
-  transformation.
-
-#### Outputs:
-
-* `newValues` is a list of transformed items from the input `values` list.
-
----
-
 ### tundra.tn.schema:derivative
 
 This schema describes the structure for derivative rules used by
@@ -3271,6 +3387,66 @@ specification.
 
 * `$derivative` is the derivative rule after filtering. The filter service
   is required to return the rule whether it makes changes to it or not.
+
+---
+
+### tundra.tn.schema.document.attribute.datetime:transformer
+
+An improved version of the `WmTN/wm.tn.rec:DateAttributeTransformService`
+specification with type constraints provided for the input and output
+arguments.
+
+#### Inputs:
+
+  * `values` is the list of extracted values to be transformed.
+  * `isArray` is a boolean indicating if the values argument contains multiple
+    items.
+  * `arg` is an optional argument that can be used to influence the
+    transformation.
+
+#### Outputs:
+
+  * `newValues` is a list of transformed items from the input `values` list.
+
+---
+
+### tundra.tn.schema.attribute.number:transformer
+
+An improved version of the WmTN/wm.tn.rec:NumberAttributeTransformService
+specification with type constraints provided for the input and output
+arguments.
+
+#### Inputs:
+
+* `values` is the list of extracted values to be transformed.
+* `isArray` is a boolean indicating if the `values` argument contains multiple
+  items.
+* `arg` is an optional argument that can be used to influence the
+  transformation.
+
+#### Outputs:
+
+* `newValues` is a list of transformed items from the input `values` list.
+
+---
+
+### tundra.tn.schema.document.attribute.string:transformer
+
+An improved version of the `WmTN/wm.tn.rec:StringAttributeTransformService`
+specification with type constraints provided for the input and output
+arguments.
+
+#### Inputs:
+
+* `values` is the list of extracted values to be transformed.
+* `isArray` is a boolean indicating if the `values` argument contains multiple
+  items.
+* `arg` is an optional argument that can be used to influence the
+  transformation.
+
+#### Outputs:
+
+* `newValues` is a list of transformed items from the input `values` list.
 
 ---
 
