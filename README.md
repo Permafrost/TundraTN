@@ -3398,15 +3398,15 @@ arguments.
 
 #### Inputs:
 
-  * `values` is the list of extracted values to be transformed.
-  * `isArray` is a boolean indicating if the values argument contains multiple
-    items.
-  * `arg` is an optional argument that can be used to influence the
-    transformation.
+* `values` is the list of extracted values to be transformed.
+* `isArray` is a boolean indicating if the values argument contains multiple
+  items.
+* `arg` is an optional argument that can be used to influence the
+  transformation.
 
 #### Outputs:
 
-  * `newValues` is a list of transformed items from the input `values` list.
+* `newValues` is a list of transformed items from the input `values` list.
 
 ---
 
