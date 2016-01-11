@@ -7,7 +7,6 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
-      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -21,7 +20,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">values</value>
           <value name="field_type">string</value>
           <value name="field_dim">1</value>
@@ -49,7 +47,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">isArray</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -80,7 +77,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">arg</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -101,11 +97,9 @@
           <value name="is_global">false</value>
         </record>
       </array>
-      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
-      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -119,47 +113,35 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">newValues</value>
-          <value name="field_type">string</value>
+          <value name="field_type">object</value>
           <value name="field_dim">1</value>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
+          <value name="wrapper_type">java.util.Date</value>
           <value name="nillable">false</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
           <value name="is_soap_array_encoding_used">false</value>
         </record>
       </array>
-      <value name="modifiable">true</value>
     </record>
   </record>
-  <value name="node_comment">### tundra.tn.schema.attribute.string:transformer
+  <value name="node_comment">### tundra.tn.schema.attribute.datetime:transformer
 
-An improved version of the WmTN/wm.tn.rec:StringAttributeTransformService
+An improved version of the WmTN/wm.tn.rec:DateAttributeTransformService
 specification with type constraints provided for the input and output
 arguments.
 
 #### Inputs:
 
-* values is the list of extracted values to be transformed.
-* isArray is a boolean indicating if the values argument contains multiple
-  items.
-* arg is an optional argument that can be used to influence the
-  transformation.
+  * values is the list of extracted values to be transformed.
+  * isArray is a boolean indicating if the values argument contains multiple
+    items.
+  * arg is an optional argument that can be used to influence the
+    transformation.
 
 #### Outputs:
 
-* newValues is a list of transformed items from the input values list.
+  * newValues is a list of transformed items from the input values list.
 
 </value>
   <value name="stateless">no</value>
@@ -167,7 +149,7 @@ arguments.
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
-  <value name="template">tundra_tn_schema_attribute_string_transformer</value>
+  <value name="template">tundra_tn_schema_attribute_datetime_transformer</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
   <value name="icontext_policy">$null</value>
@@ -177,16 +159,10 @@ arguments.
   <value name="svc_in_validator_options">none</value>
   <value name="svc_out_validator_options">none</value>
   <value name="auditoption">0</value>
-  <null name="auditfields_input"/>
-  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
-  <value name="pipeline_option">0</value>
-  <null name="originURI"/>
-  <value name="modifiable">true</value>
-  <value name="is_public">false</value>
 </Values>
