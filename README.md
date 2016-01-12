@@ -1623,6 +1623,90 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.number.transformer.duration:age
+
+Trading Networks number transformer which returns the age in
+milliseconds relative to the current datetime of the given
+extracted datetime strings.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | [ISO8601] XML datetime
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | [ISO8601] XML date
+date.jdbc     | yyyy-mm-dd
+time          | [ISO8601] XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using [java.text.SimpleDateFormat]
+compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either a named pattern, or a custom [java.text.SimpleDateFormat]
+  pattern used to parse the specified values. Defaults to an [ISO8601] XML
+  datetime, if not specified.
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the given
+  `values` list, where `newValues[n]` is the age in milliseconds from the
+  datetime specified in `values[n]` to the current datetime.
+
+---
+
+### tundra.tn.document.attribute.number.transformer.duration:effective
+
+Trading Networks number transformer which returns the the number of
+milliseconds from the current datetime to the the given extracted
+datetime strings.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | [ISO8601] XML datetime
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | [ISO8601] XML date
+date.jdbc     | yyyy-mm-dd
+time          | [ISO8601] XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using [java.text.SimpleDateFormat]
+compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
+* `arg` is either a named pattern, or a custom [java.text.SimpleDateFormat]
+  pattern used to parse the specified values. Defaults to an [ISO8601] XML
+  datetime, if not specified.
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the given
+  `values` list, where `newValues[n]` is the distance in milliseconds from the
+  current datetime to the datetime specified in `values[n]`.
+
+---
+
 ### tundra.tn.document.attribute.number.transformer:maximum
 
 Trading Networks number transformer which returns the maximum
