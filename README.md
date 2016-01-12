@@ -1940,9 +1940,10 @@ document type attribute transformer.
 
 #### Outputs:
 
-* `newValues` is a list the same length as the input `values` list, but where
-  every item is the internal ID for the Trading Networks My Enterprise
-  profile.
+* `newValues` is a list the same length as the input `values` list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item is the internal ID of the Trading
+  Networks My Enterprise partner profile.
 
 ---
 
