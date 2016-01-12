@@ -1804,8 +1804,9 @@ custom document type attribute transformer.
 
 #### Outputs:
 
-* `newValues` is a list the same length as the input `values` list,
-  but where every item is a newly generated [UUID].
+* `newValues` is a list the same length as the input `values` list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item is a newly generated [UUID].
 
 ---
 
