@@ -1727,9 +1727,9 @@ custom document type attribute transformer.
 
 #### Outputs:
 
-* `newValues` is a list the same length as the input `values` list,
-  but where every item is either the localhost's domain name, host
-  name, or IP address, depending on the value of arg provided.
+* `newValues` is a list containing a single item whose value is
+  the localhost's domain name, host name, or IP address, depending
+  on the value of `arg` provided.
 
 ---
 
