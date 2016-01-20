@@ -1842,6 +1842,84 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer.find:all
+
+Trading Networks string transformer which returns whether all of the
+given Trading Networks document attribute value or list of values
+includes the given [regular expression pattern], thereby transforming
+a list of string values into a single boolean value.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be searched against for the
+  [regular expression pattern].
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list containing a single boolean item indicating if
+  all of the given input string values were found to include the
+  given [regular expression pattern] `arg`.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.find:any
+
+Trading Networks string transformer which returns whether any of the
+given Trading Networks document attribute value or list of values
+includes the given [regular expression pattern], thereby transforming
+a list of string values into a single boolean value.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be searched against for the
+  [regular expression pattern].
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list containing a single boolean item indicating if
+  any of the given input string values were found to include the
+  given [regular expression pattern] `arg`.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.find:none
+
+Trading Networks string transformer which returns whether none of the
+given Trading Networks document attribute value or list of values
+includes the given [regular expression pattern], thereby transforming
+a list of string values into a single boolean value.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be searched against for the
+  [regular expression pattern].
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list containing a single boolean item indicating if
+  none of the given input string values were found to include the
+  given [regular expression pattern] `arg`.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer:first
 
 Trading Networks string transformer which returns only the first item
@@ -1959,6 +2037,84 @@ custom document type attribute transformer.
 
 * `newValues` is a list boolean values indicating if the given input
   string `values` match the given [regular expression pattern] `arg`.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.match:all
+
+Trading Networks string transformer which returns whether all of the
+given Trading Networks document attribute value or list of values
+match the given [regular expression pattern], thereby transforming
+a list of string values into a single boolean value.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be matched against the [regular
+  expression pattern].
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list containing a single boolean item indicating if
+  all of the given input string values match the given [regular
+  expression pattern] `arg`.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.match:any
+
+Trading Networks string transformer which returns whether any of the
+given Trading Networks document attribute value or list of values
+match the given [regular expression pattern], thereby transforming
+a list of string values into a single boolean value.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be matched against the [regular
+  expression pattern].
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list containing a single boolean item indicating if
+  any of the given input string values match the given [regular
+  expression pattern] `arg`.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.match:none
+
+Trading Networks string transformer which returns whether none of
+the given Trading Networks document attribute value or list of
+values match the given [regular expression pattern], thereby
+transforming a list of string values into a single boolean value.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is the list of strings to be matched against the [regular
+  expression pattern].
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a [regular expression pattern].
+
+#### Outputs:
+
+* `newValues` is a list containing a single boolean item indicating if
+  none of the given input string values match the given [regular
+  expression pattern] `arg`.
 
 ---
 
