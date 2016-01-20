@@ -1819,26 +1819,26 @@ custom document type attribute transformer.
 
 ### tundra.tn.document.attribute.string.transformer:find
 
-Trading Networks string transformer which returns whether the given Trading
-Networks document attribute value or list of values includes the given [regular
-expression pattern].
+Trading Networks string transformer which returns whether the given
+Trading Networks document attribute value or list of values includes
+the given [regular expression pattern].
 
-This service is intended to be invoked by Trading Networks as a custom
-document type attribute transformer.
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
 
 #### Inputs:
 
-* `values` is the list of strings to be matched against the [regular
-  expression pattern].
-* `isArray` is a boolean indicating if the `values` argument contains multiple
-  items.
+* `values` is the list of strings to be searched against the
+  [regular expression pattern].
+* `isArray` is a boolean indicating if the `values` argument contains
+  multiple items.
 * `arg` is a [regular expression pattern].
 
 #### Outputs:
 
 * `newValues` is a list boolean values indicating if the given input
-  string `values` were found to include the given [regular expression pattern]
-  `arg`.
+  string `values` were found to include the given [regular expression
+  pattern] `arg`.
 
 ---
 
