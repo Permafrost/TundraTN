@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-11-01 14:50:11 EST
+// -----( CREATED: 2016-02-07 12:32:50 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -49,8 +49,9 @@ public final class document
 		
 		    if (bizdoc != null) {
 		        IDataUtil.put(cursor, "$bizdoc", bizdoc);
-		        IDataUtil.put(cursor, "$sender", ProfileCache.getInstance().get(bizdoc.getSenderId()));
-		        IDataUtil.put(cursor, "$receiver", ProfileCache.getInstance().get(bizdoc.getReceiverId()));
+		        ProfileCache cache = ProfileCache.getInstance();
+		        IDataUtil.put(cursor, "$sender", cache.get(bizdoc.getSenderId()));
+		        IDataUtil.put(cursor, "$receiver", cache.get(bizdoc.getReceiverId()));
 		    }
 		} finally {
 		    cursor.destroy();
@@ -83,8 +84,11 @@ public final class document
 		
 		    if (output != null) {
 		        IDataUtil.put(cursor, "$bizdoc", output);
-		        if (sender) IDataUtil.put(cursor, "$sender", ProfileCache.getInstance().get(output.getSenderId()));
-		        if (receiver) IDataUtil.put(cursor, "$receiver", ProfileCache.getInstance().get(output.getReceiverId()));
+		        if (sender || receiver) {
+		            ProfileCache cache = ProfileCache.getInstance();
+		            if (sender) IDataUtil.put(cursor, "$sender", cache.get(output.getSenderId()));
+		            if (receiver) IDataUtil.put(cursor, "$receiver", cache.get(output.getReceiverId()));
+		        }
 		    }
 		} finally {
 		    cursor.destroy();
