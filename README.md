@@ -2961,6 +2961,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3000,6 +3001,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3028,6 +3030,7 @@ Clears all items from the given Trading Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3069,6 +3072,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3107,6 +3111,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3218,6 +3223,11 @@ queue.
 * `$thread.priority` is an optional priority used by the threads
   processing queued tasks. Defaults to [Thread.NORM_PRIORITY],
   if not specified.
+* `$thread.daemon?` is an optional boolean which when `true` daemonizes
+  the threads used to process queued tasks, and the invocation of
+  this service will continue (not exit) until either the queue is
+  disabled or suspended, or the server is shutdown. Defaults to
+  `false`.
 
 #### Outputs:
 
@@ -3337,6 +3347,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3364,6 +3375,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3412,6 +3424,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3444,6 +3457,7 @@ Networks queue.
   * `$retry.factor`
   * `$retry.wait`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
@@ -3508,6 +3522,7 @@ Networks queue.
   * `$retry.wait`
   * `$retry.factor`
   * `$thread.priority`
+  * `$thread.daemon?`
 
 #### Outputs:
 
