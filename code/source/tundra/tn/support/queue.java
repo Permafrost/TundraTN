@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-21 20:34:21 EST
+// -----( CREATED: 2016-02-22 09:55:16 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -47,7 +47,7 @@ public final class queue
 		// [i] field:0:optional $retry.wait
 		// [i] field:0:optional $retry.factor
 		// [i] field:0:optional $thread.priority
-		// [i] field:0:optional $thread.daemon? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $daemonize? {&quot;false&quot;,&quot;true&quot;}
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
@@ -64,7 +64,7 @@ public final class queue
 		    int retryWait = IntegerHelper.parse(IDataUtil.getString(cursor, "$retry.wait"));
 		    int retryFactor = IntegerHelper.parse(IDataUtil.getString(cursor, "$retry.factor"), 1);
 		    int threadPriority = IntegerHelper.parse(IDataUtil.getString(cursor, "$thread.priority"), Thread.NORM_PRIORITY);
-		    boolean threadDaemon = BooleanHelper.parse(IDataUtil.getString(cursor, "$thread.daemon?"));
+		    boolean threadDaemon = BooleanHelper.parse(IDataUtil.getString(cursor, "$daemonize?"));
 		
 		    DeliveryQueueHelper.each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend);
 		} finally {
