@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-12-20 14:30:12 EST
+// -----( CREATED: 2016-02-26 08:41:34 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -67,7 +67,7 @@ public final class exception
 		    
 		    if (exception instanceof IDataCodable) {
 		        IDataMap exceptionDocument = IDataMap.of(((IDataCodable)exception).getIData());
-		        if (!BooleanHelper.parse((String)exceptionDocument.get("$exception.recoverable?"))) {
+		        if (!BooleanHelper.parse((String)exceptionDocument.get("$exception.recoverable?"), true)) {
 		            messageClass = "Unrecoverable";
 		            userStatus = "ABORTED";
 		        }
