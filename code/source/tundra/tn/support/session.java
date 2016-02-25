@@ -1,14 +1,16 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-06-19 09:05:14.899
-// -----( ON-HOST: -
+// -----( CREATED: 2016-02-25 22:29:42 EST
+// -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import com.wm.app.b2b.server.Service;
+import com.wm.app.b2b.server.Session;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class session
@@ -33,18 +35,17 @@ public final class session
 		// --- <<IS-START(current)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [o] field:0:required $session
+		// [o] field:0:optional $session
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
-		  com.wm.app.b2b.server.Session session = com.wm.app.b2b.server.Service.getSession();
-		  IDataUtil.put(cursor, "$session", session.getSessionID());
+		  IDataUtil.put(cursor, "$session", Service.getSession().getSessionID());
 		} finally {
 		  cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 

@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-11-12 16:17:45.823
-// -----( ON-HOST: -
+// -----( CREATED: 2016-02-25 22:22:30 EST
+// -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -37,7 +37,7 @@ public final class task
 		// [i] record:0:optional $task
 		// [i] - field:0:required TaskId
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    IData task = IDataUtil.getIData(cursor, "$task");
 		    GuaranteedJobHelper.restart(GuaranteedJobHelper.normalize(task));
@@ -46,7 +46,7 @@ public final class task
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 

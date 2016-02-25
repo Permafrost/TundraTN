@@ -1,8 +1,8 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2015-12-21 09:55:46.476
-// -----( ON-HOST: -
+// -----( CREATED: 2016-02-25 22:28:38 EST
+// -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -48,16 +48,16 @@ public final class content
 		// [o] object:0:optional $content
 		// [o] field:0:optional $content.type
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataUtil.getIData(cursor, "$bizdoc"), true);
 		    String partName = IDataUtil.getString(cursor, "$part");
 		    String mode = IDataUtil.getString(cursor, "$mode");
-
+		
 		    if (document != null) {
 		        BizDocContentPart contentPart = BizDocContentHelper.getContentPart(document, partName);
 		        InputStream content = BizDocContentHelper.getContent(document, contentPart);
-
+		
 		        if (content != null) {
 		            if (mode != null && !mode.equals("stream")) {
 		                IDataUtil.put(cursor, "$content", ObjectHelper.convert(content, mode));
@@ -74,7 +74,7 @@ public final class content
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -89,18 +89,18 @@ public final class content
 		// [i] - field:0:required InternalID
 		// [i] field:0:required $part
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataUtil.getIData(cursor, "$bizdoc"));
 		    String partName = IDataUtil.getString(cursor, "$part");
-
+		
 		    BizDocContentHelper.removeContentPart(document, partName);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 

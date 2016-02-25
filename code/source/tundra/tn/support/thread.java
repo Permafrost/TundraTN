@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2014-06-19 08:59:54.178
-// -----( ON-HOST: -
+// -----( CREATED: 2016-02-25 22:28:48 EST
+// -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -35,7 +35,7 @@ public final class thread
 		// @sigtype java 3.5
 		// [o] field:0:required $thread
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		  Thread thread = Thread.currentThread();
 		  String description = thread.getClass().getName() + " ID#" + thread.getId() + " " + thread.getName();
@@ -45,7 +45,7 @@ public final class thread
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 
