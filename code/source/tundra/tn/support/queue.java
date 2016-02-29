@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-25 22:32:20 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2016-02-29 16:57:15.496
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -55,7 +55,7 @@ public final class queue
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    String queue = IDataUtil.getString(cursor, "queue");
 		    String service = IDataUtil.getString(cursor, "$service");
@@ -70,7 +70,7 @@ public final class queue
 		    int threadPriority = IntegerHelper.parse(IDataUtil.getString(cursor, "$thread.priority"), Thread.NORM_PRIORITY);
 		    boolean threadDaemon = BooleanHelper.parse(IDataUtil.getString(cursor, "$daemonize?"));
 		    String exhaustedStatus = IDataUtil.getString(cursor, "$status.exhausted");
-		
+
 		    DeliveryQueueHelper.each(queue, service, scope == null? pipeline : scope, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
@@ -81,7 +81,35 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
+	}
+
+
+
+	public static final void start (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(start)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		DeliveryQueueHelper.start();
+		// --- <<IS-END>> ---
+
+
+	}
+
+
+
+	public static final void stop (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(stop)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		DeliveryQueueHelper.stop();
+		// --- <<IS-END>> ---
+
+
 	}
 }
 
