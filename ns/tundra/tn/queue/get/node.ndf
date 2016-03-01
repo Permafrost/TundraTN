@@ -7,7 +7,6 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
-      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -22,7 +21,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">$queue</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -43,11 +41,9 @@
           <value name="is_global">false</value>
         </record>
       </array>
-      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
-      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -61,7 +57,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">$queue.properties</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -78,7 +73,6 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
-              <value name="is_public">false</value>
               <value name="field_name">name</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -105,7 +99,6 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
-              <value name="is_public">false</value>
               <value name="field_name">type</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -166,7 +159,6 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
-              <value name="is_public">false</value>
               <value name="field_name">status</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -237,7 +229,6 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
-              <value name="is_public">false</value>
               <value name="field_name">length</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -256,9 +247,22 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
             </record>
+            <record javaclass="com.wm.util.Values">
+              <value name="node_type">record</value>
+              <value name="node_comment"></value>
+              <record name="node_hints" javaclass="com.wm.util.Values">
+                <value name="field_largerEditor">false</value>
+                <value name="field_password">false</value>
+              </record>
+              <value name="field_name">queue</value>
+              <value name="field_type">object</value>
+              <value name="field_dim">0</value>
+              <value name="nillable">true</value>
+              <value name="form_qualified">false</value>
+              <value name="is_global">false</value>
+            </record>
           </array>
           <value name="rec_closed">true</value>
-          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -268,7 +272,6 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="is_public">false</value>
           <value name="field_name">$queue.exists?</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -288,7 +291,6 @@
           <value name="is_global">false</value>
         </record>
       </array>
-      <value name="modifiable">true</value>
     </record>
   </record>
   <value name="node_comment">### tundra.tn.queue:get
@@ -317,6 +319,8 @@ the given name.
     * suspended
   * length is the number of tasks with a status of QUEUED or
     DELIVERING currently in the queue.
+  * queue is the com.wm.app.tn.delivery.DeliveryQueue object
+    which represents this queue.
 
 </value>
   <value name="stateless">no</value>
@@ -335,16 +339,10 @@ the given name.
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
-  <null name="auditfields_input"/>
-  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
-  <value name="pipeline_option">1</value>
-  <null name="originURI"/>
-  <value name="modifiable">true</value>
-  <value name="is_public">false</value>
 </Values>

@@ -3274,8 +3274,10 @@ the given name.
     * `draining`
     * `enabled`
     * `suspended`
-  * length is the number of tasks with a status of `QUEUED` or
+  * `length` is the number of tasks with a status of `QUEUED` or
     `DELIVERING` currently in the queue.
+  * `queue` is the `com.wm.app.tn.delivery.DeliveryQueue` object
+    which represents this queue.
 
 ---
 
@@ -3315,6 +3317,8 @@ Returns a list of all registered Trading Networks delivery queues.
     * `suspended`
   * `length` is the number of tasks with a status of `QUEUED` or
     `DELIVERING` currently in the queue.
+  * `queue` is the `com.wm.app.tn.delivery.DeliveryQueue` object
+    which represents this queue.
 
 ---
 
