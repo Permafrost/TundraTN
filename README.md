@@ -3218,8 +3218,8 @@ queue.
 
       ($retry.factor ^ (retry count - 1)) * $retry.wait
 
-  Defaults to the retry factor on the receiver's profile, or `1` if
-  the receiver's profile has no retry factor configured.
+  Defaults to the retry factor on the receiver's profile, or `1.0`
+  if the receiver's profile has no retry factor configured.
 * `$thread.priority` is an optional priority used by the threads
   processing queued tasks. Defaults to [Thread.NORM_PRIORITY],
   if not specified.
