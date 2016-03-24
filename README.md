@@ -858,15 +858,21 @@ service which specifies appropriate TN_parms to control the
 routing of the content (ie. a one-line flat file gateway
 service).
 
-When invoked via HTTP, if the content is received successfully
-an HTTP 200 OK response is returned, with a 'text/plain'
-response body containing the resulting Trading Networks bizdoc
-internal ID. If a security exception is encountered, an HTTP
-403 Forbidden response is returned with a 'text/plain' response
-body containing the exception message. If any other type of
-exception is encountered, an HTTP 500 Internal Server Error
-response is returned, with a 'text/plain' response body
-containing the exception message.
+When invoked via HTTP, the service returns a 'text/plain' response
+body containing either the resulting Trading Networks bizdoc
+internal ID on success, or a message describing the errors that
+occurred on failure, and an appropriate HTTP response code
+according to the following table:
+
+Response                   | Reason
+---------------------------|-------------------------------------------------------
+202 Accepted               | Received content was routed successfully
+400 Bad Request            | Received content was malformed
+403 Forbidden              | Sender was denied access to route the received content
+406 Not Accepable          | Received content was not recognized (Unknown)
+409 Conflict               | Received content was detected as a duplicate
+422 Unprocessable Entity   | Received content failed validation
+500 Internal Server Error  | All other errors that occur while processing
 
 When invoked via transports other than HTTP, for example FTP,
 if the content is received successfully the service invocation
