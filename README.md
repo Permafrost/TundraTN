@@ -2957,6 +2957,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -2997,6 +2998,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3026,6 +3028,7 @@ Clears all items from the given Trading Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3068,6 +3071,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3107,6 +3111,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3204,6 +3209,11 @@ queue.
   reset to `0`, the task is requeued to the front of the queue, and
   the queue is suspended, requiring manual intervention to resolve
   the queue processing error. Defaults to `false` if not specifed.
+* `$task.age` is the optional age a task must be before it will be
+  dequeued and processed, measured from its creation time. This
+  argument can be used to defer the processing of tasks for the
+  specified duration. If not specified, tasks are eligible to be
+  dequeued and processed immediately upon creation.
 * `$retry.limit` is the number of times a failed task will be
   retried. Defaults to the retry limit on the receiver's profile,
   or `0` (no retries) if the receiver's profile has no retry limit
@@ -3347,6 +3357,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3375,6 +3386,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3424,6 +3436,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
@@ -3457,6 +3470,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.factor`
   * `$retry.wait`
@@ -3522,6 +3536,7 @@ Networks queue.
   * `$concurrency`
   * `$ordered?`
   * `$suspend?`
+  * `$task.age`
   * `$retry.limit`
   * `$retry.wait`
   * `$retry.factor`
