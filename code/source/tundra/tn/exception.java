@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-26 08:41:34 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2016-03-24 10:08:59.436
+// -----( ON-HOST: EBZDEVWAP37.ebiztest.qr.com.au
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -12,6 +12,11 @@ import com.wm.app.b2b.server.ServiceException;
 import com.wm.app.tn.doc.BizDocEnvelope;
 import com.wm.lang.ns.NSName;
 import com.wm.util.coder.IDataCodable;
+import permafrost.tundra.content.DuplicateException;
+import permafrost.tundra.content.MalformedException;
+import permafrost.tundra.content.StrictException;
+import permafrost.tundra.content.ValidationException;
+import permafrost.tundra.content.UnsupportedException;
 import permafrost.tundra.data.Content;
 import permafrost.tundra.data.ContentAttached;
 import permafrost.tundra.data.IDataMap;
@@ -19,9 +24,7 @@ import permafrost.tundra.lang.BaseException;
 import permafrost.tundra.lang.BooleanHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.lang.SecurityException;
-import permafrost.tundra.lang.StrictException;
 import permafrost.tundra.lang.UnrecoverableException;
-import permafrost.tundra.lang.ValidationException;
 import permafrost.tundra.time.DateTimeHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
 // --- <<IS-END-IMPORTS>> ---
@@ -118,7 +121,7 @@ public final class exception
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] field:0:optional $message
-		// [i] field:0:optional $type {&quot;security&quot;,&quot;strict&quot;,&quot;validation&quot;}
+		// [i] field:0:optional $type {&quot;security&quot;,&quot;strict&quot;,&quot;malformed&quot;,&quot;validation&quot;,&quot;duplicate&quot;,&quot;unsupported&quot;}
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
@@ -135,23 +138,36 @@ public final class exception
 	}
 
 	// --- <<IS-START-SHARED>> ---
-	// throws a new security exception 
+	/**
+	 * Throws a new exception of the given type with the given message.
+	 *
+	 * @param message           The error message to use.
+	 * @param type              The type of exception to throw.
+	 * @throws ServiceException Always throws a new exception of the given type with the given message.
+	 */
 	public static void raise(String message, String type) throws ServiceException {
-	  if (message == null) message = "";
+	    if (message == null) message = "";
+	    if (type == null) type = "";
 	
-	  ServiceException ex = null;
+	    ServiceException ex = null;
 	
-	  if (type != null && type.equals("security")) {
-	    ex = new SecurityException(message);
-	  } else if (type != null && type.equals("strict")) {
-	    ex = new StrictException(message);
-	  } else if (type != null && type.equals("validation")) {
-	    ex = new ValidationException(message);
-	  } else {
-	    ex = new BaseException(message);
-	  }
+	    if (type.equals("security")) {
+	        ex = new SecurityException(message);
+	    } else if (type.equals("strict")) {
+	        ex = new StrictException(message);
+	    } else if (type.equals("malformed")) {
+	        ex = new MalformedException(message);
+	    } else if (type.equals("validation")) {
+	        ex = new ValidationException(message);
+	    } else if (type.equals("duplicate")) {
+	        ex = new DuplicateException(message);
+	    } else if (type.equals("unsupported")) {
+	        ex = new UnsupportedException(message);
+	    } else {
+	        ex = new BaseException(message);
+	    }
 	
-	  throw ex;
+	    throw ex;
 	}
 	// --- <<IS-END-SHARED>> ---
 }
