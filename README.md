@@ -869,7 +869,7 @@ Response                   | Reason
 202 Accepted               | Received content was routed successfully
 400 Bad Request            | Received content was malformed
 403 Forbidden              | Sender was denied access to route the received content
-406 Not Accepable          | Received content was not recognized (Unknown)
+406 Not Acceptable         | Received content was not recognized (Unknown)
 409 Conflict               | Received content was detected as a duplicate
 422 Unprocessable Entity   | Received content failed validation
 500 Internal Server Error  | All other errors that occur while processing
