@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-03-24 10:08:59.436
-// -----( ON-HOST: EBZDEVWAP37.ebiztest.qr.com.au
+// -----( CREATED: 2016-06-23 15:09:32 EST
+// -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -17,8 +17,8 @@ import permafrost.tundra.content.MalformedException;
 import permafrost.tundra.content.StrictException;
 import permafrost.tundra.content.ValidationException;
 import permafrost.tundra.content.UnsupportedException;
-import permafrost.tundra.data.Content;
-import permafrost.tundra.data.ContentAttached;
+import permafrost.tundra.content.Content;
+import permafrost.tundra.content.ContentAttached;
 import permafrost.tundra.data.IDataMap;
 import permafrost.tundra.lang.BaseException;
 import permafrost.tundra.lang.BooleanHelper;
@@ -121,7 +121,7 @@ public final class exception
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] field:0:optional $message
-		// [i] field:0:optional $type {&quot;security&quot;,&quot;strict&quot;,&quot;malformed&quot;,&quot;validation&quot;,&quot;duplicate&quot;,&quot;unsupported&quot;}
+		// [i] field:0:optional $type {"security","strict","malformed","validation","duplicate","unsupported"}
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
