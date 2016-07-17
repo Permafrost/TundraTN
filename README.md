@@ -850,7 +850,7 @@ bizdoc processing rule.
 
 Receives arbitrary (XML or flat file) content and routes it
 to Trading Networks. The content can be specified as a string,
-byte array, java.io.InputStream, or org.w3c.dom.Node object.
+byte array, `java.io.InputStream`, or `org.w3c.dom.Node` object.
 
 This service is either intended to be invoked directly by
 clients via HTTP or FTP, or it can be wrapped by another
@@ -881,7 +881,7 @@ Trading Networks bizdoc internal ID is returned. If a security
 or any other exception is encountered, the service invocation
 will fail by rethrowing the exception.
 
-When invoked by a wrapping service, an exceptions encountered
+When invoked by a wrapping service, any exceptions encountered
 will be thrown to the calling service. It is then the calling
 service's responsibility to set an appropriate response for
 the transport in question.
