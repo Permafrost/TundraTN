@@ -3925,6 +3925,7 @@ Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 [Tundra.java]: <https://github.com/Permafrost/Tundra.java>
 [TundraTN]: <https://github.com/Permafrost/TundraTN>
 [TundraTN.java]: <https://github.com/Permafrost/TundraTN.java>
+[URI]: <http://www.w3.org/Addressing/>
 [URL-encoded]: <http://en.wikipedia.org/wiki/Percent-encoding>
 [UTF-8]: <http://en.wikipedia.org/wiki/UTF-8>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
