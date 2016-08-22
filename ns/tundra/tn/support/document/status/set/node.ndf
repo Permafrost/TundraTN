@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Values version="2.0">
-  <value name="svc_type">flow</value>
-  <value name="svc_subtype">default</value>
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
   <value name="svc_sigtype">java 3.5</value>
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
@@ -54,6 +54,60 @@
               <value name="is_global">false</value>
             </record>
           </array>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <null name="field_usereditable"/>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$status.system</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">string</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <null name="field_usereditable"/>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$status.system.previous</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">string</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -153,38 +207,21 @@
       </array>
     </record>
   </record>
-  <value name="node_comment">### tundra.tn.document.status:set
-
-Sets user status on the given Trading Networks document.
-
-#### Inputs:
-
-* $bizdoc is the Trading Networks document to set the user status on. Only
-  the internal ID of the bizdoc must be specified, with the remainder of
-  the WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
-* $status.user is an optional user status string to be set on the given document.
-  If errors exist on the given Trading Networks document, and the specified
-  user status is "DONE", then it is automatically suffixed with "W/ ERRORS".
-  If not specified, the document's user status will not be changed.
-* $status.user.previous can be optionally specified to ensure the user status 
-  is only updated if it previously equalled this value at the time of update.
-* $status.silence? is an optional boolean which when true will cause this
-  service not to change the status on the document. Defaults to false.
-</value>
-  <value name="stateless">yes</value>
+  <value name="node_comment">Updates the status on the given bizdoc, with optional support for
+optimistic concurrency.</value>
+  <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
-  <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
   <value name="icontext_policy">$null</value>
   <value name="system_service">no</value>
   <value name="retry_max">0</value>
   <value name="retry_interval">0</value>
-  <value name="svc_in_validator_options">default</value>
-  <value name="svc_out_validator_options">default</value>
+  <value name="svc_in_validator_options">none</value>
+  <value name="svc_out_validator_options">none</value>
   <value name="auditoption">0</value>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
