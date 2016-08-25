@@ -2641,7 +2641,7 @@ configured on the associated document type.
 * `$document` is the parsed content part in an IData document representation.
 * `$content.type` is the MIME media type that describes the format of the
   parsed content.
-* `$namespaces` is the list of XML namespace prefixes and URIs declared on
+* `$namespace` is the list of XML namespace prefixes and URIs declared on
   the associated document type and used when parsing the content.
 * `$schema` is an optional output that specifies the fully-qualified name of
   the document reference (for XML) or flat file schema (for Flat Files)
