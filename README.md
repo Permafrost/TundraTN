@@ -3773,7 +3773,7 @@ specification.
   `TundraTN/tundra.tn:process` `$parse?` parameter is false.
 * `$content.type` is the MIME media type that describes the format of the
   bizdoc content.
-* `$namespaces` is the list of XML namespace prefixes and URIs declared on
+* `$namespace` is the list of XML namespace prefixes and URIs declared on
   the associated document type and used when parsing the content.
 * `$schema` is the name of the Integration Server document reference or flat
   file schema used to parse the content into an IData structure.
