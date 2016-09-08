@@ -859,6 +859,69 @@ bizdoc processing rule.
 
 ---
 
+### tundra.tn:publish
+
+Publishes a Trading Networks document to the webMethods Integration
+Server messaging subsystem via `WmPublic/pub.publish:publish`.
+
+Supports 'strict' mode processing of bizdocs: if any `$strict` error
+classes are set to 'true' and the bizdoc contains errors for any of
+these classes, the bizdoc will not be processed; instead an
+exception will be thrown and handled by the $catch service. For
+example, if you have enabled duplicate document checking on the
+Trading Networks document type and do not wish to process
+duplicates, set the `$strict/Saving` error class to 'true' and
+duplicate documents will not be processed and will instead have
+their user status set to 'ABORTED' (when using the standard `$catch`
+service).
+
+This service is designed to be called directly from a Trading
+Networks bizdoc processing rule.
+
+#### Inputs:
+
+* `bizdoc` is the Trading Networks document to be published.
+* `$catch` is an optional fully-qualified service name which, when
+  specified, will be invoked if an exception is thrown while
+  attempting to publish the bizdoc. The input pipeline will include
+  the following variables, as per a normal catch service invoked by
+  Tundra/tundra.service:ensure: `$exception`, `$exception?`,
+  `$exception.class`, `$exception.message`, and `$exception.stack`. If not
+  specified, defaults to `TundraTN/tundra.tn.exception:handle`, the
+  standard TundraTN exception handler.
+* `$finally` is an optional fully-qualified service name which when
+  specified will be invoked after processing, and whether or not an
+  exception is encountered during processing.
+* `$schema.publish` is an publishable document reference used to
+  publish the document. This is mandatory for flat file document
+  types, and optional for XML document types. If not specified and
+  the document type is XML, it defaults to the document reference
+  specified on the document type. If not specified for a flat file
+  document type, an exception will be thrown.
+* `$local.publish?` is an optional boolean which when `true` will
+  perform a local publish only. Defaults to `false`.
+* `$status.done` is an optional user status to use for the bizdoc when
+  the publish has completed successfully. Defaults to `DONE`.
+* `$status.silence?` is an optional boolean which when `true` will cause
+  this service not to change the status on the document. Defaults to
+  `false`.
+* `$part` is the optional name of the bizdoc content part to be
+  published. Defaults to the default content part when not specified
+  (`xmldata` for XML document types, `ffdata` for Flat File document
+  types).
+* `$strict` is an optional set of boolean flags which when `true` abort
+  the processing of the bizdoc when it contains any errors with the
+  associated class.
+  * `Recognition`
+  * `Verification`
+  * `Validation`
+  * `Persistence`
+  * `Saving`
+  * `Routing`
+
+
+---
+
 ### tundra.tn:receive
 
 Receives arbitrary (XML or flat file) content and routes it
@@ -3394,6 +3457,45 @@ Networks queue.
 
 ---
 
+### tundra.tn.queue:publish
+
+Invokes `TundraTN/tundra.tn:publish` for each item in the given Trading
+Networks queue.
+
+#### Inputs:
+
+* Refer to `TundraTN/tundra.tn:publish` for details on the following
+  inputs:
+  * `$catch`
+  * `$finally`
+  * `$schema.publish`
+  * `$local.publish?`
+  * `$status.done`
+  * `$status.silence?`
+  * `$part`
+  * `$strict`
+* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+  inputs:
+  * `queue`
+  * `$concurrency`
+  * `$ordered?`
+  * `$suspend?`
+  * `$retry.limit`
+  * `$retry.wait`
+  * `$retry.factor`
+  * `$thread.priority`
+  * `$daemonize?`
+  * `$status.exhausted`
+
+#### Outputs:
+
+* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
+  outputs:
+  * `queue`
+  * `logMsg`
+
+---
+
 ### tundra.tn.queue:reroute
 
 Invokes `TundraTN/tundra.tn:reroute` for each item in the given Trading
@@ -3578,7 +3680,7 @@ Networks queue.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:amend`.
 
-Refer to `tundra.tn:amend` for futher details.
+Refer to `tundra.tn:amend` for further details.
 
 ---
 
@@ -3587,7 +3689,7 @@ Refer to `tundra.tn:amend` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:branch`.
 
-Refer to `tundra.tn:branch` for futher details.
+Refer to `tundra.tn:branch` for further details.
 
 ---
 
@@ -3596,7 +3698,7 @@ Refer to `tundra.tn:branch` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:chain`.
 
-Refer to `tundra.tn:chain` for futher details.
+Refer to `tundra.tn:chain` for further details.
 
 ---
 
@@ -3605,7 +3707,7 @@ Refer to `tundra.tn:chain` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:deliver`.
 
-Refer to `tundra.tn:deliver` for futher details.
+Refer to `tundra.tn:deliver` for further details.
 
 ---
 
@@ -3614,7 +3716,7 @@ Refer to `tundra.tn:deliver` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:derive`.
 
-Refer to `tundra.tn:derive` for futher details.
+Refer to `tundra.tn:derive` for further details.
 
 ---
 
@@ -3623,7 +3725,16 @@ Refer to `tundra.tn:derive` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:process`.
 
-Refer to `tundra.tn:process` for futher details.
+Refer to `tundra.tn:process` for further details.
+
+---
+
+### tundra.tn.reliable:publish
+
+Reliably processes (as a service execution task) a Trading Networks document
+via `tundra.tn:publish`.
+
+Refer to `tundra.tn:publish` for further details.
 
 ---
 
@@ -3632,7 +3743,7 @@ Refer to `tundra.tn:process` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:reroute`.
 
-Refer to `tundra.tn:reroute` for futher details.
+Refer to `tundra.tn:reroute` for further details.
 
 ---
 
@@ -3641,7 +3752,7 @@ Refer to `tundra.tn:reroute` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:split`.
 
-Refer to `tundra.tn:split` for futher details.
+Refer to `tundra.tn:split` for further details.
 
 ---
 
@@ -3650,7 +3761,7 @@ Refer to `tundra.tn:split` for futher details.
 Reliably processes (as a service execution task) a Trading Networks document
 via `tundra.tn:translate`.
 
-Refer to `tundra.tn:translate` for futher details.
+Refer to `tundra.tn:translate` for further details.
 
 ---
 
