@@ -584,8 +584,9 @@ Networks document types, and returns a new Trading Networks document
 
 #### Inputs:
 
-* $content is string, byte array, input stream, or IData document 
-  content to be recognized by Trading Networks.
+* $content is string, byte array, input stream, [org.w3c.dom.Node] 
+  object, or IData document content to be recognized by Trading
+  Networks.
 * $namespace is an optional list of namespace prefixes and the URIs 
   they map to, used when $content is provided as an IData document 
   to be serialized to [XML] with elements in one or more namespaces.
@@ -599,7 +600,10 @@ Networks document types, and returns a new Trading Networks document
   representing the recognized content, but not yet routed to Trading 
   Networks for processing.
 * `TN_parms` is the set of routing hints Trading Networks used when 
-  recognizing the given content.</value>
+  recognizing the given content.
+
+[org.w3c.dom.Node]: &lt;http://docs.oracle.com/javase/6/docs/api/org/w3c/dom/Node.html&gt;
+</value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>

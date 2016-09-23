@@ -1453,8 +1453,9 @@ Networks document types, and returns a new Trading Networks document
 
 #### Inputs:
 
-* `$content` is string, byte array, input stream, or IData document
-  content to be recognized by Trading Networks.
+* `$content` is string, byte array, input stream, [org.w3c.dom.Node]
+  object, or `IData` document content to be recognized by Trading
+  Networks.
 * `$namespace` is an optional list of namespace prefixes and the URIs
   they map to, used when `$content` is provided as an IData document
   to be serialized to [XML] with elements in one or more namespaces.
@@ -1488,8 +1489,9 @@ for both XML and flat files documents.
 
 #### Inputs:
 
-* `$content` is string, byte array, input stream, or IData document content
-  to be routed to Trading Networks.
+* `$content` is string, byte array, input stream, [org.w3c.dom.Node]
+  object, or `IData` document content to be routed to Trading
+  Networks.
 
   If `$content` is provided as an IData document, it will be serialized
   using an emitter determined in order of precedence by `$schema` and
@@ -4029,6 +4031,7 @@ Copyright © 2012 Lachlan Dowding. See the [LICENSE] file for further details.
 [JMS]: <http://en.wikipedia.org/wiki/Java_Message_Service>
 [JSON]: <http://www.json.org>
 [LICENSE]: <https://github.com/Permafrost/TundraTN/blob/master/LICENSE>
+[org.w3c.dom.Node]: <http://docs.oracle.com/javase/6/docs/api/org/w3c/dom/Node.html>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
 [RFC 4122]: <http://www.ietf.org/rfc/rfc4122.txt>
