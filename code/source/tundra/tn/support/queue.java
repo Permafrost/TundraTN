@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-03-24 21:36:42 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2016-10-31 15:16:58.785
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -59,7 +59,7 @@ public final class queue
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    String queue = IDataUtil.getString(cursor, "queue");
 		    String service = IDataUtil.getString(cursor, "$service");
@@ -75,7 +75,7 @@ public final class queue
 		    int threadPriority = IntegerHelper.parse(IDataUtil.getString(cursor, "$thread.priority"), Thread.NORM_PRIORITY);
 		    boolean threadDaemon = BooleanHelper.parse(IDataUtil.getString(cursor, "$daemonize?"));
 		    String exhaustedStatus = IDataUtil.getString(cursor, "$status.exhausted");
-		
+
 		    DeliveryQueueProcessor.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
@@ -86,7 +86,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -99,7 +99,7 @@ public final class queue
 		// @sigtype java 3.5
 		// [i] field:0:optional $queue
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    String queueName = IDataUtil.getString(cursor, "$queue");
 		    DeliveryQueueProcessor.interrupt(queueName);
@@ -108,7 +108,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -119,13 +119,15 @@ public final class queue
 		// --- <<IS-START(reflect)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// [o] field:0:required $processing.started?
+		// [o] field:0:required $processing.threads.length
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    IDataUtil.put(cursor, "$processing.started?", BooleanHelper.emit(DeliveryQueueProcessor.isStarted()));
 		    IData[] processes = DeliveryQueueProcessor.list();
 		    IDataUtil.put(cursor, "$processing.threads", processes);
-		    IDataUtil.put(cursor, "$processing.threads.length", "" + processes.length);
+		    IDataUtil.put(cursor, "$processing.threads.length", IntegerHelper.emit(processes.length));
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {
@@ -135,7 +137,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -149,7 +151,7 @@ public final class queue
 		DeliveryQueueProcessor.start();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -163,7 +165,7 @@ public final class queue
 		DeliveryQueueProcessor.stop();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 
