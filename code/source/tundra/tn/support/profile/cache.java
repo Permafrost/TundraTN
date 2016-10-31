@@ -1,27 +1,28 @@
-package tundra.tn.support;
+package tundra.tn.support.profile;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-25 22:32:30 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2016-10-31 14:56:44.246
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import com.wm.app.tn.profile.ProfileStore;
 import permafrost.tundra.tn.profile.ProfileCache;
 // --- <<IS-END-IMPORTS>> ---
 
-public final class profile
+public final class cache
 
 {
 	// ---( internal utility methods )---
 
-	final static profile _instance = new profile();
+	final static cache _instance = new cache();
 
-	static profile _newInstance() { return new profile(); }
+	static cache _newInstance() { return new cache(); }
 
-	static profile _cast(Object o) { return (profile)o; }
+	static cache _cast(Object o) { return (cache)o; }
 
 	// ---( server methods )---
 
@@ -34,10 +35,14 @@ public final class profile
 		// --- <<IS-START(clear)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// first refresh the internal TN profile cache
+		ProfileStore.getProfileStore(true);
+
+		// then clear the TundraTN profile cache
 		ProfileCache.getInstance().clear();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -49,7 +54,7 @@ public final class profile
 		// @subtype unknown
 		// @sigtype java 3.5
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    IDataUtil.put(cursor, "$cache", ProfileCache.getInstance().list());
 		} finally {
@@ -57,7 +62,7 @@ public final class profile
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -68,10 +73,14 @@ public final class profile
 		// --- <<IS-START(refresh)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// first refresh the internal TN profile cache
+		ProfileStore.getProfileStore(true);
+
+		// then refresh the TundraTN profile cache
 		ProfileCache.getInstance().refresh();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -85,7 +94,7 @@ public final class profile
 		ProfileCache.getInstance().seed();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 
