@@ -3758,9 +3758,9 @@ specification.
 
 ### tundra.tn.schema:profile
 
-A compatible superset of wm.tn.rec:ProfileSummary and wm.tn.rec:Profile,
-with some developer-friendly formats for all the external IDs, extended
-fields, and delivery methods.
+A superset of `wm.tn.rec:Profile` and `wm.tn.rec:ProfileSummary`, with
+some additional useful and more developer friendly inclusions such
+as `DefaultID`, `ExternalID`, `ExtendedFields`, and `DeliveryMethods`.
 
 ---
 
