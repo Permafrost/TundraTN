@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-09-10 09:50:18 EST
+// -----( CREATED: 2017-05-07 20:14:23 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -42,8 +42,8 @@ public final class type
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    String id = IDataUtil.getString(cursor, "$id");
-		    String name = IDataUtil.getString(cursor, "$name");
+		    String id = IDataHelper.get(cursor, "$id", String.class);
+		    String name = IDataHelper.get(cursor, "$name", String.class);
 		
 		    BizDocType type = null;
 		
@@ -54,7 +54,7 @@ public final class type
 		    }
 		
 		    if (type != null) {
-		        IDataUtil.put(cursor, "$type", IDataHelper.normalize((IData)type));
+		        IDataHelper.put(cursor, "$type", IDataHelper.normalize((IData)type));
 		    }
 		} finally {
 		  cursor.destroy();
@@ -77,10 +77,10 @@ public final class type
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    BizDocType type = BizDocTypeHelper.normalize(IDataUtil.getIData(cursor, "$type"));
+		    BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$type", IData.class));
 		
 		    if (type != null) {
-		        IDataUtil.put(cursor, "$type", IDataHelper.normalize((IData)type));
+		        IDataHelper.put(cursor, "$type", IDataHelper.normalize((IData)type));
 		    }
 		} finally {
 		    cursor.destroy();

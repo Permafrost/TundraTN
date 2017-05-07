@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-25 22:28:21 EST
+// -----( CREATED: 2017-05-07 20:13:22 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -41,18 +41,19 @@ public final class task
 		// @sigtype java 3.5
 		// [i] record:0:optional $bizdoc
 		// [i] - field:0:required InternalID
+		// [o] recref:1:optional $tasks wm.tn.rec:Task
 		// [o] field:0:required $tasks.length
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataUtil.getIData(cursor, "$bizdoc"));
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
 		    IData[] tasks = IDataHelper.normalize(GuaranteedJobHelper.list(bizdoc));
 		
 		    if (tasks != null && tasks.length > 0) {
-		        IDataUtil.put(cursor, "$tasks", tasks);
-		        IDataUtil.put(cursor, "$tasks.length", "" + tasks.length);
+		        IDataHelper.put(cursor, "$tasks", tasks);
+		        IDataHelper.put(cursor, "$tasks.length", tasks.length, String.class);
 		    } else {
-		        IDataUtil.put(cursor, "$tasks.length", "0");
+		        IDataHelper.put(cursor, "$tasks.length", "0");
 		    }
 		} catch(SQLException ex) {
 		    ExceptionHelper.raise(ex);

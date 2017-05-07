@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-25 22:29:42 EST
+// -----( CREATED: 2017-05-07 20:12:24 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -11,6 +11,7 @@ import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.Session;
+import permafrost.tundra.data.IDataHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class session
@@ -39,7 +40,7 @@ public final class session
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		  IDataUtil.put(cursor, "$session", Service.getSession().getSessionID());
+		  IDataHelper.put(cursor, "$session", Service.getSession().getSessionID());
 		} finally {
 		  cursor.destroy();
 		}

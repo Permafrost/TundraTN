@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-06-23 15:09:32 EST
+// -----( CREATED: 2017-05-07 20:03:47 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -19,6 +19,7 @@ import permafrost.tundra.content.ValidationException;
 import permafrost.tundra.content.UnsupportedException;
 import permafrost.tundra.content.Content;
 import permafrost.tundra.content.ContentAttached;
+import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.data.IDataMap;
 import permafrost.tundra.lang.BaseException;
 import permafrost.tundra.lang.BooleanHelper;
@@ -59,9 +60,9 @@ public final class exception
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataUtil.getIData(cursor, "$bizdoc"));
-		    Throwable exception = (Throwable)IDataUtil.get(cursor, "$exception");
-		    boolean statusSilence = BooleanHelper.parse(IDataUtil.getString(cursor, "$status.silence?"));
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+		    Throwable exception = IDataHelper.get(cursor, "$exception", Throwable.class);
+		    boolean statusSilence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
 		
 		    String messageClass = "Processing", 
 		           messageSummary = exception.getMessage(), 
@@ -125,8 +126,8 @@ public final class exception
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		  String message = IDataUtil.getString(cursor, "$message");
-		  String type = IDataUtil.getString(cursor, "$type");
+		  String message = IDataHelper.get(cursor, "$message", String.class);
+		  String type = IDataHelper.get(cursor, "$type", String.class);
 		
 		  raise(message, type);
 		} finally {

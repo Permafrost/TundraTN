@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-10-31 15:16:58.785
-// -----( ON-HOST: -
+// -----( CREATED: 2017-05-07 20:23:35 EST
+// -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -12,6 +12,7 @@ import com.wm.app.b2b.server.ServiceException;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.xml.datatype.Duration;
+import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.lang.BooleanHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.lang.ObjectHelper;
@@ -47,35 +48,35 @@ public final class queue
 		// [i] field:0:required $service
 		// [i] record:0:optional $pipeline
 		// [i] field:0:optional $concurrency
-		// [i] field:0:optional $ordered? {&quot;false&quot;,&quot;true&quot;}
-		// [i] field:0:optional $suspend? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $ordered? {"false","true"}
+		// [i] field:0:optional $suspend? {"false","true"}
 		// [i] field:0:optional $task.age
 		// [i] field:0:optional $retry.limit
 		// [i] field:0:optional $retry.wait
 		// [i] field:0:optional $retry.factor
 		// [i] field:0:optional $thread.priority
-		// [i] field:0:optional $daemonize? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $daemonize? {"false","true"}
 		// [i] field:0:optional $status.exhausted
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
-		    String queue = IDataUtil.getString(cursor, "queue");
-		    String service = IDataUtil.getString(cursor, "$service");
-		    IData scope = IDataUtil.getIData(cursor, "$pipeline");
-		    int concurrency = IntegerHelper.parse(IDataUtil.getString(cursor, "$concurrency"), 1);
-		    boolean ordered = BooleanHelper.parse(IDataUtil.getString(cursor, "$ordered?"));
-		    boolean suspend = BooleanHelper.parse(IDataUtil.getString(cursor, "$suspend?"));
-		    Duration age = DurationHelper.parse(IDataUtil.getString(cursor, "$task.age"));
+		    String queue = IDataHelper.get(cursor, "queue", String.class);
+		    String service = IDataHelper.get(cursor, "$service", String.class);
+		    IData scope = IDataHelper.get(cursor, "$pipeline", IData.class);
+		    int concurrency = IDataHelper.getOrDefault(cursor, "$concurrency", Integer.class, 1);
+		    boolean ordered = IDataHelper.getOrDefault(cursor, "$ordered?", Boolean.class, false);
+		    boolean suspend = IDataHelper.getOrDefault(cursor, "$suspend?", Boolean.class, false);
+		    Duration age = IDataHelper.get(cursor, "$task.age", Duration.class);
 		    // support $retries for backwards-compatibility
-		    int retryLimit = IntegerHelper.parse(ObjectHelper.coalesce(IDataUtil.getString(cursor, "$retry.limit"), IDataUtil.getString(cursor, "$retries")));
-		    Duration retryWait = DurationHelper.parse(IDataUtil.getString(cursor, "$retry.wait"));
-		    float retryFactor = FloatHelper.parse(IDataUtil.getString(cursor, "$retry.factor"), 1.0f);
-		    int threadPriority = IntegerHelper.parse(IDataUtil.getString(cursor, "$thread.priority"), Thread.NORM_PRIORITY);
-		    boolean threadDaemon = BooleanHelper.parse(IDataUtil.getString(cursor, "$daemonize?"));
-		    String exhaustedStatus = IDataUtil.getString(cursor, "$status.exhausted");
-
+		    int retryLimit = IDataHelper.getOrDefault(cursor, "$retry.limit", Integer.class, IDataHelper.getOrDefault(cursor, "$retries", Integer.class, 0));
+		    Duration retryWait = IDataHelper.get(cursor, "$retry.wait", Duration.class);
+		    float retryFactor = IDataHelper.getOrDefault(cursor, "$retry.factor", Float.class, 1.0f);
+		    int threadPriority = IDataHelper.getOrDefault(cursor, "$thread.priority", Integer.class, Thread.NORM_PRIORITY);
+		    boolean threadDaemon = IDataHelper.getOrDefault(cursor, "$daemonize?", Boolean.class, false);
+		    String exhaustedStatus = IDataHelper.get(cursor, "$status.exhausted", String.class);
+		
 		    DeliveryQueueProcessor.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
@@ -86,7 +87,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -99,16 +100,16 @@ public final class queue
 		// @sigtype java 3.5
 		// [i] field:0:optional $queue
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
-		    String queueName = IDataUtil.getString(cursor, "$queue");
+		    String queueName = IDataHelper.get(cursor, "$queue", String.class);
 		    DeliveryQueueProcessor.interrupt(queueName);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -120,14 +121,22 @@ public final class queue
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [o] field:0:required $processing.started?
+		// [o] record:1:required $processing.threads
+		// [o] - record:0:required queue
+		// [o] -- field:0:required name
+		// [o] -- field:0:required type
+		// [o] -- field:0:required status
+		// [o] -- field:0:required length
+		// [o] -- object:0:required queue
+		// [o] - recref:0:required thread tundra.support.schema:thread
 		// [o] field:0:required $processing.threads.length
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
-		    IDataUtil.put(cursor, "$processing.started?", BooleanHelper.emit(DeliveryQueueProcessor.isStarted()));
+		    IDataHelper.put(cursor, "$processing.started?", DeliveryQueueProcessor.isStarted(), String.class);
 		    IData[] processes = DeliveryQueueProcessor.list();
-		    IDataUtil.put(cursor, "$processing.threads", processes);
-		    IDataUtil.put(cursor, "$processing.threads.length", IntegerHelper.emit(processes.length));
+		    IDataHelper.put(cursor, "$processing.threads", processes);
+		    IDataHelper.put(cursor, "$processing.threads.length", processes.length, String.class);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {
@@ -137,7 +146,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -151,7 +160,7 @@ public final class queue
 		DeliveryQueueProcessor.start();
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -165,7 +174,7 @@ public final class queue
 		DeliveryQueueProcessor.stop();
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 

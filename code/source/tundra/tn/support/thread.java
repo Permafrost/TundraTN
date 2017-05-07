@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-25 22:28:48 EST
+// -----( CREATED: 2017-05-07 20:11:13 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -9,6 +9,7 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import permafrost.tundra.data.IDataHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class thread
@@ -39,7 +40,7 @@ public final class thread
 		try {
 		  Thread thread = Thread.currentThread();
 		  String description = thread.getClass().getName() + " ID#" + thread.getId() + " " + thread.getName();
-		  IDataUtil.put(cursor, "$thread", description);
+		  IDataHelper.put(cursor, "$thread", description);
 		} finally {
 		  cursor.destroy();
 		}

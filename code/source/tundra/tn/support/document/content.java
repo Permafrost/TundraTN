@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2016-02-25 22:28:38 EST
+// -----( CREATED: 2017-05-07 20:17:17 EST
 // -----( ON-HOST: 192.168.66.129
 
 import com.wm.data.*;
@@ -13,6 +13,7 @@ import com.wm.app.tn.doc.BizDocContentPart;
 import com.wm.app.tn.doc.BizDocEnvelope;
 import java.io.InputStream;
 import java.io.IOException;
+import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.lang.ObjectHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.tn.document.BizDocContentHelper;
@@ -44,15 +45,15 @@ public final class content
 		// [i] record:0:optional $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] field:0:optional $part
-		// [i] field:0:optional $mode {&quot;stream&quot;,&quot;bytes&quot;,&quot;string&quot;}
+		// [i] field:0:optional $mode {"stream","bytes","string"}
 		// [o] object:0:optional $content
 		// [o] field:0:optional $content.type
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataUtil.getIData(cursor, "$bizdoc"), true);
-		    String partName = IDataUtil.getString(cursor, "$part");
-		    String mode = IDataUtil.getString(cursor, "$mode");
+		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+		    String partName = IDataHelper.get(cursor, "$part", String.class);
+		    String mode = IDataHelper.get(cursor, "$mode", String.class);
 		
 		    if (document != null) {
 		        BizDocContentPart contentPart = BizDocContentHelper.getContentPart(document, partName);
@@ -60,11 +61,11 @@ public final class content
 		
 		        if (content != null) {
 		            if (mode != null && !mode.equals("stream")) {
-		                IDataUtil.put(cursor, "$content", ObjectHelper.convert(content, mode));
+		                IDataHelper.put(cursor, "$content", ObjectHelper.convert(content, mode));
 		            } else {
-		                IDataUtil.put(cursor, "$content", content);
+		                IDataHelper.put(cursor, "$content", content);
 		            }
-		            IDataUtil.put(cursor, "$content.type", BizDocContentHelper.getContentType(contentPart));
+		            IDataHelper.put(cursor, "$content.type", BizDocContentHelper.getContentType(contentPart));
 		        }
 		    }
 		} catch(IOException ex) {
@@ -91,8 +92,8 @@ public final class content
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataUtil.getIData(cursor, "$bizdoc"));
-		    String partName = IDataUtil.getString(cursor, "$part");
+		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+		    String partName = IDataHelper.get(cursor, "$part", String.class);
 		
 		    BizDocContentHelper.removeContentPart(document, partName);
 		} finally {
