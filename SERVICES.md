@@ -1307,19 +1307,19 @@ Networks document types, and returns a new Trading Networks document
 
 #### Inputs:
 
-* `$content` is string, byte array, input stream, [org.w3c.dom.Node]
-  object, or `IData` document content to be recognized by Trading
-  Networks.
-* `$namespace` is an optional list of namespace prefixes and the URIs
-  they map to, used when `$content` is provided as an IData document
+* $content is string, byte array, input stream, [org.w3c.dom.Node]
+  object, com.sap.conn.idoc.IDocDocumentList object, or IData
+  document content to be recognized by Trading Networks.
+* $namespace is an optional list of namespace prefixes and the URIs
+  they map to, used when $content is provided as an IData document
   to be serialized to [XML] with elements in one or more namespaces.
-* `TN_parms` is an optional set of routing hints for Trading Networks
-  to use when recognizing `$content`.
+* TN_parms is an optional set of routing hints for Trading Networks
+  to use when recognizing $content.
 
 #### Outputs:
 
-* `$content` is the recognized content returned as a byte array.
-* `$bizdoc` is a new Trading Networks document (BizDocEnvelope)
+* $content is the recognized content returned as a byte array.
+* $bizdoc is a new Trading Networks document (BizDocEnvelope)
   representing the recognized content, but not yet routed to Trading
   Networks for processing.
 * `TN_parms` is the set of routing hints Trading Networks used when
@@ -1329,8 +1329,9 @@ Networks document types, and returns a new Trading Networks document
 
 ### tundra.tn.content:route
 
-Routes arbitrary content specified as a string, byte array, input stream, or
-IData document to Trading Networks.
+Routes arbitrary content specified as a string, byte array, input
+stream, [org.w3c.dom.Node] object, com.sap.conn.idoc.IDocDocumentList object,
+or IData document to Trading Networks.
 
 Correctly supports large documents, so any document considered large will be
 routed as a large document in TN, unlike the `WmTN/wm.tn.doc.xml:routeXML`
@@ -1344,8 +1345,8 @@ for both XML and flat files documents.
 #### Inputs:
 
 * `$content` is string, byte array, input stream, [org.w3c.dom.Node]
-  object, or `IData` document content to be routed to Trading
-  Networks.
+  object, com.sap.conn.idoc.IDocDocumentList object, or `IData` document
+  content to be routed to Trading Networks.
 
   If `$content` is provided as an IData document, it will be serialized
   using an emitter determined in order of precedence by `$schema` and
