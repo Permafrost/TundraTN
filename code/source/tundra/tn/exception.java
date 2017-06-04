@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-05-07 20:03:47 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2017-06-04 17:44:18 EST
+// -----( ON-HOST: 192.168.66.132
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -55,13 +55,11 @@ public final class exception
 		// [i] record:0:required $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] object:0:required $exception
-		// [i] field:0:required $exception.class
-		// [i] field:0:required $exception.message
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
-		    Throwable exception = IDataHelper.get(cursor, "$exception", Throwable.class);
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class, true));
+		    Throwable exception = IDataHelper.get(cursor, "$exception", Throwable.class, true);
 		    boolean statusSilence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
 		
 		    String messageClass = "Processing", 
@@ -126,12 +124,12 @@ public final class exception
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		  String message = IDataHelper.get(cursor, "$message", String.class);
-		  String type = IDataHelper.get(cursor, "$type", String.class);
+		    String message = IDataHelper.get(cursor, "$message", String.class);
+		    String type = IDataHelper.get(cursor, "$type", String.class);
 		
-		  raise(message, type);
+		    raise(message, type);
 		} finally {
-		  cursor.destroy();
+		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
