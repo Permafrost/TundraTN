@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-05-07 20:23:35 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2017-06-04 18:00:53 EST
+// -----( ON-HOST: 192.168.66.132
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -69,8 +69,7 @@ public final class queue
 		    boolean ordered = IDataHelper.getOrDefault(cursor, "$ordered?", Boolean.class, false);
 		    boolean suspend = IDataHelper.getOrDefault(cursor, "$suspend?", Boolean.class, false);
 		    Duration age = IDataHelper.get(cursor, "$task.age", Duration.class);
-		    // support $retries for backwards-compatibility
-		    int retryLimit = IDataHelper.getOrDefault(cursor, "$retry.limit", Integer.class, IDataHelper.getOrDefault(cursor, "$retries", Integer.class, 0));
+		    int retryLimit = IDataHelper.firstOrDefault(cursor, Integer.class, 0, "$retry.limit", "$retries");
 		    Duration retryWait = IDataHelper.get(cursor, "$retry.wait", Duration.class);
 		    float retryFactor = IDataHelper.getOrDefault(cursor, "$retry.factor", Float.class, 1.0f);
 		    int threadPriority = IDataHelper.getOrDefault(cursor, "$thread.priority", Integer.class, Thread.NORM_PRIORITY);
@@ -102,8 +101,7 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    String queueName = IDataHelper.get(cursor, "$queue", String.class);
-		    DeliveryQueueProcessor.interrupt(queueName);
+		    DeliveryQueueProcessor.interrupt(IDataHelper.get(cursor, "$queue", String.class));
 		} finally {
 		    cursor.destroy();
 		}
@@ -128,7 +126,6 @@ public final class queue
 		// [o] -- field:0:required status
 		// [o] -- field:0:required length
 		// [o] -- object:0:required queue
-		// [o] - recref:0:required thread tundra.support.schema:thread
 		// [o] field:0:required $processing.threads.length
 		IDataCursor cursor = pipeline.getCursor();
 		
