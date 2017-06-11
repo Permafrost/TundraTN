@@ -1724,6 +1724,179 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer.datetime.threshold:after
+
+Trading Networks string transformer which returns whether the
+extracted datetime strings are later than the current datetime
+plus the specified duration.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | [ISO8601] XML datetime
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | [ISO8601] XML date
+date.jdbc     | yyyy-mm-dd
+time          | [ISO8601] XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using [java.text.SimpleDateFormat]
+compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is either an [ISO8601] XML duration string used to calculate
+  the threshold by being added to the current datetime, or a [YAML]
+  or [JSON] formatted string containing both the datetime pattern to
+  use to parse the given values and an [ISO8601] XML duration used
+  to calculate the threshold by being added to the current datetime.
+
+  For example, the following [YAML] formatted value in arg will
+  parse the datetime values using the given pattern and calculate
+  the comparison threshold as the current datetime + 1 day:
+
+      duration: P1D
+      pattern: dd/MM/yyyy HH:mm:ss
+
+  Similarly, the following [JSON] formatted value in arg will have
+  the same results:
+
+      { "duration": "P1D", "pattern": "dd/MM/yyyy HH:mm:ss" }
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the
+  given values list, where `newValues[n]` is a boolean indicating if
+  the datetime specified in `values[n]` was later than the
+  threshold, calculated as the current datetime plus the given
+  duration.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.datetime.threshold:before
+
+Trading Networks string transformer which returns whether the
+extracted datetime strings are earlier than the current datetime
+plus the specified duration.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | [ISO8601] XML datetime
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | [ISO8601] XML date
+date.jdbc     | yyyy-mm-dd
+time          | [ISO8601] XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using [java.text.SimpleDateFormat]
+compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is either an [ISO8601] XML duration string used to calculate
+  the threshold by being added to the current datetime, or a [YAML]
+  or [JSON] formatted string containing both the datetime pattern to
+  use to parse the given values and an [ISO8601] XML duration used
+  to calculate the threshold by being added to the current datetime.
+
+  For example, the following [YAML] formatted value in arg will
+  parse the datetime values using the given pattern and calculate
+  the comparison threshold as the current datetime + 1 day:
+
+      duration: P1D
+      pattern: dd/MM/yyyy HH:mm:ss
+
+  Similarly, the following [JSON] formatted value in arg will have
+  the same results:
+
+      { "duration": "P1D", "pattern": "dd/MM/yyyy HH:mm:ss" }
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the
+  given values list, where `newValues[n]` is a boolean indicating if
+  the datetime specified in `values[n]` was earlier than the
+  threshold, calculated as the current datetime plus the given
+  duration.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.datetime.threshold:equal
+
+Trading Networks string transformer which returns whether the
+extracted datetime strings are equal to the current datetime plus
+the specified duration.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | [ISO8601] XML datetime
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | [ISO8601] XML date
+date.jdbc     | yyyy-mm-dd
+time          | [ISO8601] XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using [java.text.SimpleDateFormat]
+compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is either an [ISO8601] XML duration string used to calculate
+  the threshold by being added to the current datetime, or a [YAML]
+  or [JSON] formatted string containing both the datetime pattern to
+  use to parse the given values and an [ISO8601] XML duration used
+  to calculate the threshold by being added to the current datetime.
+
+  For example, the following [YAML] formatted value in arg will
+  parse the datetime values using the given pattern and calculate
+  the comparison threshold as the current datetime + 1 day:
+
+      duration: P1D
+      pattern: dd/MM/yyyy HH:mm:ss
+
+  Similarly, the following [JSON] formatted value in arg will have
+  the same results:
+
+      { "duration": "P1D", "pattern": "dd/MM/yyyy HH:mm:ss" }
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the
+  given values list, where `newValues[n]` is a boolean indicating if
+  the datetime specified in `values[n]` was equal to the threshold,
+  calculated as the current datetime plus the given duration.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.dns:self
 
 Trading Networks string transformer which returns the domain name,
