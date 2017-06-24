@@ -149,6 +149,17 @@ bizdoc processing rule.
 
 ---
 
+### tundra.tn:connect
+
+Designed to be invoked via an [HTTP] request to test whether a client
+can connect and authenticate to Integration Server for publishing
+messages via the tundra.tn:receive service.
+
+Returns an [HTTP] response body in [HTML] format describing a successful
+connection to the server.
+
+---
+
 ### tundra.tn:deliver
 
 Delivers Trading Networks document (bizdoc) content to the given
@@ -4031,6 +4042,8 @@ restart the given task regardless of its status.
 [Base64]: <http://en.wikipedia.org/wiki/Base64>
 [CSV]: <http://en.wikipedia.org/wiki/Comma-separated_values>
 [default charset]: <http://docs.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html#defaultCharset()>
+[HTML]: <http://en.wikipedia.org/wiki/HTML>
+[HTTP]: <http://tools.ietf.org/search/rfc2616>
 [ISO8601]: <http://en.wikipedia.org/wiki/ISO_8601>
 [JAR]: <http://en.wikipedia.org/wiki/JAR_(file_format)>
 [java.text.SimpleDateFormat]: <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>
