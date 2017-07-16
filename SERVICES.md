@@ -2065,36 +2065,6 @@ document type attribute transformer.
 
 ---
 
-### tundra.tn.document.attribute.string.transformer.id:generate
-
-Trading Networks string transformer which returns newly generated
-immutable universally unique identifiers ([UUID]). This transformer
-can be used to assign a generated identifier to an extracted
-attribute, such as GroupID.
-
-This service is intended to be invoked by Trading Networks as a
-custom document type attribute transformer.
-
-#### Inputs:
-
-* `values` is a list of arbitrary strings, their values are ignored
-  by this service and are therefore irrelevant.
-* `isArray` is a boolean indicating if the values argument contains
-  multiple items.
-* `arg` is an optional choice which determines how the [UUID] is
-  converted to a string. Defaults to `string`, if not specified:
-  * `string` returns the [UUID] in the string representation as per
-    [RFC 4122], and is the default.
-  * `base64` returns the [UUID] as a [Base64] encoded string.
-
-#### Outputs:
-
-* `newValues` is a list the same length as the input `values` list if
-  its length was greater than zero, or a list containing a single
-  item, where each returned item is a newly generated [UUID].
-
----
-
 ### tundra.tn.document.attribute.string.transformer:last
 
 Trading Networks string transformer which returns only the last item
@@ -2394,6 +2364,36 @@ custom document type attribute transformer.
 
 * `newValues` is a list containing a single item whose value is
   the currently loggged on username.
+
+---
+
+### tundra.tn.document.attribute.string.transformer.uuid:generate
+
+Trading Networks string transformer which returns newly generated
+immutable universally unique identifiers ([UUID]). This transformer
+can be used to assign a generated identifier to an extracted
+attribute, such as GroupID.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored
+  by this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is an optional choice which determines how the [UUID] is
+  converted to a string. Defaults to `string`, if not specified:
+  * `string` returns the [UUID] in the string representation as per
+    [RFC 4122], and is the default.
+  * `base64` returns the [UUID] as a [Base64] encoded string.
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input `values` list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item is a newly generated [UUID].
 
 ---
 
