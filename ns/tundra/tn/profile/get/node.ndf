@@ -67,6 +67,37 @@
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
         </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_usereditable">false</value>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="field_name">$refresh?</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>false</value>
+            <value>true</value>
+          </array>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">boolean</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
       </array>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
@@ -704,28 +735,31 @@
   </record>
   <value name="node_comment">### tundra.tn.profile:get
 
-Returns the Trading Networks partner profile associated with the given ID.
+Returns the Trading Networks partner profile associated with the 
+given ID.
 
-Executing this service has the side-effect of seeding the TundraTN local
-in-memory cache with the returned partner profile, if it was not already
-cached.
+Executing this service has the side-effect of seeding the TundraTN 
+local in-memory cache with the returned partner profile, if it was 
+not already cached.
 
 #### Inputs:
 
-* $id is an optional identifier to use to look up the partner profile.
-  If not specified, no profile is returned.
+* $id is an optional identifier to use to look up the partner 
+  profile. If not specified, no profile is returned.
 * $type is an optional External ID description which the given $id
-  corresponds. If not specified, $id is assumed to be an internal partner
-  ID.
+  corresponds. If not specified, $id is assumed to be an internal 
+  partner ID.
+* $refresh? is an optional boolean which when true will force a 
+  refresh of the cached profile from the Trading Networks database. 
+  Defaults to false.
 
 #### Outputs:
 
-* $profile is the Trading Networks partner profile associated with the
-  given $id. The profile structure is a superset of both
+* $profile is the Trading Networks partner profile associated with 
+  the given $id. The profile structure is a superset of both
   wm.tn.rec:ProfileSummary and wm.tn.rec:Profile, with additional
   convenient and usable structures added for External IDs, Delivery
   Methods, and Extended Fields.
-
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>

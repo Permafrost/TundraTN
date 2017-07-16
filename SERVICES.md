@@ -3019,6 +3019,9 @@ cached.
 * `$type` is an optional External ID description which the given `$id`
   corresponds. If not specified, `$id` is assumed to be an internal partner
   ID.
+* `$refresh?` is an optional boolean which when `true` will force a
+  refresh of the cached profile from the Trading Networks database.
+  Defaults to `false`.
 
 #### Outputs:
 
@@ -3039,6 +3042,12 @@ Executing this service has the side-effect of seeding the TundraTN local
 in-memory cache with all partner profiles, if they were not already
 cached.
 
+#### Inputs:
+
+* `$refresh?` is an optional boolean which when `true` will force a
+  refresh of all cached profiles from the Trading Networks database.
+  Defaults to `false`.
+
 #### Outputs:
 
 * `$profiles` is a list of every Trading Networks partner profile. The
@@ -3055,6 +3064,12 @@ Returns the Trading Networks My Enterprise partner profile.
 Executing this service has the side-effect of seeding the TundraTN local
 in-memory cache with the My Enterprise partner profile, if it was not
 already cached.
+
+#### Inputs:
+
+* `$refresh?` is an optional boolean which when `true` will force a
+  refresh of the cached profile from the Trading Networks database.
+  Defaults to `false`.
 
 #### Outputs:
 

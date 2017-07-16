@@ -1,8 +1,8 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-05-07 20:05:16 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2017-07-16 18:03:59 EST
+// -----( ON-HOST: 192.168.66.132
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -37,28 +37,14 @@ public final class profile
 		// @sigtype java 3.5
 		// [i] field:0:optional $id
 		// [i] field:0:optional $type
+		// [i] field:0:optional $refresh? {"false","true"}
 		// [o] record:0:required $profile
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -80,9 +66,10 @@ public final class profile
 		try {
 		    String id = IDataHelper.get(cursor, "$id", String.class);
 		    String type = IDataHelper.get(cursor, "$type", String.class);
+		    boolean refresh = IDataHelper.getOrDefault(cursor, "$refresh?", Boolean.class, false);
 		
 		    if (id != null) {
-		        IData profile = ProfileCache.getInstance().get(id, type);
+		        IData profile = ProfileCache.getInstance().get(id, type, refresh);
 		        IDataHelper.put(cursor, "$profile", profile, false);
 		    }
 		} finally {
@@ -101,28 +88,14 @@ public final class profile
 		// --- <<IS-START(list)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// [i] field:0:optional $refresh? {"false","true"}
 		// [o] record:1:required $profiles
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -142,8 +115,8 @@ public final class profile
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    IData[] list = ProfileCache.getInstance().list(true);
-		    IDataHelper.put(cursor, "$profiles", list, false);
+		    boolean refresh = IDataHelper.getOrDefault(cursor, "$refresh?", Boolean.class, false);
+		    IDataHelper.put(cursor, "$profiles", ProfileCache.getInstance().list(true, refresh), false);
 		} finally {
 		    cursor.destroy();
 		}
@@ -160,28 +133,14 @@ public final class profile
 		// --- <<IS-START(self)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// [i] field:0:optional $refresh? {"false","true"}
 		// [o] record:0:required $profile
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -201,8 +160,8 @@ public final class profile
 		IDataCursor cursor = pipeline.getCursor();
 		
 		try {
-		    IData profile = ProfileCache.getInstance().self();
-		    IDataHelper.put(cursor, "$profile", profile, false);
+		    boolean refresh = IDataHelper.getOrDefault(cursor, "$refresh?", Boolean.class, false);
+		    IDataHelper.put(cursor, "$profile", ProfileCache.getInstance().self(refresh), false);
 		} finally {
 		    cursor.destroy();
 		}
