@@ -966,6 +966,27 @@ specification.
     will be automatically deleted by the retrieve process. If the query
     string parameter `purge` is not specified, archived files will not be
     automatically cleaned up.
+  * `ftp`: processes each file matching the given `$source` URI with the
+    given processing `$service`. The file component of the URI can
+    include wildcards or globs (such as `*.txt`) for matching multiple
+    files at once.
+
+    The following example would process all `*.txt` files in the
+    specified directory using active FTP with an ASCII transfer mode
+    and a server timeout of 5 minutes:
+
+        ftp://user:password@server:port/directory/*.txt?active=true&ascii=true&timeout=PT5M
+
+    The following additional settings can be specified using query
+    string parameters:
+    * `active`: optional boolean which when true uses active FTP.
+      Defaults to passive FTP.
+    * `ascii`: optional boolean which when true sets the FTP transfer
+      mode to ASCII. Defaults to binary transfer mode.
+    * `timeout`: optional XML duration specifying the time to wait for
+      a response from the FTP server before timing out and
+      terminating the request. Defaults to PT1M (1 minute).
+  * `ftps`: refer to `ftp`.
 * `$limit` is an optional maximum number of content matches to be processed in
   a single execution. Defaults to 1000.
 * `$strict?` is an optional boolean, which if true will abort routing/
