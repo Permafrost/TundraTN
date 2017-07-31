@@ -3456,7 +3456,7 @@
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">Service "%$service%" via "tundra.tn:translate" attempting to translate document</value>
+  <value name="xml">Service %$service% via tundra.tn:translate attempting to translate document</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -3976,6 +3976,68 @@
             <record javaclass="com.wm.util.Values">
               <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
               <value name="ncName">string</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">false</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$validate.input?</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <array name="field_options" type="value" depth="1">
+          <value>false</value>
+          <value>true</value>
+        </array>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">boolean</value>
+            </record>
+          </array>
+        </record>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_usereditable">false</value>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="field_name">$validate.output?</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <array name="field_options" type="value" depth="1">
+          <value>false</value>
+          <value>true</value>
+        </array>
+        <record name="field_content_type" javaclass="com.wm.util.Values">
+          <value name="contentType">1</value>
+          <value name="internalType">reference</value>
+          <value name="dataTypeVersion">dtVersion2</value>
+          <array name="targetNames" type="record" depth="1">
+            <record javaclass="com.wm.util.Values">
+              <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+              <value name="ncName">boolean</value>
             </record>
           </array>
         </record>
@@ -16310,6 +16372,15 @@ non-XML content:
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -16336,15 +16407,6 @@ non-XML content:
             </record>
           </array>
         </record>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -16380,11 +16442,11 @@ non-XML content:
 <MAPCOPY NAME="Link" FROM="/$duration.translation.and.route;1;0" TO="/$context;2;0/Duration;1;0">
 </MAPCOPY>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$summary;1;0">
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">Document translation (1:1) successful</value>
+  <value name="xml">Document translation (1:1) by service %$service% via tundra.tn:translate was successful</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -16393,54 +16455,10 @@ non-XML content:
       <value name="field_largerEditor">false</value>
       <value name="field_password">false</value>
     </record>
-    <value name="field_name">$summary</value>
+    <value name="field_name">$message</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">General</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$class</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <array name="field_options" type="value" depth="1">
-      <value>General</value>
-      <value>Processing</value>
-      <value>Delivery</value>
-      <value>Transient</value>
-      <value>Unrecoverable</value>
-      <value>Validation</value>
-    </array>
     <record name="field_content_type" javaclass="com.wm.util.Values">
       <value name="contentType">1</value>
       <value name="internalType">reference</value>
@@ -16540,11 +16558,55 @@ non-XML content:
 </DATA>
 </MAPSET>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">Document translation (1:1) by service "%$service%" via "tundra.tn:translate" was successful</value>
+  <value name="xml">General</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$class</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <array name="field_options" type="value" depth="1">
+      <value>General</value>
+      <value>Processing</value>
+      <value>Delivery</value>
+      <value>Transient</value>
+      <value>Unrecoverable</value>
+      <value>Validation</value>
+    </array>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$summary;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">Document translation (1:1) successful</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -16553,7 +16615,7 @@ non-XML content:
       <value name="field_largerEditor">false</value>
       <value name="field_password">false</value>
     </record>
-    <value name="field_name">$message</value>
+    <value name="field_name">$summary</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
@@ -16828,6 +16890,15 @@ non-XML content:
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -16854,15 +16925,6 @@ non-XML content:
             </record>
           </array>
         </record>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -17433,6 +17495,15 @@ non-XML content:
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -17459,15 +17530,6 @@ non-XML content:
             </record>
           </array>
         </record>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -17506,11 +17568,11 @@ non-XML content:
 <MAPDELETE NAME="Dropper" FIELD="/$duration.translation.and.route;1;0">
 </MAPDELETE>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$summary;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">Document translated from "%$bizdoc.source/InternalID%" by service "%$service%" via "tundra.tn:translate"</value>
+  <value name="xml">Document translated from %$bizdoc.source/InternalID%</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -17519,10 +17581,54 @@ non-XML content:
       <value name="field_largerEditor">false</value>
       <value name="field_password">false</value>
     </record>
-    <value name="field_name">$message</value>
+    <value name="field_name">$summary</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">General</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$class</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <array name="field_options" type="value" depth="1">
+      <value>General</value>
+      <value>Processing</value>
+      <value>Delivery</value>
+      <value>Transient</value>
+      <value>Unrecoverable</value>
+      <value>Validation</value>
+    </array>
     <record name="field_content_type" javaclass="com.wm.util.Values">
       <value name="contentType">1</value>
       <value name="internalType">reference</value>
@@ -17622,55 +17728,11 @@ non-XML content:
 </DATA>
 </MAPSET>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">General</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$class</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <array name="field_options" type="value" depth="1">
-      <value>General</value>
-      <value>Processing</value>
-      <value>Delivery</value>
-      <value>Transient</value>
-      <value>Unrecoverable</value>
-      <value>Validation</value>
-    </array>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$summary;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">Document translated from "%$bizdoc.source/InternalID%"</value>
+  <value name="xml">Document translated from %$bizdoc.source/InternalID% by service %$service% via tundra.tn:translate</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -17679,7 +17741,7 @@ non-XML content:
       <value name="field_largerEditor">false</value>
       <value name="field_password">false</value>
     </record>
-    <value name="field_name">$summary</value>
+    <value name="field_name">$message</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
@@ -17963,6 +18025,15 @@ non-XML content:
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -17989,15 +18060,6 @@ non-XML content:
             </record>
           </array>
         </record>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
@@ -18989,6 +19051,15 @@ non-XML content:
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -19021,15 +19092,6 @@ non-XML content:
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
         <value name="field_name">$duration.translation.only</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
@@ -19049,6 +19111,122 @@ non-XML content:
 
 <MAPCOPY NAME="Link" FROM="/$duration.translation.only;1;0" TO="/$context;2;0/Duration;1;0">
 </MAPCOPY>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">Document translation by service %$service% via tundra.tn:translate was successful, however no translated content was returned</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <null name="field_usereditable"/>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$message</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$summary;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">Document translation ignored</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <null name="field_usereditable"/>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$summary</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
+  <DATA ENCODING="XMLValues" I18N="true">
+
+<Values version="2.0">
+  <value name="xml">General</value>
+  <record name="type" javaclass="com.wm.util.Values">
+    <value name="node_type">unknown</value>
+    <value name="node_comment"></value>
+    <record name="node_hints" javaclass="com.wm.util.Values">
+      <value name="field_usereditable">true</value>
+      <value name="field_largerEditor">false</value>
+      <value name="field_password">false</value>
+    </record>
+    <value name="field_name">$class</value>
+    <value name="field_type">string</value>
+    <value name="field_dim">0</value>
+    <value name="field_opt">true</value>
+    <array name="field_options" type="value" depth="1">
+      <value>General</value>
+      <value>Processing</value>
+      <value>Delivery</value>
+      <value>Transient</value>
+      <value>Unrecoverable</value>
+      <value>Validation</value>
+    </array>
+    <record name="field_content_type" javaclass="com.wm.util.Values">
+      <value name="contentType">1</value>
+      <value name="internalType">reference</value>
+      <value name="dataTypeVersion">dtVersion2</value>
+      <array name="targetNames" type="record" depth="1">
+        <record javaclass="com.wm.util.Values">
+          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+          <value name="ncName">string</value>
+        </record>
+      </array>
+    </record>
+    <value name="nillable">true</value>
+    <value name="form_qualified">false</value>
+    <value name="is_global">false</value>
+  </record>
+</Values>
+</DATA>
+</MAPSET>
 
 <MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$type;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
@@ -19121,122 +19299,6 @@ non-XML content:
         <value name="dataTypeVersion">dtVersion2</value>
       </record>
       <value name="dataTypeVersion">dtVersion2</value>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$class;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">General</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <value name="field_usereditable">true</value>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$class</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <array name="field_options" type="value" depth="1">
-      <value>General</value>
-      <value>Processing</value>
-      <value>Delivery</value>
-      <value>Transient</value>
-      <value>Unrecoverable</value>
-      <value>Validation</value>
-    </array>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$summary;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">Document translation ignored</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <null name="field_usereditable"/>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$summary</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
-    </record>
-    <value name="nillable">true</value>
-    <value name="form_qualified">false</value>
-    <value name="is_global">false</value>
-  </record>
-</Values>
-</DATA>
-</MAPSET>
-
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="true" FIELD="/$message;1;0">
-  <DATA ENCODING="XMLValues" I18N="true">
-
-<Values version="2.0">
-  <value name="xml">Document translation by service "%$service%" via "tundra.tn:translate" was successful, however no translated content was returned</value>
-  <record name="type" javaclass="com.wm.util.Values">
-    <value name="node_type">unknown</value>
-    <value name="node_comment"></value>
-    <record name="node_hints" javaclass="com.wm.util.Values">
-      <null name="field_usereditable"/>
-      <value name="field_largerEditor">false</value>
-      <value name="field_password">false</value>
-    </record>
-    <value name="field_name">$message</value>
-    <value name="field_type">string</value>
-    <value name="field_dim">0</value>
-    <value name="field_opt">true</value>
-    <record name="field_content_type" javaclass="com.wm.util.Values">
-      <value name="contentType">1</value>
-      <value name="internalType">reference</value>
-      <value name="dataTypeVersion">dtVersion2</value>
-      <array name="targetNames" type="record" depth="1">
-        <record javaclass="com.wm.util.Values">
-          <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-          <value name="ncName">string</value>
-        </record>
-      </array>
     </record>
     <value name="nillable">true</value>
     <value name="form_qualified">false</value>
@@ -19507,6 +19569,15 @@ non-XML content:
         <value name="is_global">false</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$datetime.start</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -19533,15 +19604,6 @@ non-XML content:
             </record>
           </array>
         </record>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="field_name">$datetime.start</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
         <value name="nillable">true</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>

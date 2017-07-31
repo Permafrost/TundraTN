@@ -957,7 +957,7 @@ non-XML content:
 </INVOKE>
 </SEQUENCE>
 
-<MAP TIMEOUT="" MODE="STANDALONE">
+<MAP MODE="STANDALONE">
   <COMMENT>scope</COMMENT>
   <MAPTARGET>
 
@@ -2405,10 +2405,10 @@ non-XML content:
 <MAPDELETE NAME="Dropper" FIELD="/$callstack;1;1">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$callers;1;0">
+<MAPDELETE NAME="Dropper" FIELD="/$caller.initiator;1;0">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$caller.initiator;1;0">
+<MAPDELETE NAME="Dropper" FIELD="/$callers;1;0">
 </MAPDELETE>
 </MAP>
 </INVOKE>
@@ -2650,7 +2650,7 @@ non-XML content:
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">Document submitted by "%$caller%"</value>
+  <value name="xml">Document submitted by %$caller%</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -2810,7 +2810,7 @@ non-XML content:
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
-  <value name="xml">Document submitted to Trading Networks by "%$caller%"</value>
+  <value name="xml">Document submitted to Trading Networks by %$caller%</value>
   <record name="type" javaclass="com.wm.util.Values">
     <value name="node_type">unknown</value>
     <value name="node_comment"></value>
@@ -2945,6 +2945,15 @@ non-XML content:
         <value name="rec_ref">tundra.tn.schema:profile</value>
       </record>
       <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="field_name">$callers</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
         <record name="node_hints" javaclass="com.wm.util.Values">
@@ -3009,7 +3018,7 @@ non-XML content:
 </MAP>
 </INVOKE>
 
-<MAP NAME="drop" TIMEOUT="" MODE="STANDALONE">
+<MAP NAME="drop" MODE="STANDALONE">
   <COMMENT></COMMENT>
   <MAPTARGET>
 
