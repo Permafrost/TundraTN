@@ -987,6 +987,22 @@ specification.
       a response from the FTP server before timing out and
       terminating the request. Defaults to PT1M (1 minute).
   * `ftps`: refer to `ftp`.
+* `$content.identity` is an optional choice of mode for assigning a value
+  to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
+  * `UUID`: assigns a newly generated [UUID] in canonical.
+  * `ULID`: assigns a newly generated [ULID].
+  * `SHA-512`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA-384`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA-256`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD5`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD2`: the algorithm used to calculate a message digest from the
+    content.
 * `$limit` is an optional maximum number of content matches to be processed in
   a single execution. Defaults to 1000.
 * `$strict?` is an optional boolean, which if true will abort routing/
@@ -995,7 +1011,7 @@ specification.
 * `TN_parms` is an optional set of routing hints for Trading Networks to use
   when routing the retrieved content. The following TN_parms are set
   automatically, if no other value is provided:
-  * `DocumentID` is set to a generated [UUID] unique for each retrieved content.
+  * `DocumentID` is set using the provided $content.identity approach.
   * `GroupID` is set to a generated [UUID] and groups all content retrieved per
     invocation of this service.
   * `$contentType` is the MIME media type of the content.
@@ -1339,19 +1355,35 @@ Networks document types, and returns a new Trading Networks document
 
 #### Inputs:
 
-* $content is string, byte array, input stream, [org.w3c.dom.Node]
-  object, com.sap.conn.idoc.IDocDocumentList object, or IData
+* `$content` is string, byte array, input stream, [org.w3c.dom.Node]
+  object, `com.sap.conn.idoc.IDocDocumentList` object, or `IData`
   document content to be recognized by Trading Networks.
-* $namespace is an optional list of namespace prefixes and the URIs
-  they map to, used when $content is provided as an IData document
+* `$content.identity` is an optional choice of mode for assigning a value
+  to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
+  * `UUID`: assigns a newly generated [UUID].
+  * `ULID`: assigns a newly generated [ULID].
+  * `SHA-512`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA-384`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA-256`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD5`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD2`: the algorithm used to calculate a message digest from the
+    content.
+* `$namespace` is an optional list of namespace prefixes and the URIs
+  they map to, used when `$content` is provided as an `IData` document
   to be serialized to [XML] with elements in one or more namespaces.
-* TN_parms is an optional set of routing hints for Trading Networks
-  to use when recognizing $content.
+* `TN_parms` is an optional set of routing hints for Trading Networks
+  to use when recognizing `$content`.
 
 #### Outputs:
 
-* $content is the recognized content returned as a byte array.
-* $bizdoc is a new Trading Networks document (BizDocEnvelope)
+* `$content` is the recognized content returned as a byte array.
+* `$bizdoc` is a new Trading Networks document (BizDocEnvelope)
   representing the recognized content, but not yet routed to Trading
   Networks for processing.
 * `TN_parms` is the set of routing hints Trading Networks used when
@@ -1397,6 +1429,22 @@ for both XML and flat files documents.
   * TSV: `Tundra/tundra.csv:emit`
   * XML: `WmPublic/pub.xml:documentToXMLString`
   * YAML: `Tundra/tundra.yaml:emit`
+* `$content.identity` is an optional choice of mode for assigning a value
+  to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
+  * `UUID`: assigns a newly generated [UUID].
+  * `ULID`: assigns a newly generated [ULID].
+  * `SHA-512`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA-384`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA-256`: the algorithm used to calculate a message digest from the
+    content.
+  * `SHA`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD5`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD2`: the algorithm used to calculate a message digest from the
+    content.
 * `$content.type` is the MIME media type that describes the format of the
   given content:
   * For [CSV] content, a recognized [CSV] MIME media type, such as
@@ -4101,6 +4149,7 @@ restart the given task regardless of its status.
 [URI]: <http://www.w3.org/Addressing/>
 [URL-encoded]: <http://en.wikipedia.org/wiki/Percent-encoding>
 [UTF-8]: <http://en.wikipedia.org/wiki/UTF-8>
+[ULID]: <https://github.com/alizain/ulid>
 [UUID]: <http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html>
 [webMethods Integration Server]: <http://www.softwareag.com/corporate/products/wm/integration/products/ai/overview/default.asp>
 [webMethods Trading Networks]: <http://www.softwareag.com/corporate/products/wm/integration/products/b2b/overview/default.asp>
