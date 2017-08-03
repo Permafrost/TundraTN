@@ -1382,7 +1382,6 @@ Networks document types, and returns a new Trading Networks document
 
 #### Outputs:
 
-* `$content` is the recognized content returned as a byte array.
 * `$bizdoc` is a new Trading Networks document (BizDocEnvelope)
   representing the recognized content, but not yet routed to Trading
   Networks for processing.
