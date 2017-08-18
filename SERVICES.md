@@ -2534,6 +2534,7 @@ given part name as a stream.
   the given `$part` name.
 * `$content.type` is the MIME media type describing the type of data
   returned.
+* `$part` is the name of the content part returned, if any.
 
 ---
 

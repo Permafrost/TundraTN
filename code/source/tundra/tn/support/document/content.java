@@ -1,8 +1,8 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-05-07 20:17:17 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2017-08-18T11:52:02.647
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -45,20 +45,21 @@ public final class content
 		// [i] record:0:optional $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] field:0:optional $part
-		// [i] field:0:optional $mode {"stream","bytes","string"}
+		// [i] field:0:optional $mode {&quot;stream&quot;,&quot;bytes&quot;,&quot;string&quot;}
 		// [o] object:0:optional $content
 		// [o] field:0:optional $content.type
+		// [o] field:0:optional $part
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
 		    String partName = IDataHelper.get(cursor, "$part", String.class);
 		    String mode = IDataHelper.get(cursor, "$mode", String.class);
-		
+
 		    if (document != null) {
 		        BizDocContentPart contentPart = BizDocContentHelper.getContentPart(document, partName);
 		        InputStream content = BizDocContentHelper.getContent(document, contentPart);
-		
+
 		        if (content != null) {
 		            if (mode != null && !mode.equals("stream")) {
 		                IDataHelper.put(cursor, "$content", ObjectHelper.convert(content, mode));
@@ -66,6 +67,7 @@ public final class content
 		                IDataHelper.put(cursor, "$content", content);
 		            }
 		            IDataHelper.put(cursor, "$content.type", BizDocContentHelper.getContentType(contentPart));
+		            IDataHelper.put(cursor, "$part", contentPart.getPartName(), false);
 		        }
 		    }
 		} catch(IOException ex) {
@@ -75,7 +77,7 @@ public final class content
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -90,18 +92,18 @@ public final class content
 		// [i] - field:0:required InternalID
 		// [i] field:0:required $part
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
 		    String partName = IDataHelper.get(cursor, "$part", String.class);
-		
+
 		    BizDocContentHelper.removeContentPart(document, partName);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 
