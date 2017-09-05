@@ -546,6 +546,10 @@ This service is intended to be invoked by clients via HTTP or FTP.
 Enqueues a Trading Networks document to the given queue for deferred
 processing by that queue.
 
+Note that when this service is invoked for a Trading Networks document that
+already has an existing task with a status of `FAILED` for the queue in question,
+that task will be restarted rather than a new task being added.
+
 Supports 'strict' mode processing of bizdocs: if any `$strict` error classes
 are set to 'true' and the bizdoc contains errors for any of these classes,
 the bizdoc will not be processed; instead an exception will be thrown and
@@ -577,10 +581,11 @@ bizdoc processing rule.
     only if the condition evaluates to true will the document be enqueued
     to this queue. If not specified, the document will always be enqueued
     to this queue.
-  * `force?` is an optional boolean flag: when true the document will always
+  * `force?` is an optional boolean flag: when `true` the document will always
     be enqueued even if an existing task for the same queue already exists;
-    when false the document will only be enqueued if there is no existing
-    task for the same queue. Defaults to false, if not specified.
+    when `false` the document will only be enqueued if there is no existing
+    task with a status of `DELIVERING` or `DONE` for the same queue. Defaults
+    to `false`, if not specified.
   * `enabled?` is an optional boolean flag indicating whether this
     enqueuing rule will be applied to the document. When `false`, this
     enqueuing rule is inactive and ignored. Defaults to `true` when not
