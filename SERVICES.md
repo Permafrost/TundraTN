@@ -4027,6 +4027,8 @@ specification.
   logged in the Trading Networks Activity Log.
 * `$message` is an optional diagnostic detailed message to be automatically
   logged in the Trading Networks Activity Log.
+* `$status.done` is an optional user status to be set on the document after
+  processing has completed successfully.
 
 ---
 
