@@ -867,16 +867,32 @@ the transport in question.
     to the currently logged on user.
   * `SenderID` is an optional Trading Networks profile external ID
     which identifies the sender of the content. For flat files
-    only, defaults to the currently logged on user.
+    only, defaults to the following values in order of precedence:
+    * The URL query string parameter `sender`, if specified.
+    * The HTTP header `Message-Sender`, if specified.
+    * The HTTP header `X-Sender`, if specified.
+    * The currently logged on user name.
   * `ReceiverID` is an optional Trading Networks profile external ID
     which identifies the receiver of the content. For flat files
-    only, defaults to the value of the HTTP header 'X-Recipient',
-    or failing that the required External ID value of the My
-    Enterprise profile.
+    only, defaults to the following values in order of precedence:
+    * The URL query string parameter `receiver`, if specified.
+    * The HTTP header `Message-Receiver`, if specified.
+    * The HTTP header `X-Receiver`, if specified.
+    * The HTTP header `X-Recipient`, if specified.
+    * The required External ID value of the My Enterprise profile.
   * `DocumentID` is an optional ID used to identify the content in
-    Trading Networks. For flat files only, defaults to the value
-    of the HTTP header 'Message-ID', or failing that an [UUID] is
-    automatically generated.
+    Trading Networks. For flat files only, defaults to the following
+    values in order of precedence:
+    * The URL query string parameter `id`, if specified.
+    * The HTTP header `Message-ID`, if specified.
+    * A newly generated [UUID].
+  * `DoctypeName` is an optional name of the Trading Networks
+    Document Type which is the type of the received content.
+    Specifying this value bypasses the normal Trading Networks
+    document recognition logic. For flat files only, defaults to
+    the following values in order of precedence:
+    * The URL query string parameter `type`, if specified.
+    * The HTTP header `Message-Type`, if specified.
   * `GroupID` is an optional ID used to identify the group this
     content belongs to in Trading Networks. For flat files only,
     defaults to the value of `TN_parms/DocumentID`.
