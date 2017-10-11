@@ -319,6 +319,33 @@ Networks bizdoc processing rule.
       the SAP Adapter alias language.
     * `$queue`: the optional name of the SAP system inbound queue,
       required when using queued remote function calls (qRFC).
+  * `sftp`: uploads the given content to the [SFTP] server, directory and
+    file specified by the destination [URI]. Note that [SFTP] delivery
+    is only supported on Integration Server versions 9.0 and higher.
+    An example [SFTP] [URI] is as follows:
+
+        sftp://useralias/path/file?append=true
+
+    Where:
+    * `useralias` identifies the Integration Server [SFTP] User Alias to
+      be used for connecting to the destination [SFTP] server.
+    * `path` is the absolute path to the directory where the file should
+      be written, unless it starts with "." to indicate a relative
+      directory path, such as:
+
+          sftp://useralias/./path/file
+
+    * `file` is an optional remote file name that the content will be
+      written to. If not specified, will default to the value of the
+      bizdoc attribute `Content Name` if it exists, otherwise the
+      internal ID of the bizdoc whose content is being delivered. Note
+      that a partial filename can also be specified with just the
+      extension part (such as `.xml`), and in this case the internal
+      ID will be prefixed to the given extension.
+    * `append` is an optional query string boolean which if true will
+      append the content to the given file if it already exists.
+      Defaults to false if not specified, which overwrites the given
+      file if it already exists.
 * `$service` is an optional fully-qualified service name which, when
   specified, will be invoked prior to delivery, thus allowing a
   service to perform processing to influence the delivery (such as
@@ -4163,6 +4190,7 @@ restart the given task regardless of its status.
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
 [RFC 4122]: <http://www.ietf.org/rfc/rfc4122.txt>
+[SFTP]: <https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol>
 [Thread.NORM_PRIORITY]: <http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.html#NORM_PRIORITY>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
