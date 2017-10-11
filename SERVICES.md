@@ -1035,6 +1035,31 @@ specification.
       a response from the FTP server before timing out and
       terminating the request. Defaults to PT1M (1 minute).
   * `ftps`: refer to `ftp`.
+  * `sftp`: processes each file matching the given `$source` URI with the
+    given processing `$service`. The file component of the URI can
+    include wildcards or globs (such as `*.txt`) for matching multiple
+    files at once. Note that SFTP retrieval is only supported on
+    Integration Server versions 9.0 and higher.
+
+    The following example would process all `*.txt` files in the
+    specified directory using SFTP:
+
+        sftp://useralias/path/*.txt
+
+    Where:
+    * `useralias` identifies the Integration Server SFTP User Alias to
+      be used for connecting to the source SFTP server.
+    * `path` is the absolute path to the directory where the files to be
+      processed exist, unless it starts with `.` to indicate a relative
+      directory path, such as:
+
+          sftp://useralias/./path/*.txt
+
+* `$limit` is an optional maximum number of content matches to be processed in
+  a single execution. Defaults to 1000.
+* `$strict?` is an optional boolean, which if `true` will abort routing/
+  processing rule execution of the document if any any errors (such as
+  validation errors) are encountered prior to processing. Defaults to `false`.
 * `$content.identity` is an optional choice of mode for assigning a value
   to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
   * `UUID`: assigns a newly generated [UUID] in canonical.
@@ -1051,11 +1076,6 @@ specification.
     content.
   * `MD2`: the algorithm used to calculate a message digest from the
     content.
-* `$limit` is an optional maximum number of content matches to be processed in
-  a single execution. Defaults to 1000.
-* `$strict?` is an optional boolean, which if true will abort routing/
-  processing rule execution of the document if any any errors (such as
-  validation errors) are encountered prior to processing. Defaults to false.
 * `TN_parms` is an optional set of routing hints for Trading Networks to use
   when routing the retrieved content. The following TN_parms are set
   automatically, if no other value is provided:
