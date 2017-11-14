@@ -4154,8 +4154,8 @@ specification.
 
 ### tundra.tn.schema:translator
 
-Translation services used by `TundraTN/tundra.tn:translate` can implement this
-specification.
+Translation services invoked by `TundraTN/tundra.tn:translate` can
+implement this specification.
 
 #### Inputs:
 
@@ -4163,24 +4163,28 @@ specification.
   translated.
 * `$sender` is the Trading Networks partner profile associated with the
   sender of the bizdoc.
-* `$receiver` is the Trading Networks partner profile associated with the
-  receiver of the bizdoc.
+* `$receiver` is the Trading Networks partner profile associated with
+  the receiver of the bizdoc.
 * `$document` is the parsed bizdoc content for translation. This is the
-  default name for this input parameter. The actual name of the parameter
-  can be changed using the `TundraTN/tundra.tn:translate` `$service.input`
-  parameter, which allows the use of `TundraTN/tundra.tn:translate` with
-  existing mapping services.
-* `$schema` is the name of the Integration Server document reference or flat
-  file schema used to parse the content into an IData structure.
+  default name for this input parameter. The actual name of the
+  parameter can be changed using the `TundraTN/tundra.tn:translate`
+  `$service.input` parameter, which allows the use of `TundraTN/
+  tundra.tn:translate` with existing mapping services.
+* `$schema` is the name of the Integration Server document reference
+  or flat file schema used to parse the content into an `IData`
+  structure.
 
 #### Outputs:
 
 * `$translation` is the translated content which will be routed back to
-  Trading Networks as a new document. This is the default name for this
-  output parameter. The actual name of the parameter can be changed using
-  the `TundraTN/tundra.tn:translate` `$service.output` parameter, which
-  allows the use of `TundraTN/tundra.tn:translate` with existing mapping
-  services.
+  Trading Networks as a new document. This is the default name for
+  this output parameter. The actual name of the parameter can be
+  changed using the `TundraTN/tundra.tn:translate` `$service.output`
+  parameter, which allows the use of `TundraTN/tundra.tn:translate`
+  with existing mapping services.
+* `$attributes` is an optional `IData` document containing attribute
+  values to be set on the resulting translated document. Atributes
+  specified here will override values extracted from the document.
 * `TN_parms` is an optional set of routing hints used when routing the
   translated document to Trading Networks.
 
