@@ -9,9 +9,9 @@ will be substituted prior to being inserted in `$document`.
 
 The bizdoc user status is first updated to 'AMENDING', then the content part
 identified by `$part.input` (or the default content part if not specified) is
-parsed to an IData document using the named $schema (or the schema
+parsed to an `IData` document using the named `$schema` (or the schema
 configured on the TN document type if not specified), the amendments are
-applied via the `$amendments` {key, value} pairs, the amended IData document
+applied via the `$amendments` {key, value} pairs, the amended `IData` document
 is then emitted as stream then added to the bizdoc as a new content part
 identified by `$part.output` (or 'amendment' if not specified), and the bizdoc
 user status is updated to 'DONE'.
@@ -43,10 +43,10 @@ bizdoc being processed.
 Conditions can be any statement supported by
 `Tundra/tundra.condition:evaluate`. The condition will be evaluated against a
 pipeline containing `$bizdoc`, `$sender`, `$receiver`, the parsed bizdoc content
-as an IData document called `$document`, and the parsing schema/document
+as an `IData` document called `$document`, and the parsing schema/document
 blueprint used by the parser as a string called `$schema`.
 
-A null condition will always evaluate to true, and can therefore be used as
+A null condition will always evaluate to `true`, and can therefore be used as
 a default branch statement to match any documents unmatched by more specific
 conditions.
 
@@ -104,40 +104,40 @@ bizdoc processing rule.
 * `$finally` is an optional fully-qualified service name which, when
   specified, will be invoked after processing, and whether or not an
   exception is encountered during processing.
-* `$pipeline` is an optional IData document containing additional arbitrary
+* `$pipeline` is an optional `IData` document containing additional arbitrary
   input arguments for `$service` (or `WmPublic/pub.flatFile:convertToValues`,
   `WmPublic/pub.xml:xmlStringToXMLNode`, or `WmPublic/pub.xml:xmlNodeToDocument`
   via `Tundra/tundra.tn.document:parse`). Fully-qualified names will be
   handled correctly, for example an argument named `example/item[0]` will
-  be converted to an IData document named `example` containing a String
+  be converted to an `IData` document named `example` containing a String
   list named `item` with it's first value set accordingly.
 * `$service.input` is an optional name used when adding either the bizdoc
   content to the input pipeline of the call to `$service`. Defaults to
-  `$document` when `$parse?` is true, and `$content` when `$parse` is false.
+  `$document` when `$parse?` is `true`, and `$content` when `$parse` is `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
   processing has completed successfully. Defaults to DONE.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
-* `$parse?` is an optional boolean flag which when true will parse the
-  bizdoc content part to an IData document which is added to the input
-  pipeline of the call to `$service`, and when false will instead add the
+* `$parse?` is an optional boolean flag which when `true` will parse the
+  bizdoc content part to an `IData` document which is added to the input
+  pipeline of the call to `$service`, and when `false` will instead add the
   bizdoc content part as an input stream to the input pipeline. Defaults
-  to true.
+  to `true`.
 * `$prefix?` is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
-  when calling `$service`. When true `$service` should implement the
-  `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
+  when calling `$service`. When `true` `$service` should implement the
+  `TundraTN/tundra.tn.schema:processor` specification, when `false` `$service`
   should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
-  Defaults to true.
+  Defaults to `true`.
 * `$part` is an optional name identifying the bizdoc content part to be
   parsed and added to the input pipeline of the call to `$service`. Defaults
   to the default content part (xmldata for XML documents, ffdata for Flat
-  File documents). Not used if `$parse?` is false.
+  File documents). Not used if `$parse?` is `false`.
 * `$encoding` optional character encoding to be used when reading the bizdoc
   content part bytes. If not specified, defaults to the character set
   specified in the MIME content type of the content part being parsed, or
   failing that [UTF-8].
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition`
@@ -342,9 +342,9 @@ Networks bizdoc processing rule.
       that a partial filename can also be specified with just the
       extension part (such as `.xml`), and in this case the internal
       ID will be prefixed to the given extension.
-    * `append` is an optional query string boolean which if true will
+    * `append` is an optional query string boolean which if `true` will
       append the content to the given file if it already exists.
-      Defaults to false if not specified, which overwrites the given
+      Defaults to `false` if not specified, which overwrites the given
       file if it already exists.
     * `rename` is an optional query string boolean which if `true` will
       first write the content to a unique temporary filename and then
@@ -475,7 +475,7 @@ bizdoc processing rule.
 * `$finally` is an optional fully qualified service name which, when
   specified, will be invoked after processing, and whether or not an
   exception is encountered during processing.
-* `$pipeline` is an optional IData document containing arbitrary variables
+* `$pipeline` is an optional `IData` document containing arbitrary variables
   which can be used to influence the derivative process.
 * `$derivatives` is a list of rules describing when and what copies are to
   be made of this bizdoc:
@@ -511,7 +511,7 @@ bizdoc processing rule.
       conditional statement can also be specified, which is evaluated
       against the pipeline containing `$bizdoc`, `$sender`, `$receiver`, and
       `$document` (the parsed bizdoc content), and only if the condition
-      evaluates to true will the associated amended value be applied. If
+      evaluates to `true` will the associated amended value be applied. If
       not specified, the amended value will always be applied.
   * `attributes` is an optional list of {key, value} pairs used to set
     attributes on the derived bizdoc:
@@ -522,19 +522,19 @@ bizdoc processing rule.
       conditional statement can also be specified, which is evaluated
       against the pipeline containing `$bizdoc`, `$sender`, `$receiver`, and
       `$document` (the parsed bizdoc content), and only if the condition
-      evaluates to true will the attribute be added to the derived bizdoc.
+      evaluates to `true` will the attribute be added to the derived bizdoc.
       If not specified, the attribute will always be added to the derived
       bizdoc.
-  * `TN_parms` is an optional IData document containing routing hints used
+  * `TN_parms` is an optional `IData` document containing routing hints used
     when routing the derivative bizdoc.
-  * `force?` is an optional boolean flag: when true a new derivative will
+  * `force?` is an optional boolean flag: when `true` a new derivative will
     always be created even if an existing derivative for the same sender
-    and receiver already exists; when false a new derivative will only
+    and receiver already exists; when `false` a new derivative will only
     be created if there is no existing derivative with the same sender
-    and receiver. Defaults to false, if not specified.
-  * `enabled?` is an optional boolean flag, when true this derivative rule
-    is active, when false, this derivative rule is inactive and ignored.
-    Defaults to true when not specified.
+    and receiver. Defaults to `false`, if not specified.
+  * `enabled?` is an optional boolean flag, when `true` this derivative rule
+    is active, when `false`, this derivative rule is inactive and ignored.
+    Defaults to `true` when not specified.
 * `$status.done` is an optional user status to use for the bizdoc when
   derivatives have been created successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
@@ -543,15 +543,15 @@ bizdoc processing rule.
   service not to change the status on the document. Defaults to `false`.
 * `$prefix?` is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (bizdoc, sender, and receiver)
-  when calling `$service`. When true `$service` should implement the
-  `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
+  when calling `$service`. When `true` `$service` should implement the
+  `TundraTN/tundra.tn.schema:processor` specification, when `false` `$service`
   should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
-  Defaults to true.
+  Defaults to `true`.
 * `$part` is the optional name of the bizdoc content part to be copied to
   the resulting derivatives. Defaults to the default content part when not
   specified (xmldata for XML document types, ffdata for Flat File document
   types).
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition`
@@ -611,7 +611,7 @@ bizdoc processing rule.
   * `condition` is an optional `Tundra/tundra.condition:evaluate` conditional
     statement, which is evaluated against a pipeline containing `$bizdoc`,
     `$sender`, `$receiver`, and `$document` (the parsed bizdoc content), and
-    only if the condition evaluates to true will the document be enqueued
+    only if the condition evaluates to `true` will the document be enqueued
     to this queue. If not specified, the document will always be enqueued
     to this queue.
   * `force?` is an optional boolean flag: when `true` the document will always
@@ -640,7 +640,7 @@ bizdoc processing rule.
   enqueuing occurs. Defaults to `IGNORED`.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition`
@@ -670,7 +670,7 @@ diagnostics.
   `$message`.
 * `$message` is an optional message to be logged. If not specified,
   defaults to an empty string.
-* `$context` is an optional IData document containing arbitrary
+* `$context` is an optional `IData` document containing arbitrary
   information about the current execution context. The host name,
   session, thread, and call stack are added, and it is then
   serialized and appended to `$message` prior to logging.
@@ -715,42 +715,42 @@ bizdoc processing rule.
 * `$finally` is an optional fully-qualified service name which, when
   specified, will be invoked after processing, and whether or not an
   exception is encountered during processing.
-* `$pipeline` is an optional IData document containing additional arbitrary
+* `$pipeline` is an optional `IData` document containing additional arbitrary
   input arguments for `$service` (or `WmPublic/pub.flatFile:convertToValues`,
   `WmPublic/pub.xml:xmlStringToXMLNode`, or `WmPublic/pub.xml:xmlNodeToDocument` via
   `Tundra/tundra.tn.document:parse`). Fully-qualified names will be handled
   correctly, for example an argument named `example/item[0]` will be
-  converted to an IData document named `example` containing a String list
+  converted to an `IData` document named `example` containing a String list
   named `item` with it's first value set accordingly
 * `$service.input` is an optional name used when adding either the bizdoc
   content to the input pipeline of the call to `$service`. Defaults to
-  `$document` when `$parse?` is true, and `$content` when `$parse` is false.
+  `$document` when `$parse?` is `true`, and `$content` when `$parse` is `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
   processing has completed successfully. If `$service` returns an output
   pipeline argument named `$status.done` or it changes the status itself,
   this takes precedence over any value specified here. Defaults to `DONE`.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
-* `$parse?` is an optional boolean flag which when true will parse the
-  bizdoc content part to an IData document which is added to the input
-  pipeline of the call to `$service`, and when false will instead add the
+* `$parse?` is an optional boolean flag which when `true` will parse the
+  bizdoc content part to an `IData` document which is added to the input
+  pipeline of the call to `$service`, and when `false` will instead add the
   bizdoc content part as an input stream to the input pipeline. Defaults
-  to true.
+  to `true`.
 * `$prefix?` is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
-  when calling `$service`. When true `$service` should implement the
-  `TundraTN/tundra.tn.schema:processor` specification, when false `$service`
+  when calling `$service`. When `true` `$service` should implement the
+  `TundraTN/tundra.tn.schema:processor` specification, when `false` `$service`
   should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
-  Defaults to true.
+  Defaults to `true`.
 * `$part` is an optional name identifying the bizdoc content part to be
   parsed and added to the input pipeline of the call to `$service`. Defaults
   to the default content part (xmldata for XML documents, ffdata for Flat
-  File documents). Not used if `$parse?` is false.
+  File documents). Not used if `$parse?` is `false`.
 * `$encoding` optional character encoding to be used when reading the bizdoc
   content part bytes. If not specified, defaults to the character set
   specified in the MIME content type of the content part being parsed, or
   failing that [UTF-8].
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition `
@@ -770,7 +770,7 @@ Server messaging subsystem via `WmPublic/pub.publish:publish`.
 Supports 'strict' mode processing of bizdocs: if any `$strict` error
 classes are set to 'true' and the bizdoc contains errors for any of
 these classes, the bizdoc will not be processed; instead an
-exception will be thrown and handled by the $catch service. For
+exception will be thrown and handled by the `$catch` service. For
 example, if you have enabled duplicate document checking on the
 Trading Networks document type and do not wish to process
 duplicates, set the `$strict/Saving` error class to 'true' and
@@ -869,7 +869,7 @@ the transport in question.
 
 * `strict` is an optional boolean flag indicating whether 'strict'
   mode routing should be used for the received content. Defaults
-  to true. To disable 'strict' mode when using HTTP, include
+  to `true`. To disable 'strict' mode when using HTTP, include
   strict=false as part of the query string of the receive URL:
   http://localhost:5555/invoke/tundra.tn/receive?strict=false.
 * `TN_parms` is an optional set of routing hints for Trading
@@ -1033,9 +1033,9 @@ specification.
 
     The following additional settings can be specified using query
     string parameters:
-    * `active`: optional boolean which when true uses active FTP.
+    * `active`: optional boolean which when `true` uses active FTP.
       Defaults to passive FTP.
-    * `ascii`: optional boolean which when true sets the FTP transfer
+    * `ascii`: optional boolean which when `true` sets the FTP transfer
       mode to ASCII. Defaults to binary transfer mode.
     * `timeout`: optional XML duration specifying the time to wait for
       a response from the FTP server before timing out and
@@ -1085,7 +1085,7 @@ specification.
 * `TN_parms` is an optional set of routing hints for Trading Networks to use
   when routing the retrieved content. The following TN_parms are set
   automatically, if no other value is provided:
-  * `DocumentID` is set using the provided $content.identity approach.
+  * `DocumentID` is set using the provided `$content.identity` approach.
   * `GroupID` is set to a generated [UUID] and groups all content retrieved per
     invocation of this service.
   * `$contentType` is the MIME media type of the content.
@@ -1123,7 +1123,7 @@ bizdoc processing rule.
   split.
 * `$service` is the fully-qualified name of the service which will be
   invoked to split the parsed bizdoc content. The splitting service
-  must accept a single IData document and return an IData[] document list,
+  must accept a single `IData` document and return an `IData[]` document list,
   and optionally TN_parms. Refer to the `TundraTN/tundra.tn.schema:splitter`
   specification as a guide to the inputs and outputs required of the
   translation service.
@@ -1138,7 +1138,7 @@ bizdoc processing rule.
 * `$finally` is an optional fully-qualified service name which, when
   specified, will be invoked after translation, and whether or not an
   exception is encountered during translation.
-* `$pipeline` is an optional IData document containing arbitrary variables
+* `$pipeline` is an optional `IData` document containing arbitrary variables
   which can be used to influence the splitting process.
 * `$content.type.input` is the MIME media type that describes the format of
   the bizdoc content being split. For [JSON] content, a recognized [JSON]
@@ -1155,12 +1155,12 @@ bizdoc processing rule.
   map to, used when serializing the split documents returned by
   `$service` to the same [XML] format with elements in one or more
   namespaces. If the list of split documents contain dissimilar formats,
-  then `$service` should return a IData document list called `$namespaces`
+  then `$service` should return a `IData` document list called `$namespaces`
   of the same length as the split document list, where `$namespaces[n]`
   will be used to serialize `$documents[n]`.
 * `$schema.input` is the optional name of the Integration Server document
   reference or flat file schema to use to parse the bizdoc content into an
-  IData structure. Defaults to the parsing schema specified on the
+  `IData` structure. Defaults to the parsing schema specified on the
   associated Trading Networks document type.
 * `$schema.output` is the optional name of the Integration Server document
   reference or flat file schema to use to serialize the split documents
@@ -1182,40 +1182,40 @@ bizdoc processing rule.
   failing that [UTF-8].
 * `$encoding.output` is an optional character set to use when serializing
   the split documents. If not specified, defaults to [UTF-8].
-* `$validate.input?` is an optional boolean flag which when true will
+* `$validate.input?` is an optional boolean flag which when `true` will
   validate the input content against the given `$schema.input`, or the
   parsing schema specified on the associated Trading Networks document
   type if `$schema.input` is not specified, and throw an exception to abort
-  processing if the content is invalid. Defaults to false.
-* `$validate.output?` is an optional boolean flag which when true will
+  processing if the content is invalid. Defaults to `false`.
+* `$validate.output?` is an optional boolean flag which when `true` will
   validate each output content against the appropriate schema (`$schema.output`
   if specified, otherwise `$schemas[n]` returned by `$service`), and throw
   an exception to abort processing if the content is invalid. Defaults to
-  false.
+  `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
   it has been split successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
-  split documents are returned by `$service` and `$required` is false.
+  split documents are returned by `$service` and `$required` is `false`.
   Defaults to IGNORED.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
-* `$required?` is an optional boolean indicating whether $service is
-  required to return a one or more split documents. If true, and no
+* `$required?` is an optional boolean indicating whether `$service` is
+  required to return a one or more split documents. If `true`, and no
   documents are returned by `$service`, an exception will be thrown and
-  handled by the `$catch` service. Defaults to false.
+  handled by the `$catch` service. Defaults to `false`.
 * `$relate?` is an optional boolean indicating whether the original document
   should be related to each of the individual split documents. Defaults to
-  true.
+  `true`.
 * `$prefix?` is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
-  when calling `$service`. When true `$service` should implement the
-  `TundraTN/tundra.tn.schema:splitter` specification, when false `$service`
+  when calling `$service`. When `true` `$service` should implement the
+  `TundraTN/tundra.tn.schema:splitter` specification, when `false` `$service`
   should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
-  Defaults to true.
+  Defaults to `true`.
 * `$part` is the optional name of the bizdoc content part to be split.
   Defaults to the default content part when not specified (xmldata for XML
   document types, ffdata for Flat File document types).
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition`
@@ -1258,7 +1258,7 @@ bizdoc processing rule.
 * `$finally` is an optional fully-qualified service name which, when
   specified, will be invoked after processing, and whether or not an
   exception is encountered during processing.
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition`
@@ -1329,7 +1329,7 @@ bizdoc processing rule.
   translated.
 * `$service` is the fully-qualified name of the service which will be
   invoked to translate the parsed bizdoc content. The translation service
-  must accept a single IData document and return a single IData document,
+  must accept a single `IData` document and return a single `IData` document,
   and optionally TN_parms. Refer to the
   `TundraTN/tundra.tn.schema:translator` specification as a guide to the
   inputs and outputs required of the translation service.
@@ -1344,7 +1344,7 @@ bizdoc processing rule.
 * `$finally` is an optional fully-qualified service name which, when
   specified, will be invoked after translation, and whether or not an
   exception is encountered during translation.
-* `$pipeline` is an optional IData document containing arbitrary variables
+* `$pipeline` is an optional `IData` document containing arbitrary variables
   which can be used to influence the translation process.
 * `$content.type.input` is the MIME media type that describes the format of
   the bizdoc content being translated. Defaults the the content type of the
@@ -1361,7 +1361,7 @@ bizdoc processing rule.
   `$service` to [XML] content with elements in one or more namespaces.
 * `$schema.input` is the optional name of the Integration Server document
   reference or flat file schema to use to parse the bizdoc content into an
-  IData structure. Defaults to the parsing schema specified on the
+  `IData` structure. Defaults to the parsing schema specified on the
   associated Trading Networks document type.
 * `$schema.output` is the optional name of the Integration Server document
   reference or flat file schema to use to serialize the translated
@@ -1379,37 +1379,37 @@ bizdoc processing rule.
   failing that [UTF-8].
 * `$encoding.output` is an optional character set to use when serializing
   the translated document. If not specified, defaults to [UTF-8].
-* `$validate.input?` is an optional boolean flag which when true will
+* `$validate.input?` is an optional boolean flag which when `true` will
   validate the input content against the given `$schema.input`, or the
   parsing schema specified on the associated Trading Networks document
   type if `$schema.input` is not specified, and throw an exception to abort
-  processing if the content is invalid. Defaults to false.
-* `$validate.output?` is an optional boolean flag which when true will
+  processing if the content is invalid. Defaults to `false`.
+* `$validate.output?` is an optional boolean flag which when `true` will
   validate the output content against the given `$schema.output`, or the
   value in `TN_parms/$schema` returned by `$service` if `$schema.output` is
   not specified, and throw an exception to abort processing if the content
-  is invalid. Defaults to false.
+  is invalid. Defaults to `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
   it has been translated successfully. Defaults to DONE.
 * `$status.ignored` is an optional user status to use for the bizdoc when no
-  translation is returned by `$service` and `$required` is false. Defaults to
+  translation is returned by `$service` and `$required` is `false`. Defaults to
   IGNORED.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
 * `$required?` is an optional boolean indicating whether `$service` is
-  required to return a translated document. If true, and no translation is
+  required to return a translated document. If `true`, and no translation is
   returned by `$service`, an exception will be thrown and handled by the
-  `$catch` service. Defaults to false.
+  `$catch` service. Defaults to `false`.
 * `$prefix?` is an optional boolean flag indicating whether to use the '$'
   prefix on the standard input arguments (`bizdoc`, `sender`, and `receiver`)
-  when calling `$service`. When true `$service` should implement the
-  `TundraTN/tundra.tn.schema:translator` specification, when false `$service`
+  when calling `$service`. When `true` `$service` should implement the
+  `TundraTN/tundra.tn.schema:translator` specification, when `false` `$service`
   should implement the `WmTN/wm.tn.rec:ProcessingService` specification.
-  Defaults to true.
+  Defaults to `true`.
 * `$part` is the optional name of the bizdoc content part to be translated.
   Defaults to the default content part when not specified (xmldata for XML
   document types, ffdata for Flat File document types).
-* `$strict` is an optional set of boolean flags which when true abort the
+* `$strict` is an optional set of boolean flags which when `true` abort the
   processing of the bizdoc when it contains any errors with the associated
   class.
   * `Recognition`
@@ -1468,7 +1468,7 @@ Networks document types, and returns a new Trading Networks document
 
 Routes arbitrary content specified as a string, byte array, input
 stream, [org.w3c.dom.Node] object, com.sap.conn.idoc.IDocDocumentList object,
-or IData document to Trading Networks.
+or `IData` document to Trading Networks.
 
 Correctly supports large documents, so any document considered large will be
 routed as a large document in TN, unlike the `WmTN/wm.tn.doc.xml:routeXML`
@@ -1485,7 +1485,7 @@ for both XML and flat files documents.
   object, com.sap.conn.idoc.IDocDocumentList object, or `IData` document
   content to be routed to Trading Networks.
 
-  If `$content` is provided as an IData document, it will be serialized
+  If `$content` is provided as an `IData` document, it will be serialized
   using an emitter determined in order of precedence by `$schema` and
   `$content.type`. If `$schema` is specified, the type of reference determines
   the emitter to use: a document reference will use the XML emitter, a
@@ -1549,12 +1549,12 @@ for both XML and flat files documents.
   to the pipeline as `$document` to support substituting attribute
   values based on the content being routed.
 * `$namespace` is an optional list of namespace prefixes and the URIs
-  they map to, used when `$content` is provided as an IData document
+  they map to, used when `$content` is provided as an `IData` document
   to be serialized to [XML] with elements in one or more namespaces.
 * `$encoding` is an optional character set to use when encoding the
   resulting text data to a byte array or input stream. Defaults to [UTF-8].
 * `$schema` is the fully-qualified name of the parsing schema to use to
-  serialize `$content` when provided as an IData document to [XML] or
+  serialize `$content` when provided as an `IData` document to [XML] or
   Flat File content, and can have the following values:
   * For [XML] content, specify the fully-qualified name of the document
     reference that defines the [XML] format.
@@ -1575,10 +1575,10 @@ for both XML and flat files documents.
   * `TN_parms/DoctypeName`
   * `TN_parms/GroupID`
   * `TN_parms/ConversationID`
-* `$strict?` is an optional boolean, which if true will abort routing/
+* `$strict?` is an optional boolean, which if `true` will abort routing/
   processing rule execution of the document if any errors (such as
   validation errors) are encountered prior to processing, and result in an
-  exception being thrown. Defaults to true.
+  exception being thrown. Defaults to `true`.
 
 #### Outputs:
 
@@ -2567,7 +2567,7 @@ bytes or stream, to the given Trading Networks document (bizdoc).
 
 ### tundra.tn.document.content:exists
 
-Returns true if the content part identified by the given part name exists
+Returns `true` if the content part identified by the given part name exists
 for the given bizdoc.
 
 #### Inputs:
@@ -2580,7 +2580,7 @@ for the given bizdoc.
 
 #### Outputs:
 
-* `$exists?` is a boolean that when true indicates that the given `$bizdoc`
+* `$exists?` is a boolean that when `true` indicates that the given `$bizdoc`
   has a content part with the given `$part` name.
 
 ---
@@ -2629,7 +2629,7 @@ Trading Networks database.
 
 ### tundra.tn.document.derivative:exists
 
-Returns true if the given bizdoc is related to a derived bizdoc with the
+Returns `true` if the given bizdoc is related to a derived bizdoc with the
 given sender and receiver.
 
 #### Inputs:
@@ -2651,7 +2651,7 @@ given sender and receiver.
 
 #### Outputs:
 
-* `$exists?` is a boolean that when true indicates the existence of a
+* `$exists?` is a boolean that when `true` indicates the existence of a
   derivative of the given bizdoc with the given derived sender and
   receiver.
 * `$derivative` is the optional derivative bizdoc, if it exists.
@@ -2705,7 +2705,7 @@ document to Trading Networks.
       conditional statement can also be specified, which is evaluated
       against the pipeline containing `$bizdoc`, `$sender`, `$receiver`, and
       `$document` (the parsed bizdoc content), and only if the condition
-      evaluates to true will the associated amended value be applied. If
+      evaluates to `true` will the associated amended value be applied. If
       not specified, the amended value will always be applied.
   * `attributes` is an optional list of {key, value} pairs used to set
     attributes on the derived bizdoc:
@@ -2716,19 +2716,19 @@ document to Trading Networks.
       conditional statement can also be specified, which is evaluated
       against the pipeline containing `$bizdoc`, `$sender`, `$receiver`, and
       `$document` (the parsed bizdoc content), and only if the condition
-      evaluates to true will the attribute be added to the derived bizdoc.
+      evaluates to `true` will the attribute be added to the derived bizdoc.
       If not specified, the attribute will always be added to the derived
       bizdoc.
-  * `TN_parms` is an optional IData document containing routing hints used
+  * `TN_parms` is an optional `IData` document containing routing hints used
     when routing the derivative bizdoc.
-  * `force?` is an optional boolean flag: when true a new derivative will
+  * `force?` is an optional boolean flag: when `true` a new derivative will
     always be created even if an existing derivative for the same sender
-    and receiver already exists; when false a new derivative will only
+    and receiver already exists; when `false` a new derivative will only
     be created if there is no existing derivative with the same sender
-    and receiver. Defaults to false, if not specified.
-  * `enabled?` is an optional boolean flag, when true this derivative rule
-    is active, when false, this derivative rule is inactive and ignored.
-    Defaults to true when not specified.
+    and receiver. Defaults to `false`, if not specified.
+  * `enabled?` is an optional boolean flag, when `true` this derivative rule
+    is active, when `false`, this derivative rule is inactive and ignored.
+    Defaults to `true` when not specified.
 * `$part` is an optional name of the bizdoc content part to be copied to the
   resulting derivative. If not specified, the default content part is
   copied (xmldata for XML document types, ffdata for Flat File document
@@ -2743,7 +2743,7 @@ document to Trading Networks.
 
 ### tundra.tn.document.error:exists
 
-Returns true if any errors (of the given class, if specified) exist on the
+Returns `true` if any errors (of the given class, if specified) exist on the
 given bizdoc.
 
 #### Inputs:
@@ -2770,7 +2770,7 @@ given bizdoc.
 
 #### Outputs:
 
-* `$exists?` is a boolean that when true indicates the existence of one or
+* `$exists?` is a boolean that when `true` indicates the existence of one or
   more errors of the given classes (if specified) have been logged against
   the given bizdoc.
 * `$errors` is the list of activity error logs of the given classes (if
@@ -2791,7 +2791,7 @@ the given internal ID does not exist.
 * `$id` is the internal ID of the Trading Networks document (bizdoc) to be
   retrieved.
 * `$content?` is an optional boolean indicating whether to also return the
-  bizdoc's content parts. Defaults to false.
+  bizdoc's content parts. Defaults to `false`.
 
 #### Outputs:
 
@@ -2825,7 +2825,7 @@ to Integration Server's default namespace prefix `ns`.
 
 #### Outputs:
 
-* `$namespace` is an IData document containing the namespace
+* `$namespace` is an `IData` document containing the namespace
   declarations associated with the given `$bizdoc`, where the keys
   in the document are the namespace prefixes and the values are
   the namespace URIs.
@@ -2843,11 +2843,11 @@ sender and receiver profiles if desired. When the given bizdoc is a subset
 * `$bizdoc` is the Trading Networks document (bizdoc) to be normalized, and
   can be specified as a subset containing at least the InternalID field.
 * `$content?` is an optional boolean indicating whether to also return the
-  bizdoc's content parts. Defaults to false.
+  bizdoc's content parts. Defaults to `false`.
 * `$sender?` is an optional boolean indicating whether to also return the
-  associated sender partner profile. Defaults to false.
+  associated sender partner profile. Defaults to `false`.
 * `$receiver?` is an optional boolean indicating whether to also return the
-  associated receiver partner profile. Defaults to false.
+  associated receiver partner profile. Defaults to `false`.
 
 #### Outputs:
 
@@ -2885,7 +2885,7 @@ configured on the associated document type.
 
 #### Outputs:
 
-* `$document` is the parsed content part in an IData document representation.
+* `$document` is the parsed content part in an `IData` document representation.
 * `$content.type` is the MIME media type that describes the format of the
   parsed content.
 * `$namespace` is the list of XML namespace prefixes and URIs declared on
@@ -2971,11 +2971,11 @@ Sets user status on the given Trading Networks document.
 ### tundra.tn.document.type:get
 
 Returns the Trading Networks document type associated with the given ID or
-name as an IData document.
+name as an `IData` document.
 
 Use this service in preference to `WmTN/wm.tn.doctype:view`, as the WmTN
 service returns an object of type `com.wm.app.tn.doc.BizDocType` which,
-despite looking like one, is not a normal IData document and therefore
+despite looking like one, is not a normal `IData` document and therefore
 causes problems in Flow services. For example, you cannot branch on fields
 in the `com.wm.app.tn.doc.BizDocType` document.
 
@@ -2994,7 +2994,7 @@ exception if the document type does not exist.
 #### Outputs:
 
 * `$type` is the Trading Networks document type identified by either `$id` or
-  `$name`, returned as an IData document with the `WmTN/wm.tn.rec:BizDocType`
+  `$name`, returned as an `IData` document with the `WmTN/wm.tn.rec:BizDocType`
   structure. If no document type exists with the given `$id` or `$name`,
   nothing will be returned by this service, nor will an exception be thrown.
 
@@ -3555,7 +3555,7 @@ the given name.
 
 #### Outputs:
 
-* `$queue.properties` is an IData document containing the properties
+* `$queue.properties` is an `IData` document containing the properties
   of the Trading Networks delivery queue with the given name.
   * `name` is the unique name of the queue.
   * `type` is the type of queue, and is one of the following values:
@@ -3985,7 +3985,7 @@ specification.
   receiver of the bizdoc.
 * `$document` is the parsed bizdoc content for processing.
 * `$schema` is the name of the Integration Server document reference or flat
-  file schema used to parse the content into an IData structure.
+  file schema used to parse the content into an `IData` structure.
 * `$derivative` is the derivative rule to be filtered. The filter service is
   allowed to edit the `$derivative` rule, so that it may, for example,
   disable the rule by setting `$derivative/enabled?` to `false`, or specify
@@ -4075,18 +4075,18 @@ specification.
   default name for this input parameter. The actual name of the parameter
   can be changed using the `TundraTN/tundra.tn:process` `$service.input`
   parameter. This input is only provided when the `TundraTN/tundra.tn:process`
-  `$parse?` parameter is true.
+  `$parse?` parameter is `true`.
 * `$content` is the raw bizdoc content as an input stream for processing.
   This is the default name for this input parameter. The actual name of
   the parameter can be changed using the `TundraTN/tundra.tn:process`
   `$service.input` parameter. This input is only provided when the
-  `TundraTN/tundra.tn:process` `$parse?` parameter is false.
+  `TundraTN/tundra.tn:process` `$parse?` parameter is `false`.
 * `$content.type` is the MIME media type that describes the format of the
   bizdoc content.
 * `$namespace` is the list of XML namespace prefixes and URIs declared on
   the associated document type and used when parsing the content.
 * `$schema` is the name of the Integration Server document reference or flat
-  file schema used to parse the content into an IData structure.
+  file schema used to parse the content into an `IData` structure.
 * `$schema.type` describes whether the schema used to parse the content was
   a Flat File or XML schema.
 
@@ -4128,7 +4128,7 @@ specification.
   parameter, which allows the use of `TundraTN/tundra.tn:split` with
   existing mapping services.
 * `$schema` is the name of the Integration Server document reference or flat
-  file schema used to parse the content into an IData structure.
+  file schema used to parse the content into an `IData` structure.
 
 #### Outputs:
 
@@ -4144,7 +4144,7 @@ specification.
   serialize `$document[n]` to an input stream for routing to Trading
   Networks.
 * `TN_parms` provides routing hints for Trading Networks. It can be
-  specified as either a singleton IData or an IData list. If specified as
+  specified as either a singleton `IData` or an `IData` list. If specified as
   a singleton, it will be used when routing every item in the `$documents`
   list. If specified as a list, the length of `TN_parms` must match the
   length of `$documents`, and `TN_parms[n]` will be used when routing
