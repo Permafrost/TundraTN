@@ -2741,6 +2741,30 @@ document to Trading Networks.
 
 ---
 
+### tundra.tn.document.duplicate:check
+
+Checks if the given document is a duplicate by checking if there
+are other documents with the same document type, sender, receiver,
+and document ID.
+
+This service is designed to be called as a custom document duplicate
+check service from Trading Networks, and is compatible with the the
+`WmTN/wm.tn.rec:DupCheckService` specification.
+
+#### Inputs:
+
+* `bizdoc` is the Trading Networks document to be checked. Only
+  the internal ID of the bizdoc must be specified, with the
+  remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
+  optional.
+
+#### Outputs:
+
+* `duplicate` is a boolean flag which when `true` indicates that the
+  given document was considered a duplicate.
+
+---
+
 ### tundra.tn.document.error:exists
 
 Returns `true` if any errors (of the given class, if specified) exist on the
