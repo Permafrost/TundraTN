@@ -298,13 +298,13 @@ Networks bizdoc processing rule.
     the SAP Adapter alias name, and the user and password are
     provided as query string parameters:
 
-        sap+idoc:sap_r3?user=aladdin&password=opensesame&client=200&language=en&queue=xyz
+        sap+idoc:sap_r3?user=aladdin&password=opensesame&client=200&language=en&queue=xyz&limit=999
 
     An example non-opaque `sap+idoc` [URI] is as follows, where `sappr3`
     is the SAP Adapter alias name, and the user and password are
     provided in the authority section of the [URI]:
 
-        sap+idoc://aladdin:opensesame@sappr3?client=200&language=en&queue=xyz
+        sap+idoc://aladdin:opensesame@sappr3?client=200&language=en&queue=xyz&limit=999
 
     The following additional override options can be provided via the
     `$pipeline` document, and if specified will override the relevant
@@ -319,6 +319,9 @@ Networks bizdoc processing rule.
       the SAP Adapter alias language.
     * `$queue`: the optional name of the SAP system inbound queue,
       required when using queued remote function calls (qRFC).
+    * `$limit`: the maximum number of IDocs to send per transaction
+      (TID), used to partition the sending of a batch of IDocs across
+      multiple smaller TIDs. Defaults to no limit.
   * `sftp`: uploads the given content to the [SFTP] server, directory and
     file specified by the destination [URI]. Note that [SFTP] delivery
     is only supported on Integration Server versions 9.0 and higher.
