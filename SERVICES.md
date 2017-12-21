@@ -620,8 +620,11 @@ bizdoc processing rule.
   * `force?` is an optional boolean flag: when `true` the document will always
     be enqueued even if an existing task for the same queue already exists;
     when `false` the document will only be enqueued if there is no existing
-    task with a status of `DELIVERING` or `DONE` for the same queue. Defaults
-    to `false`, if not specified.
+    task with a status of `DELIVERING` or `DONE` for the same queue. Note that
+    this service prefers to restart existing `FAILED` tasks for the given
+    queue, rather than enqueuing new tasks, and therefore this setting
+    has no effect when a `FAILED` task for the queue already exists.
+    Defaults to `false`, if not specified.
   * `enabled?` is an optional boolean flag indicating whether this
     enqueuing rule will be applied to the document. When `false`, this
     enqueuing rule is inactive and ignored. Defaults to `true` when not
