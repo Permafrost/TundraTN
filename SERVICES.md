@@ -4175,7 +4175,7 @@ specification.
 * `$schemas` is the list of Integration Server document references or flat
   file schemas that each `$documents` item conforms to. The length of
   `$schemas` must match the length of `$documents`, and `$schema[n]` is used to
-  serialize `$document[n]` to an input stream for routing to Trading
+  serialize `$documents[n]` to an input stream for routing to Trading
   Networks.
 * `TN_parms` provides routing hints for Trading Networks. It can be
   specified as either a singleton `IData` or an `IData` list. If specified as
