@@ -111,7 +111,7 @@ bizdoc processing rule.
   handled correctly, for example an argument named `example/item[0]` will
   be converted to an `IData` document named `example` containing a String
   list named `item` with it's first value set accordingly.
-* `$service.input` is an optional name used when adding either the bizdoc
+* `$service.input` is an optional name used when adding the bizdoc
   content to the input pipeline of the call to `$service`. Defaults to
   `$document` when `$parse?` is `true`, and `$content` when `$parse` is `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
@@ -726,9 +726,9 @@ bizdoc processing rule.
   `WmPublic/pub.xml:xmlStringToXMLNode`, or `WmPublic/pub.xml:xmlNodeToDocument` via
   `Tundra/tundra.tn.document:parse`). Fully-qualified names will be handled
   correctly, for example an argument named `example/item[0]` will be
-  converted to an `IData` document named `example` containing a String list
+  converted to an `IData` document named `example` containing a String[] list
   named `item` with it's first value set accordingly
-* `$service.input` is an optional name used when adding either the bizdoc
+* `$service.input` is an optional name used when adding the bizdoc
   content to the input pipeline of the call to `$service`. Defaults to
   `$document` when `$parse?` is `true`, and `$content` when `$parse` is `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
