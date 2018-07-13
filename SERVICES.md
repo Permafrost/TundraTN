@@ -954,20 +954,26 @@ This service is intended to be invoked by clients via HTTP or FTP.
 
 ### tundra.tn:reroute
 
-Reprocesses the given document in Trading Networks by rematching it against
-the processing rule base and executing the first processing rule that
-matches.
+Reprocesses the given document in Trading Networks by rematching it
+against the processing rule base and executing the first processing
+rule that matches.
+
+This service is designed to be called directly from a Trading
+Networks bizdoc processing rule.
 
 #### Inputs:
 
-* `bizdoc` is the Trading Networks document to be rerouted.
+* `bizdoc` is the Trading Networks document to be reprocessed.
 
 #### Outputs:
 
-* `bizdoc`
-* `sender`
-* `receiver`
-* `TN_parms`
+* `bizdoc` is the Trading Networks document that was reprocessed.
+* `sender` is the Trading Networks profile of the sender of the
+  document.
+* `receiver` is the Trading Networks profile of the receiver of the
+  document.
+* `TN_parms` contains the routing hints used to route the document in
+  Trading Networks.
 
 ---
 
@@ -2955,6 +2961,28 @@ bizdoc.
   optional.
 * `$relationship` is an optional string describing the relationship between
   the source and target bizdocs. If not specified, defaults to 'Unknown'.
+
+---
+
+### tundra.tn.document:reroute
+
+Reprocesses the given Trading Networks document.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document (bizdoc) to be
+  reprocessed, and can be specified as a subset containing at least
+  the `InternalID` field.
+
+#### Outputs:
+
+* `$bizdoc` is the Trading Networks document that was reprocessed.
+* `$sender` is the Trading Networks profile of the sender of the
+  document.
+* `$receiver` is the Trading Networks profile of the receiver of the
+  document.
+* `TN_parms` contains the routing hints used to route the document in
+  Trading Networks.
 
 ---
 
