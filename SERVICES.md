@@ -2863,28 +2863,32 @@ to Integration Server's default namespace prefix `ns`.
 
 ### tundra.tn.document:normalize
 
-Returns the given Trading Networks document (bizdoc) and its associated
-sender and receiver profiles if desired. When the given bizdoc is a subset
-(only the `InternalID` is required), the full bizdoc will be returned.
+Returns the given Trading Networks document (bizdoc) and its
+associated sender and receiver profiles if desired. When the given
+bizdoc is a subset (only the InternalID is required), the full
+bizdoc will be returned.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document (bizdoc) to be normalized, and
-  can be specified as a subset containing at least the InternalID field.
-* `$content?` is an optional boolean indicating whether to also return the
-  bizdoc's content parts. Defaults to `false`.
-* `$sender?` is an optional boolean indicating whether to also return the
-  associated sender partner profile. Defaults to `false`.
-* `$receiver?` is an optional boolean indicating whether to also return the
-  associated receiver partner profile. Defaults to `false`.
+* `$bizdoc` is the Trading Networks document (bizdoc) to be
+  normalized, and can be specified as a subset containing at least
+  the InternalID field.
+* `$content?` is an optional boolean indicating whether to also return
+  the bizdoc's content parts. Defaults to `false`.
+* `$sender?` is an optional boolean indicating whether to also return
+  the associated sender partner profile. Defaults to `false`.
+* `$receiver?` is an optional boolean indicating whether to also
+  return the associated receiver partner profile. Defaults to `false`.
+* `$raise?` is an optional boolean indicating whether to throw an
+  exception if the bizdoc does not exist. Defaults to `false`.
 
 #### Outputs:
 
 * `$bizdoc` is the normalized full Trading Networks document (bizdoc).
-* `$sender` is the Trading Networks partner profile of the sender of the
-  returned bizdoc, if requested.
-* `$receiver` is the Trading Networks partner profile of the receiver of the
-  returned bizdoc, if requested.
+* `$sender` is the Trading Networks partner profile of the sender of
+  the returned bizdoc, if requested.
+* `$receiver` is the Trading Networks partner profile of the receiver
+  of the returned bizdoc, if requested.
 
 ---
 

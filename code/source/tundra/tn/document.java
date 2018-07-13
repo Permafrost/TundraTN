@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2018-07-13 11:24:23 GMT+10:00
+// -----( CREATED: 2018-07-13 11:41:04 GMT+10:00
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -156,6 +156,7 @@ public final class document
 		// [i] field:0:optional $content? {"false","true"}
 		// [i] field:0:optional $sender? {"false","true"}
 		// [i] field:0:optional $receiver? {"false","true"}
+		// [i] field:0:optional $raise? {"false","true"}
 		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
 		// [o] record:0:optional $sender
 		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
@@ -240,10 +241,19 @@ public final class document
 		    boolean content = IDataHelper.getOrDefault(cursor, "$content?", Boolean.class, false);
 		    boolean sender = IDataHelper.getOrDefault(cursor, "$sender?", Boolean.class, false);
 		    boolean receiver = IDataHelper.getOrDefault(cursor, "$receiver?", Boolean.class, false);
+		    boolean raise = IDataHelper.getOrDefault(cursor, "$raise?", Boolean.class, false);
 
 		    BizDocEnvelope output = BizDocEnvelopeHelper.normalize(input, content);
 
-		    if (output != null) {
+		    if (output == null) {
+		        if (raise && input != null) {
+		            IDataCursor inputCursor = input.getCursor();
+		            String id = IDataUtil.getString(inputCursor, "InternalID");
+		            inputCursor.destroy();
+
+		            throw new UnrecoverableException("Trading Networks document does not exist: " + id);
+		        }
+		    } else {
 		        IDataHelper.put(cursor, "$bizdoc", output);
 		        if (sender || receiver) {
 		            ProfileCache cache = ProfileCache.getInstance();

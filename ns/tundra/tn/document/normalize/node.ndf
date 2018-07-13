@@ -7,6 +7,7 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -20,6 +21,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc</value>
           <value name="field_type">recref</value>
           <value name="field_dim">0</value>
@@ -27,6 +29,7 @@
           <value name="nillable">true</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
+          <value name="modifiable">true</value>
           <value name="rec_ref">wm.tn.rec:BizDocEnvelope</value>
         </record>
         <record javaclass="com.wm.util.Values">
@@ -37,6 +40,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$content?</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -68,6 +72,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$sender?</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -99,6 +104,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$receiver?</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -122,10 +128,44 @@
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
         </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_usereditable">false</value>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="is_public">false</value>
+          <value name="field_name">$raise?</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <array name="field_options" type="value" depth="1">
+            <value>false</value>
+            <value>true</value>
+          </array>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">boolean</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -139,6 +179,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc</value>
           <value name="field_type">recref</value>
           <value name="field_dim">0</value>
@@ -146,6 +187,7 @@
           <value name="nillable">true</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
+          <value name="modifiable">true</value>
           <value name="rec_ref">wm.tn.rec:BizDocEnvelope</value>
         </record>
         <record javaclass="com.wm.util.Values">
@@ -155,6 +197,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$sender</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -170,12 +213,14 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Corporate</value>
               <value name="field_type">recref</value>
               <value name="field_dim">0</value>
               <value name="nillable">true</value>
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:Corporation</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -185,6 +230,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Contact</value>
               <value name="field_type">recref</value>
               <value name="field_dim">1</value>
@@ -192,6 +238,7 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
               <value name="is_soap_array_encoding_used">true</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:Contact</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -201,6 +248,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Delivery</value>
               <value name="field_type">recref</value>
               <value name="field_dim">1</value>
@@ -208,6 +256,7 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
               <value name="is_soap_array_encoding_used">true</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:Delivery</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -217,6 +266,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ID</value>
               <value name="field_type">recref</value>
               <value name="field_dim">1</value>
@@ -224,6 +274,7 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
               <value name="is_soap_array_encoding_used">true</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:ExternalID</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -233,6 +284,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ProfileGroups</value>
               <value name="field_type">string</value>
               <value name="field_dim">1</value>
@@ -248,6 +300,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">users</value>
               <value name="field_type">string</value>
               <value name="field_dim">1</value>
@@ -264,6 +317,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">DefaultID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -281,6 +335,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ExternalID</value>
               <value name="field_type">record</value>
               <value name="field_dim">0</value>
@@ -290,6 +345,7 @@
               <value name="is_global">false</value>
               <array name="rec_fields" type="record" depth="1">
               </array>
+              <value name="modifiable">true</value>
             </record>
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -298,6 +354,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ExtendedFields</value>
               <value name="field_type">record</value>
               <value name="field_dim">0</value>
@@ -307,6 +364,7 @@
               <value name="is_global">false</value>
               <array name="rec_fields" type="record" depth="1">
               </array>
+              <value name="modifiable">true</value>
             </record>
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -315,6 +373,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">DeliveryMethods</value>
               <value name="field_type">record</value>
               <value name="field_dim">0</value>
@@ -330,6 +389,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Preferred Protocol</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -337,6 +397,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -346,6 +407,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary E-mail</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -353,6 +415,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -362,6 +425,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary FTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -369,6 +433,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -378,6 +443,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary FTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -385,6 +451,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -394,6 +461,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary HTTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -401,6 +469,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -410,6 +479,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary HTTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -417,6 +487,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -426,6 +497,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary E-mail</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -433,6 +505,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -442,6 +515,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary FTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -449,6 +523,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -458,6 +533,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary FTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -465,6 +541,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -474,6 +551,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary HTTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -481,6 +559,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -490,6 +569,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary HTTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -497,10 +577,12 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
               </array>
               <value name="rec_closed">true</value>
+              <value name="modifiable">true</value>
             </record>
             <record javaclass="com.wm.util.Values">
               <value name="node_type">unknown</value>
@@ -510,6 +592,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ProfileID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -538,6 +621,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">CorporationName</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -555,6 +639,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">OrgUnit</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -572,6 +657,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Type</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -588,6 +674,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Self?</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -603,6 +690,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Status</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -620,6 +708,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RemoteStatus</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -637,6 +726,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">PreferredProtocol</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -654,6 +744,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">PollingProtocol</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -671,6 +762,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">TNVersion</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -687,6 +779,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Deleted?</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -701,6 +794,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">TimeToWait</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -716,6 +810,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RetryLimit</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -731,6 +826,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RetryFactor</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -746,6 +842,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ProfileGroups</value>
               <value name="field_type">string</value>
               <value name="field_dim">1</value>
@@ -761,6 +858,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RoutingOffStatus?</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -769,6 +867,7 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -777,6 +876,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$receiver</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -792,12 +892,14 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Corporate</value>
               <value name="field_type">recref</value>
               <value name="field_dim">0</value>
               <value name="nillable">true</value>
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:Corporation</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -807,6 +909,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Contact</value>
               <value name="field_type">recref</value>
               <value name="field_dim">1</value>
@@ -814,6 +917,7 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
               <value name="is_soap_array_encoding_used">true</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:Contact</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -823,6 +927,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Delivery</value>
               <value name="field_type">recref</value>
               <value name="field_dim">1</value>
@@ -830,6 +935,7 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
               <value name="is_soap_array_encoding_used">true</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:Delivery</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -839,6 +945,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ID</value>
               <value name="field_type">recref</value>
               <value name="field_dim">1</value>
@@ -846,6 +953,7 @@
               <value name="form_qualified">false</value>
               <value name="is_global">false</value>
               <value name="is_soap_array_encoding_used">true</value>
+              <value name="modifiable">true</value>
               <value name="rec_ref">wm.tn.rec:ExternalID</value>
             </record>
             <record javaclass="com.wm.util.Values">
@@ -855,6 +963,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ProfileGroups</value>
               <value name="field_type">string</value>
               <value name="field_dim">1</value>
@@ -870,6 +979,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">users</value>
               <value name="field_type">string</value>
               <value name="field_dim">1</value>
@@ -886,6 +996,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">DefaultID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -903,6 +1014,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ExternalID</value>
               <value name="field_type">record</value>
               <value name="field_dim">0</value>
@@ -912,6 +1024,7 @@
               <value name="is_global">false</value>
               <array name="rec_fields" type="record" depth="1">
               </array>
+              <value name="modifiable">true</value>
             </record>
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -920,6 +1033,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ExtendedFields</value>
               <value name="field_type">record</value>
               <value name="field_dim">0</value>
@@ -929,6 +1043,7 @@
               <value name="is_global">false</value>
               <array name="rec_fields" type="record" depth="1">
               </array>
+              <value name="modifiable">true</value>
             </record>
             <record javaclass="com.wm.util.Values">
               <value name="node_type">record</value>
@@ -937,6 +1052,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">DeliveryMethods</value>
               <value name="field_type">record</value>
               <value name="field_dim">0</value>
@@ -952,6 +1068,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Preferred Protocol</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -959,6 +1076,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -968,6 +1086,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary E-mail</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -975,6 +1094,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -984,6 +1104,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary FTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -991,6 +1112,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1000,6 +1122,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary FTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1007,6 +1130,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1016,6 +1140,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary HTTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1023,6 +1148,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1032,6 +1158,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Primary HTTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1039,6 +1166,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1048,6 +1176,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary E-mail</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1055,6 +1184,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1064,6 +1194,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary FTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1071,6 +1202,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1080,6 +1212,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary FTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1087,6 +1220,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1096,6 +1230,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary HTTP</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1103,6 +1238,7 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
                 <record javaclass="com.wm.util.Values">
@@ -1112,6 +1248,7 @@
                     <value name="field_largerEditor">false</value>
                     <value name="field_password">false</value>
                   </record>
+                  <value name="is_public">false</value>
                   <value name="field_name">Secondary HTTPS</value>
                   <value name="field_type">recref</value>
                   <value name="field_dim">0</value>
@@ -1119,10 +1256,12 @@
                   <value name="nillable">true</value>
                   <value name="form_qualified">false</value>
                   <value name="is_global">false</value>
+                  <value name="modifiable">true</value>
                   <value name="rec_ref">wm.tn.rec:Delivery</value>
                 </record>
               </array>
               <value name="rec_closed">true</value>
+              <value name="modifiable">true</value>
             </record>
             <record javaclass="com.wm.util.Values">
               <value name="node_type">unknown</value>
@@ -1132,6 +1271,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ProfileID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1160,6 +1300,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">CorporationName</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1177,6 +1318,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">OrgUnit</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1194,6 +1336,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Type</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1210,6 +1353,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Self?</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -1225,6 +1369,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Status</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1242,6 +1387,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RemoteStatus</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1259,6 +1405,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">PreferredProtocol</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1276,6 +1423,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">PollingProtocol</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1293,6 +1441,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">TNVersion</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -1309,6 +1458,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">Deleted?</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -1323,6 +1473,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">TimeToWait</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -1338,6 +1489,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RetryLimit</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -1353,6 +1505,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RetryFactor</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -1368,6 +1521,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">ProfileGroups</value>
               <value name="field_type">string</value>
               <value name="field_dim">1</value>
@@ -1383,6 +1537,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">RoutingOffStatus?</value>
               <value name="field_type">object</value>
               <value name="field_dim">0</value>
@@ -1391,35 +1546,40 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
   </record>
   <value name="node_comment">### tundra.tn.document:normalize
 
-Returns the given Trading Networks document (bizdoc) and its associated
-sender and receiver profiles if desired. When the given bizdoc is a subset
-(only the InternalID is required), the full bizdoc will be returned.
+Returns the given Trading Networks document (bizdoc) and its 
+associated sender and receiver profiles if desired. When the given 
+bizdoc is a subset (only the InternalID is required), the full 
+bizdoc will be returned.
 
 #### Inputs:
 
-* $bizdoc is the Trading Networks document (bizdoc) to be normalized, and
-  can be specified as a subset containing at least the InternalID field.
-* $content? is an optional boolean indicating whether to also return the
-  bizdoc's content parts. Defaults to false.
-* $sender? is an optional boolean indicating whether to also return the
-  associated sender partner profile. Defaults to false.
-* $receiver? is an optional boolean indicating whether to also return the
-  associated receiver partner profile. Defaults to false.
+* $bizdoc is the Trading Networks document (bizdoc) to be 
+  normalized, and can be specified as a subset containing at least 
+  the InternalID field.
+* $content? is an optional boolean indicating whether to also return 
+  the bizdoc's content parts. Defaults to false.
+* $sender? is an optional boolean indicating whether to also return 
+  the associated sender partner profile. Defaults to false.
+* $receiver? is an optional boolean indicating whether to also 
+  return the associated receiver partner profile. Defaults to false.
+* $raise? is an optional boolean indicating whether to throw an 
+  exception if the bizdoc does not exist. Defaults to false.
 
 #### Outputs:
 
 * $bizdoc is the normalized full Trading Networks document (bizdoc).
-* $sender is the Trading Networks partner profile of the sender of the
-  returned bizdoc, if requested.
-* $receiver is the Trading Networks partner profile of the receiver of the
-  returned bizdoc, if requested.
-
+* $sender is the Trading Networks partner profile of the sender of 
+  the returned bizdoc, if requested.
+* $receiver is the Trading Networks partner profile of the receiver 
+  of the returned bizdoc, if requested.
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
@@ -1436,10 +1596,16 @@ sender and receiver profiles if desired. When the given bizdoc is a subset
   <value name="svc_in_validator_options">none</value>
   <value name="svc_out_validator_options">none</value>
   <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
 </Values>
