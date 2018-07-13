@@ -2813,15 +2813,15 @@ given bizdoc.
 Returns the Trading Networks document (bizdoc) associated with the
 given internal ID, optionally including the document's content parts.
 
-Unlike `WmTN/wm.tn.doc:viewAs`, this service does not throw an
-exception if the given internal ID does not exist.
-
 #### Inputs:
 
 * `$id` is the internal ID of the Trading Networks document (bizdoc)
   to be retrieved.
 * `$content?` is an optional boolean indicating whether to also return
   the bizdoc's content parts. Defaults to `false`.
+* `$raise?` is an optional boolean indicating whether to throw an
+  exception if no bizdoc exists with the given `$id`. Defaults to
+  `false`.
 
 #### Outputs:
 
