@@ -847,39 +847,34 @@ Networks bizdoc processing rule.
     * $limit: the maximum number of IDocs to send per transaction
       (TID), used to partition the sending of a batch of IDocs across
       multiple smaller TIDs. Defaults to no limit.
-  * sftp: uploads the given content to the [SFTP] server, directory and
-    file specified by the destination [URI]. Note that [SFTP] delivery
-    is only supported on Integration Server versions 9.0 and higher. 
-    An example [SFTP] [URI] is as follows:
+  * sftp: uploads the given content to the [SFTP] server, directory 
+    and file specified by the destination [URI]. Note that [SFTP] 
+    delivery is only supported on Integration Server versions 9.0 
+    and higher. An example [SFTP] [URI] is as follows:
 
         sftp://useralias/path/file?append=false&amp;rename=true
 
     Where:
-    * useralias identifies the Integration Server [SFTP] User Alias to
-      be used for connecting to the destination [SFTP] server.
-    * path is the absolute path to the directory where the file should
-      be written, unless it starts with "." to indicate a relative
-      directory path, such as:
+    * useralias identifies the Integration Server [SFTP] User Alias 
+      to be used for connecting to the destination [SFTP] server.
+    * path is the absolute path to the directory where the file 
+      should be written, unless it starts with "." to indicate a 
+      relative directory path, such as:
 
           sftp://useralias/./path/file
 
-    * file is an optional remote file name that the content will be
-      written to. If not specified, will default to the value of the 
-      bizdoc attribute Content Name if it exists, otherwise the 
-      internal ID of the bizdoc whose content is being delivered. Note
-      that a partial filename can also be specified with just the 
-      extension part (such as ".xml"), and in this case the internal
-      ID will be prefixed to the given extension.
+    * file is the literal name of the remote file the content will be
+      written to.
     * append is an optional query string boolean which if true will 
       append the content to the given file if it already exists. 
       Defaults to false if not specified, which overwrites the given
       file if it already exists.
     * rename is an optional query string boolean which if true will
-      first write the content to a unique temporary filename and then
-      rename it to its specified name once written. Defaults to false,
-      where the content is written directly to the filename specified
-      in the destination [URI]. Note if the append option is true, 
-      this option has no effect.
+      first write the content to the given file name with ".tmp" 
+      suffix and then rename it to its specified name once written. 
+      Defaults to false, where the content is written directly to 
+      the file name specified in the destination [URI]. Note if the 
+      append option is true, this option has no effect.
 * $service is an optional fully-qualified service name which, when
   specified, will be invoked prior to delivery, thus allowing a 
   service to perform processing to influence the delivery (such as 

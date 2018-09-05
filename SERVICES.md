@@ -350,11 +350,11 @@ Networks bizdoc processing rule.
       Defaults to `false` if not specified, which overwrites the given
       file if it already exists.
     * `rename` is an optional query string boolean which if `true` will
-      first write the content to a unique temporary filename and then
-      rename it to its specified name once written. Defaults to `false`,
-      where the content is written directly to the filename specified
-      in the destination [URI]. Note if the append option is `true`,
-      this option has no effect.
+      first write the content to the given file name with `.tmp`
+      suffix and then rename it to its specified name once written.
+      Defaults to `false`, where the content is written directly to
+      the file name specified in the destination [URI]. Note if the
+      append option is `true`, this option has no effect.
 * `$service` is an optional fully-qualified service name which, when
   specified, will be invoked prior to delivery, thus allowing a
   service to perform processing to influence the delivery (such as
