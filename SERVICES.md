@@ -939,8 +939,8 @@ the transport in question.
 
 #### Outputs:
 
-* `id` is the internal/native ID assigned by Trading Networks to
-  the resulting bizdoc.
+* `id` is the internal ID assigned by Trading Networks to the
+  resulting bizdoc.
 
 ---
 
