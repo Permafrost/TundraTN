@@ -2,7 +2,7 @@ package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
 // -----( CREATED: 2019-02-28 16:35:17 GMT+10:00
-// -----( ON-HOST: PCLBKJP4M2.internal.qr.com.au
+// -----( ON-HOST:
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -38,7 +38,7 @@ public final class attribute
 		// [i] record:0:optional $attributes
 		// [o] record:0:optional $attributes
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    IData attributes = IDataHelper.get(cursor, "$attributes", IData.class);
 		    IDataHelper.put(cursor, "$attributes", BizDocAttributeHelper.sanitize(attributes), false);
@@ -47,7 +47,7 @@ public final class attribute
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 
