@@ -636,6 +636,18 @@ bizdoc processing rule.
       content.
     * value is the new value to be assigned to the element associated with
       the given key.
+    * action is an optional choice of merge, create, update, or delete. 
+      Defaults to merge if not specified.
+      * merge will create the key and associate it with the given 
+        value if the key does not already exist, or update the the 
+        associated value if the key already exists.
+      * create will only create the key and associate it with the given
+        value if the key does not already exist. 
+      * update will only update the associated value if the key 
+        already exists.
+      * delete will remove the key and previously associated value 
+        from the document. No value is required to be specified when
+        using this action.
     * condition is an optional Tundra/tundra.condition:evaluate
       conditional statement can also be specified, which is evaluated
       against the pipeline containing $bizdoc, $sender, $receiver, and
@@ -689,7 +701,6 @@ bizdoc processing rule.
   * Persistence
   * Saving
   * Routing
-
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
