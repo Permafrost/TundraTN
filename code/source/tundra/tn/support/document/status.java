@@ -1,8 +1,8 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-05-07 20:15:49 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2019-05-24 18:01:13 GMT+10:00
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -44,7 +44,7 @@ public final class status
 		// [i] field:0:optional $status.user.previous
 		// [i] field:0:optional $status.silence? {"false","true"}
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
 		    String systemStatus = IDataHelper.get(cursor, "$status.system", String.class);
@@ -52,14 +52,14 @@ public final class status
 		    String userStatus = IDataHelper.get(cursor, "$status.user", String.class);
 		    String previousUserStatus = IDataHelper.get(cursor, "$status.user.previous", String.class);
 		    boolean silence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
-		
+
 		    BizDocEnvelopeHelper.setStatus(bizdoc, systemStatus, previousSystemStatus, userStatus, previousUserStatus, silence);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 

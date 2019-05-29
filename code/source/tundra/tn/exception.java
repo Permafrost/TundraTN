@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-07-19T16:44:11.089
+// -----( CREATED: 2019-05-24 18:00:54 GMT+10:00
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -123,7 +123,7 @@ public final class exception
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] field:0:optional $message
-		// [i] field:0:optional $type {&quot;security&quot;,&quot;strict&quot;,&quot;malformed&quot;,&quot;validation&quot;,&quot;duplicate&quot;,&quot;unsupported&quot;}
+		// [i] field:0:optional $type {"security","strict","malformed","validation","duplicate","unsupported"}
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {

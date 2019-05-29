@@ -886,8 +886,16 @@ the transport in question.
 * `strict` is an optional boolean flag indicating whether 'strict'
   mode routing should be used for the received content. Defaults
   to `true`. To disable 'strict' mode when using HTTP, include
-  strict=false as part of the query string of the receive URL:
-  http://localhost:5555/invoke/tundra.tn/receive?strict=false.
+  `strict=false` in the query string of the receive URL:
+  `http://localhost:5555/invoke/tundra.tn/receive?strict=false`.
+* `defer` is an optional boolean, which if `true` will verify, validate,
+  and persist the document synchronously, but will then defer the
+  document to be processed asynchronously by a dedicated fixed size
+  thread pool, thereby ensuring a constrained use of compute
+  resources for processing rule execution. Defaults to `false`.
+  To enable deferred processing, include `defer=true` in the query
+  string of the receive URL:
+  `http://localhost:5555/invoke/tundra.tn/receive?defer=true`
 * `TN_parms` is an optional set of routing hints for Trading
   Networks to use when routing the received content. If not
   specified by the caller, the following TN_parms are set
@@ -1586,6 +1594,15 @@ for both XML and flat files documents.
 
   Defaults to serializing `$content` as [XML], if neither `$content.type` nor
   `$schema` are specified.
+* `$strict?` is an optional boolean, which if `true` will abort routing/
+  processing rule execution of the document if any errors (such as
+  validation errors) are encountered prior to processing, and result in an
+  exception being thrown. Defaults to `true`.
+* `$defer?` is an optional boolean, which if `true` will verify, validate,
+  and persist the document synchronously, but will then defer the document
+  to be processed asynchronously by a dedicated fixed size thread pool,
+  thereby ensuring a constrained use of compute resources for processing
+  rule execution. Defaults to `false`.
 * `TN_parms` is an optional set of routing hints for Trading Networks to use
   when routing `$content`. If specified, the following values will overwrite
   the normal bizdoc recognised values, allowing for sender, receiver,
@@ -1598,10 +1615,6 @@ for both XML and flat files documents.
   * `TN_parms/DoctypeName`
   * `TN_parms/GroupID`
   * `TN_parms/ConversationID`
-* `$strict?` is an optional boolean, which if `true` will abort routing/
-  processing rule execution of the document if any errors (such as
-  validation errors) are encountered prior to processing, and result in an
-  exception being thrown. Defaults to `true`.
 
 #### Outputs:
 

@@ -1,8 +1,8 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-05-07 20:14:23 EST
-// -----( ON-HOST: 192.168.66.129
+// -----( CREATED: 2019-05-22 09:51:08 GMT+10:00
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -40,19 +40,19 @@ public final class type
 		// [i] field:0:optional $name
 		// [o] recref:0:optional $type wm.tn.rec:BizDocType
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    String id = IDataHelper.get(cursor, "$id", String.class);
 		    String name = IDataHelper.get(cursor, "$name", String.class);
-		
+
 		    BizDocType type = null;
-		
+
 		    if (id != null) {
 		        type = BizDocTypeHelper.get(id);
 		    } else if (name != null) {
 		        type = BizDocTypeHelper.getByName(name);
 		    }
-		
+
 		    if (type != null) {
 		        IDataHelper.put(cursor, "$type", IDataHelper.normalize((IData)type));
 		    }
@@ -61,7 +61,7 @@ public final class type
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -75,10 +75,10 @@ public final class type
 		// [i] recref:0:optional $type wm.tn.rec:BizDocType
 		// [o] recref:0:optional $type wm.tn.rec:BizDocType
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$type", IData.class));
-		
+
 		    if (type != null) {
 		        IDataHelper.put(cursor, "$type", IDataHelper.normalize((IData)type));
 		    }
@@ -87,7 +87,7 @@ public final class type
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 

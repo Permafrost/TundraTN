@@ -1,0 +1,29 @@
+# TundraTN package configuration
+#
+# These settings can be overridden in this file, however
+# changes may be lost when updating to a newer version of
+# the package.
+#
+# Alternatively, these settings can be overridden using
+# a server-specific configuration file stored in the
+# server config directory: ./config/packages/TundraTN.hjson.
+{
+    # TundraTN package features, which can be enabled with feature
+    # flags in this configuration section.
+    feature: {
+        document: {
+            defer: {
+                # Enables the ability to defer processing of received
+                # and routed bizdocs to a dedicated fixed size thread
+                # pool, thereby constraining the compute resources used
+                # for processing rule execution.
+                enabled: true
+                # The number of threads to use in the dedicated thread
+                # pool for processing deferred bizdocs. If not specified
+                # or null, double the number of available processors is
+                # used for the size of the thread pool.
+                concurrency: null
+            }
+        }
+    }
+}
