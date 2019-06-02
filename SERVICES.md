@@ -1627,6 +1627,32 @@ for both XML and flat files documents.
 
 ---
 
+### tundra.tn.document.attribute.datetime.transformer:constant
+
+Trading Networks string transformer which returns the given
+argument as the attribute value. This transformer can be used to
+assign a constant value to an extracted attribute.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored
+  by this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is the constant value to be returned as the attribute's value,
+  and must be a [ISO8601] XML datetime string.
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input values list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item has the given `arg` as its value.
+
+---
+
 ### tundra.tn.document.attribute.datetime.transformer:parse
 
 Trading Networks date attribute transformer which parses the given Trading
@@ -1748,6 +1774,33 @@ custom document type attribute transformer.
 
 * `newValues` is a list containing a single value representing the
   average of all the given `values`.
+
+---
+
+### tundra.tn.document.attribute.number.transformer:constant
+
+Trading Networks string transformer which returns the given
+argument as the attribute value. This transformer can be used to
+assign a constant value to an extracted attribute.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored
+  by this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is the constant value to be returned as the attribute's value,
+  and must be a decimal number specified as a string using the
+  [java.math.BigDecimal grammar].
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input values list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item has the given `arg` as its value.
 
 ---
 
@@ -1910,6 +1963,31 @@ custom document type attribute transformer.
 
 * `newValues` is a list containing a single value representing the
   minimum of all the given `values`.
+
+---
+
+### tundra.tn.document.attribute.string.transformer:constant
+
+Trading Networks string transformer which returns the given
+argument as the attribute value. This transformer can be used to
+assign a constant value to an extracted attribute.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored
+  by this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is the constant value to be returned as the attribute's value.
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input values list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item has the given `arg` as its value.
 
 ---
 
