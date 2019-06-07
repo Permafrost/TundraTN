@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-05-29T13:08:15.706
+// -----( CREATED: 2019-06-06T16:37:05.008
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -12,8 +12,9 @@ import com.wm.app.b2b.server.ServiceException;
 import com.wm.app.tn.doc.BizDocEnvelope;
 import com.wm.app.tn.route.RoutingRule;
 import permafrost.tundra.data.IDataHelper;
+import permafrost.tundra.lang.ExceptionHelper;
+import permafrost.tundra.tn.route.CallableRoute;
 import permafrost.tundra.tn.route.Deferrer;
-import permafrost.tundra.tn.route.DeferredRoute;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class defer
@@ -48,7 +49,9 @@ public final class defer
 		    RoutingRule rule = IDataHelper.get(cursor, "rule", RoutingRule.class);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
 
-		    Deferrer.getInstance().defer(new DeferredRoute(bizdoc, rule, parameters));
+		    Deferrer.getInstance().defer(new CallableRoute(bizdoc, rule, parameters));
+		} catch(Exception ex) {
+		    ExceptionHelper.raise(ex);
 		} finally {
 		    cursor.destroy();
 		}
