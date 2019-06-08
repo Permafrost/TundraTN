@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="svc_type">flow</value>
+  <value name="svc_subtype">default</value>
+  <value name="svc_sigtype">java 3.5</value>
+  <value name="svc_spec">tundra.tn.schema.document.attribute.number:transformer</value>
+  <value name="node_comment">### tundra.tn.document.attribute.number.transformer.priority:imminence
+
+Trading Networks number transformer which returns a message priority
+given one or more datetimes, a duration range, and a base priority.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* values is a list of datetime strings all conforming to the same
+  pattern.
+* isArray is a boolean indicating if the values argument contains
+  multiple items.
+* arg is a YAML or JSON string containing the following fields:
+  * pattern is the datetime pattern the given values conform to.
+  * range is an XML duration range, specified as start..end, and
+    defaults to -PT1H..P7D if not specified. Datetime values within
+    the range affect the priority, and the closer the datetime to the
+    start of the range the higher the returned priority.
+  * priority is the base priority as an integer.
+
+#### Outputs:
+
+* newValues is a list containing a message priority calculated as
+  the base priority integer plus a decimal mantissa representing the
+  most imminent of the given datetime values to the start of the given
+  duration range relative to current time.
+</value>
+  <value name="stateless">no</value>
+  <value name="caching">no</value>
+  <value name="prefetch">no</value>
+  <value name="cache_ttl">15</value>
+  <value name="prefetch_level">1</value>
+  <value name="template_type">html</value>
+  <value name="audit_level">off</value>
+  <value name="check_internal_acls">no</value>
+  <value name="icontext_policy">$null</value>
+  <value name="system_service">no</value>
+  <value name="retry_max">0</value>
+  <value name="retry_interval">0</value>
+  <value name="svc_in_validator_options">default</value>
+  <value name="svc_out_validator_options">none</value>
+  <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
+  <record name="auditsettings" javaclass="com.wm.util.Values">
+    <value name="document_data">0</value>
+    <value name="startExecution">false</value>
+    <value name="stopExecution">false</value>
+    <value name="onError">true</value>
+  </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
+</Values>

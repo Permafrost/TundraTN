@@ -1,8 +1,8 @@
-package tundra.tn.support.document;
+package tundra.tn.support.document.attribute;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-02-28 16:35:17 GMT+10:00
-// -----( ON-HOST:
+// -----( CREATED: 2019-06-08 14:56:46 EST
+// -----( ON-HOST:-
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -13,16 +13,16 @@ import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.tn.document.BizDocAttributeHelper;
 // --- <<IS-END-IMPORTS>> ---
 
-public final class attribute
+public final class any
 
 {
 	// ---( internal utility methods )---
 
-	final static attribute _instance = new attribute();
+	final static any _instance = new any();
 
-	static attribute _newInstance() { return new attribute(); }
+	static any _newInstance() { return new any(); }
 
-	static attribute _cast(Object o) { return (attribute)o; }
+	static any _cast(Object o) { return (any)o; }
 
 	// ---( server methods )---
 

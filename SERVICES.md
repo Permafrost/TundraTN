@@ -1966,6 +1966,37 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.number.transformer.priority:imminence
+
+Trading Networks number transformer which returns a message priority
+given one or more datetimes, a duration range, and a base priority.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is a YAML or JSON string containing the following fields:
+  * `pattern` is the datetime pattern the given values conform to.
+  * `range` is an XML duration range, specified as `start..end`, and
+    defaults to `-PT1H..P7D` if not specified. Datetime values within
+    the range affect the priority, and the closer the datetime to the
+    start of the range the higher the returned priority.
+  * `priority` is the base priority as an integer.
+
+#### Outputs:
+
+* newValues is a list containing a message priority calculated as
+  the base priority integer plus a decimal mantissa representing the
+  most imminent of the given datetime values to the start of the given
+  duration range relative to current time.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer:constant
 
 Trading Networks string transformer which returns the given
