@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-06-06T16:37:05.008
+// -----( CREATED: 2019-06-11T10:22:08.329
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -11,6 +11,7 @@ import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
 import com.wm.app.tn.doc.BizDocEnvelope;
 import com.wm.app.tn.route.RoutingRule;
+import javax.xml.datatype.Duration;
 import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.tn.route.CallableRoute;
@@ -68,7 +69,20 @@ public final class defer
 		// --- <<IS-START(seed)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		Deferrer.getInstance().seed();
+		// [i] field:0:optional $bizdoc.seed.age
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    Duration age = IDataHelper.get(cursor, "$bizdoc.seed.age", Duration.class);
+
+		    if (age == null) {
+		        Deferrer.getInstance().seed();
+		    } else {
+		        Deferrer.getInstance().seed(age);
+		    }
+		} finally {
+		    cursor.destroy();
+		}
 		// --- <<IS-END>> ---
 
 
