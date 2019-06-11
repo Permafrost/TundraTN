@@ -47,38 +47,6 @@
           <value name="is_global">false</value>
         </record>
         <record javaclass="com.wm.util.Values">
-          <value name="node_type">unknown</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <value name="field_usereditable">false</value>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">defer</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <array name="field_options" type="value" depth="1">
-            <value>true</value>
-            <value>false</value>
-          </array>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_comment">Trading Networks routing parameters.  The following parameters should ideally be specified for
 non-XML content:
@@ -532,14 +500,6 @@ the transport in question.
   to true. To disable 'strict' mode when using HTTP, include
   strict=false in the query string of the receive URL:
   http://localhost:5555/invoke/tundra.tn/receive?strict=false.
-* defer is an optional boolean, which if true will verify, validate,
-  and persist the document synchronously, but will then defer the 
-  document to be processed asynchronously by a dedicated fixed size 
-  thread pool, thereby ensuring a constrained use of compute 
-  resources for processing rule execution. Defaults to true. 
-  To disable deferred processing, include defer=false in the query 
-  string of the receive URL: 
-  http://localhost:5555/invoke/tundra.tn/receive?defer=false
 * TN_parms is an optional set of routing hints for Trading
   Networks to use when routing the received content. If not
   specified by the caller, the following TN_parms are set

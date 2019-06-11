@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-06-11T10:22:08.329
+// -----( CREATED: 2019-06-14T12:34:30.658
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -31,35 +31,6 @@ public final class defer
 
 	// ---( server methods )---
 
-
-
-
-	public static final void route (IData pipeline)
-        throws ServiceException
-	{
-		// --- <<IS-START(route)>> ---
-		// @subtype unknown
-		// @sigtype java 3.5
-		// [i] object:0:required bizdoc
-		// [i] object:0:required rule
-		// [i] record:0:optional TN_parms
-		IDataCursor cursor = pipeline.getCursor();
-
-		try {
-		    BizDocEnvelope bizdoc = IDataHelper.get(cursor, "bizdoc", BizDocEnvelope.class);
-		    RoutingRule rule = IDataHelper.get(cursor, "rule", RoutingRule.class);
-		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
-		    Deferrer.getInstance().defer(new CallableRoute(bizdoc, rule, parameters));
-		} catch(Exception ex) {
-		    ExceptionHelper.raise(ex);
-		} finally {
-		    cursor.destroy();
-		}
-		// --- <<IS-END>> ---
-
-
-	}
 
 
 
@@ -97,12 +68,18 @@ public final class defer
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] object:0:optional $bizdoc.defer.concurrency
+		// [i] object:0:required $bizdoc.defer.queue.capacity
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
 		    Integer concurrency = IDataHelper.get(cursor, "$bizdoc.defer.concurrency", Integer.class);
+		    Integer capacity = IDataHelper.get(cursor, "$bizdoc.defer.queue.capacity", Integer.class);
+
 		    Deferrer deferrer = Deferrer.getInstance();
-		    if (concurrency != null) deferrer.setConcurrency(concurrency);
+
+		    if (concurrency != null && concurrency >= 1) deferrer.setConcurrency(concurrency);
+		    if (capacity != null && capacity >= 1) deferrer.setCapacity(capacity);
+
 		    deferrer.start();
 		} finally {
 		    cursor.destroy();

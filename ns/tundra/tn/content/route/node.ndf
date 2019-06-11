@@ -287,38 +287,6 @@
           <value name="is_global">false</value>
         </record>
         <record javaclass="com.wm.util.Values">
-          <value name="node_type">unknown</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <value name="field_usereditable">false</value>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">$defer?</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <array name="field_options" type="value" depth="1">
-            <value>true</value>
-            <value>false</value>
-          </array>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
           <value name="node_comment">Trading Networks routing parameters.  The following parameters should ideally be specified for
 non-XML content:
@@ -2528,18 +2496,12 @@ for both XML and flat files documents.
     reference that defines the [XML] format.
   * For Flat File content specify the fully-qualified name of the flat
     file schema that defines the Flat File format.
-
   Defaults to serializing $content as [XML], if neither $content.type nor
   $schema are specified.
 * $strict? is an optional boolean, which if true will abort routing/
   processing rule execution of the document if any errors (such as
   validation errors) are encountered prior to processing, and result in an
   exception being thrown. Defaults to true.
-* $defer? is an optional boolean, which if true will verify, validate,
-  and persist the document synchronously, but will then defer the document
-  to be processed asynchronously by a dedicated fixed size thread pool,
-  thereby ensuring a constrained use of compute resources for processing 
-  rule execution. Defaults to true.
 * TN_parms is an optional set of routing hints for Trading Networks to use
   when routing $content. If specified, the following values will overwrite
   the normal bizdoc recognised values, allowing for sender, receiver,
@@ -2552,7 +2514,6 @@ for both XML and flat files documents.
   * TN_parms/DoctypeName
   * TN_parms/GroupID
   * TN_parms/ConversationID
-
 
 #### Outputs:
 

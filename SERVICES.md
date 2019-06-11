@@ -888,14 +888,6 @@ the transport in question.
   to `true`. To disable 'strict' mode when using HTTP, include
   `strict=false` in the query string of the receive URL:
   `http://localhost:5555/invoke/tundra.tn/receive?strict=false`.
-* `defer` is an optional boolean, which if `true` will verify, validate,
-  and persist the document synchronously, but will then defer the
-  document to be processed asynchronously by a dedicated fixed size
-  thread pool, thereby ensuring a constrained use of compute
-  resources for processing rule execution. Defaults to `true`.
-  To disable deferred processing, include `defer=false` in the query
-  string of the receive URL:
-  `http://localhost:5555/invoke/tundra.tn/receive?defer=false`
 * `TN_parms` is an optional set of routing hints for Trading
   Networks to use when routing the received content. If not
   specified by the caller, the following TN_parms are set
@@ -1591,18 +1583,12 @@ for both XML and flat files documents.
     reference that defines the [XML] format.
   * For Flat File content specify the fully-qualified name of the flat
     file schema that defines the Flat File format.
-
   Defaults to serializing `$content` as [XML], if neither `$content.type` nor
   `$schema` are specified.
 * `$strict?` is an optional boolean, which if `true` will abort routing/
   processing rule execution of the document if any errors (such as
   validation errors) are encountered prior to processing, and result in an
   exception being thrown. Defaults to `true`.
-* `$defer?` is an optional boolean, which if `true` will verify, validate,
-  and persist the document synchronously, but will then defer the document
-  to be processed asynchronously by a dedicated fixed size thread pool,
-  thereby ensuring a constrained use of compute resources for processing
-  rule execution. Defaults to `true`.
 * `TN_parms` is an optional set of routing hints for Trading Networks to use
   when routing `$content`. If specified, the following values will overwrite
   the normal bizdoc recognised values, allowing for sender, receiver,

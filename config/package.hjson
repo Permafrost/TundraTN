@@ -17,12 +17,20 @@
                 # and routed bizdocs to a dedicated fixed size thread
                 # pool, thereby constraining the compute resources used
                 # for processing rule execution.
-                enabled: true
+                enabled: false
                 # The number of threads to use in the dedicated thread
                 # pool for processing deferred bizdocs. If not specified
                 # or null, double the number of available processors is
                 # used for the size of the thread pool.
                 concurrency: null
+                # The work queue capacity which determines the maximum
+                # number of deferred routes that can be queued waiting
+                # for execution by the thread pool. If more routes are
+                # received than there is capacity to queue, they will
+                # be executed by the calling thread, thus applying
+                # back pressure when required. Defaults to 16 x the
+                # number of available processors.
+                capacity: null
             }
         }
     }

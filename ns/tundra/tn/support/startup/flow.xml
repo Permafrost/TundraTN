@@ -325,7 +325,33 @@
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$bizdoc.defer.queue.capacity</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Integer</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="is_public">false</value>
         <value name="field_name">$bizdoc.defer.concurrency</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">$bizdoc.defer.queue.capacity</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -365,19 +391,6 @@
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
         <array name="rec_fields" type="record" depth="1">
-          <record javaclass="com.wm.util.Values">
-            <value name="node_type">record</value>
-            <value name="is_public">false</value>
-            <value name="field_name">document</value>
-            <value name="field_type">record</value>
-            <value name="field_dim">0</value>
-            <value name="nillable">true</value>
-            <value name="form_qualified">false</value>
-            <value name="is_global">false</value>
-            <array name="rec_fields" type="record" depth="1">
-            </array>
-            <value name="modifiable">true</value>
-          </record>
           <record javaclass="com.wm.util.Values">
             <value name="node_type">record</value>
             <value name="node_comment"></value>
@@ -460,6 +473,23 @@
                         <value name="form_qualified">false</value>
                         <value name="is_global">false</value>
                       </record>
+                      <record javaclass="com.wm.util.Values">
+                        <value name="node_type">unknown</value>
+                        <value name="node_comment"></value>
+                        <record name="node_hints" javaclass="com.wm.util.Values">
+                          <value name="field_largerEditor">false</value>
+                          <value name="field_password">false</value>
+                        </record>
+                        <value name="is_public">false</value>
+                        <value name="field_name">capacity</value>
+                        <value name="field_type">object</value>
+                        <value name="field_dim">0</value>
+                        <value name="field_opt">true</value>
+                        <value name="wrapper_type">java.lang.Double</value>
+                        <value name="nillable">true</value>
+                        <value name="form_qualified">false</value>
+                        <value name="is_global">false</value>
+                      </record>
                     </array>
                     <value name="modifiable">true</value>
                   </record>
@@ -482,6 +512,9 @@
 
 <MAPCOPY NAME="Link" FROM="/$configuration;2;0/feature;2;0/document;2;0/defer;2;0/concurrency;3.4;0" TO="/$bizdoc.defer.concurrency(1);3;0">
 </MAPCOPY>
+
+<MAPCOPY NAME="Link" FROM="/$configuration;2;0/feature;2;0/document;2;0/defer;2;0/capacity;3.4;0" TO="/$bizdoc.defer.queue.capacity(1);3;0">
+</MAPCOPY>
 </MAP>
 
 <MAP MODE="OUTPUT">
@@ -497,17 +530,6 @@
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">$bizdoc.defer.concurrency</value>
-        <value name="field_type">object</value>
-        <value name="field_dim">0</value>
-        <value name="wrapper_type">java.lang.Integer</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">record</value>
         <value name="node_comment"></value>
@@ -526,6 +548,31 @@
         <array name="rec_fields" type="record" depth="1">
         </array>
         <value name="modifiable">true</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">$bizdoc.defer.concurrency</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">$bizdoc.defer.queue.capacity</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
       </record>
     </array>
     <value name="modifiable">true</value>
@@ -553,6 +600,9 @@
   <!-- nodes -->
 
 <MAPDELETE NAME="Dropper" FIELD="/$bizdoc.defer.concurrency;3.6;0">
+</MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/$bizdoc.defer.queue.capacity;3;0">
 </MAPDELETE>
 </MAP>
 </INVOKE>
