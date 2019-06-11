@@ -60,8 +60,8 @@
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
           <array name="field_options" type="value" depth="1">
-            <value>false</value>
             <value>true</value>
+            <value>false</value>
           </array>
           <record name="field_content_type" javaclass="com.wm.util.Values">
             <value name="contentType">1</value>
@@ -536,10 +536,10 @@ the transport in question.
   and persist the document synchronously, but will then defer the 
   document to be processed asynchronously by a dedicated fixed size 
   thread pool, thereby ensuring a constrained use of compute 
-  resources for processing rule execution. Defaults to false. 
-  To enable deferred processing, include defer=true in the query 
+  resources for processing rule execution. Defaults to true. 
+  To disable deferred processing, include defer=false in the query 
   string of the receive URL: 
-  http://localhost:5555/invoke/tundra.tn/receive?defer=true
+  http://localhost:5555/invoke/tundra.tn/receive?defer=false
 * TN_parms is an optional set of routing hints for Trading
   Networks to use when routing the received content. If not
   specified by the caller, the following TN_parms are set

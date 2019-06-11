@@ -892,10 +892,10 @@ the transport in question.
   and persist the document synchronously, but will then defer the
   document to be processed asynchronously by a dedicated fixed size
   thread pool, thereby ensuring a constrained use of compute
-  resources for processing rule execution. Defaults to `false`.
-  To enable deferred processing, include `defer=true` in the query
+  resources for processing rule execution. Defaults to `true`.
+  To disable deferred processing, include `defer=false` in the query
   string of the receive URL:
-  `http://localhost:5555/invoke/tundra.tn/receive?defer=true`
+  `http://localhost:5555/invoke/tundra.tn/receive?defer=false`
 * `TN_parms` is an optional set of routing hints for Trading
   Networks to use when routing the received content. If not
   specified by the caller, the following TN_parms are set
@@ -1602,7 +1602,7 @@ for both XML and flat files documents.
   and persist the document synchronously, but will then defer the document
   to be processed asynchronously by a dedicated fixed size thread pool,
   thereby ensuring a constrained use of compute resources for processing
-  rule execution. Defaults to `false`.
+  rule execution. Defaults to `true`.
 * `TN_parms` is an optional set of routing hints for Trading Networks to use
   when routing `$content`. If specified, the following values will overwrite
   the normal bizdoc recognised values, allowing for sender, receiver,
