@@ -1,7 +1,7 @@
 package tundra.tn.support.document;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-06-14T12:34:30.658
+// -----( CREATED: 2019-07-23T11:26:32.128
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -34,26 +34,13 @@ public final class defer
 
 
 
-	public static final void seed (IData pipeline)
+	public static final void restart (IData pipeline)
         throws ServiceException
 	{
-		// --- <<IS-START(seed)>> ---
+		// --- <<IS-START(restart)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] field:0:optional $bizdoc.seed.age
-		IDataCursor cursor = pipeline.getCursor();
-
-		try {
-		    Duration age = IDataHelper.get(cursor, "$bizdoc.seed.age", Duration.class);
-
-		    if (age == null) {
-		        Deferrer.getInstance().seed();
-		    } else {
-		        Deferrer.getInstance().seed(age);
-		    }
-		} finally {
-		    cursor.destroy();
-		}
+		Deferrer.getInstance().restart();
 		// --- <<IS-END>> ---
 
 
@@ -68,12 +55,12 @@ public final class defer
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] object:0:optional $bizdoc.defer.concurrency
-		// [i] object:0:required $bizdoc.defer.queue.capacity
+		// [i] object:0:optional $bizdoc.defer.capacity
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
 		    Integer concurrency = IDataHelper.get(cursor, "$bizdoc.defer.concurrency", Integer.class);
-		    Integer capacity = IDataHelper.get(cursor, "$bizdoc.defer.queue.capacity", Integer.class);
+		    Integer capacity = IDataHelper.get(cursor, "$bizdoc.defer.capacity", Integer.class);
 
 		    Deferrer deferrer = Deferrer.getInstance();
 
@@ -97,17 +84,28 @@ public final class defer
 		// --- <<IS-START(status)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [o] field:0:required $bizdoc.defer.started?
+		// [o] object:0:required $bizdoc.defer.started?
 		// [o] object:0:required $bizdoc.defer.concurrency
-		// [o] object:0:required $bizdoc.defer.queue.length
+		// [o] object:0:required $bizdoc.defer.capacity
+		// [o] object:0:optional $bizdoc.defer.idle?
+		// [o] object:0:optional $bizdoc.defer.saturated?
+		// [o] object:0:optional $bizdoc.defer.pending
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
 		    Deferrer deferrer = Deferrer.getInstance();
 
-		    IDataHelper.put(cursor, "$bizdoc.defer.started?", deferrer.isStarted(), String.class);
+		    boolean started = deferrer.isStarted();
+
+		    IDataHelper.put(cursor, "$bizdoc.defer.started?", started);
 		    IDataHelper.put(cursor, "$bizdoc.defer.concurrency", deferrer.getConcurrency());
-		    IDataHelper.put(cursor, "$bizdoc.defer.queue.length", deferrer.size());
+		    IDataHelper.put(cursor, "$bizdoc.defer.capacity", deferrer.getCapacity());
+
+		    if (started) {
+		        IDataHelper.put(cursor, "$bizdoc.defer.idle?", deferrer.isIdle());
+		        IDataHelper.put(cursor, "$bizdoc.defer.saturated?", deferrer.isSaturated());
+		        IDataHelper.put(cursor, "$bizdoc.defer.pending", deferrer.size());
+		    }
 		} finally {
 		    cursor.destroy();
 		}
