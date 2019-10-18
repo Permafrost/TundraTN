@@ -1,8 +1,8 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2017-06-04 18:00:53 EST
-// -----( ON-HOST: 192.168.66.132
+// -----( CREATED: 2019-10-18T16:51:35.371
+// -----( ON-HOST: -
 
 import com.wm.data.*;
 import com.wm.util.Values;
@@ -60,11 +60,11 @@ public final class queue
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    String queue = IDataHelper.get(cursor, "queue", String.class);
 		    String service = IDataHelper.get(cursor, "$service", String.class);
-		    IData scope = IDataHelper.get(cursor, "$pipeline", IData.class);
+		    IData scope = IDataHelper.normalize(IDataHelper.get(cursor, "$pipeline", IData.class));
 		    int concurrency = IDataHelper.getOrDefault(cursor, "$concurrency", Integer.class, 1);
 		    boolean ordered = IDataHelper.getOrDefault(cursor, "$ordered?", Boolean.class, false);
 		    boolean suspend = IDataHelper.getOrDefault(cursor, "$suspend?", Boolean.class, false);
@@ -75,7 +75,7 @@ public final class queue
 		    int threadPriority = IDataHelper.getOrDefault(cursor, "$thread.priority", Integer.class, Thread.NORM_PRIORITY);
 		    boolean threadDaemon = IDataHelper.getOrDefault(cursor, "$daemonize?", Boolean.class, false);
 		    String exhaustedStatus = IDataHelper.get(cursor, "$status.exhausted", String.class);
-		
+
 		    DeliveryQueueProcessor.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
@@ -86,7 +86,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -99,7 +99,7 @@ public final class queue
 		// @sigtype java 3.5
 		// [i] field:0:optional $queue
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    DeliveryQueueProcessor.interrupt(IDataHelper.get(cursor, "$queue", String.class));
 		} finally {
@@ -107,7 +107,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -126,9 +126,10 @@ public final class queue
 		// [o] -- field:0:required status
 		// [o] -- field:0:required length
 		// [o] -- object:0:required queue
+		// [o] - recref:0:required thread tundra.schema:thread
 		// [o] field:0:required $processing.threads.length
 		IDataCursor cursor = pipeline.getCursor();
-		
+
 		try {
 		    IDataHelper.put(cursor, "$processing.started?", DeliveryQueueProcessor.isStarted(), String.class);
 		    IData[] processes = DeliveryQueueProcessor.list();
@@ -143,7 +144,7 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -157,7 +158,7 @@ public final class queue
 		DeliveryQueueProcessor.start();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 
 
@@ -171,7 +172,7 @@ public final class queue
 		DeliveryQueueProcessor.stop();
 		// --- <<IS-END>> ---
 
-                
+
 	}
 }
 

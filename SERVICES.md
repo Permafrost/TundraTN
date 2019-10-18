@@ -3760,6 +3760,13 @@ the given name.
 
 ---
 
+### tundra.tn.support.queue:interrupt
+
+Interrupts and therefore shuts down the processing supervisor
+associated with the given queue.
+
+---
+
 ### tundra.tn.queue:length
 
 Returns the number of tasks with a status of `QUEUED` or `DELIVERING`
