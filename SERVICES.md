@@ -3092,6 +3092,8 @@ Reprocesses the given Trading Networks document.
 * `$bizdoc` is the Trading Networks document (bizdoc) to be
   reprocessed, and can be specified as a subset containing at least
   the `InternalID` field.
+* `TN_parms` contains the routing hints used to route the document in
+  Trading Networks.
 
 #### Outputs:
 
