@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-18T14:28:29.404
+// -----( CREATED: 2019-10-22T10:38:29.680
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -30,6 +30,8 @@ import permafrost.tundra.lang.UnrecoverableException;
 import permafrost.tundra.server.ServiceHelper;
 import permafrost.tundra.time.DateTimeHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
+import permafrost.tundra.tn.log.ActivityLogHelper;
+import permafrost.tundra.tn.log.EntryType;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class exception
@@ -102,7 +104,7 @@ public final class exception
 		        }
 		    }
 
-		    BizDocEnvelopeHelper.log(bizdoc, "ERROR", messageClass, messageSummary, messageDetail);
+		    ActivityLogHelper.log(EntryType.ERROR, messageClass, messageSummary, messageDetail, bizdoc);
 		    BizDocEnvelopeHelper.setStatus(bizdoc, null, userStatus, statusSilence);
 
 		    ExceptionHelper.raise(exception);

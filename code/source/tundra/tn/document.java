@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-18T16:38:32.694
+// -----( CREATED: 2019-10-22T09:09:30.795
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -25,6 +25,8 @@ import permafrost.tundra.tn.document.attribute.transform.number.ImminentPrioriti
 import permafrost.tundra.tn.document.BizDocContentHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
 import permafrost.tundra.tn.document.BizDocTypeHelper;
+import permafrost.tundra.tn.log.ActivityLogHelper;
+import permafrost.tundra.tn.log.EntryType;
 import permafrost.tundra.tn.profile.ProfileCache;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -281,7 +283,26 @@ public final class document
 	}
 
 	// --- <<IS-START-SHARED>> ---
-	public static class Content {
+	public static class ActivityLog {
+	    public static void log(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            String entryType = IDataHelper.getOrDefault(cursor, "$type", String.class, "MESSAGE");
+	            String entryClass = IDataHelper.getOrDefault(cursor, "$class", String.class, "General");
+	            String messageSummary = IDataHelper.get(cursor, "$summary", String.class);
+	            String messageDetail = IDataHelper.get(cursor, "$message", String.class);
+	            IData context = IDataHelper.get(cursor, "$context", IData.class);
+
+	            ActivityLogHelper.log(EntryType.normalize(entryType), entryClass, messageSummary, messageDetail, bizdoc, context);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
+	public static class DocumentContent {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
 
@@ -325,7 +346,7 @@ public final class document
 	    }
 	}
 
-	public static class Duplicate {
+	public static class DocumentDuplicate {
 	    public static void check(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
 
@@ -338,7 +359,7 @@ public final class document
 	    }
 	}
 
-	public static class Error {
+	public static class DocumentError {
 	    public static void exists(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
 
@@ -356,7 +377,7 @@ public final class document
 	    }
 	}
 
-	public static class Type {
+	public static class DocumentType {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
 
@@ -395,7 +416,7 @@ public final class document
 	    }
 	}
 
-	public static class AttributeNumberTransformerPriority {
+	public static class DocumentAttributeNumberTransformerPriority {
 	    public static void imminence(IData pipeline) throws ServiceException {
 	        Transformer.transform(pipeline, new ImminentPrioritizer());
 	    }
