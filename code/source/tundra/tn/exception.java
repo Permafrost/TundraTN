@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-22T10:38:29.680
+// -----( CREATED: 2019-10-25T10:03:13.279
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -71,6 +71,8 @@ public final class exception
 		           messageSummary = exception.getMessage(),
 		           messageDetail = ExceptionHelper.getStackTraceString(exception, 3),
 		           userStatus = "ERROR";
+
+		    if (messageSummary == null || "".equals(messageSummary.trim())) messageSummary = exception.toString();
 
 		    if (exception instanceof IDataCodable) {
 		        IDataMap exceptionDocument = IDataMap.of(((IDataCodable)exception).getIData());
