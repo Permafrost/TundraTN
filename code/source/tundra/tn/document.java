@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-22T09:09:30.795
+// -----( CREATED: 2019-10-29T13:34:42.675
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -371,6 +371,25 @@ public final class document
 
 	            IDataHelper.put(cursor, "$exists?", errors != null && errors.length > 0, String.class);
 	            IDataHelper.put(cursor, "$errors", IDataHelper.normalize(errors), false);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
+	public static class DocumentStatus {
+	    public static void set(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            String systemStatus = IDataHelper.get(cursor, "$status.system", String.class);
+	            String previousSystemStatus = IDataHelper.get(cursor, "$status.system.previous", String.class);
+	            String userStatus = IDataHelper.get(cursor, "$status.user", String.class);
+	            String previousUserStatus = IDataHelper.get(cursor, "$status.user.previous", String.class);
+	            boolean silence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
+
+	            BizDocEnvelopeHelper.setStatus(bizdoc, systemStatus, previousSystemStatus, userStatus, previousUserStatus, silence);
 	        } finally {
 	            cursor.destroy();
 	        }
