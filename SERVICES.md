@@ -4265,13 +4265,6 @@ matches the given document.
 
 ---
 
-### tundra.tn.schema:derivative
-
-This schema describes the structure for derivative rules used by
-`TundraTN/tundra.tn:derive`.
-
----
-
 ### tundra.tn.support.rule:normalize
 
 Normalizes the given Trading Networks processing rule. When the given
@@ -4290,6 +4283,13 @@ Throws an exception if the rule does not exist.
 
 * $rule is the normalized Trading Networks processing rule if it
   exists.
+
+---
+
+### tundra.tn.schema:derivative
+
+This schema describes the structure for derivative rules used by
+`TundraTN/tundra.tn:derive`.
 
 ---
 
