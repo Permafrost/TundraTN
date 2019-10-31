@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-31T10:43:06.111
+// -----( CREATED: 2019-10-31T15:58:42.081
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -497,12 +497,12 @@ public final class rule
 		// --- <<IS-START(match)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] record:0:optional $bizdoc
+		// [i] record:0:required $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] record:0:optional TN_parms
 		// [i] - field:0:optional processingRuleID
 		// [i] - field:0:optional processingRuleName
-		// [o] record:0:optional $rule
+		// [o] record:0:required $rule
 		// [o] - field:0:required RuleName
 		// [o] - field:0:required RuleDescription
 		// [o] - field:0:required Disabled?
@@ -539,7 +539,7 @@ public final class rule
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
 
 		    IDataHelper.put(cursor, "$rule", RoutingRuleHelper.match(bizdoc, parameters, true));
