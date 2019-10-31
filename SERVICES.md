@@ -4163,10 +4163,133 @@ Refer to `tundra.tn:translate` for further details.
 
 ---
 
+### tundra.tn.support.rule:disable
+
+Disable the given Trading Networks processing rule.
+
+#### Inputs:
+
+* `$rule` is the Trading Networks processing rule to be disabled, and
+  can be specified as a subset containing at least the `RuleID` or
+  `RuleName`.
+
+---
+
+### tundra.tn.support.rule:enable
+
+Enable the given Trading Networks processing rule.
+
+#### Inputs:
+
+* `$rule` is the Trading Networks processing rule to be enabled, and
+  can be specified as a subset containing at least the `RuleID` or
+  `RuleName`.
+
+---
+
+### tundra.tn.support.rule:execute
+
+Processes a Trading Networks document using the specified processing
+rule.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document (bizdoc) to be processed,
+  and can be specified as a subset containing at least the `InternalID`
+  field.
+* `$rule` is the Trading Networks processing rule to be used when
+  processing the given `$bizdoc`, and can be specified as a subset
+  containing at least the `RuleID` or `RuleName`.
+* `TN_parms` contains the routing hints used to route the document in
+  Trading Networks.
+
+#### Outputs:
+
+* `$bizdoc` is the Trading Networks document that was processed.
+* `$sender` is the Trading Networks profile of the sender of the
+  document.
+* `$receiver` is the Trading Networks profile of the receiver of the
+  document.
+* `$rule` is the Trading Networks processing rule used to process
+  `$bizdoc`.
+* `TN_parms` contains the routing hints used to route the document in
+  Trading Networks.
+
+---
+
+### tundra.tn.support.rule:get
+
+Returns the Trading Networks processing rule associated with the
+given identity or name.
+
+#### Inputs:
+
+* `$rule.id` is the internal RuleID for the rule to be returned.
+* `$rule.name` is the internal RuleName for the rule to be returned.
+
+#### Outputs:
+
+* `$rule` is the Trading Networks processing rule associated with the
+  given identity or name, if it exists.
+
+---
+
+### tundra.tn.support.rule:list
+
+Returns the list of all Trading Networks processing rules currently
+defined.
+
+#### Outputs:
+
+* `$rule.list` is the list of all Trading Networks processing rules.
+* `$rule.list.length` is the number of items in the returned `$rule.list`.
+
+---
+
+### tundra.tn.support.rule:match
+
+Returns the first Trading Networks processing rule whose criteria
+matches the given document.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document (bizdoc), and can be
+  specified as a subset containing at least the `InternalID` field.
+* `TN_parms` contains the routing hints used to route the document in
+  Trading Networks.
+
+#### Outputs:
+
+* `$rule` is the first Trading Networks processing rule whose criteria
+  matches the given `$bizdoc`.
+
+---
+
 ### tundra.tn.schema:derivative
 
 This schema describes the structure for derivative rules used by
 `TundraTN/tundra.tn:derive`.
+
+---
+
+### tundra.tn.support.rule:normalize
+
+Normalizes the given Trading Networks processing rule. When the given
+rule is a subset (only `RuleID` or `RuleName` is required), the full
+rule will be returned.
+
+Throws an exception if the rule does not exist.
+
+#### Inputs:
+
+* $rule is the Trading Networks processing rule to be normalized, and
+  can be specified as a subset containing at least the RuleID or
+  RuleName.
+
+#### Outputs:
+
+* $rule is the normalized Trading Networks processing rule if it
+  exists.
 
 ---
 
