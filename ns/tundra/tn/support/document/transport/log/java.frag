@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">log</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">SURhdGFDdXJzb3IgY3Vyc29yID0gcGlwZWxpbmUuZ2V0Q3Vyc29yKCk7Cgp0cnkgewogICAgYm9v
+bGVhbiBzaG91bGRMb2cgPSBJRGF0YUhlbHBlci5nZXRPckRlZmF1bHQoY3Vyc29yLCAiJHRyYW5z
+cG9ydC5sb2c/IiwgQm9vbGVhbi5jbGFzcywgZmFsc2UpOwogICAgaWYgKHNob3VsZExvZykgewog
+ICAgICAgIEJpekRvY0VudmVsb3BlIGRvY3VtZW50ID0gQml6RG9jRW52ZWxvcGVIZWxwZXIubm9y
+bWFsaXplKElEYXRhSGVscGVyLmdldChjdXJzb3IsICIkYml6ZG9jIiwgSURhdGEuY2xhc3MpKTsK
+ICAgICAgICBTdHJpbmcgcGFydE5hbWUgPSBJRGF0YUhlbHBlci5nZXQoY3Vyc29yLCAiJHRyYW5z
+cG9ydC5sb2cucGFydCIsIFN0cmluZy5jbGFzcyk7CiAgICAgICAgQml6RG9jQ29udGVudEhlbHBl
+ci5hZGRUcmFuc3BvcnRDb250ZW50UGFydChkb2N1bWVudCwgcGFydE5hbWUpOwogICAgfQp9IGZp
+bmFsbHkgewogICAgY3Vyc29yLmRlc3Ryb3koKTsKfQ==</value>
+</Values>
