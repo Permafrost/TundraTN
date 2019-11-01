@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-29T13:34:42.675
+// -----( CREATED: 2019-11-01T10:32:06.204
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -15,7 +15,9 @@ import com.wm.app.tn.doc.BizDocType;
 import com.wm.app.tn.err.ActivityLogEntry;
 import java.io.InputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import permafrost.tundra.data.IDataHelper;
+import permafrost.tundra.io.InputStreamHelper;
 import permafrost.tundra.lang.BooleanHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.lang.ObjectHelper;
@@ -165,12 +167,151 @@ public final class document
 		// --- <<IS-START(normalize)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
+		// [i] record:0:required $bizdoc
+		// [i] - field:0:required InternalID
 		// [i] field:0:optional $content? {"false","true"}
 		// [i] field:0:optional $sender? {"false","true"}
 		// [i] field:0:optional $receiver? {"false","true"}
 		// [i] field:0:optional $raise? {"false","true"}
-		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
+		// [o] record:0:optional $bizdoc
+		// [o] - field:0:required InternalID
+		// [o] - record:0:required DocType
+		// [o] -- field:0:required TypeID
+		// [o] -- field:0:required TypeName
+		// [o] -- field:0:optional TypeDescription
+		// [o] -- record:0:optional Deleted
+		// [o] --- field:0:required MBoolean
+		// [o] -- record:0:optional Hidden
+		// [o] --- field:0:required MBoolean
+		// [o] -- record:0:optional SenderFromSession
+		// [o] --- field:0:required MBoolean
+		// [o] -- field:0:required LastModified
+		// [o] -- field:0:optional ValidationSvc
+		// [o] -- field:0:optional VerificationSvc
+		// [o] -- field:0:optional SigningSvc
+		// [o] -- record:0:optional PreProcessingFlags
+		// [o] --- field:0:optional validate? {"yes","no","dont care"}
+		// [o] --- field:0:optional verify? {"yes","no","dont care"}
+		// [o] --- field:0:optional persist? {"yes","no","dont care","only if unique"}
+		// [o] --- field:0:optional unique? {"dont care","Document ID only","Document ID and sender"}
+		// [o] --- field:0:optional persistOption? {"don't care","content, attributes and activity log","content only","attributes only","activity log only","content and attributes","content and activity log","attributes and activity log"}
+		// [o] --- field:0:optional dupCheckSvc
+		// [o] -- record:0:optional Attributes
+		// [o] -- record:0:optional RequiredAttributes
+		// [o] -- record:0:optional Routing
+		// [o] --- field:0:required MBoolean
+		// [o] -- record:0:optional attribQueries
+		// [o] -- record:0:optional PipelineMatchIData
+		// [o] -- record:0:optional envelopeIData
+		// [o] -- field:2:optional nsDecls
+		// [o] -- field:0:optional Type
+		// [o] -- field:1:optional queries
+		// [o] -- field:1:optional qryEvals
+		// [o] -- field:0:optional docType
+		// [o] -- field:0:optional ValidationSchema
+		// [o] -- field:0:optional recordBlueprint
+		// [o] - field:0:required DocTimestamp
+		// [o] - field:0:required LastModified
+		// [o] - field:0:required SenderID
+		// [o] - field:0:required ReceiverID
+		// [o] - field:0:optional DocumentID
+		// [o] - field:0:optional GroupID
+		// [o] - field:0:optional ConversationID
+		// [o] - field:0:required SystemStatus
+		// [o] - field:0:optional UserStatus
+		// [o] - field:0:required Persisted?
+		// [o] - field:0:required LargeDocument?
+		// [o] - record:0:optional Attributes
+		// [o] - object:0:optional Signature
+		// [o] - object:0:optional SignedBody
+		// [o] - record:1:optional ContentParts
+		// [o] -- field:0:required PartName
+		// [o] -- field:0:required MimeType
+		// [o] -- object:0:required Length
+		// [o] -- object:0:required Bytes
+		// [o] -- object:0:required PartIndex
+		// [o] -- field:0:required StorageType
+		// [o] -- object:0:required StorageRef
+		// [o] -- field:0:required LargePart?
+		// [o] - object:0:optional Content
+		// [o] - record:0:optional Errors
+		// [o] -- record:1:optional Recognition
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Verification
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Validation
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Persistence
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Routing
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional General
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] - record:1:optional Relationships
+		// [o] -- field:0:required from
+		// [o] -- field:0:required to
+		// [o] -- field:0:required relationship
+		// [o] - field:0:optional ReceiveSvc
+		// [o] - field:0:optional OriginalSenderID
+		// [o] - field:0:optional OriginalReceiverID
+		// [o] - field:0:optional Comments
+		// [o] - object:0:optional RepeatNum
+		// [o] - field:0:optional RoutingType
+		// [o] - field:0:optional Duplicate
 		// [o] record:0:optional $sender
 		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
 		// [o] - recref:1:required Contact wm.tn.rec:Contact
@@ -303,6 +444,36 @@ public final class document
 	}
 
 	public static class DocumentContent {
+	    public static void add(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+	            String partName = IDataHelper.get(cursor, "$part", String.class);
+	            Object content = IDataHelper.get(cursor, "$content");
+	            String contentType = IDataHelper.get(cursor, "$content.type", String.class);
+	            Charset contentEncoding = IDataHelper.first(cursor, Charset.class, "$content.encoding", "$encoding");
+	            boolean overwrite = IDataHelper.getOrDefault(cursor, "$overwrite?", Boolean.class, false);
+
+	            BizDocContentHelper.addContentPart(document, partName, contentType, contentEncoding, InputStreamHelper.normalize(content, contentEncoding), overwrite);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+
+	    public static void exists(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+	            String partName = IDataHelper.get(cursor, "$part", String.class);
+
+	            IDataHelper.put(cursor, "$exists?", BizDocContentHelper.exists(document, partName), String.class);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
 
