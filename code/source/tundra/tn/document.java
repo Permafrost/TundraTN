@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-11-01T10:32:06.204
+// -----( CREATED: 2019-11-01T12:34:21.982
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -30,6 +30,7 @@ import permafrost.tundra.tn.document.BizDocTypeHelper;
 import permafrost.tundra.tn.log.ActivityLogHelper;
 import permafrost.tundra.tn.log.EntryType;
 import permafrost.tundra.tn.profile.ProfileCache;
+import permafrost.tundra.tn.profile.ProfileHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class document
@@ -511,6 +512,25 @@ public final class document
 	            String partName = IDataHelper.get(cursor, "$part", String.class);
 
 	            BizDocContentHelper.removeContentPart(document, partName);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
+	public static class DocumentDerivative {
+	    public static void exists(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            String originalDocumentID = BizDocEnvelopeHelper.getIdentity(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            String derivedSenderID = ProfileHelper.getIdentity(IDataHelper.get(cursor, "$sender", IData.class));
+	            String derivedReceiverID = ProfileHelper.getIdentity(IDataHelper.get(cursor, "$receiver", IData.class));
+
+	            BizDocEnvelope derivedDocument = BizDocEnvelopeHelper.getDerivative(originalDocumentID, derivedSenderID, derivedReceiverID);
+
+	            IDataHelper.put(cursor, "$exists?", derivedDocument != null, String.class);
+	            IDataHelper.put(cursor, "$derivative", derivedDocument, false);
 	        } finally {
 	            cursor.destroy();
 	        }
