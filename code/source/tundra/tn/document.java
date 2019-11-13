@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-11-01T12:34:21.982
+// -----( CREATED: 2019-11-13T13:50:10.109
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -576,7 +576,7 @@ public final class document
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
 	            String systemStatus = IDataHelper.get(cursor, "$status.system", String.class);
 	            String previousSystemStatus = IDataHelper.get(cursor, "$status.system.previous", String.class);
-	            String userStatus = IDataHelper.get(cursor, "$status.user", String.class);
+	            String userStatus = IDataHelper.first(cursor, String.class, "$status.user", "$status");
 	            String previousUserStatus = IDataHelper.get(cursor, "$status.user.previous", String.class);
 	            boolean silence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
 
