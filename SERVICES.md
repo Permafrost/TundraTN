@@ -3766,10 +3766,14 @@ the given name.
 
 ---
 
-### tundra.tn.support.queue:interrupt
+### tundra.tn.queue:interrupt
 
 Interrupts and therefore shuts down the processing supervisor
 associated with the given queue.
+
+#### Inputs:
+
+* `$queue` is the name of the queue to be interrupted.
 
 ---
 
