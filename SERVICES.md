@@ -4163,7 +4163,7 @@ Refer to `tundra.tn:translate` for further details.
 
 ---
 
-### tundra.tn.support.rule:disable
+### tundra.tn.rule:disable
 
 Disable the given Trading Networks processing rule.
 
@@ -4175,7 +4175,7 @@ Disable the given Trading Networks processing rule.
 
 ---
 
-### tundra.tn.support.rule:enable
+### tundra.tn.rule:enable
 
 Enable the given Trading Networks processing rule.
 
@@ -4187,7 +4187,7 @@ Enable the given Trading Networks processing rule.
 
 ---
 
-### tundra.tn.support.rule:execute
+### tundra.tn.rule:execute
 
 Processes a Trading Networks document using the specified processing
 rule.
@@ -4217,7 +4217,7 @@ rule.
 
 ---
 
-### tundra.tn.support.rule:get
+### tundra.tn.rule:get
 
 Returns the Trading Networks processing rule associated with the
 given identity or name.
@@ -4234,7 +4234,7 @@ given identity or name.
 
 ---
 
-### tundra.tn.support.rule:list
+### tundra.tn.rule:list
 
 Returns the list of all Trading Networks processing rules currently
 defined.
@@ -4246,7 +4246,7 @@ defined.
 
 ---
 
-### tundra.tn.support.rule:match
+### tundra.tn.rule:match
 
 Returns the first Trading Networks processing rule whose criteria
 matches the given document.
@@ -4265,7 +4265,7 @@ matches the given document.
 
 ---
 
-### tundra.tn.support.rule:normalize
+### tundra.tn.rule:normalize
 
 Normalizes the given Trading Networks processing rule. When the given
 rule is a subset (only `RuleID` or `RuleName` is required), the full
