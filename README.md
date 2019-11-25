@@ -120,33 +120,26 @@ in the following locations:
 
 ## Conventions
 
-1. Most input and output pipeline arguments are prefixed with '$' as
+1. Most input and output pipeline arguments are prefixed with `$` as
    a poor-man's scoping mechanism, since typically user-space
    variables are unprefixed. However some Trading Networks-specific
-   arguments, such as `TN_parms`, remain unprefixed.
-2. All boolean arguments are suffixed with a '?'.
+   arguments, such as `TN_parms`, remain unprefixed to be compatible
+   with Trading Networks.
+2. All boolean arguments are suffixed with a `?`.
 3. Single-word argument names are preferred. Where multiple words are
-   necessary, words are separated with a '.'.
+   necessary, words are separated with a `.`.
 4. Service namespace is kept flat. Namespace folders are usually
    nouns. Service names are usually verbs, indicating the action
    performed on the noun (parent folder).
-5. Services are written in Java where necessary, such as when dealing
-   directly with the Trading Networks Java API. Java services are
-   *almost* always overloaded by a backing method in the shared
-   source, which provides the actual implementation. This way,
-   backing methods can be used by other backing methods directly,
-   without needing to deal with the IData/IDataCursor/IDataUtil
-   nastiness that a fronting Java service is usually required to
-   deal with.
-6. Services declare all inputs and outputs, always explicitly marked
-   as optional or required, use constrained types where possible,
-   and enable input and output pipeline validation, which minimises
-   developer surprise.
-7. Services often declare their inputs as optional, and either apply
+5. Services declare all inputs and outputs (except where deprecated),
+   always explicitly marked as optional or required, use constrained
+   types where possible, and enable input and output pipeline
+   validation where possible, to minimise surprise.
+6. Services often declare their inputs as optional, and either apply
    an appropriate default value, or take no action and return no
    output (whatever is more appropriate), to minimise the need for
    existence checking in flow map steps.
-8. All private elements are kept in the `tundra.tn.support` folder.
+7. All private elements are kept in the `tundra.tn.support` folder.
    All other elements comprise the public API of the package. As the
    private elements do not contribute to the public API, they are
    liable to change at any time. **Enter at your own risk.**
