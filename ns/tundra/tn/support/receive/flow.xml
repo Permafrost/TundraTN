@@ -6656,7 +6656,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
+        <value name="field_name">$content.encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -6684,7 +6684,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$mode</value>
+        <value name="field_name">$content.mode</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -6884,6 +6884,22 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$content</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
@@ -6903,13 +6919,13 @@ non-XML content:
 <MAPCOPY NAME="Link" FROM="/$content;3;0" TO="/$base64;3;0">
 </MAPCOPY>
 
-<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$encoding;1;0">
-</MAPCOPY>
-
 <MAPDELETE NAME="Dropper" FIELD="/$content;3;0">
 </MAPDELETE>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$mode;1;0">
+<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$content.encoding;1;0">
+</MAPCOPY>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$content.mode;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
@@ -6923,7 +6939,7 @@ non-XML content:
       <value name="field_password">false</value>
     </record>
     <value name="is_public">false</value>
-    <value name="field_name">$mode</value>
+    <value name="field_name">$content.mode</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
@@ -7017,27 +7033,23 @@ non-XML content:
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">$mode</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
         <value name="field_name">$content.encoding</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">$content.mode</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -7143,6 +7155,22 @@ non-XML content:
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
         <value name="form_qualified">false</value>
         <value name="is_global">false</value>
       </record>
@@ -7190,10 +7218,7 @@ non-XML content:
 <MAPDELETE NAME="Dropper" FIELD="/$base64;3;0">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$encoding;1;0">
-</MAPDELETE>
-
-<MAPDELETE NAME="Dropper" FIELD="/$mode;1;0">
+<MAPDELETE NAME="Dropper" FIELD="/$content.mode;1;0">
 </MAPDELETE>
 </MAP>
 </INVOKE>
@@ -7241,7 +7266,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
+        <value name="field_name">$content.encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -7269,7 +7294,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$mode</value>
+        <value name="field_name">$content.mode</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -7475,6 +7500,22 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$content</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
@@ -7494,13 +7535,13 @@ non-XML content:
 <MAPCOPY NAME="Link" FROM="/$content;3;0" TO="/$content.gzip;3;0">
 </MAPCOPY>
 
-<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$encoding;1;0">
-</MAPCOPY>
-
 <MAPDELETE NAME="Dropper" FIELD="/$content;3;0">
 </MAPDELETE>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$mode;1;0">
+<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$content.encoding;1;0">
+</MAPCOPY>
+
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$content.mode;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
@@ -7514,7 +7555,7 @@ non-XML content:
       <value name="field_password">false</value>
     </record>
     <value name="is_public">false</value>
-    <value name="field_name">$mode</value>
+    <value name="field_name">$content.mode</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
@@ -7614,27 +7655,17 @@ non-XML content:
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">$mode</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
         <value name="field_name">$content.encoding</value>
+        <value name="field_type">string</value>
+        <value name="field_dim">0</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">unknown</value>
+        <value name="is_public">false</value>
+        <value name="field_name">$content.mode</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -7751,6 +7782,22 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$content</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
@@ -7787,10 +7834,7 @@ non-XML content:
 <MAPDELETE NAME="Dropper" FIELD="/$content.gzip;3;0">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$encoding;1;0">
-</MAPDELETE>
-
-<MAPDELETE NAME="Dropper" FIELD="/$mode;1;0">
+<MAPDELETE NAME="Dropper" FIELD="/$content.mode;1;0">
 </MAPDELETE>
 </MAP>
 </INVOKE>
@@ -7838,7 +7882,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
+        <value name="field_name">$content.encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -7866,7 +7910,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$mode</value>
+        <value name="field_name">$content.mode</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -8072,6 +8116,22 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$content</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
@@ -8091,13 +8151,10 @@ non-XML content:
 <MAPCOPY NAME="Link" FROM="/$content;3;0" TO="/$contents.zip;3;0">
 </MAPCOPY>
 
-<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$encoding;1;0">
-</MAPCOPY>
-
 <MAPDELETE NAME="Dropper" FIELD="/$content;3;0">
 </MAPDELETE>
 
-<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$mode;1;0">
+<MAPSET NAME="Setter" OVERWRITE="true" VARIABLES="false" FIELD="/$content.mode;1;0">
   <DATA ENCODING="XMLValues" I18N="true">
 
 <Values version="2.0">
@@ -8111,7 +8168,7 @@ non-XML content:
       <value name="field_password">false</value>
     </record>
     <value name="is_public">false</value>
-    <value name="field_name">$mode</value>
+    <value name="field_name">$content.mode</value>
     <value name="field_type">string</value>
     <value name="field_dim">0</value>
     <value name="field_opt">true</value>
@@ -8211,7 +8268,7 @@ non-XML content:
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
+        <value name="field_name">$content.encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -8220,8 +8277,14 @@ non-XML content:
       </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <null name="field_usereditable"/>
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
         <value name="is_public">false</value>
-        <value name="field_name">$mode</value>
+        <value name="field_name">$content.mode</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -8241,7 +8304,7 @@ non-XML content:
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="is_public">false</value>
-        <value name="field_name">$content.encoding</value>
+        <value name="field_name">$encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="nillable">true</value>
@@ -8694,6 +8757,22 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$contents</value>
         <value name="field_type">record</value>
         <value name="field_dim">1</value>
@@ -8742,6 +8821,22 @@ non-XML content:
             <value name="field_type">object</value>
             <value name="field_dim">0</value>
             <value name="nillable">true</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="node_comment"></value>
+            <record name="node_hints" javaclass="com.wm.util.Values">
+              <value name="field_largerEditor">false</value>
+              <value name="field_password">false</value>
+            </record>
+            <value name="is_public">false</value>
+            <value name="field_name">length</value>
+            <value name="field_type">object</value>
+            <value name="field_dim">0</value>
+            <value name="wrapper_type">java.lang.Integer</value>
+            <value name="nillable">false</value>
             <value name="form_qualified">false</value>
             <value name="is_global">false</value>
           </record>
@@ -8825,6 +8920,22 @@ non-XML content:
             <value name="form_qualified">false</value>
             <value name="is_global">false</value>
           </record>
+          <record javaclass="com.wm.util.Values">
+            <value name="node_type">record</value>
+            <value name="node_comment"></value>
+            <record name="node_hints" javaclass="com.wm.util.Values">
+              <value name="field_largerEditor">false</value>
+              <value name="field_password">false</value>
+            </record>
+            <value name="is_public">false</value>
+            <value name="field_name">length</value>
+            <value name="field_type">object</value>
+            <value name="field_dim">0</value>
+            <value name="wrapper_type">java.lang.Integer</value>
+            <value name="nillable">false</value>
+            <value name="form_qualified">false</value>
+            <value name="is_global">false</value>
+          </record>
         </array>
         <value name="rec_closed">true</value>
         <value name="modifiable">true</value>
@@ -8843,9 +8954,6 @@ non-XML content:
 <MAPDELETE NAME="Dropper" FIELD="/$encoding;1;0">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$mode;1;0">
-</MAPDELETE>
-
 <MAPCOPY NAME="Link" FROM="/$contents[0];2;1/content;3;0" TO="/$content;3;0">
 </MAPCOPY>
 
@@ -8853,6 +8961,9 @@ non-XML content:
 </MAPCOPY>
 
 <MAPDELETE NAME="Dropper" FIELD="/$contents;2;1">
+</MAPDELETE>
+
+<MAPDELETE NAME="Dropper" FIELD="/$content.mode;1;0">
 </MAPDELETE>
 </MAP>
 </INVOKE>
@@ -8883,7 +8994,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$object</value>
+        <value name="field_name">$content</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -8900,7 +9011,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
+        <value name="field_name">$content.encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -9056,6 +9167,22 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$content</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
@@ -9072,14 +9199,11 @@ non-XML content:
 
   <!-- nodes -->
 
-<MAPCOPY NAME="Link" FROM="/$content;3;0" TO="/$object;3;0">
+<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$content.encoding;1;0">
 </MAPCOPY>
 
-<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/$encoding;1;0">
+<MAPCOPY NAME="Link" FROM="/$content;3;0" TO="/$content;3;0">
 </MAPCOPY>
-
-<MAPDELETE NAME="Dropper" FIELD="/$content;3;0">
-</MAPDELETE>
 </MAP>
 
 <MAP MODE="OUTPUT">
@@ -9095,36 +9219,6 @@ non-XML content:
     <value name="form_qualified">false</value>
     <value name="is_global">false</value>
     <array name="rec_fields" type="record" depth="1">
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">$object</value>
-        <value name="field_type">object</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
-        <value name="field_type">string</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
-      <record javaclass="com.wm.util.Values">
-        <value name="node_type">unknown</value>
-        <value name="is_public">false</value>
-        <value name="field_name">$content</value>
-        <value name="field_type">object</value>
-        <value name="field_dim">0</value>
-        <value name="nillable">true</value>
-        <value name="form_qualified">false</value>
-        <value name="is_global">false</value>
-      </record>
       <record javaclass="com.wm.util.Values">
         <value name="node_type">unknown</value>
         <value name="is_public">false</value>
@@ -9581,6 +9675,38 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
+        <value name="field_name">$datetime.monotonic.start</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="wrapper_type">java.lang.Long</value>
+        <value name="nillable">false</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
+        <value name="field_name">$content</value>
+        <value name="field_type">object</value>
+        <value name="field_dim">0</value>
+        <value name="field_opt">true</value>
+        <value name="nillable">true</value>
+        <value name="form_qualified">false</value>
+        <value name="is_global">false</value>
+      </record>
+      <record javaclass="com.wm.util.Values">
+        <value name="node_type">record</value>
+        <value name="node_comment"></value>
+        <record name="node_hints" javaclass="com.wm.util.Values">
+          <value name="field_largerEditor">false</value>
+          <value name="field_password">false</value>
+        </record>
+        <value name="is_public">false</value>
         <value name="field_name">$bytes</value>
         <value name="field_type">object</value>
         <value name="field_dim">0</value>
@@ -9633,7 +9759,7 @@ non-XML content:
           <value name="field_password">false</value>
         </record>
         <value name="is_public">false</value>
-        <value name="field_name">$encoding</value>
+        <value name="field_name">$content.encoding</value>
         <value name="field_type">string</value>
         <value name="field_dim">0</value>
         <value name="field_opt">true</value>
@@ -9660,22 +9786,13 @@ non-XML content:
 
   <!-- nodes -->
 
-<MAPDELETE NAME="Dropper" FIELD="/$object;3;0">
-</MAPDELETE>
-
 <MAPCOPY NAME="Link" FROM="/$bytes;3.10;0" TO="/$content;3;0">
 </MAPCOPY>
 
 <MAPDELETE NAME="Dropper" FIELD="/$bytes;3.10;0">
 </MAPDELETE>
 
-<MAPDELETE NAME="Dropper" FIELD="/$encoding;1;0">
-</MAPDELETE>
-
-<MAPCOPY NAME="Link" FROM="/$encoding;1;0" TO="/$content.encoding;1;0">
-</MAPCOPY>
-
-<MAPCOPY NAME="Link" FROM="/$encoding;1;0" TO="/TN_parms;2;0/$contentEncoding;1;0">
+<MAPCOPY NAME="Link" FROM="/$content.encoding;1;0" TO="/TN_parms;2;0/$contentEncoding;1;0">
 </MAPCOPY>
 </MAP>
 </INVOKE>
