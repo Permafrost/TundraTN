@@ -843,21 +843,22 @@ Networks bizdoc processing rule.
 
 ### tundra.tn:receive
 
-Receives arbitrary (XML or flat file) content and routes it
-to Trading Networks. The content can be specified as a string,
-byte array, `java.io.InputStream`, or `org.w3c.dom.Node` object.
+Receives arbitrary (XML or flat file) content and routes it to
+Trading Networks.
 
-This service is either intended to be invoked directly by
-clients via HTTP or FTP, or it can be wrapped by another
-service which specifies appropriate TN_parms to control the
-routing of the content (ie. a one-line flat file gateway
-service).
+The content can be specified as a string, byte array, JMSMessage,
+`java.io.InputStream`, or `org.w3c.dom.Node` object.
+
+This service is either intended to be invoked directly by clients via
+HTTP or FTP, or it can be wrapped by another service which specifies
+appropriate TN_parms to control the routing of the content (ie. a
+one-line flat file gateway service).
 
 When invoked via HTTP, the service returns a 'text/plain' response
-body containing either the resulting Trading Networks bizdoc
-internal ID on success, or a message describing the errors that
-occurred on failure, and an appropriate HTTP response code
-according to the following table:
+body containing either the resulting Trading Networks bizdoc internal
+ID on success, or a message describing the errors that occurred on
+failure, and an appropriate HTTP response code according to the
+following table:
 
 Response                   | Reason
 ---------------------------|-------------------------------------------------------
@@ -869,80 +870,88 @@ Response                   | Reason
 422 Unprocessable Entity   | Received content failed validation
 500 Internal Server Error  | All other errors that occur while processing
 
-When invoked via transports other than HTTP, for example FTP,
-if the content is received successfully the service invocation
-will succeed and a response body containing the resulting
-Trading Networks bizdoc internal ID is returned. If a security
-or any other exception is encountered, the service invocation
-will fail by rethrowing the exception.
+When invoked via transports other than HTTP, for example FTP, if the
+content is received successfully the service invocation will succeed
+and a response body containing the resulting Trading Networks bizdoc
+internal ID is returned. If a security or any other exception is
+encountered, the service invocation will fail by rethrowing the
+exception.
 
-When invoked by a wrapping service, any exceptions encountered
-will be thrown to the calling service. It is then the calling
-service's responsibility to set an appropriate response for
-the transport in question.
+When invoked by a wrapping service, any exceptions encountered will
+be thrown to the calling service. It is then the calling service's
+responsibility to set an appropriate response for the transport in
+question. This is due to a limitation in Integration Server that
+requires the invoked (top-level) service to set the HTTP response
+to be returned (a child service cannot set the response on behalf of
+its parent).
 
 #### Inputs:
 
-* `strict` is an optional boolean flag indicating whether 'strict'
-  mode routing should be used for the received content. Defaults
-  to `true`. To disable 'strict' mode when using HTTP, include
+* `strict` is an optional boolean flag indicating whether `strict`
+  mode routing should be used for the received content. Defaults to
+  `true`. To disable `strict` mode when using HTTP, include
   `strict=false` in the query string of the receive URL:
-  `http://localhost:5555/invoke/tundra.tn/receive?strict=false`.
-* `TN_parms` is an optional set of routing hints for Trading
-  Networks to use when routing the received content. If not
-  specified by the caller, the following TN_parms are set
-  automatically as follows:
+
+        http://localhost:5555/invoke/tundra.tn/receive?strict=false
+
+* `TN_parms` is an optional set of routing hints for Trading Networks
+  to use when routing the received content. If not specified by the
+  caller, the following TN_parms are set automatically as follows:
   * `$contentType` is an optional mime media type of the received
-    content. Defaults to the transport content type returned by
-    `WmPublic/pub.flow:getTransportInfo`, or failing that 'text/xml'
-    if a node object is present in the pipeline, or failing that
-    'application/octet-stream'.
-  * `$contentEncoding` is an optional character encoding used by
-    the received content, for example UTF-16. Defaults to the
-    encoding specified as the charset property in the content
-    type, or failing that defaults to [UTF-8].
+    content. Defaults to the following values in order of precedence:
+    * The content type specified in the transport document returned
+      by `WmPublic/pub.flow:getTransportInfo`.
+    * The value `text/xml` if a node object exists in the pipeline.
+    * The value `application/octet-stream`.
+  * `$contentEncoding` is an optional character encoding used by the
+    received content, for example UTF-16. Defaults to the following
+    values in order of precedence:
+    * The `charset` property in the specified content type.
+    * The value [UTF-8].
   * `$contentName` is an optional logical label or name for the
-    received content, typically the filename for flat files.
-    For HTTP transports, defaults to the the filename specified
-    in the Content-Disposition header, or failing that the
-    filename part of the request URI. For non-HTTP transports,
-    defaults to the filename returned by
-    `WmPublic/pub.flow:getTransportInfo`.
+    received content, typically the filename for flat files. Defaults
+    to the following values in order of precedence:
+    * For HTTP transports:
+      * The filename specified in the `Content-Disposition` header.
+      * The filename part of the request URI.
+    * For non-HTTP transports:
+      * The filename specified in the transport document returned
+        by `WmPublic/pub.flow:getTransportInfo`.
   * `$contentSchema` is an optional Integration Server document
-    reference or flat file schema the received content conforms
-    to. Defaults to the value of the `$schema` variable, if
+    reference or flat file schema the received content conforms to.
+    Defaults to the value of the `$content.schema` variable, if
     specified in the pipeline.
-  * `$user` is the user that sent the received content. Defaults
-    to the currently logged on user.
+  * `$user` is the user that sent the received content. Defaults to
+    the currently logged on user.
   * `SenderID` is an optional Trading Networks profile external ID
-    which identifies the sender of the content. If not specified,
-    defaults to the following values in order of precedence:
-    * The URL query string parameter `sender`, if specified.
-    * The HTTP header `Message-Sender`, if specified.
-    * The HTTP header `X-Sender`, if specified.
+    which identifies the sender of the content. Defaults to the
+    following values in order of precedence:
+    * The URL query string parameter `sender`.
+    * The HTTP header `Message-Sender`.
+    * The HTTP header `X-Sender`.
     * The currently logged on user name.
   * `ReceiverID` is an optional Trading Networks profile external ID
-    which identifies the receiver of the content. If not specified,
-    defaults to the following values in order of precedence:
-    * The URL query string parameter `receiver`, if specified.
-    * The HTTP header `Message-Receiver`, if specified.
-    * The HTTP header `X-Receiver`, if specified.
-    * The HTTP header `X-Recipient`, if specified.
+    which identifies the receiver of the content. Defaults to the
+    following values in order of precedence:
+    * The URL query string parameter `receiver`.
+    * The HTTP header `Message-Receiver`.
+    * The HTTP header `X-Receiver`.
+    * The HTTP header `X-Recipient`.
     * The required External ID value of the My Enterprise profile.
   * `DocumentID` is an optional ID used to identify the content in
     Trading Networks. If not specified, and no `DocumentID` is
     extracted when the message is recognized, defaults to the
     following values in order of precedence:
-    * The URL query string parameter `id`, if specified.
-    * The HTTP header `Message-ID`, if specified.
+    * The URL query string parameter `id`.
+    * The HTTP header `Message-ID`.
     * A newly generated [UUID].
   * `DoctypeName` is an optional name of the Trading Networks
     Document Type which is the type of the received content.
     Specifying this value bypasses the normal Trading Networks
-    document recognition logic. If not specified, defaults to the
-    following values in order of precedence:
-    * The URL query string parameter `type`, if specified.
-    * The HTTP header `Message-Type`, if specified.
+    document recognition logic. Defaults to the following values in
+    order of precedence:
+    * The URL query string parameter `type`.
+    * The HTTP header `Message-Type`.
   * `GroupID` is an optional ID used to identify the group this
     content belongs to in Trading Networks. For flat files only,
     defaults to the value of `TN_parms/DocumentID`.
