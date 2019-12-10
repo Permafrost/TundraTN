@@ -1455,16 +1455,17 @@ Networks document types, and returns a new Trading Networks document
 * `$content` is string, byte array, input stream, [org.w3c.dom.Node]
   object, `com.sap.conn.idoc.IDocDocumentList` object, or `IData`
   document content to be recognized by Trading Networks.
-* `$content.identity` is an optional choice of mode for assigning a value
-  to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
+* `$content.identity` is an optional choice of mode for assigning a
+  value to the `DocumentID` of the resulting bizdoc if no
+  `DocumentID` is extracted:
   * `UUID`: assigns a newly generated [UUID].
   * `ULID`: assigns a newly generated [ULID].
-  * `SHA-512`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA-384`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA-256`: the algorithm used to calculate a message digest from the
-    content.
+  * `SHA-512`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA-384`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA-256`: the algorithm used to calculate a message digest from
+    the content.
   * `SHA`: the algorithm used to calculate a message digest from the
     content.
   * `MD5`: the algorithm used to calculate a message digest from the
@@ -1472,8 +1473,9 @@ Networks document types, and returns a new Trading Networks document
   * `MD2`: the algorithm used to calculate a message digest from the
     content.
 * `$namespace` is an optional list of namespace prefixes and the URIs
-  they map to, used when `$content` is provided as an `IData` document
-  to be serialized to [XML] with elements in one or more namespaces.
+  they map to, used when `$content` is provided as an `IData`
+  document to be serialized to [XML] with elements in one or more
+  namespaces.
 * `TN_parms` is an optional set of routing hints for Trading Networks
   to use when recognizing `$content`.
 

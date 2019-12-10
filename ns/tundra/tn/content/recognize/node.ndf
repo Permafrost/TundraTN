@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Values version="2.0">
-  <value name="svc_type">flow</value>
-  <value name="svc_subtype">default</value>
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
   <value name="svc_sigtype">java 3.5</value>
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
@@ -140,7 +140,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$namespace</value>
+          <value name="field_name">$content.namespace</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -909,49 +909,52 @@ non-XML content:
   </record>
   <value name="node_comment">### tundra.tn.content:recognize
 
-Recognizes the given content against the defined set of Trading 
+Recognizes the given content against the defined set of Trading
 Networks document types, and returns a new Trading Networks document
 (BizDocEnvelope) for that document type and the given content.
 
 #### Inputs:
 
-* $content is string, byte array, input stream, [org.w3c.dom.Node] 
-  object, com.sap.conn.idoc.IDocDocumentList object, or IData 
+* `$content` is string, byte array, input stream, [org.w3c.dom.Node]
+  object, `com.sap.conn.idoc.IDocDocumentList` object, or `IData`
   document content to be recognized by Trading Networks.
-* $content.identity is an optional choice of mode for assigning a value
-  to the DocumentID of the resulting bizdoc if no DocumentID is extracted:
-  * UUID: assigns a newly generated [UUID].
-  * ULID: assigns a newly generated [ULID].
-  * SHA-512: the algorithm used to calculate a message digest from the 
+* `$content.identity` is an optional choice of mode for assigning a 
+  value to the `DocumentID` of the resulting bizdoc if no 
+  `DocumentID` is extracted:
+  * `UUID`: assigns a newly generated [UUID].
+  * `ULID`: assigns a newly generated [ULID].
+  * `SHA-512`: the algorithm used to calculate a message digest from 
+    the content.
+  * `SHA-384`: the algorithm used to calculate a message digest from 
+    the content.
+  * `SHA-256`: the algorithm used to calculate a message digest from 
+    the content.
+  * `SHA`: the algorithm used to calculate a message digest from the
     content.
-  * SHA-384: the algorithm used to calculate a message digest from the 
+  * `MD5`: the algorithm used to calculate a message digest from the
     content.
-  * SHA-256: the algorithm used to calculate a message digest from the 
+  * `MD2`: the algorithm used to calculate a message digest from the
     content.
-  * SHA: the algorithm used to calculate a message digest from the 
-    content.
-  * MD5: the algorithm used to calculate a message digest from the 
-    content.
-  * MD2: the algorithm used to calculate a message digest from the 
-    content.
-* $namespace is an optional list of namespace prefixes and the URIs 
-  they map to, used when $content is provided as an IData document 
-  to be serialized to [XML] with elements in one or more namespaces.
-* TN_parms is an optional set of routing hints for Trading Networks
-  to use when recognizing $content.
+* `$namespace` is an optional list of namespace prefixes and the URIs
+  they map to, used when `$content` is provided as an `IData` 
+  document to be serialized to [XML] with elements in one or more 
+  namespaces.
+* `TN_parms` is an optional set of routing hints for Trading Networks
+  to use when recognizing `$content`.
 
 #### Outputs:
 
-* $bizdoc is a new Trading Networks document (BizDocEnvelope) 
-  representing the recognized content, but not yet routed to Trading 
+* `$bizdoc` is a new Trading Networks document (BizDocEnvelope)
+  representing the recognized content, but not yet routed to Trading
   Networks for processing.
-* TN_parms is the set of routing hints Trading Networks used when 
+* `TN_parms` is the set of routing hints Trading Networks used when
   recognizing the given content.
 
 [org.w3c.dom.Node]: &lt;http://docs.oracle.com/javase/6/docs/api/org/w3c/dom/Node.html&gt;
 [ULID]: &lt;https://github.com/alizain/ulid&gt;
-[UUID]: &lt;http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html&gt;</value>
-  <value name="stateless">yes</value>
+[UUID]: &lt;http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html&gt;
+</value>
+  <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
@@ -963,7 +966,7 @@ Networks document types, and returns a new Trading Networks document
   <value name="system_service">no</value>
   <value name="retry_max">0</value>
   <value name="retry_interval">0</value>
-  <value name="svc_in_validator_options">default</value>
+  <value name="svc_in_validator_options">none</value>
   <value name="svc_out_validator_options">none</value>
   <value name="auditoption">0</value>
   <null name="auditfields_input"/>
