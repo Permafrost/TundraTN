@@ -1501,34 +1501,38 @@ Networks document types, and returns a new Trading Networks document
 ### tundra.tn.content:route
 
 Routes arbitrary content specified as a string, byte array, input
-stream, [org.w3c.dom.Node] object, com.sap.conn.idoc.IDocDocumentList object,
-or `IData` document to Trading Networks.
+stream, [org.w3c.dom.Node] object, `IData` document, or
+`com.sap.conn.idoc.IDocDocumentList` object to Trading Networks.
 
-Correctly supports large documents, so any document considered large will be
-routed as a large document in TN, unlike the `WmTN/wm.tn.doc.xml:routeXML`
-service which does not correctly use tspace when routing large documents.
+Correctly supports large documents, so any document considered large
+will be routed as a large document in TN, unlike the
+`WmTN/wm.tn.doc.xml:routeXML` service which does not correctly use
+tspace when routing large documents.
 
-Also supports overriding the normally recognised document attributes, unlike
-`WmTN/wm.tn.doc.xml:routeXML`, such as sender, receiver, document ID, group
-ID, conversation ID, and document type with the value specified in TN_parms
-for both XML and flat files documents.
+Also supports overriding the normally recognised document attributes,
+unlike `WmTN/wm.tn.doc.xml:routeXML`, such as sender, receiver,
+document ID, group ID, conversation ID, and document type with the
+value specified in `TN_parms` for both XML and flat files documents.
 
 #### Inputs:
 
 * `$content` is string, byte array, input stream, [org.w3c.dom.Node]
-  object, com.sap.conn.idoc.IDocDocumentList object, or `IData` document
-  content to be routed to Trading Networks.
+  object, `com.sap.conn.idoc.IDocDocumentList` object, or `IData`
+  document content to be routed to Trading Networks.
 
-  If `$content` is provided as an `IData` document, it will be serialized
-  using an emitter determined in order of precedence by `$schema` and
-  `$content.type`. If `$schema` is specified, the type of reference determines
-  the emitter to use: a document reference will use the XML emitter, a
-  flat file schema reference will use the Flat File emitter. If `$schema` is
-  not specified, `$content.type` is used to determine the most appropriate
-  emitter for the MIME media type in question. If neither `$schema`, nor
-  `$content.type` are specified, `$content` is serialized as XML by default.
+  If `$content` is provided as an `IData` document, it will be
+  serialized using an parser determined in order of precedence by
+  `$content.schema` and `$content.type`. If `$content.schema` is
+  specified, the type of reference determines the parser to use: a
+  document reference will use the XML parser, and a flat file schema
+  reference will use the Flat File parser.
 
-  Emitter implementions are as follows:
+  If `$content.schema` is not specified, `$content.type` is used to
+  determine the most appropriate parser for the MIME media type in
+  question. If neither `$content.schema`, nor `$content.type` are
+  specified, `$content` is serialized as XML by default.
+
+  Parser implementions are as follows:
   * CSV: `Tundra/tundra.csv:emit`
   * Flat File: `WmFlatFile/pub.flatFile:convertToString`
   * JSON: `Tundra/tundra.json:emit`
@@ -1536,24 +1540,8 @@ for both XML and flat files documents.
   * TSV: `Tundra/tundra.csv:emit`
   * XML: `WmPublic/pub.xml:documentToXMLString`
   * YAML: `Tundra/tundra.yaml:emit`
-* `$content.identity` is an optional choice of mode for assigning a value
-  to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
-  * `UUID`: assigns a newly generated [UUID].
-  * `ULID`: assigns a newly generated [ULID].
-  * `SHA-512`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA-384`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA-256`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA`: the algorithm used to calculate a message digest from the
-    content.
-  * `MD5`: the algorithm used to calculate a message digest from the
-    content.
-  * `MD2`: the algorithm used to calculate a message digest from the
-    content.
-* `$content.type` is the MIME media type that describes the format of the
-  given content:
+* `$content.type` is the MIME media type that describes the format of
+  the  given content:
   * For [CSV] content, a recognized [CSV] MIME media type, such as
     "text/csv", "text/comma-separated-values", or a type that includes a
     "+csv" suffix, must be specified.
@@ -1572,39 +1560,59 @@ for both XML and flat files documents.
   * For [XML] content, a recognized [XML] MIME media type, such as
     "text/xml" or "application/xml", or a type that includes a
     "+xml" suffix, must be specified.
+* `$content.encoding` is an optional character set to use when
+  encoding the resulting text data to a byte array or input stream.
+  Defaults to [UTF-8].
+* `$content.schema` is the fully-qualified name of the parsing schema
+  to use to serialize `$content` when provided as an `IData` document
+  to [XML] or Flat File content, and can have the following values:
+  * For [XML] content, specify the fully-qualified name of the
+    document reference that defines the [XML] format.
+  * For Flat File content specify the fully-qualified name of the
+    flat file schema that defines the Flat File format.
+  Defaults to serializing `$content` as [XML], if neither
+  `$content.type` nor `$content.schema` are specified.
+* `$content.namespace` is an optional list of namespace prefixes and
+  the URIs they map to, used when `$content` is provided as an
+  `IData` document to be serialized to [XML] with elements in one or
+  more namespaces.
+* `$content.identity` is an optional choice of mode for assigning a
+  value to the `DocumentID` of the resulting bizdoc if no
+  `DocumentID` is extracted:
+  * `UUID`: assigns a newly generated [UUID].
+  * `ULID`: assigns a newly generated [ULID].
+  * `SHA-512`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA-384`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA-256`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD5`: the algorithm used to calculate a message digest from the
+    content.
+  * `MD2`: the algorithm used to calculate a message digest from the
+    content.
 * `$attributes` is a list of attributes to be set on the resulting
   Trading Networks document, and can be used to override the values
   of any extracted attributes, or to set the values of additional
   attributes not extracted by Trading Networks when it recognizes
   the type of document being routed. Attribute values that include
   percent-delimited variable substitutions will have their value
-  resolved against the pipeline. If any variable substitution includes
-  references to `$document`, the content will first be parsed and added
-  to the pipeline as `$document` to support substituting attribute
-  values based on the content being routed.
-* `$namespace` is an optional list of namespace prefixes and the URIs
-  they map to, used when `$content` is provided as an `IData` document
-  to be serialized to [XML] with elements in one or more namespaces.
-* `$encoding` is an optional character set to use when encoding the
-  resulting text data to a byte array or input stream. Defaults to [UTF-8].
-* `$schema` is the fully-qualified name of the parsing schema to use to
-  serialize `$content` when provided as an `IData` document to [XML] or
-  Flat File content, and can have the following values:
-  * For [XML] content, specify the fully-qualified name of the document
-    reference that defines the [XML] format.
-  * For Flat File content specify the fully-qualified name of the flat
-    file schema that defines the Flat File format.
-  Defaults to serializing `$content` as [XML], if neither `$content.type` nor
-  `$schema` are specified.
-* `$strict?` is an optional boolean, which if `true` will abort routing/
-  processing rule execution of the document if any errors (such as
-  validation errors) are encountered prior to processing, and result in an
-  exception being thrown. Defaults to `true`.
-* `TN_parms` is an optional set of routing hints for Trading Networks to use
-  when routing `$content`. If specified, the following values will overwrite
-  the normal bizdoc recognised values, allowing for sender, receiver,
-  document ID, group ID, conversation ID, and document type to be forced
-  to have the specified value (even for XML document types):
+  resolved against the pipeline. If any variable substitution
+  includes references to `$document`, the content will first be
+  parsed and added to the pipeline as `$document` to support
+  substituting attribute values based on the content being routed.
+* `$strict?` is an optional boolean, which if `true` will abort
+  routing (processing rule execution) of the document if any errors
+  (such as validation errors) are encountered prior to processing,
+  and result in an exception being thrown. Defaults to `true`.
+* `TN_parms` is an optional set of routing hints for Trading Networks
+  to use when routing `$content`. If specified, the following values
+  will overwrite the normal bizdoc recognised values, allowing for
+  sender, receiver, document ID, group ID, conversation ID, and
+  document type to be forced to have the specified value (even for
+  [XML] document types):
   * `TN_parms/SenderID`
   * `TN_parms/ReceiverID`
   * `TN_parms/DocumentID`
@@ -1615,12 +1623,14 @@ for both XML and flat files documents.
 
 #### Outputs:
 
-* `$bizdoc` is the resulting Trading Networks document that was routed.
-* `$sender` is the Trading Networks profile of the sender of the document.
+* `$bizdoc` is the resulting Trading Networks document that was
+  routed.
+* `$sender` is the Trading Networks profile of the sender of the
+  document.
 * `$receiver` is the Trading Networks profile of the receiver of the
   document.
-* `TN_parms` is the routing hints used to route the document in Trading
-  Networks.
+* `TN_parms` is the routing hints used to route the document in
+  Trading Networks.
 
 ---
 
