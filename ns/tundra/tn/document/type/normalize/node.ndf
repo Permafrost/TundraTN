@@ -22,7 +22,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$type</value>
+          <value name="field_name">$document.type</value>
           <value name="field_type">recref</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -52,7 +52,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$type</value>
+          <value name="field_name">$document.type</value>
           <value name="field_type">recref</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -68,18 +68,20 @@
   </record>
   <value name="node_comment">### tundra.tn.document.type:normalize
 
-Returns the given Trading Networks document type. When the given type is a
-subset (only the TypeID is required), the full type will be returned.
+Returns the given Trading Networks document type. When the given type
+is a subset (only the `TypeID` is required), the full type will be
+returned.
 
 #### Inputs:
 
-* $type is the Trading Networks document type to be normalized, and
-  can be specified as a subset containing at least the TypeID field.
+* `$document.type` is the Trading Networks document type to be 
+  normalized, and can be specified as a subset containing at least 
+  the `TypeID` field.
 
 #### Outputs:
 
-* $type is the normalized full Trading Networks document type.
-
+* `$document.type` is the normalized full Trading Networks document 
+  type.
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>

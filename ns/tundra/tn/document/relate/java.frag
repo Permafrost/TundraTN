@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="name">relate</value>
+  <value name="encodeutf8">true</value>
+  <value name="body">SURhdGFDdXJzb3IgY3Vyc29yID0gcGlwZWxpbmUuZ2V0Q3Vyc29yKCk7Cgp0cnkgewogICAgQml6
+RG9jRW52ZWxvcGUgc291cmNlID0gQml6RG9jRW52ZWxvcGVIZWxwZXIubm9ybWFsaXplKElEYXRh
+SGVscGVyLmdldChjdXJzb3IsICIkYml6ZG9jLnNvdXJjZSIsIElEYXRhLmNsYXNzKSk7CiAgICBC
+aXpEb2NFbnZlbG9wZSB0YXJnZXQgPSBCaXpEb2NFbnZlbG9wZUhlbHBlci5ub3JtYWxpemUoSURh
+dGFIZWxwZXIuZ2V0KGN1cnNvciwgIiRiaXpkb2MudGFyZ2V0IiwgSURhdGEuY2xhc3MpKTsKICAg
+IFN0cmluZyByZWxhdGlvbnNoaXAgPSBJRGF0YUhlbHBlci5nZXQoY3Vyc29yLCAiJHJlbGF0aW9u
+c2hpcCIsIFN0cmluZy5jbGFzcyk7CgogICAgQml6RG9jRW52ZWxvcGVIZWxwZXIucmVsYXRlKHNv
+dXJjZSwgdGFyZ2V0LCByZWxhdGlvbnNoaXApOwp9IGZpbmFsbHkgewogICAgY3Vyc29yLmRlc3Ry
+b3koKTsKfQ==</value>
+</Values>

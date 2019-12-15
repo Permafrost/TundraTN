@@ -23,7 +23,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$id</value>
+          <value name="field_name">$document.type.id</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -51,7 +51,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$name</value>
+          <value name="field_name">$document.type.name</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -90,7 +90,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$type</value>
+          <value name="field_name">$document.type</value>
           <value name="field_type">recref</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -106,34 +106,37 @@
   </record>
   <value name="node_comment">### tundra.tn.document.type:get
 
-Returns the Trading Networks document type associated with the given ID or
-name as an IData document.
+Returns the Trading Networks document type associated with the given 
+ID or name as an `IData` document.
 
-Use this service in preference to WmTN/wm.tn.doctype:view, as the WmTN
-service returns an object of type com.wm.app.tn.doc.BizDocType which,
-despite looking like one, is not a normal IData document and therefore
-causes problems in Flow services. For example, you cannot branch on fields
-in the com.wm.app.tn.doc.BizDocType document.
+Use this service in preference to `WmTN/wm.tn.doctype:view`, as the 
+WmTN service returns an object of type `com.wm.app.tn.doc.BizDocType`
+which, despite looking like one, is not a normal `IData` document and
+therefore causes problems in Flow services. For example, you cannot
+branch on fields in the `com.wm.app.tn.doc.BizDocType` document.
 
-Also, unlike WmTN/wm.tn.doctype:view, this service does not throw an
-exception if the document type does not exist.
+Also, unlike `WmTN/wm.tn.doctype:view`, this service does not throw
+an exception if the document type does not exist.
 
 #### Inputs:
 
-* $id is an optional internal ID that identifies the Trading Networks
-  document type to be returned. If both $id and $name are specified, $id
-  takes precedence.
-* $name is an optional Trading Networks document type name that identifies
-  the document type to be returned. If both $id and $name are specified,
-  $id takes precedence.
+* `$document.type.id` is an optional internal ID that identifies the 
+  Trading Networks document type to be returned. If both 
+  `$document.type.id` and `$document.type.name` are specified, 
+  `$document.type.id` takes precedence.
+* `$document.type.name` is an optional Trading Networks document type
+  name that identifies the document type to be returned. If both 
+  `$document.type.id` and `$document.type.name` are specified,
+  `$document.type.id` takes precedence.
 
 #### Outputs:
 
-* $type is the Trading Networks document type identified by either $id or
-  $name, returned as an IData document with the WmTN/wm.tn.rec:BizDocType
-  structure. If no document type exists with the given $id or $name,
-  nothing will be returned by this service, nor will an exception be thrown.
-
+* `$document.type` is the Trading Networks document type identified 
+  by either `$document.type.id` or `$document.type.name`, returned as
+  an `IData` document with the `WmTN/wm.tn.rec:BizDocType` structure. 
+  If no document type exists with the given `$document.type.id` or 
+  `$document.type.name`, nothing will be returned by this service, 
+  nor will an exception be thrown.
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>

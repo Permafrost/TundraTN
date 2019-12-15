@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Values version="2.0">
-  <value name="svc_type">flow</value>
-  <value name="svc_subtype">default</value>
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
   <value name="svc_sigtype">java 3.5</value>
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -20,6 +21,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc.source</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -36,6 +38,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">InternalID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -55,6 +58,7 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -63,6 +67,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc.target</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -79,6 +84,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">InternalID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -98,6 +104,7 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -107,6 +114,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$relationship</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -127,9 +135,11 @@
           <value name="is_global">false</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -137,32 +147,30 @@
       <value name="is_global">false</value>
       <array name="rec_fields" type="record" depth="1">
       </array>
+      <value name="modifiable">true</value>
     </record>
   </record>
   <value name="node_comment">### tundra.tn.document:relate
 
-Relates two Trading Networks documents (bizdocs) together.
+Relates two Trading Networks documents (BizDocEnvelope) together.
 
-Use this service in preference to WmTN/wm.tn.doc:relateDocuments, as this
-service does not throw an exception if the relationship already exists, and
-this service also logs the creation of the relationship on the target
-bizdoc.
+Use this service in preference to `WmTN/wm.tn.doc:relateDocuments`, 
+as this service does not throw an exception if the relationship 
+already exists, and this service also logs the creation of the 
+relationship on the target bizdoc.
 
 #### Inputs:
 
-* $bizdoc.source is the source Trading Networks document in the
-  relationship. Only the internal ID of the bizdoc must be specified, with
-  the remainder of the WmTN/wm.tn.rec:BizDocEnvelope structure purely
-  optional.
-* $bizdoc.target is the target Trading Networks document in the
-  relationship. Only the internal ID of the bizdoc must be specified, with
-  the remainder of the WmTN/wm.tn.rec:BizDocEnvelope structure purely
-  optional.
-* $relationship is an optional string describing the relationship between
-  the source and target bizdocs. If not specified, defaults to 'Unknown'.
-
+* `$bizdoc.source` is the source Trading Networks document in the
+  relationship. Only the `InternalID` is required, with the remainder
+  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+* `$bizdoc.target` is the target Trading Networks document in the
+  relationship. Only the `InternalID` is required, with the remainder
+  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+* `$relationship` is an optional string describing the relationship 
+  between the source and target bizdocs. Defaults to `Unknown`.
 </value>
-  <value name="stateless">yes</value>
+  <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
@@ -175,12 +183,18 @@ bizdoc.
   <value name="retry_max">0</value>
   <value name="retry_interval">0</value>
   <value name="svc_in_validator_options">default</value>
-  <value name="svc_out_validator_options">default</value>
+  <value name="svc_out_validator_options">none</value>
   <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
 </Values>

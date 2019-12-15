@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Values version="2.0">
-  <value name="svc_type">flow</value>
-  <value name="svc_subtype">default</value>
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
   <value name="svc_sigtype">java 3.5</value>
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
@@ -98,27 +98,26 @@
 
 Returns the namespace declarations associated with the given Trading
 Networks document (bizdoc) in a format useful when parsing the
-content using WmPublic/pub.xml:xmlStringToXMLNode and
-WmPublic/pub.xml:xmlNodeToDocument.
+content using `WmPublic/pub.xml:xmlStringToXMLNode` and
+`WmPublic/pub.xml:xmlNodeToDocument`.
 
-Note that the special Trading Networks namespace prefix prefix0,
+Note that the special Trading Networks namespace prefix `prefix0`,
 which represents the default namespace, is automatically copied
-to Integration Server's default namespace prefix ns.
+to Integration Server's default namespace prefix `ns`.
 
 #### Inputs:
 
-* $bizdoc is the Trading Networks document to retrieve the
+* `$bizdoc` is the Trading Networks document to retrieve the
   namespace declarations from. Only the internal ID of the bizdoc
   must be specified, with the remainder of the
-  WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
+  `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
 
 #### Outputs:
 
-* $namespace is an IData document containing the namespace
-  declarations associated with the given $bizdoc, where the keys
+* `$namespace` is an `IData` document containing the namespace
+  declarations associated with the given `$bizdoc`, where the keys
   in the document are the namespace prefixes and the values are
   the namespace URIs.
-
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
@@ -147,4 +146,8 @@ to Integration Server's default namespace prefix ns.
   <null name="originURI"/>
   <value name="modifiable">true</value>
   <value name="is_public">false</value>
+  <record name="java_data" javaclass="com.wm.util.Values">
+    <value name="class">tundra.tn.document$DocumentNamespace</value>
+    <value name="method">get</value>
+  </record>
 </Values>

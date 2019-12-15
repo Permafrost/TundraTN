@@ -3040,67 +3040,68 @@ bizdoc will be returned.
 
 ### tundra.tn.document:parse
 
-Parses the Trading Networks document content part associated with the given
-part name, or the default part if not provided, using the parsing schema
-configured on the associated document type.
+Parses the Trading Networks document content part associated with the
+given part name, or the default part if not provided, using the
+parsing schema configured on the associated document type.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document whose content is to be parsed.
-  Only the internal ID of the bizdoc must be specified, with the remainder
-  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional. If the
-  specified bizdoc does not exist, an exception will be thrown.
-* `$part` is an optional content part name to be parsed. If not specified,
-  the default content part (xmldata for XML, ffdata for Flat Files) will
-  be parsed. If the specified content part name does not exist, an
+* `$bizdoc` is the Trading Networks document whose content is to be
+  parsed. Only the internal ID of the bizdoc must be specified, with
+  the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure
+  purely optional. If the specified bizdoc does not exist, an
   exception will be thrown.
-* `$encoding` is an optional character set to use when decoding the content
-  part data. If not specified, defaults to the character set specified in
-  the MIME content type of the content part being parsed, or failing that
-  [UTF-8].
-* `$validate?` is an optional boolean flag which when `true` will validate
-  the parsed content against the given `$schema`, and throw an exception
-  if the content is invalid. Defaults to `false`.
+* `$part` is an optional content part name to be parsed. If not
+  specified, the default content part (xmldata for XML, ffdata for
+  Flat Files) will be parsed. If the specified content part name does
+  not exist, an exception will be thrown.
+* `$encoding` is an optional character set to use when decoding the
+  content part data. If not specified, defaults to the character set
+  specified in the MIME content type of the content part being
+  parsed, or failing that [UTF-8].
+* `$validate?` is an optional boolean flag which when `true` will
+  validate the parsed content against the given `$schema`, and throw
+  an exception if the content is invalid. Defaults to `false`.
 
 #### Outputs:
 
-* `$document` is the parsed content part in an `IData` document representation.
-* `$content.type` is the MIME media type that describes the format of the
-  parsed content.
-* `$namespace` is the list of XML namespace prefixes and URIs declared on
-  the associated document type and used when parsing the content.
-* `$schema` is an optional output that specifies the fully-qualified name of
-  the document reference (for XML) or flat file schema (for Flat Files)
-  declared on the associated document type.
-* `$schema.type` is an optional output that specifies whether `$schema` is an
-  XML document reference or flat file schema, and is a choice of one of the
-  following values:
-  * Flat File
-  * XML
+* `$document` is the parsed content part in an `IData` document
+  representation.
+* `$content.type` is the MIME media type that describes the format of
+  the parsed content.
+* `$namespace` is the list of XML namespace prefixes and URIs
+  declared on the associated document type and used when parsing the
+  content.
+* `$schema` is an optional output that specifies the fully-qualified
+  name of the document reference (for XML) or flat file schema (for
+  Flat Files) declared on the associated document type.
+* `$schema.type` is an optional output that specifies whether
+  `$schema` is an XML document reference or flat file schema, and is
+  a choice of one of the following values:
+  * `Flat File`
+  * `XML`
 
 ---
 
 ### tundra.tn.document:relate
 
-Relates two Trading Networks documents (bizdocs) together.
+Relates two Trading Networks documents (BizDocEnvelope) together.
 
-Use this service in preference to `WmTN/wm.tn.doc:relateDocuments`, as this
-service does not throw an exception if the relationship already exists, and
-this service also logs the creation of the relationship on the target
-bizdoc.
+Use this service in preference to `WmTN/wm.tn.doc:relateDocuments`,
+as this service does not throw an exception if the relationship
+already exists, and this service also logs the creation of the
+relationship on the target bizdoc.
 
 #### Inputs:
 
 * `$bizdoc.source` is the source Trading Networks document in the
-  relationship. Only the internal ID of the bizdoc must be specified, with
-  the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
-  optional.
+  relationship. Only the `InternalID` is required, with the remainder
+  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
 * `$bizdoc.target` is the target Trading Networks document in the
-  relationship. Only the internal ID of the bizdoc must be specified, with
-  the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
-  optional.
-* `$relationship` is an optional string describing the relationship between
-  the source and target bizdocs. If not specified, defaults to 'Unknown'.
+  relationship. Only the `InternalID` is required, with the remainder
+  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+* `$relationship` is an optional string describing the relationship
+  between the source and target bizdocs. Defaults to `Unknown`.
 
 ---
 
@@ -3110,7 +3111,7 @@ Reprocesses the given Trading Networks document.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document (bizdoc) to be
+* `$bizdoc` is the Trading Networks document (BizDocEnvelope) to be
   reprocessed, and can be specified as a subset containing at least
   the `InternalID` field.
 * `TN_parms` contains the routing hints used to route the document in
@@ -3128,6 +3129,41 @@ Reprocesses the given Trading Networks document.
 
 ---
 
+### tundra.tn.document:route
+
+Routes the given `BizDocEnvelope` object to Trading Networks.
+
+Reimplements `wm.tn.route:routeBizdoc`, but throws an exception and
+aborts routing if any errors are detected prior to executing the
+processing rule if `$strict?` is `true`.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks `BizDocEnvelope` object to be
+  routed.
+* `$transport.log?` is an optional boolean indicating if the current
+  transport information from `pub.flow:getTransportInfo` should be
+  added to the document as a new content part for diagnostics.
+  Defaults to `false`.
+* `$transport.log.part` is an optional content part name to use when
+  adding the current transport information content part. Defaults
+* `$strict?` is an optional boolean indicating if routing should be
+  aborted if any errors are detected prior to executing the
+  processing rule.
+* `TN_parms` is the optional Trading Networks routing hints used when
+  routing the document.
+
+#### Outputs:
+
+* `$bizdoc` is the Trading Networks BizDocEnvelope object that was
+  routed.
+* `$sender` is the sender profile associated with the document.
+* `$receiver` is the reciever profile associated with the document.
+* `TN_parms` is the Trading Networks routing hints that were used
+  when the document was routed.
+
+---
+
 ### tundra.tn.document.schema:get
 
 Returns the parsing schema associated with the given Trading Networks
@@ -3135,17 +3171,19 @@ document.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document to retrieve the parsing schema
-  from. Only the internal ID of the bizdoc must be specified, with the
-  remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
+* `$bizdoc` is the Trading Networks document to retrieve the parsing
+  schema from. Only the internal ID of the bizdoc must be specified,
+  with the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure
+  purely optional.
 
 #### Outputs:
 
-* `$schema` is the fully-qualified name of the document reference (for XML)
-  or flat file schema (for flat files) declared on the given bizdoc's
-  document type.
-* `$schema.type` specifies whether `$schema` is an XML document reference or
-  flat file schema, and is a choice of one of the following values:
+* `$schema` is the fully-qualified name of the document reference
+  (for XML) or flat file schema (for flat files) declared on the
+  given bizdoc's document type.
+* `$schema.type` specifies whether `$schema` is an XML document
+  reference or flat file schema, and is a choice of one of the
+  following values:
   * `Flat File`
   * `XML`
 
@@ -3183,49 +3221,56 @@ Sets user status on the given Trading Networks document.
 
 ### tundra.tn.document.type:get
 
-Returns the Trading Networks document type associated with the given ID or
-name as an `IData` document.
+Returns the Trading Networks document type associated with the given
+ID or name as an `IData` document.
 
-Use this service in preference to `WmTN/wm.tn.doctype:view`, as the WmTN
-service returns an object of type `com.wm.app.tn.doc.BizDocType` which,
-despite looking like one, is not a normal `IData` document and therefore
-causes problems in Flow services. For example, you cannot branch on fields
-in the `com.wm.app.tn.doc.BizDocType` document.
+Use this service in preference to `WmTN/wm.tn.doctype:view`, as the
+WmTN service returns an object of type `com.wm.app.tn.doc.BizDocType`
+which, despite looking like one, is not a normal `IData` document and
+therefore causes problems in Flow services. For example, you cannot
+branch on fields in the `com.wm.app.tn.doc.BizDocType` document.
 
-Also, unlike `WmTN/wm.tn.doctype:view`, this service does not throw an
-exception if the document type does not exist.
+Also, unlike `WmTN/wm.tn.doctype:view`, this service does not throw
+an exception if the document type does not exist.
 
 #### Inputs:
 
-* `$id` is an optional internal ID that identifies the Trading Networks
-  document type to be returned. If both `$id` and `$name` are specified, `$id`
-  takes precedence.
-* `$name` is an optional Trading Networks document type name that identifies
-  the document type to be returned. If both `$id` and `$name` are specified,
-  `$id` takes precedence.
+* `$document.type.id` is an optional internal ID that identifies the
+  Trading Networks document type to be returned. If both
+  `$document.type.id` and `$document.type.name` are specified,
+  `$document.type.id` takes precedence.
+* `$document.type.name` is an optional Trading Networks document type
+  name that identifies the document type to be returned. If both
+  `$document.type.id` and `$document.type.name` are specified,
+  `$document.type.id` takes precedence.
 
 #### Outputs:
 
-* `$type` is the Trading Networks document type identified by either `$id` or
-  `$name`, returned as an `IData` document with the `WmTN/wm.tn.rec:BizDocType`
-  structure. If no document type exists with the given `$id` or `$name`,
-  nothing will be returned by this service, nor will an exception be thrown.
+* `$document.type` is the Trading Networks document type identified
+  by either `$document.type.id` or `$document.type.name`, returned as
+  an `IData` document with the `WmTN/wm.tn.rec:BizDocType` structure.
+  If no document type exists with the given `$document.type.id` or
+  `$document.type.name`, nothing will be returned by this service,
+  nor will an exception be thrown.
 
 ---
 
 ### tundra.tn.document.type:normalize
 
-Returns the given Trading Networks document type. When the given type is a
-subset (only the `TypeID` is required), the full type will be returned.
+Returns the given Trading Networks document type. When the given type
+is a subset (only the `TypeID` is required), the full type will be
+returned.
 
 #### Inputs:
 
-* `$type` is the Trading Networks document type to be normalized, and
-  can be specified as a subset containing at least the `TypeID` field.
+* `$document.type` is the Trading Networks document type to be
+  normalized, and can be specified as a subset containing at least
+  the `TypeID` field.
 
 #### Outputs:
 
-* `$type` is the normalized full Trading Networks document type.
+* `$document.type` is the normalized full Trading Networks document
+  type.
 
 ---
 
@@ -3236,17 +3281,19 @@ document type.
 
 #### Inputs:
 
-* `$type` is the Trading Networks document type, specified in the
-  `WmTN/wm.tn.rec:BizDocType` structure, to retrieve the parsing
-  schema from.
+* `$document.type` is the Trading Networks document type to retrieve
+  the parsing schema from. Can be specified as a subset of the
+  `WmTN/wm.tn.rec:BizDocType` structure containing at least the
+  `TypeID` field.
 
 #### Outputs:
 
-* `$schema` is the fully-qualified name of the document reference (for XML)
-  or flat file schema (for flat files) declared on the given document
-  type.
-* `$schema.type` specifies whether `$schema` is an XML document reference or
-  flat file schema, and is a choice of one of the following values:
+* `$content.schema` is the fully-qualified name of the document
+  reference (for XML) or flat file schema (for flat files) declared
+  on the given document type.
+* `$content.schema.type` specifies whether `$schema` is an XML
+  document reference or flat file schema, and is a choice of one of
+  the following values:
   * `Flat File`
   * `XML`
 

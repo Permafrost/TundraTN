@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-11-13T13:50:10.109
+// -----( CREATED: 2019-12-16T08:24:56.258
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -424,6 +424,451 @@ public final class document
 
 	}
 
+
+
+	public static final void parse (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(parse)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] record:0:required $bizdoc
+		// [i] - field:0:required InternalID
+		// [i] field:0:optional $part
+		// [i] field:0:optional $validate? {"false","true"}
+		// [o] record:0:optional $document
+		// [o] field:0:optional $content.type
+		// [o] field:0:optional $schema
+		// [o] field:0:optional $schema.type {"Flat File","XML"}
+		// [o] record:0:optional $namespace
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+		    String partName = IDataHelper.get(cursor, "$part", String.class);
+		    boolean validate = IDataHelper.getOrDefault(cursor, "$validate?", Boolean.class, false);
+
+		    IData document = BizDocContentHelper.parse(bizdoc, partName, validate, true);
+
+		    if (document != null) {
+		        IDataHelper.put(cursor, "$document", document);
+
+		        BizDocContentPart contentPart = BizDocContentHelper.getContentPart(bizdoc, partName);
+		        if (contentPart != null) IDataHelper.put(cursor, "$content.type", contentPart.getMimeType(), false);
+		        IDataHelper.put(cursor, "$schema", BizDocEnvelopeHelper.getContentSchema(bizdoc), false);
+		        IDataHelper.put(cursor, "$schema.type", BizDocEnvelopeHelper.getContentSchemaType(bizdoc), false);
+		        IDataHelper.put(cursor, "$namespace", BizDocEnvelopeHelper.getNamespaceDeclarations(bizdoc), false);
+		    }
+		} finally {
+		    cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
+
+
+
+	public static final void relate (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(relate)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] record:0:optional $bizdoc.source
+		// [i] - field:0:required InternalID
+		// [i] record:0:optional $bizdoc.target
+		// [i] - field:0:required InternalID
+		// [i] field:0:optional $relationship
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    BizDocEnvelope source = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.source", IData.class));
+		    BizDocEnvelope target = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.target", IData.class));
+		    String relationship = IDataHelper.get(cursor, "$relationship", String.class);
+
+		    BizDocEnvelopeHelper.relate(source, target, relationship);
+		} finally {
+		    cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
+
+
+
+	public static final void reroute (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(reroute)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] record:0:required $bizdoc
+		// [i] - field:0:required InternalID
+		// [i] record:0:optional TN_parms
+		// [o] record:0:required $bizdoc
+		// [o] - field:0:required InternalID
+		// [o] - record:0:required DocType
+		// [o] -- field:0:required TypeID
+		// [o] -- field:0:required TypeName
+		// [o] -- field:0:optional TypeDescription
+		// [o] -- record:0:optional Deleted
+		// [o] --- field:0:required MBoolean
+		// [o] -- record:0:optional Hidden
+		// [o] --- field:0:required MBoolean
+		// [o] -- record:0:optional SenderFromSession
+		// [o] --- field:0:required MBoolean
+		// [o] -- field:0:required LastModified
+		// [o] -- field:0:optional ValidationSvc
+		// [o] -- field:0:optional VerificationSvc
+		// [o] -- field:0:optional SigningSvc
+		// [o] -- record:0:optional PreProcessingFlags
+		// [o] --- field:0:optional validate? {"yes","no","dont care"}
+		// [o] --- field:0:optional verify? {"yes","no","dont care"}
+		// [o] --- field:0:optional persist? {"yes","no","dont care","only if unique"}
+		// [o] --- field:0:optional unique? {"dont care","Document ID only","Document ID and sender"}
+		// [o] --- field:0:optional persistOption? {"don't care","content, attributes and activity log","content only","attributes only","activity log only","content and attributes","content and activity log","attributes and activity log"}
+		// [o] --- field:0:optional dupCheckSvc
+		// [o] -- record:0:optional Attributes
+		// [o] -- record:0:optional RequiredAttributes
+		// [o] -- record:0:optional Routing
+		// [o] --- field:0:required MBoolean
+		// [o] -- record:0:optional attribQueries
+		// [o] -- record:0:optional PipelineMatchIData
+		// [o] -- record:0:optional envelopeIData
+		// [o] -- field:2:optional nsDecls
+		// [o] -- field:0:optional Type
+		// [o] -- field:1:optional queries
+		// [o] -- field:1:optional qryEvals
+		// [o] -- field:0:optional docType
+		// [o] -- field:0:optional ValidationSchema
+		// [o] -- field:0:optional recordBlueprint
+		// [o] - field:0:required DocTimestamp
+		// [o] - field:0:required LastModified
+		// [o] - field:0:required SenderID
+		// [o] - field:0:required ReceiverID
+		// [o] - field:0:optional DocumentID
+		// [o] - field:0:optional GroupID
+		// [o] - field:0:optional ConversationID
+		// [o] - field:0:required SystemStatus
+		// [o] - field:0:optional UserStatus
+		// [o] - field:0:required Persisted?
+		// [o] - field:0:required LargeDocument?
+		// [o] - record:0:optional Attributes
+		// [o] - object:0:optional Signature
+		// [o] - object:0:optional SignedBody
+		// [o] - record:1:optional ContentParts
+		// [o] -- field:0:required PartName
+		// [o] -- field:0:required MimeType
+		// [o] -- object:0:required Length
+		// [o] -- object:0:required Bytes
+		// [o] -- object:0:required PartIndex
+		// [o] -- field:0:required StorageType
+		// [o] -- object:0:required StorageRef
+		// [o] -- field:0:required LargePart?
+		// [o] - object:0:optional Content
+		// [o] - record:0:optional Errors
+		// [o] -- record:1:optional Recognition
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Verification
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Validation
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Persistence
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional Routing
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] -- record:1:optional General
+		// [o] --- field:0:required EntryTimestamp
+		// [o] --- field:0:required EntryType
+		// [o] --- field:0:required EntryClass
+		// [o] --- field:0:required BriefMessage
+		// [o] --- field:0:optional FullMessage
+		// [o] --- field:0:optional RelatedDocID
+		// [o] --- field:0:optional RelatedPartnerID
+		// [o] --- field:0:optional RelatedConversationID
+		// [o] --- field:0:required RelatedStepID
+		// [o] --- field:0:optional B2BUser
+		// [o] - record:1:optional Relationships
+		// [o] -- field:0:required from
+		// [o] -- field:0:required to
+		// [o] -- field:0:required relationship
+		// [o] - field:0:optional ReceiveSvc
+		// [o] - field:0:optional OriginalSenderID
+		// [o] - field:0:optional OriginalReceiverID
+		// [o] - field:0:optional Comments
+		// [o] - object:0:optional RepeatNum
+		// [o] - field:0:optional RoutingType
+		// [o] - field:0:optional Duplicate
+		// [o] record:0:optional $sender
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
+		// [o] - field:1:required ProfileGroups
+		// [o] - field:1:required users
+		// [o] - field:0:optional DefaultID
+		// [o] - record:0:optional ExternalID
+		// [o] - record:0:optional ExtendedFields
+		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
+		// [o] - field:0:required ProfileID
+		// [o] - field:0:required CorporationName
+		// [o] - field:0:required OrgUnit
+		// [o] - field:0:required Type
+		// [o] - object:0:required Self?
+		// [o] - field:0:required Status
+		// [o] - field:0:required RemoteStatus
+		// [o] - field:0:required PreferredProtocol
+		// [o] - field:0:required PollingProtocol
+		// [o] - field:0:required TNVersion
+		// [o] - object:0:required Deleted?
+		// [o] - object:0:required TimeToWait
+		// [o] - object:0:required RetryLimit
+		// [o] - object:0:required RetryFactor
+		// [o] - field:1:required ProfileGroups
+		// [o] - object:0:required RoutingOffStatus?
+		// [o] record:0:required $receiver
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
+		// [o] - field:1:required ProfileGroups
+		// [o] - field:1:required users
+		// [o] - field:0:optional DefaultID
+		// [o] - record:0:optional ExternalID
+		// [o] - record:0:optional ExtendedFields
+		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
+		// [o] - field:0:required ProfileID
+		// [o] - field:0:required CorporationName
+		// [o] - field:0:required OrgUnit
+		// [o] - field:0:required Type
+		// [o] - object:0:required Self?
+		// [o] - field:0:required Status
+		// [o] - field:0:required RemoteStatus
+		// [o] - field:0:required PreferredProtocol
+		// [o] - field:0:required PollingProtocol
+		// [o] - field:0:required TNVersion
+		// [o] - object:0:required Deleted?
+		// [o] - object:0:required TimeToWait
+		// [o] - object:0:required RetryLimit
+		// [o] - object:0:required RetryFactor
+		// [o] - field:1:required ProfileGroups
+		// [o] - object:0:required RoutingOffStatus?
+		// [o] record:0:optional TN_parms
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
+
+		    if (bizdoc != null) {
+		        BizDocEnvelopeHelper.reroute(bizdoc, parameters);
+
+		        IDataHelper.put(cursor, "$bizdoc", bizdoc);
+		        ProfileCache cache = ProfileCache.getInstance();
+		        IDataHelper.put(cursor, "$sender", cache.get(bizdoc.getSenderId()));
+		        IDataHelper.put(cursor, "$receiver", cache.get(bizdoc.getReceiverId()));
+		        IDataHelper.put(cursor, "TN_parms", parameters, false);
+		    }
+		} finally {
+		    cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
+
+
+
+	public static final void route (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(route)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
+		// [i] field:0:optional $transport.log? {"false","true"}
+		// [i] field:0:optional $transport.log.part
+		// [i] field:0:optional $strict? {"false","true"}
+		// [i] record:0:optional TN_parms
+		// [i] - field:0:optional processingRuleID
+		// [i] - field:0:optional processingRuleName
+		// [i] - field:0:optional $bypassRouting {"false","true"}
+		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
+		// [o] record:0:optional $sender
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
+		// [o] - field:1:required ProfileGroups
+		// [o] - field:1:required users
+		// [o] - field:0:optional DefaultID
+		// [o] - record:0:optional ExternalID
+		// [o] - record:0:optional ExtendedFields
+		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
+		// [o] - field:0:required ProfileID
+		// [o] - field:0:required CorporationName
+		// [o] - field:0:required OrgUnit
+		// [o] - field:0:required Type
+		// [o] - object:0:required Self?
+		// [o] - field:0:required Status
+		// [o] - field:0:required RemoteStatus
+		// [o] - field:0:required PreferredProtocol
+		// [o] - field:0:required PollingProtocol
+		// [o] - field:0:required TNVersion
+		// [o] - object:0:required Deleted?
+		// [o] - object:0:required TimeToWait
+		// [o] - object:0:required RetryLimit
+		// [o] - object:0:required RetryFactor
+		// [o] - field:1:required ProfileGroups
+		// [o] - object:0:required RoutingOffStatus?
+		// [o] record:0:optional $receiver
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
+		// [o] - field:1:required ProfileGroups
+		// [o] - field:1:required users
+		// [o] - field:0:optional DefaultID
+		// [o] - record:0:optional ExternalID
+		// [o] - record:0:optional ExtendedFields
+		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
+		// [o] - field:0:required ProfileID
+		// [o] - field:0:required CorporationName
+		// [o] - field:0:required OrgUnit
+		// [o] - field:0:required Type
+		// [o] - object:0:required Self?
+		// [o] - field:0:required Status
+		// [o] - field:0:required RemoteStatus
+		// [o] - field:0:required PreferredProtocol
+		// [o] - field:0:required PollingProtocol
+		// [o] - field:0:required TNVersion
+		// [o] - object:0:required Deleted?
+		// [o] - object:0:required TimeToWait
+		// [o] - object:0:required RetryLimit
+		// [o] - object:0:required RetryFactor
+		// [o] - field:1:required ProfileGroups
+		// [o] - object:0:required RoutingOffStatus?
+		// [o] record:0:optional TN_parms
+		// [o] - field:0:optional processingRuleID
+		// [o] - field:0:optional processingRuleName
+		// [o] - field:0:optional $bypassRouting {"false","true"}
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    BizDocEnvelope bizdoc = IDataHelper.get(cursor, "$bizdoc", BizDocEnvelope.class);
+		    boolean transportLog = IDataHelper.getOrDefault(cursor, "$transport.log?", Boolean.class, false);
+		    String transportLogPartName = IDataHelper.get(cursor, "$transport.log.part", String.class);
+		    boolean strict = IDataHelper.getOrDefault(cursor, "$transport.log?", Boolean.class, false);
+		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
+
+		    if (bizdoc != null) {
+		        BizDocEnvelopeHelper.route(bizdoc, transportLog, transportLogPartName, parameters, strict);
+
+		        IDataHelper.put(cursor, "$bizdoc", bizdoc);
+		        ProfileCache cache = ProfileCache.getInstance();
+		        IDataHelper.put(cursor, "$sender", cache.get(bizdoc.getSenderId()));
+		        IDataHelper.put(cursor, "$receiver", cache.get(bizdoc.getReceiverId()));
+		        IDataHelper.put(cursor, "TN_parms", parameters, false);
+		    }
+		} finally {
+		    cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
+
 	// --- <<IS-START-SHARED>> ---
 	public static class ActivityLog {
 	    public static void log(IData pipeline) throws ServiceException {
@@ -568,6 +1013,33 @@ public final class document
 	    }
 	}
 
+	public static class DocumentNamespace {
+	    public static void get(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            IDataHelper.put(cursor, "$namespace", BizDocEnvelopeHelper.getNamespaceDeclarations(bizdoc), false);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
+	public static class DocumentSchema {
+	    public static void get(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            IDataHelper.put(cursor, "$schema", BizDocEnvelopeHelper.getContentSchema(bizdoc), false);
+	            IDataHelper.put(cursor, "$schema.type", BizDocEnvelopeHelper.getContentSchemaType(bizdoc), false);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
 	public static class DocumentStatus {
 	    public static void set(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
@@ -592,8 +1064,16 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            String id = IDataHelper.get(cursor, "$id", String.class);
-	            String name = IDataHelper.get(cursor, "$name", String.class);
+	            boolean backwardsCompatible = false;
+
+	            String id = IDataHelper.get(cursor, "$document.type.id", String.class);
+	            String name = IDataHelper.get(cursor, "$document.type.name", String.class);
+
+	            if (id == null && name == null) {
+	                id = IDataHelper.get(cursor, "$id", String.class);
+	                name = IDataHelper.get(cursor, "$name", String.class);
+	                backwardsCompatible = id != null || name != null;
+	            }
 
 	            BizDocType type = null;
 
@@ -604,7 +1084,7 @@ public final class document
 	            }
 
 	            if (type != null) {
-	                IDataHelper.put(cursor, "$type", IDataHelper.normalize((IData)type));
+	                IDataHelper.put(cursor, backwardsCompatible ? "$type" : "$document.type", IDataHelper.normalize((IData)type));
 	            }
 	        } finally {
 	            cursor.destroy();
@@ -615,10 +1095,37 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$type", IData.class));
+	            boolean backwardsCompatible = false;
+
+	            BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$document.type", IData.class));
+
+	            if (type == null) {
+	                type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$type", IData.class));
+	                backwardsCompatible = type != null;
+	            }
 
 	            if (type != null) {
-	                IDataHelper.put(cursor, "$type", IDataHelper.normalize((IData)type));
+	                IDataHelper.put(cursor, backwardsCompatible ? "$type" : "$document.type", IDataHelper.normalize((IData)type));
+	            }
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
+	public static class DocumentTypeSchema {
+	    public static void get(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$document.type", IData.class));
+	            if (type == null) {
+	                type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$type", IData.class));
+	                IDataHelper.put(cursor, "$schema", BizDocTypeHelper.getContentSchema(type), false);
+	                IDataHelper.put(cursor, "$schema.type", BizDocTypeHelper.getContentSchemaType(type), false);
+	            } else {
+	                IDataHelper.put(cursor, "$content.schema", BizDocTypeHelper.getContentSchema(type), false);
+	                IDataHelper.put(cursor, "$content.schema.type", BizDocTypeHelper.getContentSchemaType(type), false);
 	            }
 	        } finally {
 	            cursor.destroy();

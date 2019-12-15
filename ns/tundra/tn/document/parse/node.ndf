@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Values version="2.0">
-  <value name="svc_type">flow</value>
-  <value name="svc_subtype">default</value>
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
   <value name="svc_sigtype">java 3.5</value>
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
@@ -69,34 +69,6 @@
           </record>
           <value name="is_public">false</value>
           <value name="field_name">$part</value>
-          <value name="field_type">string</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <record name="field_content_type" javaclass="com.wm.util.Values">
-            <value name="contentType">1</value>
-            <value name="internalType">reference</value>
-            <value name="dataTypeVersion">dtVersion2</value>
-            <array name="targetNames" type="record" depth="1">
-              <record javaclass="com.wm.util.Values">
-                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
-              </record>
-            </array>
-          </record>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <null name="field_usereditable"/>
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">$encoding</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -210,25 +182,6 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">$namespace</value>
-          <value name="field_type">record</value>
-          <value name="field_dim">0</value>
-          <value name="field_opt">true</value>
-          <value name="nillable">true</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-          <array name="rec_fields" type="record" depth="1">
-          </array>
-          <value name="modifiable">true</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
             <null name="field_usereditable"/>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
@@ -319,52 +272,73 @@
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
         </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="is_public">false</value>
+          <value name="field_name">$namespace</value>
+          <value name="field_type">record</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+          <array name="rec_fields" type="record" depth="1">
+          </array>
+          <value name="modifiable">true</value>
+        </record>
       </array>
       <value name="modifiable">true</value>
     </record>
   </record>
   <value name="node_comment">### tundra.tn.document:parse
 
-Parses the Trading Networks document content part associated with the given
-part name, or the default part if not provided, using the parsing schema
-configured on the associated document type.
+Parses the Trading Networks document content part associated with the
+given part name, or the default part if not provided, using the 
+parsing schema configured on the associated document type.
 
 #### Inputs:
 
-* $bizdoc is the Trading Networks document whose content is to be parsed.
-  Only the internal ID of the bizdoc must be specified, with the remainder
-  of the WmTN/wm.tn.rec:BizDocEnvelope structure purely optional. If the
-  specified bizdoc does not exist, an exception will be thrown.
-* $part is an optional content part name to be parsed. If not specified,
-  the default content part (xmldata for XML, ffdata for Flat Files) will
-  be parsed. If the specified content part name does not exist, an
+* `$bizdoc` is the Trading Networks document whose content is to be 
+  parsed. Only the internal ID of the bizdoc must be specified, with 
+  the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure 
+  purely optional. If the specified bizdoc does not exist, an 
   exception will be thrown.
-* $encoding is an optional character set to use when decoding the content
-  part data. If not specified, defaults to the character set specified in
-  the MIME content type of the content part being parsed, or failing that
-  [UTF-8].
-* $validate? is an optional boolean flag which when true will validate
-  the parsed content against the given $schema, and throw an exception
-  if the content is invalid. Defaults to false.
+* `$part` is an optional content part name to be parsed. If not 
+  specified, the default content part (xmldata for XML, ffdata for 
+  Flat Files) will be parsed. If the specified content part name does
+  not exist, an exception will be thrown.
+* `$encoding` is an optional character set to use when decoding the
+  content part data. If not specified, defaults to the character set
+  specified in the MIME content type of the content part being 
+  parsed, or failing that [UTF-8].
+* `$validate?` is an optional boolean flag which when `true` will
+  validate the parsed content against the given `$schema`, and throw
+  an exception if the content is invalid. Defaults to `false`.
 
 #### Outputs:
 
-* $document is the parsed content part in an IData document representation.
-* $content.type is the MIME media type that describes the format of the
-  parsed content.
-* $namespace is the list of XML namespace prefixes and URIs declared on
-  the associated document type and used when parsing the content.
-* $schema is an optional output that specifies the fully-qualified name of
-  the document reference (for XML) or flat file schema (for Flat Files)
-  declared on the associated document type.
-* $schema.type is an optional output that specifies whether $schema is an
-  XML document reference or flat file schema, and is a choice of one of the
-  following values:
-  * Flat File
-  * XML
-
-[UTF-8]: &lt;http://en.wikipedia.org/wiki/UTF-8&gt;</value>
-  <value name="stateless">yes</value>
+* `$document` is the parsed content part in an `IData` document
+  representation.
+* `$content.type` is the MIME media type that describes the format of
+  the parsed content.
+* `$namespace` is the list of XML namespace prefixes and URIs
+  declared on the associated document type and used when parsing the
+  content.
+* `$schema` is an optional output that specifies the fully-qualified
+  name of the document reference (for XML) or flat file schema (for
+  Flat Files) declared on the associated document type.
+* `$schema.type` is an optional output that specifies whether 
+  `$schema` is an XML document reference or flat file schema, and is
+  a choice of one of the following values:
+  * `Flat File`
+  * `XML`
+</value>
+  <value name="stateless">no</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
