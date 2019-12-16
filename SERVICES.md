@@ -2691,6 +2691,28 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute:merge
+
+Merges the given attributes into the given Trading Networks document.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document (BizDocEnvelope) against
+  which the given `$attributes` will be merged.
+* `$attributes` are the attribute keys and values to be merged into
+  the given `$bizdoc`. The attributes are first sanitized such that
+  any keys that do match already defined Trading Networks document
+  attributes are removed, then the attributes are
+  merged into the `$bizdoc`. Existing attributes on the `$bizdoc`
+  will be overwritten if `$attributes` contains the same attribute.
+* `$substitute?` is an optional boolean indicating if variable
+  substitution should be performed against the `$attributes` values.
+  The pipeline used for substitution will include the parsed
+  `$bizdoc` content as a variable named `$document`. Defaults to
+  `false`.
+
+---
+
 ### tundra.tn.document.content:add
 
 Adds a content part with the given name and content, specified as a string,

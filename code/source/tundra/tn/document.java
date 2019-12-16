@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-12-16T08:24:56.258
+// -----( CREATED: 2019-12-17T08:54:50.123
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -24,6 +24,7 @@ import permafrost.tundra.lang.ObjectHelper;
 import permafrost.tundra.lang.UnrecoverableException;
 import permafrost.tundra.tn.document.attribute.transform.Transformer;
 import permafrost.tundra.tn.document.attribute.transform.number.ImminentPrioritizer;
+import permafrost.tundra.tn.document.BizDocAttributeHelper;
 import permafrost.tundra.tn.document.BizDocContentHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
 import permafrost.tundra.tn.document.BizDocTypeHelper;
@@ -889,6 +890,28 @@ public final class document
 	    }
 	}
 
+	public static class DocumentAttribute {
+	    public static void merge(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            IData attributes = IDataHelper.get(cursor, "$attributes", IData.class);
+	            boolean substitute = IDataHelper.getOrDefault(cursor, "$substitute?", Boolean.class, false);
+
+	            BizDocAttributeHelper.merge(bizdoc, attributes, pipeline, substitute);
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	}
+
+	public static class DocumentAttributeNumberTransformerPriority {
+	    public static void imminence(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new ImminentPrioritizer());
+	    }
+	}
+
 	public static class DocumentContent {
 	    public static void add(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
@@ -1130,12 +1153,6 @@ public final class document
 	        } finally {
 	            cursor.destroy();
 	        }
-	    }
-	}
-
-	public static class DocumentAttributeNumberTransformerPriority {
-	    public static void imminence(IData pipeline) throws ServiceException {
-	        Transformer.transform(pipeline, new ImminentPrioritizer());
 	    }
 	}
 	// --- <<IS-END-SHARED>> ---
