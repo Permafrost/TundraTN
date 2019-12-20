@@ -2939,6 +2939,34 @@ check service from Trading Networks, and is compatible with the the
 
 ---
 
+### tundra.tn.document:enqueue
+
+Enqueues the given Trading Networks document for delivery by the
+given queue.
+
+Creates a new delivery task if one does not already exist for the
+given document on the given queue. However, if a task does already
+exist, it will be restarted if it is failed or stopped or `$force?`
+is `true`, otherwise the document will not be requeued to the queue
+as an existing in-progress or completed task already exists for it.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document to be enqueued.
+* `$queue` is the name of the Trading Networks delivery queue to
+  enqueue the given `$bizdoc` to for delivery.
+* `$force?` is an optional boolean which if `true` will always
+  restart an existing task regardless of its status. If `false`, only
+  existing tasks that are failed or stopped will be restarted.
+  Defaults to `false`.
+
+#### Outputs:
+
+* `$task` is the delivery task created or restarted to deliver the
+  given `$bizdoc` via the given `$queue`.
+
+---
+
 ### tundra.tn.document.error:exists
 
 Returns `true` if any errors (of the given class, if specified) exist on the

@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-12-17T08:54:50.123
+// -----( CREATED: 2019-12-21T07:19:15.578
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -9,6 +9,7 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import com.wm.app.tn.delivery.DeliveryQueue;
 import com.wm.app.tn.doc.BizDocContentPart;
 import com.wm.app.tn.doc.BizDocEnvelope;
 import com.wm.app.tn.doc.BizDocType;
@@ -22,6 +23,7 @@ import permafrost.tundra.lang.BooleanHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.lang.ObjectHelper;
 import permafrost.tundra.lang.UnrecoverableException;
+import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
 import permafrost.tundra.tn.document.attribute.transform.Transformer;
 import permafrost.tundra.tn.document.attribute.transform.number.ImminentPrioritizer;
 import permafrost.tundra.tn.document.BizDocAttributeHelper;
@@ -47,6 +49,40 @@ public final class document
 
 	// ---( server methods )---
 
+
+
+
+	public static final void enqueue (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(enqueue)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] record:0:required $bizdoc
+		// [i] - field:0:required InternalID
+		// [i] field:0:required $queue
+		// [i] field:0:optional $force? {"false","true"}
+		// [o] record:0:optional $task
+		// [o] - field:0:required TaskId
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+		    DeliveryQueue queue = DeliveryQueueHelper.get(IDataHelper.get(cursor, "$queue", String.class));
+		    boolean force = IDataHelper.getOrDefault(cursor, "$force?", Boolean.class, false);
+		    String summary = IDataHelper.get(cursor, "$tundra.tn.document.enqueue.log.message.summary.prefix", String.class);
+		    IData context = IDataHelper.get(cursor, "$tundra.tn.document.enqueue.log.context", IData.class);
+
+		    IDataHelper.put(cursor, "$task", BizDocEnvelopeHelper.enqueue(document, queue, force, summary, context), false);
+		} catch(Exception ex) {
+		    ExceptionHelper.raise(ex);
+		} finally {
+		    cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
 
 
 
