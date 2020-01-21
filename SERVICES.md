@@ -999,133 +999,56 @@ Networks bizdoc processing rule.
 
 ### tundra.tn:retrieve
 
-Retrieves arbitrary content from the given `$source` URI, and routes it to
-Trading Networks.
+Retrieves arbitrary content from the given `$source` URI, and routes
+it to Trading Networks.
 
-Additional retrieval protocols can be implemented by creating a service named
-for the URI scheme in the folder `Tundra/tundra.content.retrieve`.  Services in
-this folder must implement the `Tundra/tundra.schema.content.retrieve:handler`
-specification.
+Uses `Tundra/tundra.content:retrieve` for its implementation. Please
+refer to that service's documentation for further details.
 
 #### Inputs:
 
-* `$source` is a URI identifying the location from which content is to be
-  retrieved. Supports the following retrieval protocols / URI schemes:
-  * `file:` routes each file matching the given `$source` URI to Trading
-    Networks. The file component of the URI can include wildcards
-    or globs (such as `*.txt` or `*.j?r`) for matching multiple files at once.
-
-    The following example would process all `*.txt` files in the specified
-    directory:
-
-        file:////server:port/directory/*.txt
-
-    To ensure each file processed is not locked or being written to by
-    another process, the file is first moved to a working directory. The
-    name of this directory can be configured by adding a query string
-    parameter called `working` to the URI, for example:
-
-        file:////server:port/directory/*.txt?working=temp
-
-    In this example, files are first moved to a subdirectory named `temp`.
-    If not specified, the working directory defaults to a subdirectory
-    named `working`.
-
-    After successful processing, the file is then moved to an archive
-    directory. The name of this directory can be configured by adding a
-    query string parameter called `archive` to the URI, for example:
-
-        file:////server:port/directory/*.txt?archive=backup
-
-    In this example, files are moved to a subdirectory named `backup` after
-    being successfully processed. If not specified, the archive directory
-    defaults to a subdirectory named `archive`.
-
-    Optionally, archived files older than a given age can be cleaned up
-    automatically by the retrieve process by specifying a query string
-    parameter called `purge` with an XML duration value representing the
-    age an archived file must be before being purged, for example:
-
-        file:////server:port/directory/*.txt?purge=P14D
-
-    In this example, any files in the archive directory older than 14 days
-    will be automatically deleted by the retrieve process. If the query
-    string parameter `purge` is not specified, archived files will not be
-    automatically cleaned up.
-  * `ftp`: processes each file matching the given `$source` URI with the
-    given processing `$service`. The file component of the URI can
-    include wildcards or globs (such as `*.txt`) for matching multiple
-    files at once.
-
-    The following example would process all `*.txt` files in the
-    specified directory using active FTP with an ASCII transfer mode
-    and a server timeout of 5 minutes:
-
-        ftp://user:password@server:port/directory/*.txt?active=true&ascii=true&timeout=PT5M
-
-    The following additional settings can be specified using query
-    string parameters:
-    * `active`: optional boolean which when `true` uses active FTP.
-      Defaults to passive FTP.
-    * `ascii`: optional boolean which when `true` sets the FTP transfer
-      mode to ASCII. Defaults to binary transfer mode.
-    * `timeout`: optional XML duration specifying the time to wait for
-      a response from the FTP server before timing out and
-      terminating the request. Defaults to PT1M (1 minute).
-  * `ftps`: refer to `ftp`.
-  * `sftp`: processes each file matching the given `$source` URI with the
-    given processing `$service`. The file component of the URI can
-    include wildcards or globs (such as `*.txt`) for matching multiple
-    files at once. Note that SFTP retrieval is only supported on
-    Integration Server versions 9.0 and higher.
-
-    The following example would process all `*.txt` files in the
-    specified directory using SFTP:
-
-        sftp://useralias/path/*.txt
-
-    Where:
-    * `useralias` identifies the Integration Server SFTP User Alias to
-      be used for connecting to the source SFTP server.
-    * `path` is the absolute path to the directory where the files to be
-      processed exist, unless it starts with `.` to indicate a relative
-      directory path, such as:
-
-          sftp://useralias/./path/*.txt
-
-* `$limit` is an optional maximum number of content matches to be processed in
-  a single execution. Defaults to 1000.
-* `$strict?` is an optional boolean, which if `true` will abort routing/
-  processing rule execution of the document if any any errors (such as
-  validation errors) are encountered prior to processing. Defaults to `false`.
-* `$content.identity` is an optional choice of mode for assigning a value
-  to the `DocumentID` of the resulting bizdoc if no `DocumentID` is extracted:
+* `$source` is a URI identifying the location from which content is
+  to be retrieved. The retrieval protocols / URI schemes are as per
+  `Tundra/tundra.content:retrieve`. Please refer to this service's
+  documentation for further details.
+* `$limit` is an optional maximum number of content matches to be
+  processed in a single execution. Defaults to 1000.
+* `$strict?` is an optional boolean, which if `true` will abort
+  routing/processing rule execution of the document if any any errors
+  (such as validation errors) are encountered prior to processing.
+  Defaults to `false`.
+* `$content.identity` is an optional choice of mode for assigning a
+  value to the `DocumentID` of the resulting bizdoc if no
+  `DocumentID` is extracted:
   * `UUID`: assigns a newly generated [UUID] in canonical.
   * `ULID`: assigns a newly generated [ULID].
-  * `SHA-512`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA-384`: the algorithm used to calculate a message digest from the
-    content.
-  * `SHA-256`: the algorithm used to calculate a message digest from the
-    content.
+  * `SHA-512`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA-384`: the algorithm used to calculate a message digest from
+    the content.
+  * `SHA-256`: the algorithm used to calculate a message digest from
+    the content.
   * `SHA`: the algorithm used to calculate a message digest from the
     content.
   * `MD5`: the algorithm used to calculate a message digest from the
     content.
   * `MD2`: the algorithm used to calculate a message digest from the
     content.
-* `TN_parms` is an optional set of routing hints for Trading Networks to use
-  when routing the retrieved content. The following TN_parms are set
-  automatically, if no other value is provided:
-  * `DocumentID` is set using the provided `$content.identity` approach.
-  * `GroupID` is set to a generated [UUID] and groups all content retrieved per
-    invocation of this service.
+* `TN_parms` is an optional set of routing hints for Trading Networks
+  to use when routing the retrieved content. The following TN_parms
+  are set automatically, if no other value is provided:
+  * `DocumentID` is set using the provided `$content.identity`
+    approach.
+  * `GroupID` is set to a generated [UUID] and groups all content
+    retrieved per invocation of this service.
   * `$contentType` is the MIME media type of the content.
   * `$contentEncoding` is the character set of the content.
-  * `Content Name` is the name associated with the retrieved content, for example
-    the file name for content retrieved from a file URI.
-  * `Content Source` is the source location from which the content was retrieved.
-  * `Content Archive` is the archive location to which the content was archived.
+  * `Content Name` is the name associated with the retrieved content,
+    for example the file name for content retrieved from a file URI.
+  * `Content Source` is the source location from which the content
+    was retrieved.
+  * `Content Archive` is the archive location to which the content
+    was archived.
   * `User` is the user under which this service was invoked.
 
 ---
