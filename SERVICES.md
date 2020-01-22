@@ -166,10 +166,10 @@ Delivers Trading Networks document (bizdoc) content to the given
 destination [URI].
 
 Variable substitution is performed on all variables specified in the
-`$pipeline` document, and the `$destination` [URI], allowing for dynamic
-generation of any of these values. Also, if `$service` is specified,
-it will be called prior to variable substitution and thus can be
-used to populate the pipeline with variables to be used by the
+`$pipeline` document, and the `$destination` [URI], allowing for
+dynamic generation of any of these values. Also, if `$service` is
+specified, it will be called prior to variable substitution and thus
+can be used to populate the pipeline with variables to be used by the
 substitution.
 
 When using variable substitution in a [URI], because it uses `%`
@@ -180,16 +180,13 @@ include the variable substitution statement:
 
     %$bizdoc/DocType/TypeName%
 
-in a `mailto` [URI], the `%` characters need to be encoded as the `%25`
-escape sequence as follows:
+in a `mailto` [URI], the `%` characters need to be encoded as the
+`%25` escape sequence as follows:
 
     mailto:john.doe@example.com?subject=%25$bizdoc/DocType/TypeName%25
 
-This service leverages the service `Tundra/tundra.content:deliver`.
-Therefore, additional delivery protocols can be implemented by
-creating a service named for the [URI] scheme in the folder
-`tundra.content.deliver`.  Services in this folder should implement
-the `tundra.schema.content.deliver:handler` specification.
+Uses `Tundra/tundra.content:deliver` for its implementation. Please
+refer to that service's documentation for further details.
 
 This service is designed to be called directly from a Trading
 Networks bizdoc processing rule.
@@ -201,160 +198,9 @@ Networks bizdoc processing rule.
 * `$destination` is either a [URI], or a named destination (such as
   `Receiver's Preferred Protocol`), to which the bizdoc content will
   be delivered. If not specified, no delivery will be attempted.
-  Supports the following delivery protocols ([URI] schemes):
-  * `file`: writes the given content to the file specified by the
-    destination [URI]. The following additional override options can
-    be provided via the `$pipeline` document:
-    * `$filename`: the name of the file to be written. This value will
-      override the value provided in the destination [URI].
-    * `$mode`: append / write
-  * `ftp`: uploads the given content to the FTP server, directory and
-    file specified by the destination [URI]. An example FTP [URI] is
-    as follows:
-
-        ftp://aladdin:opensesame@example.com:21/path/file?append=true&active=true&ascii=true
-
-    The following additional override options can be provided via
-    the `$pipeline` document:
-    * `$user`: the username used to log in to the FTP server.
-      Defaults to the username specified in the authority section of
-      the [URI].
-    * `$password`: the password used to log in to the FTP server.
-      Defaults to the password specified in the authority section of
-      the [URI].
-    * `$active`: a boolean which when `true` indicates that the
-      connection to the FTP server should be in active mode.
-      Defaults to `false` (passive mode).
-    * `$append`: a boolean which when `true` will append the given
-      content to the file, rather than overwrite it, if the file
-      already exists. Defaults to `false` (overwriting).
-    * `$ascii`: a boolean which when `true` indicates that the file
-      transfer should be made in ascii mode. Defaults to `false`
-      (binary mode).
-    * `$timeout`: an optional [XML] duration string which specifies
-      how long the client waits for a response from the server
-      before timing out and terminating the request with an error.
-      Defaults to `PT60S`.
-  * `ftps`: refer to `ftp`
-  * `http`: transmits the given content to the destination [URI]. The
-    following additional override options can be provided via the
-    `$pipeline` document:
-    * `$method`: get / put / post / delete / head / trace / options
-    * `$headers/*`: additional HTTP headers as required
-    * `$authority/user`: the username to log on to the remote web
-      server. Defaults to the username specified in the authority
-      section of the [URI].
-    * `$authority/password`: the password to log on to the remote web
-      server. Defaults to the password specified in the authority
-      section of the [URI].
-    * `$timeout` is an optional [XML] duration string which specifies
-      how long the client waits for a response from the server
-      before timing out and terminating the request with an error.
-      Defaults to `PT60S`.
-  * `https`: refer to `http`
-  * `jms`: sends the given content as a [JMS] [javax.jms.BytesMessage]
-    to the specified [JMS] alias and queue or topic. The following
-    additional override options can be provided via the `$pipeline`
-    document:
-    * `$headers/*`: additional properties to be added to the [JMS]
-      message header, which can be used for filtering by [JMS]
-      subscribers.
-
-    The following example will deliver the given content as a [JMS]
-    bytes message to the JMS alias DEFAULT_IS_JMS_CONNECTION, [JMS]
-    topic JMS::Temporary::Topic, with a time to live of 1 day, and
-    with the default priority of 4:
-
-        jms://DEFAULT_IS_JMS_CONNECTION?topic=JMS::Temporary::Topic&lifetime=P1D
-
-    The following example will deliver the given content as a [JMS]
-    bytes message to the [JMS] alias DEFAULT_IS_JMS_CONNECTION,
-    [JMS] queue JMS::Temporary::Queue, with no expiry, and with the
-    specified priority of 1:
-
-        jms://DEFAULT_IS_JMS_CONNECTION?queue=JMS::Temporary::Queue&priority=1
-  * `mailto`: sends an email, with the given content as an attachment
-    if specified. An example mailto [URI] is as follows:
-
-        mailto:bob@example.com?cc=jane@example.com&subject=Example&body=Example&attachment=message.xml
-
-    The following additional override options can be provided via the
-    `$pipeline` document:
-    * `$attachment`: the attached file's name
-    * `$from`: email address to send the email from
-    * `$subject`: the subject line text
-    * `$body`: the main text of the email
-    * `$smtp`: an SMTP [URI] specifying the SMTP server to use (for
-      example, smtp://user:password@host:port), defaults to the SMTP
-      server configured in the Integration Server setting
-      `watt.server.smtpServer`.
-  * `sap+idoc`: sends an IDoc [XML] message to an SAP system. Note
-    that this delivery scheme requires the webMethods SAP adapter be
-    installed. Both opaque and non-opaque URIs are allowed: opaque
-    URIs are useful if the SAP Adapter alias contains characters not
-    permitted in a normal domain name, such as underscores.
-
-    An example opaque `sap+idoc` [URI] is as follows, where `sap_r3` is
-    the SAP Adapter alias name, and the user and password are
-    provided as query string parameters:
-
-        sap+idoc:sap_r3?user=aladdin&password=opensesame&client=200&language=en&queue=xyz&limit=999
-
-    An example non-opaque `sap+idoc` [URI] is as follows, where `sappr3`
-    is the SAP Adapter alias name, and the user and password are
-    provided in the authority section of the [URI]:
-
-        sap+idoc://aladdin:opensesame@sappr3?client=200&language=en&queue=xyz&limit=999
-
-    The following additional override options can be provided via the
-    `$pipeline` document, and if specified will override the relevant
-    parts of the destination [URI]:
-    * `$user`: the username used for the SAP session. Defaults to the
-      SAP Adapter alias username.
-    * `$password`: the password used for the SAP session. Defaults to
-      the SAP Adapter alias password.
-    * `$client`: the SAP client used for the SAP session. Defaults to
-      the SAP Adapter alias client.
-    * `$language`: the language used for the SAP session. Defaults to
-      the SAP Adapter alias language.
-    * `$queue`: the optional name of the SAP system inbound queue,
-      required when using queued remote function calls (qRFC).
-    * `$limit`: the maximum number of IDocs to send per transaction
-      (TID), used to partition the sending of a batch of IDocs across
-      multiple smaller TIDs. Defaults to no limit.
-  * `sftp`: uploads the given content to the [SFTP] server, directory and
-    file specified by the destination [URI]. Note that [SFTP] delivery
-    is only supported on Integration Server versions 9.0 and higher.
-    An example [SFTP] [URI] is as follows:
-
-        sftp://useralias/path/file?append=false&rename=true
-
-    Where:
-    * `useralias` identifies the Integration Server [SFTP] User Alias to
-      be used for connecting to the destination [SFTP] server.
-    * `path` is the absolute path to the directory where the file should
-      be written, unless it starts with "." to indicate a relative
-      directory path, such as:
-
-          sftp://useralias/./path/file
-
-    * `file` is an optional remote file name that the content will be
-      written to. If not specified, will default to the value of the
-      bizdoc attribute `Content Name` if it exists, otherwise the
-      internal ID of the bizdoc whose content is being delivered. Note
-      that a partial filename can also be specified with just the
-      extension part (such as `.xml`), and in this case the internal
-      ID will be prefixed to the given extension.
-    * `append` is an optional query string boolean which if `true` will
-      append the content to the given file if it already exists.
-      Defaults to `false` if not specified, which overwrites the given
-      file if it already exists.
-    * `rename` is an optional query string boolean which if `true` will
-      first write the content to the given file name with `.tmp`
-      suffix and then rename it to its specified name once written.
-      Defaults to `false`, where the content is written directly to
-      the file name specified in the destination [URI]. Note if the
-      append option is `true`, this option has no effect.
+  The supported delivery protocols ([URI] schemes) are as per
+  `Tundra/tundra.content:deliver`. Please refer to this service's
+  documentation for further details.
 * `$service` is an optional fully-qualified service name which, when
   specified, will be invoked prior to delivery, thus allowing a
   service to perform processing to influence the delivery (such as
@@ -376,13 +222,13 @@ Networks bizdoc processing rule.
   values in the `$destination` [URI] where applicable. See the
   `$destination` description above for transport-specific options
   which can be provided via this `IData` document.
-* `$status.done` is an optional user status to use for the bizdoc when
-  delivery has completed successfully. Defaults to `DONE`.
+* `$status.done` is an optional user status to use for the bizdoc
+  when delivery has completed successfully. Defaults to `DONE`.
 * `$status.ignored` is an optional user status to use for the bizdoc
   when no delivery destination is provided. Defaults to `IGNORED`.
-* `$status.silence?` is an optional boolean which when `true` will cause
-  this service not to change the status on the document. Defaults to
-  `false`.
+* `$status.silence?` is an optional boolean which when `true` will
+  cause this service not to change the status on the document.
+  Defaults to `false`.
 * `$substitute?` is an optional boolean flag which when `true` will
   perform variable substitution on all variables in the pipeline
   (after invoking `$service`, if applicable), which allows variables
@@ -390,8 +236,8 @@ Networks bizdoc processing rule.
   values returned by `$service`, if applicable). Defaults to `true`.
 * `$part` is an optional name of the bizdoc content part to be
   delivered. Defaults to the default content part when not specified
-  (`xmldata` for [XML] document types; `ffdata` for Flat File document
-  types).
+  (`xmldata` for [XML] document types; `ffdata` for Flat File
+  document types).
 * `$parse?` is an optional boolean flag which when `true` parses the
   bizdoc content part identified by `$part` using the parsing schema
   configured on the Trading Networks document type, prior to both
@@ -399,12 +245,13 @@ Networks bizdoc processing rule.
   document content can then be used in conjunction with variable
   substitution for influencing the delivery [URI] based on the
   content of the document. Defaults to `false`.
-* `$prefix?` is an optional boolean flag indicating whether to use the
-  `$` prefix on the standard input arguments (`bizdoc`, `sender`, and
-  `receiver`) when calling `$service`. When `true` `$service` should
-  implement the `TundraTN/tundra.tn.schema:processor` specification;
-  when `false` `$service` should implement the
-  `WmTN/wm.tn.rec:ProcessingService` specification. Defaults to `true`.
+* `$prefix?` is an optional boolean flag indicating whether to use
+  the `$` prefix on the standard input arguments (`bizdoc`, `sender`,
+  and `receiver`) when calling `$service`. When `true` `$service`
+  should implement the `TundraTN/tundra.tn.schema:processor`
+  specification; when `false` `$service` should implement the
+  `WmTN/wm.tn.rec:ProcessingService` specification. Defaults to
+  `true`.
 * `$encoding` is an optional character set to use when encoding text
   content for delivery. Defaults to [UTF-8].
 * `$strict` is an optional set of boolean flags that control strict
@@ -417,8 +264,8 @@ Networks bizdoc processing rule.
   Trading Networks document type and do not wish to deliver
   duplicates, set the `$strict/Saving` error class to `true` and
   duplicate documents will not be delivered, and will instead have
-  their user status set to `ABORTED` (when using the standard `$catch`
-  service).
+  their user status set to `ABORTED` (when using the standard
+  `$catch` service).
 
   The following flags are supported, and all default to `true` if not
   specified:
@@ -4579,15 +4426,12 @@ restart the given task regardless of its status.
 [JAR]: <http://en.wikipedia.org/wiki/JAR_(file_format)>
 [java.text.SimpleDateFormat]: <http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html>
 [java.util.Date]: <http://docs.oracle.com/javase/6/docs/api/java/util/Date.html>
-[javax.jms.BytesMessage]: <http://docs.oracle.com/javaee/1.4/api/javax/jms/BytesMessage.html>
-[JMS]: <http://en.wikipedia.org/wiki/Java_Message_Service>
 [JSON]: <http://www.json.org>
 [LICENSE]: <https://github.com/Permafrost/TundraTN/blob/master/LICENSE>
 [org.w3c.dom.Node]: <http://docs.oracle.com/javase/6/docs/api/org/w3c/dom/Node.html>
 [regular expression pattern]: <http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html>
 [releases]: <https://github.com/Permafrost/TundraTN/releases>
 [RFC 4122]: <http://www.ietf.org/rfc/rfc4122.txt>
-[SFTP]: <https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol>
 [Thread.NORM_PRIORITY]: <http://docs.oracle.com/javase/6/docs/api/java/lang/Thread.html#NORM_PRIORITY>
 [TSV]: <http://en.wikipedia.org/wiki/Tab-separated_values>
 [Tundra]: <https://github.com/Permafrost/Tundra>
