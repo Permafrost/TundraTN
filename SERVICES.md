@@ -2275,6 +2275,40 @@ custom document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer.profile:find
+
+Trading Networks string transformer which returns the internal ID
+associated with a Trading Networks partner profile for a given
+external ID.
+
+This transformer replaces the built-in partner profile lookup
+function `FN_PARTNER_LOOKUP`. Unlike the `FN_PARTNER_LOOKUP`, this
+transformer caches the external IDs in memory, so that it is more
+resilient and likely to survive short database outages gracefully. In
+contrast, the `FN_PARTNER_LOOKUP` unexpectedly returns the `Unknown`
+partner profile when performing lookups during database outages,
+resulting in documents with an `Unknown` sender or receiver set
+incorrectly.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of one or more Trading Networks partner profile
+  external IDs.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is the type of external ID provided in `values`, such as
+  `DUNS` or `User Defined 1`.
+
+#### Outputs:
+
+* `newValues` is a list containing the internal IDs of the partner
+  profiles identified by the given external IDs in `values`.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer.profile:get
 
 Trading Networks string transformer which returns the internal ID

@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-12-21T07:19:15.578
+// -----( CREATED: 2020-01-30T18:07:57.986
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -26,6 +26,7 @@ import permafrost.tundra.lang.UnrecoverableException;
 import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
 import permafrost.tundra.tn.document.attribute.transform.Transformer;
 import permafrost.tundra.tn.document.attribute.transform.number.ImminentPrioritizer;
+import permafrost.tundra.tn.document.attribute.transform.string.ProfileFinder;
 import permafrost.tundra.tn.document.BizDocAttributeHelper;
 import permafrost.tundra.tn.document.BizDocContentHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
@@ -945,6 +946,12 @@ public final class document
 	public static class DocumentAttributeNumberTransformerPriority {
 	    public static void imminence(IData pipeline) throws ServiceException {
 	        Transformer.transform(pipeline, new ImminentPrioritizer());
+	    }
+	}
+
+	public static class DocumentAttributeStringTransformerProfile {
+	    public static void find(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new ProfileFinder());
 	    }
 	}
 

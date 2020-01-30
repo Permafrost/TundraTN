@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Values version="2.0">
+  <value name="svc_type">java</value>
+  <value name="svc_subtype">unknown</value>
+  <value name="svc_sigtype">java 3.5</value>
+  <value name="svc_spec">tundra.tn.schema.document.attribute.string:transformer</value>
+  <value name="node_comment">### tundra.tn.document.attribute.string.transformer.profile:find
+
+Trading Networks string transformer which returns the internal ID
+associated with a Trading Networks partner profile for a given
+external ID.
+
+This transformer replaces the built-in partner profile lookup
+function `FN_PARTNER_LOOKUP`. Unlike the `FN_PARTNER_LOOKUP`, this
+transformer caches the external IDs in memory, so that it is more
+resilient and likely to survive short database outages gracefully. In
+contrast, the `FN_PARTNER_LOOKUP` unexpectedly returns the `Unknown`
+partner profile when performing lookups during database outages, 
+resulting in documents with an `Unknown` sender or receiver set
+incorrectly.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of one or more Trading Networks partner profile
+  external IDs.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is the type of external ID provided in `values`, such as 
+  `DUNS` or `User Defined 1`.
+
+#### Outputs:
+
+* `newValues` is a list containing the internal IDs of the partner
+  profiles identified by the given external IDs in `values`.
+</value>
+  <value name="stateless">no</value>
+  <value name="caching">no</value>
+  <value name="prefetch">no</value>
+  <value name="cache_ttl">15</value>
+  <value name="prefetch_level">1</value>
+  <value name="template_type">html</value>
+  <value name="audit_level">off</value>
+  <value name="check_internal_acls">no</value>
+  <value name="icontext_policy">$null</value>
+  <value name="system_service">no</value>
+  <value name="retry_max">0</value>
+  <value name="retry_interval">0</value>
+  <value name="svc_in_validator_options">default</value>
+  <value name="svc_out_validator_options">default</value>
+  <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
+  <record name="auditsettings" javaclass="com.wm.util.Values">
+    <value name="document_data">0</value>
+    <value name="startExecution">false</value>
+    <value name="stopExecution">false</value>
+    <value name="onError">true</value>
+  </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
+  <record name="java_data" javaclass="com.wm.util.Values">
+    <value name="class">tundra.tn.document$DocumentAttributeStringTransformerProfile</value>
+    <value name="method">find</value>
+  </record>
+</Values>
