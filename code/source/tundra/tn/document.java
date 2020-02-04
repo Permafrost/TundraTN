@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-01-30T18:07:57.986
+// -----( CREATED: 2020-02-04T23:41:28.071
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -887,7 +887,7 @@ public final class document
 		    BizDocEnvelope bizdoc = IDataHelper.get(cursor, "$bizdoc", BizDocEnvelope.class);
 		    boolean transportLog = IDataHelper.getOrDefault(cursor, "$transport.log?", Boolean.class, false);
 		    String transportLogPartName = IDataHelper.get(cursor, "$transport.log.part", String.class);
-		    boolean strict = IDataHelper.getOrDefault(cursor, "$transport.log?", Boolean.class, false);
+		    boolean strict = IDataHelper.getOrDefault(cursor, "$strict?", Boolean.class, true);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
 
 		    if (bizdoc != null) {
