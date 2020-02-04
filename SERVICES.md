@@ -3339,34 +3339,13 @@ already cached.
 
 ### tundra.tn.queue:branch
 
-Invokes `TundraTN/tundra.tn:branch` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:branch` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:branch` for details on the following inputs:
-  * `$branches`
-  * `$catch`
-  * `$finally`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:chain`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
@@ -3375,152 +3354,50 @@ Networks queue.
 Invokes `TundraTN/tundra.tn:chain` for each item in the given Trading
 Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:chain` for details on the following inputs:
-  * `$services`
-  * `$catch`
-  * `$finally`
-  * `$pipeline`
-  * `$service.input`
-  * `$status.done`
-  * `$parse?`
-  * `$prefix?`
-  * `$part`
-  * `$encoding`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:chain`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
 ### tundra.tn.queue:clear
 
+Deprecated: use `TundraTN/tundra.tn.queue:status` instead.
+
 Clears all items from the given Trading Networks queue.
 
-#### Inputs:
+Invokes `TundraTN/tundra.tn.queue:status` for each item in the given
+Trading Networks queue.
 
-* `$status` is the user status that will be set on each dequeued bizdoc. If not
-  specified, defaults to `DONE`.
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn.queue:status`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
 ### tundra.tn.queue:deliver
 
-Invokes `TundraTN/tundra.tn:deliver` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:deliver` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:deliver` for details on the following inputs:
-  * `$destination`
-  * `$service`
-  * `$catch`
-  * `$finally`
-  * `$pipeline`
-  * `$status.done`
-  * `$status.ignored`
-  * `$substitute?`
-  * `$parse?`
-  * `$prefix?`
-  * `$part`
-  * `$encoding`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:deliver`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
 ### tundra.tn.queue:derive
 
-Invokes `TundraTN/tundra.tn:derive` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:derive` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:derive` for details on the following inputs:
-  * `$service`
-  * `$catch`
-  * `$finally`
-  * `$pipeline`
-  * `$derivatives`
-  * `$status.done`
-  * `$status.ignored`
-  * `$prefix?`
-  * `$part`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:derive`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
@@ -3580,32 +3457,6 @@ queue.
   the given `$service` bizdoc processing service. Defaults to using
   the pipeline itself as the input pipeline for `$service`, if not
   specified.
-* `$concurrency` is an optional number of threads to use when
-  processing queue tasks. Defaults to `1` if not specified.
-
-  If a `$concurrency > 1` is specified, a thread pool will be
-  created with a size equal to the given value. These threads are
-  not managed by the normal Integration Server thread pools, and
-  therefore are not restricted by Integration Server thread pool
-  settings. As such, please ensure that the sum of all the
-  `$concurrency` values for all Trading Networks queues that specify
-  a `$concurrency > 1`, plus the configured Integration Server
-  thread pool maximum is supported by the amount of free memory
-  available on your server:
-
-      ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
-
-  If a `$concurrency <= 1` is specified, tasks will be processed
-  sequentially on the main thread.
-* `$ordered?` is an optional boolean flag which when `true` processes
-  tasks in ascending task creation order. Defaults to `false` if
-  not specified.
-* `$suspend?` is an optional boolean flag which when `true` will
-  automatically suspend the queue when all retries of a task are
-  exhausted. At this point, the exhausted task's retry count is
-  reset to `0`, the task is requeued to the front of the queue, and
-  the queue is suspended, requiring manual intervention to resolve
-  the queue processing error. Defaults to `false` if not specifed.
 * `$task.age` is the optional age a task must be before it will be
   dequeued and processed, measured from its creation time. This
   argument can be used to defer the processing of tasks for the
@@ -3627,9 +3478,55 @@ queue.
 
   Defaults to the retry factor on the receiver's profile, or `1.0`
   if the receiver's profile has no retry factor configured.
+* `$ordered?` is an optional boolean flag which when `true` processes
+  tasks in strict ascending task creation order. Note that when
+  processing tasks in creation order, if the oldest task fails no
+  other tasks will be processed until all retries have been
+  exhausted.
+
+  When `false`, tasks will be ordered by the priority specified by
+  the value of the Document Attribute `Message Priority` if it
+  exists, where higher numeric values are treated as higher priority.
+  If all documents have the same priority, or no priority is
+  specified, tasks are generally processed in task creation order,
+  however retries of older tasks do not halt processing of younger
+  tasks.
+
+  Defaults to `false` if not specified.
+* `$suspend?` is an optional boolean flag which when `true` will
+  automatically suspend the queue when all retries of a task are
+  exhausted. At this point, the exhausted task's retry count is
+  reset to `0`, the task is requeued to the front of the queue, and
+  the queue is suspended, requiring manual intervention to resolve
+  the queue processing error. Defaults to `false` if not specified.
+* `$concurrency` is an optional number of threads to use when
+  processing queue tasks. Defaults to `1` if not specified.
+
+  If a `$concurrency > 1` is specified, a thread pool will be
+  created with a size equal to the given value. These threads are
+  not managed by the normal Integration Server thread pools, and
+  therefore are not restricted by Integration Server thread pool
+  settings. As such, please ensure that the sum of all the
+  `$concurrency` values for all Trading Networks queues that specify
+  a `$concurrency > 1`, plus the configured Integration Server
+  thread pool maximum is supported by the amount of free memory
+  available on your server:
+
+      ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
+
+  If a `$concurrency <= 1` is specified, tasks will be processed
+  sequentially on the main thread.
 * `$thread.priority` is an optional priority used by the threads
   processing queued tasks. Defaults to [Thread.NORM_PRIORITY],
   if not specified.
+* `$error.threshold` is an optional number of continuous task
+  failures allowed before queue processing is terminated. If not
+  specified, queue processing will not terminate regardless of the
+  number of continuous task failures encountered.
+* `$status.exhausted` is an optional user status to set on the bizdoc
+  when all retries have been exhausted. Defaults to `EXHAUSTED`.
+* `$status.silence?` is an optional boolean which when `true` will
+  suppress updates to the bizdoc status. Defaults to `false`.
 * `$daemonize?` is an optional boolean which when `true` daemonizes
   the threads used to process queued tasks, and the invocation of
   this service will continue (not exit) until either the queue is
@@ -3742,110 +3639,37 @@ Returns a list of all registered Trading Networks delivery queues.
 
 ### tundra.tn.queue:process
 
-Invokes `TundraTN/tundra.tn:process` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:process` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:process` for details on the following inputs:
-  * `$service`
-  * `$catch`
-  * `$finally`
-  * `$pipeline`
-  * `$service.input`
-  * `$status.done`
-  * `$parse?`
-  * `$prefix?`
-  * `$part`
-  * `$encoding`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:process`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
 ### tundra.tn.queue:publish
 
-Invokes `TundraTN/tundra.tn:publish` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:publish` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:publish` for details on the following
-  inputs:
-  * `$catch`
-  * `$finally`
-  * `$schema.publish`
-  * `$local.publish?`
-  * `$status.done`
-  * `$status.silence?`
-  * `$part`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-  * `$status.exhausted`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:publish`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
 ### tundra.tn.queue:reroute
 
-Invokes `TundraTN/tundra.tn:reroute` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:reroute` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:reroute`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
@@ -3854,82 +3678,22 @@ Networks queue.
 Invokes `TundraTN/tundra.tn:split` for each item in the given Trading
 Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:split` for details on the following inputs:
-  * `$service`
-  * `$catch`
-  * `$finally`
-  * `$pipeline`
-  * `$content.type.input`
-  * `$content.type.output`
-  * `$namespace.input`
-  * `$namespace.output`
-  * `$schema.input`
-  * `$schema.output`
-  * `$service.input`
-  * `$service.output`
-  * `$encoding.input`
-  * `$encoding.output`
-  * `$status.done`
-  * `$status.ignored`
-  * `$required?`
-  * `$prefix?`
-  * `$part`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:split`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
 ### tundra.tn.queue:status
 
-Invokes `TundraTN/tundra.tn:status` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:status` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:status` for details on the following inputs:
-  * `$status.user`
-  * `$catch`
-  * `$finally`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.factor`
-  * `$retry.wait`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:status`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 
@@ -3950,52 +3714,13 @@ temporarily unable to receive documents.
 
 ### tundra.tn.queue:translate
 
-Invokes `TundraTN/tundra.tn:translate` for each item in the given Trading
-Networks queue.
+Invokes `TundraTN/tundra.tn:translate` for each item in the given
+Trading Networks queue.
 
-#### Inputs:
-
-* Refer to `TundraTN/tundra.tn:translate` for details on the following
-  inputs:
-  * `$service`
-  * `$catch`
-  * `$finally`
-  * `$pipeline`
-  * `$content.type.input`
-  * `$content.type.output`
-  * `$namespace.input`
-  * `$namespace.output`
-  * `$schema.input`
-  * `$schema.output`
-  * `$service.input`
-  * `$service.output`
-  * `$encoding.input`
-  * `$encoding.output`
-  * `$status.done`
-  * `$status.ignored`
-  * `$required?`
-  * `$prefix?`
-  * `$part`
-  * `$strict`
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  inputs:
-  * `queue`
-  * `$concurrency`
-  * `$ordered?`
-  * `$suspend?`
-  * `$task.age`
-  * `$retry.limit`
-  * `$retry.wait`
-  * `$retry.factor`
-  * `$thread.priority`
-  * `$daemonize?`
-
-#### Outputs:
-
-* Refer to `TundraTN/tundra.tn.queue:each` for details on the following
-  outputs:
-  * `queue`
-  * `logMsg`
+For details on inputs and outputs, refer to the following service
+documentation:
+* `TundraTN/tundra.tn:translate`
+* `TundraTN/tundra.tn.queue:each`
 
 ---
 

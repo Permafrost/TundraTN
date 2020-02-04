@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-18T16:58:08.462
+// -----( CREATED: 2020-02-04T21:11:25.501
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -90,6 +90,23 @@ public final class queue
 		// --- <<IS-START(each)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// [i] field:0:required queue
+		// [i] field:0:required $service
+		// [i] record:0:optional $pipeline
+		// [i] field:0:optional $task.age
+		// [i] field:0:optional $retry.limit
+		// [i] field:0:optional $retry.wait
+		// [i] field:0:optional $retry.factor
+		// [i] field:0:optional $ordered? {"false","true"}
+		// [i] field:0:optional $suspend? {"false","true"}
+		// [i] field:0:optional $concurrency
+		// [i] field:0:optional $thread.priority
+		// [i] field:0:optional $error.threshold
+		// [i] field:0:optional $status.exhausted
+		// [i] field:0:optional $status.silence? {"false","true"}
+		// [i] field:0:optional $daemonize? {"false","true"}
+		// [o] field:0:required queue
+		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
@@ -106,8 +123,9 @@ public final class queue
 		    int threadPriority = IDataHelper.getOrDefault(cursor, "$thread.priority", Integer.class, Thread.NORM_PRIORITY);
 		    boolean threadDaemon = IDataHelper.getOrDefault(cursor, "$daemonize?", Boolean.class, false);
 		    String exhaustedStatus = IDataHelper.get(cursor, "$status.exhausted", String.class);
+		    long errorThreshold = IDataHelper.getOrDefault(cursor, "$error.threshold", Long.class, 0L);
 
-		    DeliveryQueueProcessor.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus);
+		    DeliveryQueueProcessor.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, errorThreshold);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {
