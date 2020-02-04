@@ -3361,22 +3361,6 @@ documentation:
 
 ---
 
-### tundra.tn.queue:clear
-
-Deprecated: use `TundraTN/tundra.tn.queue:status` instead.
-
-Clears all items from the given Trading Networks queue.
-
-Invokes `TundraTN/tundra.tn.queue:status` for each item in the given
-Trading Networks queue.
-
-For details on inputs and outputs, refer to the following service
-documentation:
-* `TundraTN/tundra.tn.queue:status`
-* `TundraTN/tundra.tn.queue:each`
-
----
-
 ### tundra.tn.queue:deliver
 
 Invokes `TundraTN/tundra.tn:deliver` for each item in the given
