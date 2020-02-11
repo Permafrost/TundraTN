@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-02-04T23:41:28.071
+// -----( CREATED: 2020-02-12T06:13:04.022
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -913,7 +913,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            String entryType = IDataHelper.getOrDefault(cursor, "$type", String.class, "MESSAGE");
 	            String entryClass = IDataHelper.getOrDefault(cursor, "$class", String.class, "General");
 	            String messageSummary = IDataHelper.get(cursor, "$summary", String.class);
