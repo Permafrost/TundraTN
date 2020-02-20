@@ -5,6 +5,18 @@
 
   <!-- nodes -->
 
+<INVOKE SCOPE="$pipeline" TIMEOUT="" SERVICE="tundra.pipeline:normalize" VALIDATE-IN="$none" VALIDATE-OUT="$none">
+  <COMMENT></COMMENT>
+
+  <!-- nodes -->
+
+<MAP MODE="INPUT">
+</MAP>
+
+<MAP MODE="OUTPUT">
+</MAP>
+</INVOKE>
+
 <INVOKE TIMEOUT="" SERVICE="tundra.tn.support.service:ensure" VALIDATE-IN="$none" VALIDATE-OUT="$none">
   <COMMENT></COMMENT>
 
@@ -385,6 +397,7 @@
             <value name="field_opt">true</value>
             <array name="field_options" type="value" depth="1">
               <value>merge</value>
+              <value>create</value>
               <value>update</value>
               <value>delete</value>
             </array>
@@ -393,6 +406,11 @@
                 <record javaclass="com.wm.util.Values">
                   <value name="primitiveType">0</value>
                   <value name="lexRep">merge</value>
+                  <value name="isList">false</value>
+                </record>
+                <record javaclass="com.wm.util.Values">
+                  <value name="primitiveType">0</value>
+                  <value name="lexRep">create</value>
                   <value name="isList">false</value>
                 </record>
                 <record javaclass="com.wm.util.Values">

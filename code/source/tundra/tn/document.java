@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-02-12T06:13:04.022
+// -----( CREATED: 2020-02-21T06:00:52.182
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -68,7 +68,7 @@ public final class document
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 		    DeliveryQueue queue = DeliveryQueueHelper.get(IDataHelper.get(cursor, "$queue", String.class));
 		    boolean force = IDataHelper.getOrDefault(cursor, "$force?", Boolean.class, false);
 		    String summary = IDataHelper.get(cursor, "$tundra.tn.document.enqueue.log.message.summary.prefix", String.class);
@@ -436,7 +436,7 @@ public final class document
 		    boolean receiver = IDataHelper.getOrDefault(cursor, "$receiver?", Boolean.class, false);
 		    boolean raise = IDataHelper.getOrDefault(cursor, "$raise?", Boolean.class, false);
 
-		    BizDocEnvelope output = BizDocEnvelopeHelper.normalize(input, content);
+		    BizDocEnvelope output = BizDocEnvelopeHelper.normalize(input, content, false);
 
 		    if (output == null) {
 		        if (raise && input != null) {
@@ -482,7 +482,7 @@ public final class document
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 		    String partName = IDataHelper.get(cursor, "$part", String.class);
 		    boolean validate = IDataHelper.getOrDefault(cursor, "$validate?", Boolean.class, false);
 
@@ -521,8 +521,8 @@ public final class document
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    BizDocEnvelope source = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.source", IData.class));
-		    BizDocEnvelope target = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.target", IData.class));
+		    BizDocEnvelope source = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.source", IData.class), false, false);
+		    BizDocEnvelope target = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.target", IData.class), false, false);
 		    String relationship = IDataHelper.get(cursor, "$relationship", String.class);
 
 		    BizDocEnvelopeHelper.relate(source, target, relationship);
@@ -764,7 +764,7 @@ public final class document
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, true);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
 
 		    if (bizdoc != null) {
@@ -932,7 +932,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            IData attributes = IDataHelper.get(cursor, "$attributes", IData.class);
 	            boolean substitute = IDataHelper.getOrDefault(cursor, "$substitute?", Boolean.class, false);
 
@@ -960,7 +960,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.get(cursor, "$part", String.class);
 	            Object content = IDataHelper.get(cursor, "$content");
 	            String contentType = IDataHelper.get(cursor, "$content.type", String.class);
@@ -977,7 +977,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.get(cursor, "$part", String.class);
 
 	            IDataHelper.put(cursor, "$exists?", BizDocContentHelper.exists(document, partName), String.class);
@@ -990,7 +990,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
+	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.get(cursor, "$part", String.class);
 	            String mode = IDataHelper.get(cursor, "$mode", String.class);
 
@@ -1019,7 +1019,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.get(cursor, "$part", String.class);
 
 	            BizDocContentHelper.removeContentPart(document, partName);
@@ -1053,7 +1053,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class));
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class), false, false);
 	            IDataHelper.put(cursor, "duplicate", BizDocEnvelopeHelper.isDuplicate(bizdoc), String.class);
 	        } finally {
 	            cursor.destroy();
@@ -1084,7 +1084,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            IDataHelper.put(cursor, "$namespace", BizDocEnvelopeHelper.getNamespaceDeclarations(bizdoc), false);
 	        } finally {
 	            cursor.destroy();
@@ -1097,7 +1097,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            IDataHelper.put(cursor, "$schema", BizDocEnvelopeHelper.getContentSchema(bizdoc), false);
 	            IDataHelper.put(cursor, "$schema.type", BizDocEnvelopeHelper.getContentSchemaType(bizdoc), false);
 	        } finally {
@@ -1111,7 +1111,7 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class));
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            String systemStatus = IDataHelper.get(cursor, "$status.system", String.class);
 	            String previousSystemStatus = IDataHelper.get(cursor, "$status.system.previous", String.class);
 	            String userStatus = IDataHelper.first(cursor, String.class, "$status.user", "$status");

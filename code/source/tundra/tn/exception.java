@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-25T10:03:13.279
+// -----( CREATED: 2020-02-21T06:00:42.202
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -62,7 +62,7 @@ public final class exception
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class, true));
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class, true), true, false);
 		    Throwable exception = IDataHelper.get(cursor, "$exception", Throwable.class, true);
 		    boolean statusSilence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
 		    String service = IDataHelper.getOrDefault(cursor, "$exception.service", String.class, "tundra.tn.exception:handle");
