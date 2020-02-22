@@ -2519,27 +2519,24 @@ Merges the given attributes into the given Trading Networks document.
 
 ### tundra.tn.document.content:add
 
-Adds a content part with the given name and content, specified as a string,
-bytes or stream, to the given Trading Networks document (bizdoc).
+Adds a content part with the given name and content to the given
+Trading Networks document (bizdoc).
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document to add the content part to.
-  Only the internal ID of the bizdoc must be specified, with the remainder
-  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
-* `$part` is the name of the content part to be added to the Trading
-  Networks document, and uniquely identifies the part being added.
-* `$content` is the content part data to be added, specified as a string,
-  byte array, or input stream.
-* `$content.type` is an optional MIME media type describing the type of content
-  being added. Defaults to application/octet-stream (the default MIME media
-  type for arbitrary binary data) if not specified.
-* `$encoding` is the optional character set used to encode `$content` when
-  specified as a byte array or input stream and representing text data.
-  Defaults to [UTF-8].
-* `$overwrite?` is an optional boolean flag indicating whether to overwrite
-  an existing content part with the same name, if one exists. Defaults to
-  `false`.
+* `$bizdoc` is the Trading Networks document to add the content part
+  to. For convenience, only the `InternalID` is required.
+* `$content` is the content part data to be added, specified as a
+  string, byte array, or input stream.
+* `$content.part` is the name of the content part to be added.
+* `$content.type` is an optional MIME media type describing the type
+  of content being added. Defaults to `application/octet-stream`, the
+  default MIME media type for arbitrary binary data, if not specified.
+* `$content.encoding` is the optional character set used to encode
+  `$content` when is specified as a string. Defaults to [UTF-8].
+* `$overwrite?` is an optional boolean flag indicating whether to
+  overwrite an existing content part with the same name, if one
+  exists. Defaults to `false`.
 
 ---
 
@@ -2571,12 +2568,10 @@ the given part name.
 #### Inputs:
 
 * `$bizdoc` is the Trading Networks document to retrieve the content
-  part from. Only the internal ID of the bizdoc must be specified,
-  with the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure
-  purely optional.
+  part from. For convenience, only the `InternalID` is required.
 * `$content.part` is an optional name of the content part to be
-  returned. If not specified, the default content part (`xmldata` for
-  XML, `ffdata` for Flat Files) is returned.
+  returned. If not specified, the default content part  is returned:
+  `xmldata` for XML, or `ffdata` for Flat Files.
 * `$content.mode` is an optional choice which determines the type of
   object `$content` is returned as. Defaults to `stream`.
   * `base64`: the content is returned as a base-64 encoded string.

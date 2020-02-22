@@ -63,12 +63,27 @@
           <value name="node_type">record</value>
           <value name="node_comment"></value>
           <record name="node_hints" javaclass="com.wm.util.Values">
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="is_public">false</value>
+          <value name="field_name">$content</value>
+          <value name="field_type">object</value>
+          <value name="field_dim">0</value>
+          <value name="nillable">false</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
             <null name="field_usereditable"/>
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$part</value>
+          <value name="field_name">$content.part</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <record name="field_content_type" javaclass="com.wm.util.Values">
@@ -82,21 +97,6 @@
               </record>
             </array>
           </record>
-          <value name="nillable">false</value>
-          <value name="form_qualified">false</value>
-          <value name="is_global">false</value>
-        </record>
-        <record javaclass="com.wm.util.Values">
-          <value name="node_type">record</value>
-          <value name="node_comment"></value>
-          <record name="node_hints" javaclass="com.wm.util.Values">
-            <value name="field_largerEditor">false</value>
-            <value name="field_password">false</value>
-          </record>
-          <value name="is_public">false</value>
-          <value name="field_name">$content</value>
-          <value name="field_type">object</value>
-          <value name="field_dim">0</value>
           <value name="nillable">false</value>
           <value name="form_qualified">false</value>
           <value name="is_global">false</value>
@@ -138,7 +138,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$encoding</value>
+          <value name="field_name">$content.encoding</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -207,34 +207,33 @@
   </record>
   <value name="node_comment">### tundra.tn.document.content:add
 
-Adds a content part with the given name and content, specified as a string,
-bytes or stream, to the given Trading Networks document (bizdoc).
+Adds a content part with the given name and content to the given 
+Trading Networks document (bizdoc).
 
 #### Inputs:
 
-* $bizdoc is the Trading Networks document to add the content part to.
-  Only the internal ID of the bizdoc must be specified, with the remainder
-  of the WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
-* $part is the name of the content part to be added to the Trading
-  Networks document, and uniquely identifies the part being added.
-* $content is the content part data to be added, specified as a string,
-  byte array, or input stream.
-* $content.type is an optional MIME media type describing the type of content
-  being added. Defaults to application/octet-stream (the default MIME media
-  type for arbitrary binary data) if not specified.
-* $encoding is the optional character set used to encode $content when
-  specified as a byte array or input stream and representing text data.
-  Defaults to [UTF-8].
-* $overwrite? is an optional boolean flag indicating whether to overwrite
-  an existing content part with the same name, if one exists. Defaults to
-  false.
+* `$bizdoc` is the Trading Networks document to add the content part 
+  to. For convenience, only the `InternalID` is required.
+* `$content` is the content part data to be added, specified as a 
+  string, byte array, or input stream.
+* `$content.part` is the name of the content part to be added.
+* `$content.type` is an optional MIME media type describing the type
+  of content being added. Defaults to `application/octet-stream`, the 
+  default MIME media type for arbitrary binary data, if not specified.
+* `$content.encoding` is the optional character set used to encode 
+  `$content` when is specified as a string. Defaults to [UTF-8].
+* `$overwrite?` is an optional boolean flag indicating whether to
+  overwrite an existing content part with the same name, if one
+  exists. Defaults to `false`.
 
-[UTF-8]: &lt;http://en.wikipedia.org/wiki/UTF-8&gt;</value>
+[UTF-8]: &lt;http://en.wikipedia.org/wiki/UTF-8&gt;
+</value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
+  <value name="template">tundra_tn_document_content_add</value>
   <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>

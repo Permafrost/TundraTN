@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-02-22 12:17:04 EST
+// -----( CREATED: 2020-02-22 12:41:54 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -840,8 +840,8 @@ public final class document
 
 	        try {
 	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
-	            String partName = IDataHelper.get(cursor, "$part", String.class);
 	            Object content = IDataHelper.get(cursor, "$content");
+	            String partName = IDataHelper.first(cursor, String.class, "$content.part", "$part");
 	            String contentType = IDataHelper.get(cursor, "$content.type", String.class);
 	            Charset contentEncoding = IDataHelper.first(cursor, Charset.class, "$content.encoding", "$encoding");
 	            boolean overwrite = IDataHelper.getOrDefault(cursor, "$overwrite?", Boolean.class, false);
