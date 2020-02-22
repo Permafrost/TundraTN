@@ -2590,16 +2590,16 @@ the given part name.
 
 ### tundra.tn.document.content:remove
 
-Deletes the Trading Networks document content part with the given name from the
-Trading Networks database.
+Deletes the Trading Networks document content part with the given name
+from the Trading Networks database.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document to delete the content part from.
-  Only the internal ID of the bizdoc must be specified, with the remainder
-  of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
-* `$part` is the name of the content part to be deleted from the Trading
-  Networks document, and uniquely identifies the part being deleted.
+* `$bizdoc` is the Trading Networks document to delete the content
+  part from. For convenience, only the `InternalID` is required.
+* `$content.part` is the name of the content part to be deleted from
+  the Trading Networks document, and uniquely identifies the part
+  being deleted.
 
 ---
 
