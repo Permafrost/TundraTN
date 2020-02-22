@@ -68,7 +68,7 @@
             <value name="field_password">false</value>
           </record>
           <value name="is_public">false</value>
-          <value name="field_name">$part</value>
+          <value name="field_name">$content.part</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <record name="field_content_type" javaclass="com.wm.util.Values">
@@ -131,28 +131,28 @@
   </record>
   <value name="node_comment">### tundra.tn.document.content:exists
 
-Returns true if the content part identified by the given part name exists
-for the given bizdoc.
+Returns `true` if the content part identified by the given part name 
+exists for the given Trading Networks document (bizdoc).
 
 #### Inputs:
 
-* $bizdoc is the Trading Networks document to check for the existence of
-  the given content part. Only the internal ID of the bizdoc must be
-  specified, with the remainder of the WmTN/wm.tn.rec:BizDocEnvelope
-  structure purely optional.
-* $part is the name of the content part check for the existence of.
+* `$bizdoc` is the Trading Networks document to check for the
+  existence of the given content part. For convenience, only the 
+  `InternalID` is required.
+* `$content.part` is the name of the content part check the existence
+  of.
 
 #### Outputs:
 
-* $exists? is a boolean that when true indicates that the given $bizdoc
-  has a content part with the given $part name.
-
+* `$exists?` is a boolean that when `true` indicates that the given 
+  `$bizdoc` has a content part with the given `$content.part` name.
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
+  <value name="template">tundra_tn_document_content_exists</value>
   <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
