@@ -7,6 +7,7 @@
   <record name="svc_sig" javaclass="com.wm.util.Values">
     <record name="sig_in" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -20,6 +21,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$bizdoc</value>
           <value name="field_type">record</value>
           <value name="field_dim">0</value>
@@ -35,6 +37,7 @@
                 <value name="field_largerEditor">false</value>
                 <value name="field_password">false</value>
               </record>
+              <value name="is_public">false</value>
               <value name="field_name">InternalID</value>
               <value name="field_type">string</value>
               <value name="field_dim">0</value>
@@ -54,6 +57,7 @@
               <value name="is_global">false</value>
             </record>
           </array>
+          <value name="modifiable">true</value>
         </record>
         <record javaclass="com.wm.util.Values">
           <value name="node_type">record</value>
@@ -63,7 +67,8 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="field_name">$part</value>
+          <value name="is_public">false</value>
+          <value name="field_name">$content.part</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -90,7 +95,8 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="field_name">$mode</value>
+          <value name="is_public">false</value>
+          <value name="field_name">$content.mode</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -98,6 +104,7 @@
             <value>stream</value>
             <value>bytes</value>
             <value>string</value>
+            <value>base64</value>
           </array>
           <record name="field_content_type" javaclass="com.wm.util.Values">
             <array name="enumeration" type="record" depth="1">
@@ -114,6 +121,11 @@
               <record javaclass="com.wm.util.Values">
                 <value name="primitiveType">0</value>
                 <value name="lexRep">string</value>
+                <value name="isList">false</value>
+              </record>
+              <record javaclass="com.wm.util.Values">
+                <value name="primitiveType">0</value>
+                <value name="lexRep">base64</value>
                 <value name="isList">false</value>
               </record>
             </array>
@@ -154,9 +166,11 @@
           <value name="is_global">false</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
     <record name="sig_out" javaclass="com.wm.util.Values">
       <value name="node_type">record</value>
+      <value name="is_public">false</value>
       <value name="field_type">record</value>
       <value name="field_dim">0</value>
       <value name="nillable">true</value>
@@ -170,6 +184,7 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
           <value name="field_name">$content</value>
           <value name="field_type">object</value>
           <value name="field_dim">0</value>
@@ -186,6 +201,35 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
+          <value name="is_public">false</value>
+          <value name="field_name">$content.part</value>
+          <value name="field_type">string</value>
+          <value name="field_dim">0</value>
+          <value name="field_opt">true</value>
+          <record name="field_content_type" javaclass="com.wm.util.Values">
+            <value name="contentType">1</value>
+            <value name="internalType">reference</value>
+            <value name="dataTypeVersion">dtVersion2</value>
+            <array name="targetNames" type="record" depth="1">
+              <record javaclass="com.wm.util.Values">
+                <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
+                <value name="ncName">string</value>
+              </record>
+            </array>
+          </record>
+          <value name="nillable">true</value>
+          <value name="form_qualified">false</value>
+          <value name="is_global">false</value>
+        </record>
+        <record javaclass="com.wm.util.Values">
+          <value name="node_type">record</value>
+          <value name="node_comment"></value>
+          <record name="node_hints" javaclass="com.wm.util.Values">
+            <null name="field_usereditable"/>
+            <value name="field_largerEditor">false</value>
+            <value name="field_password">false</value>
+          </record>
+          <value name="is_public">false</value>
           <value name="field_name">$content.type</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
@@ -213,7 +257,8 @@
             <value name="field_largerEditor">false</value>
             <value name="field_password">false</value>
           </record>
-          <value name="field_name">$part</value>
+          <value name="is_public">false</value>
+          <value name="field_name">$content.length</value>
           <value name="field_type">string</value>
           <value name="field_dim">0</value>
           <value name="field_opt">true</value>
@@ -224,7 +269,7 @@
             <array name="targetNames" type="record" depth="1">
               <record javaclass="com.wm.util.Values">
                 <value name="xmlns">http://www.w3.org/2001/XMLSchema</value>
-                <value name="ncName">string</value>
+                <value name="ncName">nonNegativeInteger</value>
               </record>
             </array>
           </record>
@@ -233,38 +278,41 @@
           <value name="is_global">false</value>
         </record>
       </array>
+      <value name="modifiable">true</value>
     </record>
   </record>
   <value name="node_comment">### tundra.tn.document.content:get
 
-Returns the given Trading Networks document's content associated with the
-given part name as a stream.
+Returns the given Trading Networks document's content associated with
+the given part name.
 
 #### Inputs:
 
-* $bizdoc is the Trading Networks document to retrieve the content part
-  from. Only the internal ID of the bizdoc must be specified, with the
-  remainder of the WmTN/wm.tn.rec:BizDocEnvelope structure purely optional.
-* $part is an optional name of the content part to be returned. If not
-  specified, the default content part (xmldata for XML; ffdata for Flat
-  Files) is returned.
-* $mode is an optional choice of stream, bytes, or string, which
-  determines the type of $content returned by this service. Defaults
-  to stream.
+* `$bizdoc` is the Trading Networks document to retrieve the content
+  part from. For convenience, only the `InternalID` is required.
+* `$content.part` is an optional name of the content part to be
+  returned. If not specified, the default content part  is returned:
+  `xmldata` for XML, or `ffdata` for Flat Files.
+* `$content.mode` is an optional choice which determines the type of
+  object `$content` is returned as. Defaults to `stream`.
+  * `base64`: the content is returned as a base-64 encoded string.
+  * `bytes`: the content is returned as a byte array.
+  * `stream`: the content is returned as a `java.io.InputStream`.
+  * `string`: the content is returned as a string.
 
 #### Outputs:
 
-* $content is the content part data as an input stream associated with
-  the given $part name.
-* $content.type is the MIME media type describing the type of data
-  returned.
-* $part is the name of the content part returned, if any.
+* `$content` is the content part data.
+* `$content.part` is the name of the content part.
+* `$content.type` is the MIME media type of the content part.
+* `$content.length` is the size in bytes of the content part.
 </value>
   <value name="stateless">yes</value>
   <value name="caching">no</value>
   <value name="prefetch">no</value>
   <value name="cache_ttl">15</value>
   <value name="prefetch_level">1</value>
+  <value name="template">tundra_tn_document_content_get</value>
   <value name="template_type">html</value>
   <value name="audit_level">off</value>
   <value name="check_internal_acls">no</value>
@@ -275,12 +323,18 @@ given part name as a stream.
   <value name="svc_in_validator_options">default</value>
   <value name="svc_out_validator_options">default</value>
   <value name="auditoption">0</value>
+  <null name="auditfields_input"/>
+  <null name="auditfields_output"/>
   <record name="auditsettings" javaclass="com.wm.util.Values">
     <value name="document_data">0</value>
     <value name="startExecution">false</value>
     <value name="stopExecution">false</value>
     <value name="onError">true</value>
   </record>
+  <value name="pipeline_option">1</value>
+  <null name="originURI"/>
+  <value name="modifiable">true</value>
+  <value name="is_public">false</value>
   <record name="java_data" javaclass="com.wm.util.Values">
     <value name="class">tundra.tn.document$DocumentContent</value>
     <value name="method">get</value>

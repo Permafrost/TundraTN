@@ -2565,28 +2565,31 @@ for the given bizdoc.
 
 ### tundra.tn.document.content:get
 
-Returns the given Trading Networks document's content associated with the
-given part name as a stream.
+Returns the given Trading Networks document's content associated with
+the given part name.
 
 #### Inputs:
 
-* `$bizdoc` is the Trading Networks document to retrieve the content part
-  from. Only the internal ID of the bizdoc must be specified, with the
-  remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely optional.
-* `$part` is an optional name of the content part to be returned. If not
-  specified, the default content part (xmldata for XML; ffdata for Flat
-  Files) is returned.
-* `$mode` is an optional choice of `stream`, `bytes`, or `string`, which
-  determines the type of `$content` returned by this service. Defaults
-  to `stream`.
+* `$bizdoc` is the Trading Networks document to retrieve the content
+  part from. Only the internal ID of the bizdoc must be specified,
+  with the remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure
+  purely optional.
+* `$content.part` is an optional name of the content part to be
+  returned. If not specified, the default content part (`xmldata` for
+  XML, `ffdata` for Flat Files) is returned.
+* `$content.mode` is an optional choice which determines the type of
+  object `$content` is returned as. Defaults to `stream`.
+  * `base64`: the content is returned as a base-64 encoded string.
+  * `bytes`: the content is returned as a byte array.
+  * `stream`: the content is returned as a `java.io.InputStream`.
+  * `string`: the content is returned as a string.
 
 #### Outputs:
 
-* `$content` is the content part data as an input stream associated with
-  the given `$part` name.
-* `$content.type` is the MIME media type describing the type of data
-  returned.
-* `$part` is the name of the content part returned, if any.
+* `$content` is the content part data.
+* `$content.part` is the name of the content part.
+* `$content.type` is the MIME media type of the content part.
+* `$content.length` is the size in bytes of the content part.
 
 ---
 
