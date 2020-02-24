@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-02-22 12:55:05 EST
+// -----( CREATED: 2020-02-25T06:34:41.459
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -64,7 +64,7 @@ public final class document
 		// [i] record:0:required $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] field:0:required $queue
-		// [i] field:0:optional $force? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $force? {"false","true"}
 		// [o] record:0:optional $task
 		// [o] - field:0:required TaskId
 		IDataCursor cursor = pipeline.getCursor();
@@ -96,15 +96,31 @@ public final class document
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] field:0:optional $id
-		// [i] field:0:optional $content? {&quot;false&quot;,&quot;true&quot;}
-		// [i] field:0:optional $raise? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $content? {"false","true"}
+		// [i] field:0:optional $raise? {"false","true"}
+		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
 		// [o] record:0:optional $sender
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -122,12 +138,27 @@ public final class document
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:optional $receiver
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -179,10 +210,10 @@ public final class document
 		// @sigtype java 3.5
 		// [i] record:0:required $bizdoc
 		// [i] - field:0:required InternalID
-		// [i] field:0:optional $content? {&quot;false&quot;,&quot;true&quot;}
-		// [i] field:0:optional $sender? {&quot;false&quot;,&quot;true&quot;}
-		// [i] field:0:optional $receiver? {&quot;false&quot;,&quot;true&quot;}
-		// [i] field:0:optional $raise? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $content? {"false","true"}
+		// [i] field:0:optional $sender? {"false","true"}
+		// [i] field:0:optional $receiver? {"false","true"}
+		// [i] field:0:optional $raise? {"false","true"}
 		// [o] record:0:optional $bizdoc
 		// [o] - field:0:required InternalID
 		// [o] - record:0:required DocType
@@ -200,11 +231,11 @@ public final class document
 		// [o] -- field:0:optional VerificationSvc
 		// [o] -- field:0:optional SigningSvc
 		// [o] -- record:0:optional PreProcessingFlags
-		// [o] --- field:0:optional validate? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;}
-		// [o] --- field:0:optional verify? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;}
-		// [o] --- field:0:optional persist? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;,&quot;only if unique&quot;}
-		// [o] --- field:0:optional unique? {&quot;dont care&quot;,&quot;Document ID only&quot;,&quot;Document ID and sender&quot;}
-		// [o] --- field:0:optional persistOption? {&quot;don't care&quot;,&quot;content, attributes and activity log&quot;,&quot;content only&quot;,&quot;attributes only&quot;,&quot;activity log only&quot;,&quot;content and attributes&quot;,&quot;content and activity log&quot;,&quot;attributes and activity log&quot;}
+		// [o] --- field:0:optional validate? {"yes","no","dont care"}
+		// [o] --- field:0:optional verify? {"yes","no","dont care"}
+		// [o] --- field:0:optional persist? {"yes","no","dont care","only if unique"}
+		// [o] --- field:0:optional unique? {"dont care","Document ID only","Document ID and sender"}
+		// [o] --- field:0:optional persistOption? {"don't care","content, attributes and activity log","content only","attributes only","activity log only","content and attributes","content and activity log","attributes and activity log"}
 		// [o] --- field:0:optional dupCheckSvc
 		// [o] -- record:0:optional Attributes
 		// [o] -- record:0:optional RequiredAttributes
@@ -323,12 +354,27 @@ public final class document
 		// [o] - field:0:optional RoutingType
 		// [o] - field:0:optional Duplicate
 		// [o] record:0:optional $sender
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -346,12 +392,27 @@ public final class document
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:optional $receiver
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -414,11 +475,11 @@ public final class document
 		// [i] record:0:required $bizdoc
 		// [i] - field:0:required InternalID
 		// [i] field:0:optional $part
-		// [i] field:0:optional $validate? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $validate? {"false","true"}
 		// [o] record:0:optional $document
 		// [o] field:0:optional $content.type
 		// [o] field:0:optional $schema
-		// [o] field:0:optional $schema.type {&quot;Flat File&quot;,&quot;XML&quot;}
+		// [o] field:0:optional $schema.type {"Flat File","XML"}
 		// [o] record:0:optional $namespace
 		IDataCursor cursor = pipeline.getCursor();
 
@@ -427,7 +488,7 @@ public final class document
 		    String partName = IDataHelper.get(cursor, "$part", String.class);
 		    boolean validate = IDataHelper.getOrDefault(cursor, "$validate?", Boolean.class, false);
 
-		    IData document = BizDocContentHelper.parse(bizdoc, partName, validate, true);
+		    IData document = BizDocContentHelper.parse(bizdoc, partName, validate, true, pipeline);
 
 		    if (document != null) {
 		        IDataHelper.put(cursor, "$document", document);
@@ -503,11 +564,11 @@ public final class document
 		// [o] -- field:0:optional VerificationSvc
 		// [o] -- field:0:optional SigningSvc
 		// [o] -- record:0:optional PreProcessingFlags
-		// [o] --- field:0:optional validate? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;}
-		// [o] --- field:0:optional verify? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;}
-		// [o] --- field:0:optional persist? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;,&quot;only if unique&quot;}
-		// [o] --- field:0:optional unique? {&quot;dont care&quot;,&quot;Document ID only&quot;,&quot;Document ID and sender&quot;}
-		// [o] --- field:0:optional persistOption? {&quot;don't care&quot;,&quot;content, attributes and activity log&quot;,&quot;content only&quot;,&quot;attributes only&quot;,&quot;activity log only&quot;,&quot;content and attributes&quot;,&quot;content and activity log&quot;,&quot;attributes and activity log&quot;}
+		// [o] --- field:0:optional validate? {"yes","no","dont care"}
+		// [o] --- field:0:optional verify? {"yes","no","dont care"}
+		// [o] --- field:0:optional persist? {"yes","no","dont care","only if unique"}
+		// [o] --- field:0:optional unique? {"dont care","Document ID only","Document ID and sender"}
+		// [o] --- field:0:optional persistOption? {"don't care","content, attributes and activity log","content only","attributes only","activity log only","content and attributes","content and activity log","attributes and activity log"}
 		// [o] --- field:0:optional dupCheckSvc
 		// [o] -- record:0:optional Attributes
 		// [o] -- record:0:optional RequiredAttributes
@@ -626,12 +687,27 @@ public final class document
 		// [o] - field:0:optional RoutingType
 		// [o] - field:0:optional Duplicate
 		// [o] record:0:optional $sender
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -649,12 +725,27 @@ public final class document
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:required $receiver
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -703,20 +794,37 @@ public final class document
 		// --- <<IS-START(route)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] field:0:optional $transport.log? {&quot;false&quot;,&quot;true&quot;}
+		// [i] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
+		// [i] field:0:optional $transport.log? {"false","true"}
 		// [i] field:0:optional $transport.log.part
-		// [i] field:0:optional $strict? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $strict? {"false","true"}
 		// [i] record:0:optional TN_parms
 		// [i] - field:0:optional processingRuleID
 		// [i] - field:0:optional processingRuleName
-		// [i] - field:0:optional $bypassRouting {&quot;false&quot;,&quot;true&quot;}
+		// [i] - field:0:optional $bypassRouting {"false","true"}
+		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
 		// [o] record:0:optional $sender
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -734,12 +842,27 @@ public final class document
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:optional $receiver
+		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
+		// [o] - recref:1:required Contact wm.tn.rec:Contact
+		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
+		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
+		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
+		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -759,7 +882,7 @@ public final class document
 		// [o] record:0:optional TN_parms
 		// [o] - field:0:optional processingRuleID
 		// [o] - field:0:optional processingRuleName
-		// [o] - field:0:optional $bypassRouting {&quot;false&quot;,&quot;true&quot;}
+		// [o] - field:0:optional $bypassRouting {"false","true"}
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
