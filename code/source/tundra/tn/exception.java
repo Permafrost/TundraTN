@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-02-21T06:00:42.202
+// -----( CREATED: 2020-04-01T17:44:29.085
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -27,6 +27,7 @@ import permafrost.tundra.lang.BooleanHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.lang.SecurityException;
 import permafrost.tundra.lang.UnrecoverableException;
+import permafrost.tundra.mime.MIMETypeHelper;
 import permafrost.tundra.server.ServiceHelper;
 import permafrost.tundra.time.DateTimeHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
@@ -89,7 +90,12 @@ public final class exception
 		                String contentType = (String)exceptionContent.get("$content.type");
 
 		                if (content != null && content.length > 0) {
-		                    String partName = service.replaceAll("\\W", ".") + "_exception_" + DateTimeHelper.now("yyyy-MM-dd'T'HH.mm.ss.SSS") + "_" + ULID.generate();
+		                    String extension = "";
+		                    if (contentType != null) {
+		                        extension = "." + MIMETypeHelper.getFileExtension(contentType);
+		                    }
+
+		                    String partName = service.replaceAll("\\W", "_") + "_exception_" + DateTimeHelper.now("yyyyMMddHHmmssSSSZ") + extension;
 
 		                    IDataMap scope = new IDataMap();
 		                    scope.put("$bizdoc", bizdoc);
