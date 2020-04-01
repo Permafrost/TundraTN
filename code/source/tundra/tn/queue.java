@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-02-04T21:11:25.501
+// -----( CREATED: 2020-04-01T17:19:23.347
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -117,7 +117,7 @@ public final class queue
 		    boolean ordered = IDataHelper.getOrDefault(cursor, "$ordered?", Boolean.class, false);
 		    boolean suspend = IDataHelper.getOrDefault(cursor, "$suspend?", Boolean.class, false);
 		    Duration age = IDataHelper.get(cursor, "$task.age", Duration.class);
-		    int retryLimit = IDataHelper.firstOrDefault(cursor, Integer.class, 0, "$retry.limit", "$retries");
+		    int retryLimit = IDataHelper.firstOrDefault(cursor, Integer.class, -1, "$retry.limit", "$retries");
 		    Duration retryWait = IDataHelper.get(cursor, "$retry.wait", Duration.class);
 		    float retryFactor = IDataHelper.getOrDefault(cursor, "$retry.factor", Float.class, 1.0f);
 		    int threadPriority = IDataHelper.getOrDefault(cursor, "$thread.priority", Integer.class, Thread.NORM_PRIORITY);
