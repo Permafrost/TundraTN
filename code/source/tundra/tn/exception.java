@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-04-01T17:44:29.085
+// -----( CREATED: 2020-04-02T14:52:46.694
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -73,7 +73,14 @@ public final class exception
 		           messageDetail = ExceptionHelper.getStackTraceString(exception, 3),
 		           userStatus = "ERROR";
 
-		    if (messageSummary == null || "".equals(messageSummary.trim())) messageSummary = exception.toString();
+		    if (messageSummary == null || messageSummary.trim().equals("")) {
+		        messageSummary = exception.toString();
+		    } else {
+		        String exceptionClassName = exception.getClass().getSimpleName();
+		        if (exceptionClassName != null) {
+		            messageSummary = exceptionClassName + ": " + messageSummary;
+		        }
+		    }
 
 		    if (exception instanceof IDataCodable) {
 		        IDataMap exceptionDocument = IDataMap.of(((IDataCodable)exception).getIData());
@@ -99,12 +106,14 @@ public final class exception
 
 		                    IDataMap scope = new IDataMap();
 		                    scope.put("$bizdoc", bizdoc);
-		                    scope.put("$part", partName);
 		                    scope.put("$content", content);
+		                    scope.put("$content.part", partName);
 		                    scope.put("$content.type", contentType);
 		                    scope.put("$overwrite?", "true");
 
 		                    Service.doInvoke(NSName.create("tundra.tn.document.content:add"), scope);
+
+		                    messageDetail = messageDetail + "\nRefer to content part: " + partName + "; " + content.length + " byte" + (content.length == 1 ? "" : "s") + ")";
 		                }
 		            } catch(Exception ex) {
 		                // suppress/ignore exceptions adding content part
