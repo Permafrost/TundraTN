@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-04-02T14:52:46.694
+// -----( CREATED: 2020-06-29T05:40:48.930
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -113,7 +113,7 @@ public final class exception
 
 		                    Service.doInvoke(NSName.create("tundra.tn.document.content:add"), scope);
 
-		                    messageDetail = messageDetail + "\nRefer to content part: " + partName + "; " + content.length + " byte" + (content.length == 1 ? "" : "s") + ")";
+		                    messageDetail = messageDetail + "\nRefer to content part: " + partName + " (" + content.length + " byte" + (content.length == 1 ? "" : "s") + ")";
 		                }
 		            } catch(Exception ex) {
 		                // suppress/ignore exceptions adding content part
