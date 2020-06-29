@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-06-29T05:40:48.930
+// -----( CREATED: 2020-06-30T05:38:41.034
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -21,6 +21,7 @@ import permafrost.tundra.content.Content;
 import permafrost.tundra.content.ContentAttached;
 import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.data.IDataMap;
+import permafrost.tundra.data.IDataYAMLParser;
 import permafrost.tundra.id.ULID;
 import permafrost.tundra.lang.BaseException;
 import permafrost.tundra.lang.BooleanHelper;
@@ -92,9 +93,12 @@ public final class exception
 		        IDataMap exceptionContent = IDataMap.of((IData)exceptionDocument.get("$exception.content"));
 
 		        if (exceptionContent.size() > 0) {
+		            StringBuilder builder = new StringBuilder();
+		            if (messageDetail != null) builder.append(messageDetail.trim());
 		            try {
 		                byte[] content = (byte[])exceptionContent.get("$content");
 		                String contentType = (String)exceptionContent.get("$content.type");
+		                IData context = (IData)exceptionContent.get("$content.context");
 
 		                if (content != null && content.length > 0) {
 		                    String extension = "";
@@ -113,10 +117,18 @@ public final class exception
 
 		                    Service.doInvoke(NSName.create("tundra.tn.document.content:add"), scope);
 
-		                    messageDetail = messageDetail + "\nRefer to content part: " + partName + " (" + content.length + " byte" + (content.length == 1 ? "" : "s") + ")";
+		                    builder.append("\n---\nRefer to content part: ").append(partName);
+		                }
+
+		                if (context != null) {
+		                    IDataYAMLParser parser = new IDataYAMLParser();
+		                    String contextString = parser.emit(context, String.class);
+		                    builder.append("\n---\n").append(contextString);
 		                }
 		            } catch(Exception ex) {
 		                // suppress/ignore exceptions adding content part
+		            } finally {
+		                messageDetail = builder.toString();
 		            }
 		        }
 		    }
