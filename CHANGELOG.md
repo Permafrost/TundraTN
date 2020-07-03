@@ -1,3 +1,103 @@
+# 0.0.35 (2020-07-03)
+
+* add `tundra.tn.document.attribute.string.transformer.profile:find` to lookup a partner profile internal ID given an external ID (this is a replacement for the built-in `FN_PARTNER_LOOKUP` function for extracting sender and receiver profiles for a document which is more resilient to short database outages by using an in-memory cache of external IDs)
+* add `tundra.tn.document.attribute:merge` for creating or updating attributes on a given bizdoc
+* add `tundra.tn.document:enqueue` for enqueuing a `BizDocEnvelope` to a given Trading Networks queue
+* add `tundra.tn.document:route` for routing a `BizDocEnvelope` to Trading Networks
+* add `tundra.tn.queue:interrupt` for interrupting currently running TundraTN queue processing
+* add `tundra.tn.rule:disable` for disabling a given rule
+* add `tundra.tn.rule:enable` for enabling a given rule
+* add `tundra.tn.rule:execute` for executing the given rule against a given bizdoc
+* add `tundra.tn.rule:get` for returning a rule associated with a given identity or name
+* add `tundra.tn.rule:list` for returning the list of all defined rules
+* add `tundra.tn.rule:match` for returning the first rule whose criteria matches the given bizdoc
+* add `tundra.tn.rule:normalize` for normalizing a given rule to be a `RoutingRule` object
+* change `tundra.tn.content:recognize` implementation to Java for easier reuse by other components and better performance
+* change `tundra.tn.content:route` implementation to Java for easier reuse by other components and better performance
+* change `tundra.tn.document.attribute.number.transformer.priority:imminence` implementation to Java for better performance
+* change `tundra.tn.document.attribute.number.transformer.priority:imminence` implementation to use double-based maths instead of BigDecimal to improve performance
+* change `tundra.tn.document.attribute.string.transformer.uri:decode` to use new `tundra.uri:decode` input and output parameters
+* change `tundra.tn.document.attribute.string.transformer.uri:encode` to use new `tundra.uri:encode` input and output parameters
+* change `tundra.tn.document.attribute` services related to datetimes to support new `seconds` named pattern which is the seconds since the unix epoch
+* change `tundra.tn.document.content:add` to use consistent parameter names
+* change `tundra.tn.document.content:exists` to use consistent parameter names
+* change `tundra.tn.document.content:get` implementation to Java for better performance
+* change `tundra.tn.document.content:get` to return `$content.length`
+* change `tundra.tn.document.content:remove` implementation to Java for better performance
+* change `tundra.tn.document.content:remove` to use consistent parameter names
+* change `tundra.tn.document.derivative:exists` implementation to Java for better performance
+* change `tundra.tn.document.duplicate:check` implementation to Java for better performance
+* change `tundra.tn.document.error:exists` implementation to Java for better performance
+* change `tundra.tn.document.namespace:get` implementation to Java for better performance
+* change `tundra.tn.document.schema:get` implementation to Java for better performance
+* change `tundra.tn.document.status:set` implementation to Java for better performance
+* change `tundra.tn.document.status:set` to support setting the system status as well as the user status
+* change `tundra.tn.document.type.schema:get` implementation to Java for better performance
+* change `tundra.tn.document.type:get` implementation to Java for better performance
+* change `tundra.tn.document.type:normalize` implementation to Java for better performance
+* change `tundra.tn.document:add` implementation to Java for better performance
+* change `tundra.tn.document:exists` implementation to Java for better performance
+* change `tundra.tn.document:normalize` to not use `BizDocEnvelope` document reference for bizdoc input and output to make it clearer that the input bizdoc can be a subset only containing an `InternalID`, and so the output bizdoc does not appear duplicated in a caller's pipeline
+* change `tundra.tn.document:parse` implementation to Java for better performance
+* change `tundra.tn.document:relate` implementation to Java for better performance
+* change `tundra.tn.document:reroute` implementation to Java for better performance
+* change `tundra.tn.document:reroute` to support the dedicated deferred routing thread pool feature when enabled
+* change `tundra.tn.exception:handle` to include a partial stack trace in activity log full message to help with error diagnosis
+* change `tundra.tn.exception:handle` to include class name in activity log message summary
+* change `tundra.tn.exception:handle` to set the exception message summary to the string representation of the exception if the exception message itself is empty
+* change `tundra.tn.profile.cache:clear` implementation to Java for better performance
+* change `tundra.tn.profile.cache:list` implementation to Java for better performance
+* change `tundra.tn.profile.cache:refresh` implementation to Java for better performance
+* change `tundra.tn.profile.cache:seed` implementation to Java for better performance
+* change `tundra.tn.queue.each` to only start processing if the current size of the delivery queue is greater than 0
+* change `tundra.tn.queue:each` and dependent services to support specifying `$error.threshold` input which will terminate queue processing if the number of tasks that continuously fail is equal to or greater than the given threshold
+* change `tundra.tn.queue:each` implementation to Java for better performance
+* change `tundra.tn.queue:each` to improve performance when retrieving queued tasks and `$concurrency` > 1 by not fetching tasks that are already submitted to the queue processing thread pool for execution
+* change `tundra.tn.queue:each` to only check the delivery queue and scheduler status once a second to improve performance
+* change `tundra.tn.queue:each` to support task prioritization using `Message Priority` bizdoc attribute
+* change `tundra.tn.support.document.transport:log` implementation to Java for better performance
+* change `tundra.tn.support.document:parse` to remove double quotes from activity log statements
+* change `tundra.tn.support:receive` to use new `tundra.gzip:decompress` and `tundra.zip:decompress` inputs
+* change `tundra.tn:connect` to use new `tundra.service:respond` input argument names
+* change `tundra.tn:deliver` `file` delivery to set the last modified datetime to the `Content Updated` attribute value if it exists
+* change `tundra.tn:deliver` response content part name to be consistent with `tundra.tn:receive` transport content part name
+* change `tundra.tn:deliver` to include `tundra.system:reflect` `$system` document in the pipeline when variable substition is performed
+* change `tundra.tn:discard` to use new `tundra.service:respond` input argument names
+* change `tundra.tn:enqueue` to use `tundra.tn.document:enqueue` for its implementation
+* change `tundra.tn:log` implementation to Java for better performance
+* change `tundra.tn:receive` to merge `JMSMessage/header` and `JMSMessage/properties` if they exist into `TN_parms`
+* change `tundra.tn:receive` to support receiving content as a `JMSMessage`
+* change `tundra.tn:reject` to use new `tundra.service:respond` input argument names
+* change `tundra.tn:retrieve` to set the `Content Created` and `Content Updated` attributes on the resulting bizdoc when the retrieval protocol supports providing these values
+* change tundra.tn.exception:handle to include HTTP request context including the headers and a reference to the added response content part in the Trading Networks activity log
+* deprecate `tundra.tn.queue:clear`, use `tundra.tn.queue:status` instead
+* fix `BizDocEnvelope` processing services to work correctly when content, attributes, or activity log is not persisted for the document being processed
+* fix `tundra.tn.content:recogniz` to handle non-UTF-8 character encodings correctly by providing the encoding in the current invoke state's content info which is used by `wm.tn.doc:handleLargeDoc`
+* fix `tundra.tn.content:recognize` to ignore current invoke state content info as it relates to the intially received content rather than subsequent content being recognized
+* fix `tundra.tn.document.namespace:get` to insert the `ns` prefix before the `prefix0` prefix in the returned `$namespace` document so that the `WmPublic/pub.xml:*` services use the `ns` prefix (because it appears first in the namespace declarations) when parsing or serializing XML content
+* fix `tundra.tn.document:parse` to allow pipeline to contain additional settings for the parser
+* fix `tundra.tn.document:route` to log the transport content part when required
+* fix `tundra.tn.profile:get` to allow unspecified fields in the `DeliveryMethods` document in the returned profile structure
+* fix `tundra.tn.profile:list` to allow unspecified fields in the `DeliveryMethods` document in the returned profile structure
+* fix `tundra.tn.profile:self` to allow unspecified fields in the `DeliveryMethods` document in the returned profile structure
+* fix `tundra.tn.queue:each` `$daemonize?` to work correctly when `true` on Integration Server 9.x and higher
+* fix `tundra.tn.queue:each` to ensure tasks are only processed once when `$concurrency` > 1, and ordering by creation time works correctly
+* fix `tundra.tn.queue:each` to not throw `NullPointerException` caused by race condition by invoking service on separate `ServiceThread` allocated from the Integration Server thread pool
+* fix `tundra.tn.queue:each` to respect explicitly setting `$retry.limit` to zero as an override of the receiver profile's retry settings to provide a per-queue way of disabling retries
+* fix `tundra.tn.reliable:deliver` to allow `$destination` to be optional
+* fix `tundra.tn.support.document:route` to correctly respect `TN_parms` that overwrite the sender/receiver/doctype
+* fix `tundra.tn:chain` to work correctly with new `tundra.tn.document.content:get` output parameters
+* fix `tundra.tn:derive` race condition with setting the `Derivative?` attribute
+* fix `tundra.tn:derive` to work correctly with new `tundra.tn.document.content:get` output parameters
+* fix `tundra.tn:enqueue` log statement when queuing is disabled to correctly perform variable substitution
+* fix `tundra.tn:enqueue` to only set `Queued?` attribute to `true` if document was actually queued
+* fix `tundra.tn:log` to not throw `NullPointerException` when bizdoc is not found
+* fix `tundra.tn:process` to work correctly with new `tundra.tn.document.content:get` output parameters
+* fix `tundra.tn:retrieve` to drop `$content.identity` after use
+* fix `tundra.tn:split` to work correctly with new `tundra.tn.document.content:get` output parameters
+* fix `tundra.tn:translate` to work correctly with new `tundra.tn.document.content:get` output parameters
+* fix deferred routing feature to treat reliable service execution correctly rather than treating it the same as asynchronous execution
+
 # 0.0.34 (2019-08-06)
 
 * add `tundra.tn.document.attribute.datetime.transformer:constant` for setting a datetime attribute to a constant value via a document type attribute transformation
