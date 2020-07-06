@@ -1404,6 +1404,64 @@ value specified in `TN_parms` for both XML and flat files documents.
 
 ---
 
+### tundra.tn.document.attribute.datetime.transformer:add
+
+Trading Networks datetime attribute transformer which parses the
+given Trading Networks document attribute values and adds the
+given duration.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | ISO8601 XML datetime
+datetime.db2  | yyyy-MM-dd-HH.mm.ss.SSSSSS
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | ISO8601 XML date
+date.jdbc     | yyyy-mm-dd
+time          | ISO8601 XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+seconds       | Number of seconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using
+[java.text.SimpleDateFormat] compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is either an [ISO8601] XML duration string to be added to the
+  parsed datetime, or a [YAML] or [JSON] formatted string containing
+  both the datetime pattern to use to parse the given values and an
+  [ISO8601] XML duration to be added to the parsed datetime values.
+
+  For example, the following [YAML] formatted value in `arg` will
+  parse the datetime values using the pattern "dd/MM/yyyy HH:mm:ss",
+  and then add a duration of 1 day:
+
+        duration: P1D
+        pattern: dd/MM/yyyy HH:mm:ss
+
+  Similarly, the following [JSON] formatted value in `arg` will have
+  the same results:
+
+        { "duration": "P1D", "pattern": "dd/MM/yyyy HH:mm:ss" }
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the
+  given `values` list, where `newValues[n]` is a [java.util.Date]
+  object representing the parsed `values[n]` value plus the given
+  duration.
+
+---
+
 ### tundra.tn.document.attribute.datetime.transformer:constant
 
 Trading Networks string transformer which returns the given
@@ -1475,6 +1533,65 @@ document type attribute transformer.
 
 * `newValues` is a list of parsed [java.util.Date] objects representing
   the same instants in time as the given input datetime string `values`.
+
+---
+
+### tundra.tn.document.attribute.datetime.transformer:subtract
+
+Trading Networks datetime attribute transformer which parses the
+given Trading Networks document attribute values and subtracts the
+given duration.
+
+Supports a handful of well-known named patterns:
+
+Pattern Name  | Description
+------------- | --------------------------------------------
+datetime      | ISO8601 XML datetime
+datetime.db2  | yyyy-MM-dd-HH.mm.ss.SSSSSS
+datetime.jdbc | yyyy-MM-dd HH:mm:ss.SSS
+date          | ISO8601 XML date
+date.jdbc     | yyyy-mm-dd
+time          | ISO8601 XML time
+time.jdbc     | HH:mm:ss
+milliseconds  | Number of milliseconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+seconds       | Number of seconds since the Epoch, January 1, 1970 00:00:00.000 GMT (Gregorian)
+
+Custom datetime patterns can be specified using
+[java.text.SimpleDateFormat] compatible patterns.
+
+This service is intended to be invoked by Trading Networks as a
+custom document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of datetime strings all conforming to the same
+  pattern.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is either an [ISO8601] XML duration string to be subtracted
+  from the parsed datetime, or a [YAML] or [JSON] formatted string
+  containing both the datetime pattern to use to parse the given
+  values and an [ISO8601] XML duration to be added to the parsed
+  datetime values.
+
+  For example, the following [YAML] formatted value in `arg` will
+  parse the datetime values using the pattern "dd/MM/yyyy HH:mm:ss",
+  and then subtract a duration of 1 day:
+
+          duration: P1D
+          pattern: dd/MM/yyyy HH:mm:ss
+
+  Similarly, the following [JSON] formatted value in `arg` will have
+  the same results:
+
+          { "duration": "P1D", "pattern": "dd/MM/yyyy HH:mm:ss" }
+
+#### Outputs:
+
+* `newValues` is a list containing the same number of items as the
+  given `values` list, where `newValues[n]` is a [java.util.Date]
+  object representing the parsed `values[n]` value minus the given
+  duration.
 
 ---
 
