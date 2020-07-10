@@ -620,9 +620,10 @@ queue.
   processing queued tasks. Defaults to [Thread.NORM_PRIORITY],
   if not specified.
 * `$error.threshold` is an optional number of continuous task 
-  failures allowed before queue processing is terminated. If not
-  specified, queue processing will not terminate regardless of the 
-  number of continuous task failures encountered.
+  failures allowed before queue processing is successively backed
+  off. If not specified, or set to `0`, queue processing will not
+  back off regardless of the number of continuous task failures 
+  encountered.
 * `$status.exhausted` is an optional user status to set on the bizdoc
   when all retries have been exhausted. Defaults to `EXHAUSTED`.
 * `$status.silence?` is an optional boolean which when `true` will

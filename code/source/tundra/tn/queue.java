@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-04-01T17:19:23.347
+// -----( CREATED: 2020-07-10T15:08:42.864
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -15,6 +15,7 @@ import javax.xml.datatype.Duration;
 import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
+import permafrost.tundra.tn.delivery.DeliveryQueueManager;
 import permafrost.tundra.tn.delivery.DeliveryQueueProcessor;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -125,7 +126,7 @@ public final class queue
 		    String exhaustedStatus = IDataHelper.get(cursor, "$status.exhausted", String.class);
 		    long errorThreshold = IDataHelper.getOrDefault(cursor, "$error.threshold", Long.class, 0L);
 
-		    DeliveryQueueProcessor.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, errorThreshold);
+		    DeliveryQueueHelper.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, errorThreshold);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {
@@ -212,7 +213,9 @@ public final class queue
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
-		    DeliveryQueueProcessor.interrupt(IDataHelper.get(cursor, "$queue", String.class));
+		    String queueName = IDataHelper.get(cursor, "$queue", String.class);
+		    DeliveryQueueProcessor processor = DeliveryQueueManager.getInstance().get(queueName);
+		    if (processor != null) processor.stop();
 		} finally {
 		    cursor.destroy();
 		}
