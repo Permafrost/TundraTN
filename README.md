@@ -49,7 +49,7 @@ instance in which you want to install:
 $ cd ./packages/
 $ git clone https://github.com/Permafrost/TundraTN.git
 $ cd ./TundraTN/
-$ git checkout v<n.n.n> # where <n.n.n> is the required version
+$ git reset --hard v<n.n.n> # where <n.n.n> is the required version
 ```
 
 Then activate and enable the [TundraTN] package from the package
@@ -96,7 +96,7 @@ instance in which you want to install:
 ```sh
 $ cd ./packages/TundraTN/
 $ git fetch
-$ git checkout v<n.n.n> # where <n.n.n> is the desired updated version
+$ git reset --hard v<n.n.n> # where <n.n.n> is the desired updated version
 ```
 
 Then reload the [TundraTN] package from the package management web
