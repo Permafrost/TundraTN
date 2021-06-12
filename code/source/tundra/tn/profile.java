@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-18T16:44:18.308
+// -----( CREATED: 2021-06-12 11:58:52 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -9,9 +9,13 @@ import com.wm.util.Values;
 import com.wm.app.b2b.server.Service;
 import com.wm.app.b2b.server.ServiceException;
 // --- <<IS-START-IMPORTS>> ---
+import com.wm.app.tn.profile.Destination;
+import com.wm.app.tn.profile.Profile;
 import com.wm.app.tn.profile.ProfileStore;
 import permafrost.tundra.data.IDataHelper;
+import permafrost.tundra.tn.profile.DestinationHelper;
 import permafrost.tundra.tn.profile.ProfileCache;
+import permafrost.tundra.tn.profile.ProfileHelper;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class profile
@@ -38,29 +42,14 @@ public final class profile
 		// @sigtype java 3.5
 		// [i] field:0:optional $id
 		// [i] field:0:optional $type
-		// [i] field:0:optional $refresh? {"false","true"}
+		// [i] field:0:optional $refresh? {&quot;false&quot;,&quot;true&quot;}
 		// [o] record:0:required $profile
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -104,29 +93,14 @@ public final class profile
 		// --- <<IS-START(list)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] field:0:optional $refresh? {"false","true"}
+		// [i] field:0:optional $refresh? {&quot;false&quot;,&quot;true&quot;}
 		// [o] record:1:required $profiles
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -164,29 +138,14 @@ public final class profile
 		// --- <<IS-START(self)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
-		// [i] field:0:optional $refresh? {"false","true"}
+		// [i] field:0:optional $refresh? {&quot;false&quot;,&quot;true&quot;}
 		// [o] record:0:required $profile
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -244,6 +203,22 @@ public final class profile
 
 	    public static void seed(IData pipeline) throws ServiceException {
 	        ProfileCache.getInstance().seed();
+	    }
+	}
+
+	public static class Delivery {
+	    public static void get(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+
+	        try {
+	            IData profile = IDataHelper.get(cursor, "$profile", IData.class);
+	            String destinationName = IDataHelper.get(cursor, "$method", String.class);
+	            IData destination = ProfileHelper.getDestination(profile, destinationName);
+
+	            IDataHelper.put(cursor, "$delivery", destination, false);
+	        } finally {
+	            cursor.destroy();
+	        }
 	    }
 	}
 	// --- <<IS-END-SHARED>> ---
