@@ -1,3 +1,29 @@
+# 0.0.36 (2021-07-01)
+
+* add `tundra.tn.document.attribute.datetime.transformer:add` services for parsing a datetime string and then adding a specified duration
+* add `tundra.tn.document.attribute.datetime.transformer:subtract` services for parsing a datetime string and then subtracting a specified duration
+* change `README.md` to recommend using git reset rather than git checkout
+* change `tundra.tn.content:route` to correct the charset parameter on the content part's content type from the incorrect Trading Networks default of `UTF8` to the correct canonical name of `UTF-8` where applicable
+* change `tundra.tn.profile.delivery:get` implementation to Java for improved performance
+* change `tundra.tn.queue:each` `$error.threshold` backoff strategy to use an exponential backoff up to the specified `$retry.wait` to reduce the number of retries
+* change `tundra.tn.queue:each` `$error.threshold` to be used to successively back off/slow task processing if the number of continuously failing tasks exceeds the threshold
+* change `tundra.tn.queue:each` to improve performance when ordered is true and the queue contains a large number of queued tasks
+* change `tundra.tn.queue:each` to monitor queue and scheduler status of all queues currently being processed from a dedicated thread, and if disabled/suspended to automatically stop the associated queue processing
+* change `tundra.tn.support.deliver.destination:normalize` to throw exception when a named delivery method is specifed but does not exist on the receiver's partner profile
+* change `tundra.tn.support:amend` to use new input variable names when calling `tundra.content:amend`
+* change `tundra.tn:deliver` to include `$destination.unresolved` in the input pipeline when `$service` is called containing the original value of `$destination` prior to it being resolved to a URI
+* change `tundra.tn:deliver` to include the delivery result returned by the call to `Tundra/tundra.content:deliver` in the pipeline when invoking the `$finally` service (the `tundra.content:deliver` protocol implementation services can now return a protocol-specific `$response` and `$response.context`, which this change makes available for further processing by the `$finally` service if required; for example, an HTTP delivery is implemented with the `Tundra/tundra.content.deliver:http` service, which now returns the HTTP response body in `$response` and the HTTP return status and headers in the `$response.context` document)
+* change `tundra.tn:process` and dependent services to support optional variable substitution on the pipeline prior to invoking the given service
+* change `tundra.tn:split` to not include double quotes in relationship description when relating original to translated documents
+* change `tundra.tn:translate` to not include double quotes in relationship description when relating original to translated documents
+* change route and queue related logging to support being written to different configured log target files, which can be configured in the `Tundra` package configuration section `feature/log/target`
+* fix `tundra.tn.document:parse` to infer default namespace prefix by inspecting the root node prefix on the document type's `recordBlueprint` (previously the prefix `ns` was assumed for the default namespace)
+* fix `tundra.tn.document:parse` to provide derived namespace prefixes from the default Trading Networks `prefix0` prefix in the following order of precedence: (1) declared root node prefix on the document type's `recordBlueprint`, (2) default Integration Server `ns` prefix, or (3) default Trading Networks `prefix0` prefix
+* fix `tundra.tn.queue:each` and `tundra.tn.document:route` to use current thread for service invocations (previously these services were using a separate thread for service invocation to work around `java.lang.NullPointerException` being thrown due to an `InvokeState` race condition, which has now been fixed)
+* fix `tundra.tn:deliver` to handle `$destination` URI variable substitution using URI template or percent-delimited variable formats more consistently by only attempting to parse the URI after substitution has been attempted
+* fix `tundra.tn:derive` amendment keys to support normalizing namespace prefixes against namespace declarations
+* fix `tundra.tn:enqueue` log message when queuing condition evaluates to false to correctly substitute variables in the logged message
+
 # 0.0.35 (2020-07-03)
 
 * add `tundra.tn.document.attribute.string.transformer.profile:find` to lookup a partner profile internal ID given an external ID (this is a replacement for the built-in `FN_PARTNER_LOOKUP` function for extracting sender and receiver profiles for a document which is more resilient to short database outages by using an in-memory cache of external IDs)
