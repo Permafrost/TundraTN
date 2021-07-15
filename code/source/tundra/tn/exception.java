@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-06-30T05:38:41.034
+// -----( CREATED: 2021-07-15 21:15:42 AEST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -12,6 +12,9 @@ import com.wm.app.b2b.server.ServiceException;
 import com.wm.app.tn.doc.BizDocEnvelope;
 import com.wm.lang.ns.NSName;
 import com.wm.util.coder.IDataCodable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 import permafrost.tundra.content.DuplicateException;
 import permafrost.tundra.content.MalformedException;
 import permafrost.tundra.content.StrictException;
@@ -83,53 +86,70 @@ public final class exception
 		        }
 		    }
 
-		    if (exception instanceof IDataCodable) {
-		        IDataMap exceptionDocument = IDataMap.of(((IDataCodable)exception).getIData());
-		        if (!BooleanHelper.parse((String)exceptionDocument.get("$exception.recoverable?"), true)) {
-		            messageClass = "Unrecoverable";
-		            userStatus = "ABORTED";
-		        }
-
-		        IDataMap exceptionContent = IDataMap.of((IData)exceptionDocument.get("$exception.content"));
-
-		        if (exceptionContent.size() > 0) {
-		            StringBuilder builder = new StringBuilder();
-		            if (messageDetail != null) builder.append(messageDetail.trim());
-		            try {
-		                byte[] content = (byte[])exceptionContent.get("$content");
-		                String contentType = (String)exceptionContent.get("$content.type");
-		                IData context = (IData)exceptionContent.get("$content.context");
-
-		                if (content != null && content.length > 0) {
-		                    String extension = "";
-		                    if (contentType != null) {
-		                        extension = "." + MIMETypeHelper.getFileExtension(contentType);
+		    if (exception != null) {
+		        Class exceptionClass = exception.getClass();
+		        try {
+		            Method getProperties = exceptionClass.getMethod("getProperties");
+		            if (getProperties != null) {
+		                Object returnValue = getProperties.invoke(exception);
+		                if (returnValue instanceof Map) {
+		                    Map exceptionDocument = (Map)returnValue;
+		                    if (!BooleanHelper.parse((String)exceptionDocument.get("$exception.recoverable?"), true)) {
+		                        messageClass = "Unrecoverable";
+		                        userStatus = "ABORTED";
 		                    }
 
-		                    String partName = service.replaceAll("\\W", "_") + "_exception_" + DateTimeHelper.now("yyyyMMddHHmmssSSSZ") + extension;
+		                    Object exceptionContentObject = exceptionDocument.get("$exception.content");
+		                    if (exceptionContentObject instanceof Map) {
+		                        Map exceptionContent = (Map)exceptionContentObject;
+		                        if (exceptionContent.size() > 0) {
+		                            StringBuilder builder = new StringBuilder();
+		                            if (messageDetail != null) builder.append(messageDetail.trim());
+		                            try {
+		                                byte[] content = (byte[])exceptionContent.get("$content");
+		                                String contentType = (String)exceptionContent.get("$content.type");
+		                                IData context = (IData)exceptionContent.get("$content.context");
 
-		                    IDataMap scope = new IDataMap();
-		                    scope.put("$bizdoc", bizdoc);
-		                    scope.put("$content", content);
-		                    scope.put("$content.part", partName);
-		                    scope.put("$content.type", contentType);
-		                    scope.put("$overwrite?", "true");
+		                                if (content != null && content.length > 0) {
+		                                    String extension = "";
+		                                    if (contentType != null) {
+		                                        extension = "." + MIMETypeHelper.getFileExtension(contentType);
+		                                    }
 
-		                    Service.doInvoke(NSName.create("tundra.tn.document.content:add"), scope);
+		                                    String partName = service.replaceAll("\\W", "_") + "_exception_" + DateTimeHelper.now("yyyyMMddHHmmssSSSZ") + extension;
 
-		                    builder.append("\n---\nRefer to content part: ").append(partName);
+		                                    IDataMap scope = new IDataMap();
+		                                    scope.put("$bizdoc", bizdoc);
+		                                    scope.put("$content", content);
+		                                    scope.put("$content.part", partName);
+		                                    scope.put("$content.type", contentType);
+		                                    scope.put("$overwrite?", "true");
+
+		                                    Service.doInvoke(NSName.create("tundra.tn.document.content:add"), scope);
+
+		                                    builder.append("\n---\nRefer to content part: ").append(partName);
+		                                }
+
+		                                if (context != null) {
+		                                    IDataYAMLParser parser = new IDataYAMLParser();
+		                                    String contextString = parser.emit(context, String.class);
+		                                    builder.append("\n---\n").append(contextString);
+		                                }
+		                            } catch(Exception ex) {
+		                                // suppress/ignore exceptions adding content part
+		                            } finally {
+		                                messageDetail = builder.toString();
+		                            }
+		                        }
+		                    }
 		                }
-
-		                if (context != null) {
-		                    IDataYAMLParser parser = new IDataYAMLParser();
-		                    String contextString = parser.emit(context, String.class);
-		                    builder.append("\n---\n").append(contextString);
-		                }
-		            } catch(Exception ex) {
-		                // suppress/ignore exceptions adding content part
-		            } finally {
-		                messageDetail = builder.toString();
 		            }
+		        } catch(IllegalAccessException ex) {
+		            // do nothing
+		        } catch(InvocationTargetException ex) {
+		            // do nothing
+		        } catch(NoSuchMethodException ex) {
+		            // do nothing
 		        }
 		    }
 
@@ -154,7 +174,7 @@ public final class exception
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] field:0:optional $message
-		// [i] field:0:optional $type {"security","strict","malformed","validation","duplicate","unsupported"}
+		// [i] field:0:optional $type {&quot;security&quot;,&quot;strict&quot;,&quot;malformed&quot;,&quot;validation&quot;,&quot;duplicate&quot;,&quot;unsupported&quot;}
 		IDataCursor cursor = pipeline.getCursor();
 
 		try {
