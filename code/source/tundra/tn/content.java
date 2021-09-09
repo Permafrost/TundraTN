@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-12-13T16:17:18.873
+// -----( CREATED: 2021-09-10 06:00:31 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -40,7 +40,7 @@ public final class content
 		// @subtype unknown
 		// @sigtype java 3.5
 		// [i] object:0:optional $content
-		// [i] field:0:optional $content.identity {"UUID","ULID","SHA-512","SHA-384","SHA-256","SHA","MD5","MD2"}
+		// [i] field:0:optional $content.identity {&quot;UUID&quot;,&quot;ULID&quot;,&quot;SHA-512&quot;,&quot;SHA-384&quot;,&quot;SHA-256&quot;,&quot;SHA&quot;,&quot;MD5&quot;,&quot;MD2&quot;}
 		// [i] record:0:optional $content.namespace
 		// [i] record:0:optional TN_parms
 		// [i] - field:0:optional $contentType
@@ -55,7 +55,6 @@ public final class content
 		// [i] - field:0:optional DoctypeName
 		// [i] - field:0:optional GroupID
 		// [i] - field:0:optional ConversationID
-		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
 		// [o] record:0:optional TN_parms
 		// [o] - field:0:optional $contentType
 		// [o] - field:0:optional $contentEncoding
@@ -70,15 +69,15 @@ public final class content
 		// [o] - field:0:optional GroupID
 		// [o] - field:0:optional ConversationID
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    Object content = IDataHelper.get(cursor, "$content");
 		    String contentIdentity = IDataHelper.get(cursor, "$content.identity", String.class);
 		    IData contentNamespace = IDataHelper.first(cursor, IData.class, "$content.namespace", "$namespace");
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.recognize(content, contentIdentity, contentNamespace, parameters);
-
+		
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.recognize(content, contentIdentity, contentNamespace, parameters, pipeline);
+		
 		    IDataHelper.put(cursor, "$bizdoc", bizdoc, false);
 		    IDataHelper.put(cursor, "TN_parms", parameters, false);
 		} finally {
@@ -86,7 +85,7 @@ public final class content
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -102,9 +101,9 @@ public final class content
 		// [i] field:0:optional $content.encoding
 		// [i] field:0:optional $content.schema
 		// [i] record:0:optional $content.namespace
-		// [i] field:0:optional $content.identity {"UUID","ULID","SHA-512","SHA-384","SHA-256","SHA","MD5","MD2"}
+		// [i] field:0:optional $content.identity {&quot;UUID&quot;,&quot;ULID&quot;,&quot;SHA-512&quot;,&quot;SHA-384&quot;,&quot;SHA-256&quot;,&quot;SHA&quot;,&quot;MD5&quot;,&quot;MD2&quot;}
 		// [i] record:0:optional $attributes
-		// [i] field:0:optional $strict? {"true","false"}
+		// [i] field:0:optional $strict? {&quot;true&quot;,&quot;false&quot;}
 		// [i] record:0:optional TN_parms
 		// [i] - field:0:optional $contentType
 		// [i] - field:0:optional $contentEncoding
@@ -118,29 +117,13 @@ public final class content
 		// [i] - field:0:optional DoctypeName
 		// [i] - field:0:optional GroupID
 		// [i] - field:0:optional ConversationID
-		// [o] recref:0:optional $bizdoc wm.tn.rec:BizDocEnvelope
 		// [o] record:0:optional $sender
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -158,27 +141,12 @@ public final class content
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:optional $receiver
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -209,7 +177,7 @@ public final class content
 		// [o] - field:0:optional GroupID
 		// [o] - field:0:optional ConversationID
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    Object content = IDataHelper.first(cursor, Object.class, "$content", "stream", "node", "ffdata", "content", "contentStream", "jsonStream", "iDocList", "JMSMessage");
 		    MimeType contentType = IDataHelper.get(cursor, "$content.type", MimeType.class);
@@ -220,9 +188,9 @@ public final class content
 		    IData attributes = IDataHelper.get(cursor, "$attributes", IData.class);
 		    boolean strict = IDataHelper.getOrDefault(cursor, "$strict?", Boolean.class, true);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
+		
 		    BizDocEnvelope document = BizDocEnvelopeHelper.route(content, contentIdentity, contentType, contentEncoding, contentNamespace, contentSchema, attributes, parameters, pipeline, strict);
-
+		
 		    if (document != null) {
 		        IDataHelper.put(cursor, "$bizdoc", document);
 		        ProfileCache cache = ProfileCache.getInstance();
@@ -235,7 +203,7 @@ public final class content
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 
