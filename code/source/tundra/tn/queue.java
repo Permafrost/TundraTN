@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-07-10T15:08:42.864
+// -----( CREATED: 2021-10-02 13:25:01 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -98,14 +98,14 @@ public final class queue
 		// [i] field:0:optional $retry.limit
 		// [i] field:0:optional $retry.wait
 		// [i] field:0:optional $retry.factor
-		// [i] field:0:optional $ordered? {"false","true"}
-		// [i] field:0:optional $suspend? {"false","true"}
+		// [i] field:0:optional $ordered? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $suspend? {&quot;false&quot;,&quot;true&quot;}
 		// [i] field:0:optional $concurrency
 		// [i] field:0:optional $thread.priority
 		// [i] field:0:optional $error.threshold
 		// [i] field:0:optional $status.exhausted
-		// [i] field:0:optional $status.silence? {"false","true"}
-		// [i] field:0:optional $daemonize? {"false","true"}
+		// [i] field:0:optional $status.silence? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $daemonize? {&quot;false&quot;,&quot;true&quot;}
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
@@ -126,7 +126,7 @@ public final class queue
 		    String exhaustedStatus = IDataHelper.get(cursor, "$status.exhausted", String.class);
 		    long errorThreshold = IDataHelper.getOrDefault(cursor, "$error.threshold", Long.class, 0L);
 
-		    DeliveryQueueHelper.each(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, errorThreshold);
+		    DeliveryQueueManager.getInstance().process(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, errorThreshold);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {
