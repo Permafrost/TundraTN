@@ -3654,6 +3654,11 @@ queue.
   this service will continue (not exit) until either the queue is
   disabled or suspended, or the server is shutdown. Defaults to
   `false`.
+* `$expedite?` is an optional boolean which when `true` will expedite
+  the queue's associated scheduled task to run immediately as soon as
+  new queued tasks are detected for the queue. Defaults to `false`.
+  Note that this feature can only be enabled when no `$task.age` is
+  specified and both `$daemonize?` and `$ordered?` are `false`.
 
 #### Outputs:
 
@@ -3673,6 +3678,18 @@ will be delivered. This is the normal state for a queue.
 #### Inputs:
 
 * `$queue` is the name of the queue to be enabled.
+
+---
+
+### tundra.tn.queue:expedite
+
+Expedites the delivery of documents queued on the given Trading
+Networks queue, by running the associated scheduled task immediately
+rather than waiting for the next scheduled delivery time.
+
+#### Inputs:
+
+* `$queue` is the name of the queue to be expedited.
 
 ---
 

@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2021-10-02 13:25:01 EST
+// -----( CREATED: 2021-11-17 05:03:53 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -106,6 +106,7 @@ public final class queue
 		// [i] field:0:optional $status.exhausted
 		// [i] field:0:optional $status.silence? {&quot;false&quot;,&quot;true&quot;}
 		// [i] field:0:optional $daemonize? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $expedite? {&quot;false&quot;,&quot;true&quot;}
 		// [o] field:0:required queue
 		// [o] field:0:optional logMsg
 		IDataCursor cursor = pipeline.getCursor();
@@ -152,6 +153,32 @@ public final class queue
 
 		try {
 		    DeliveryQueueHelper.enable(DeliveryQueueHelper.get(IDataHelper.get(cursor, "$queue", String.class)));
+		} catch(IOException ex) {
+		    ExceptionHelper.raise(ex);
+		} catch(SQLException ex) {
+		    ExceptionHelper.raise(ex);
+		} finally {
+		    cursor.destroy();
+		}
+		// --- <<IS-END>> ---
+
+
+	}
+
+
+
+	public static final void expedite (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(expedite)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		// [i] field:0:required $queue
+		IDataCursor cursor = pipeline.getCursor();
+
+		try {
+		    String queueName = IDataHelper.get(cursor, "$queue", String.class);
+		    DeliveryQueueHelper.expedite(DeliveryQueueHelper.get(queueName));
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {
