@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2021-11-17 05:03:53 EST
+// -----( CREATED: 2022-02-18 05:40:01 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -124,10 +124,11 @@ public final class queue
 		    float retryFactor = IDataHelper.getOrDefault(cursor, "$retry.factor", Float.class, 1.0f);
 		    int threadPriority = IDataHelper.getOrDefault(cursor, "$thread.priority", Integer.class, Thread.NORM_PRIORITY);
 		    boolean threadDaemon = IDataHelper.getOrDefault(cursor, "$daemonize?", Boolean.class, false);
+		    String exhaustedService = IDataHelper.get(cursor, "$service.exhausted", String.class);
 		    String exhaustedStatus = IDataHelper.get(cursor, "$status.exhausted", String.class);
 		    long errorThreshold = IDataHelper.getOrDefault(cursor, "$error.threshold", Long.class, 0L);
 
-		    DeliveryQueueManager.getInstance().process(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, errorThreshold);
+		    DeliveryQueueManager.getInstance().process(queue, service, scope == null? pipeline : scope, age, concurrency, retryLimit, retryFactor, retryWait, threadPriority, threadDaemon, ordered, suspend, exhaustedStatus, exhaustedService, errorThreshold);
 		} catch(IOException ex) {
 		    ExceptionHelper.raise(ex);
 		} catch(SQLException ex) {

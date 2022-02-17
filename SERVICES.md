@@ -3645,6 +3645,9 @@ queue.
   off. If not specified, or set to `0`, queue processing will not
   back off regardless of the number of continuous task failures
   encountered.
+* `$service.exhausted` is an optional fully-qualified service name of
+  a bizdoc processing service to be invoked when and if each task
+  exhausts all its retries at the time of exhaustion.
 * `$status.exhausted` is an optional user status to set on the bizdoc
   when all retries have been exhausted. Defaults to `EXHAUSTED`.
 * `$status.silence?` is an optional boolean which when `true` will
