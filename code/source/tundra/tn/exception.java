@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2021-07-15 21:15:42 AEST
+// -----( CREATED: 2022-02-18 05:37:24 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -14,6 +14,7 @@ import com.wm.lang.ns.NSName;
 import com.wm.util.coder.IDataCodable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.Map;
 import permafrost.tundra.content.DuplicateException;
 import permafrost.tundra.content.MalformedException;
@@ -73,18 +74,9 @@ public final class exception
 		    String service = IDataHelper.getOrDefault(cursor, "$exception.service", String.class, "tundra.tn.exception:handle");
 
 		    String messageClass = "Processing",
-		           messageSummary = exception.getMessage(),
+		           messageSummary = exception == null ? "Document processing failed" : MessageFormat.format("Document processing failed: {0}", ExceptionHelper.getMessage(exception, true)),
 		           messageDetail = ExceptionHelper.getStackTraceString(exception, 3),
 		           userStatus = "ERROR";
-
-		    if (messageSummary == null || messageSummary.trim().equals("")) {
-		        messageSummary = exception.toString();
-		    } else {
-		        String exceptionClassName = exception.getClass().getSimpleName();
-		        if (exceptionClassName != null) {
-		            messageSummary = exceptionClassName + ": " + messageSummary;
-		        }
-		    }
 
 		    if (exception != null) {
 		        Class exceptionClass = exception.getClass();
