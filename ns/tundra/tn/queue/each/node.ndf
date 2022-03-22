@@ -613,6 +613,15 @@ queue.
   the input pipeline of `$service` as a variable named `$task` whose
   structure is as per `WmTN/wm.tn.rec:Task`, which allows `$service`
   to access properties on the task such as the current retry count.
+  Note that the processing service can request a task to be retried 
+  without throwing an exception by returning the following optional
+  output parameters:
+  * `$task.retry.requested?` is an optional boolean flag which if set 
+    to the string "true" will cause the task to be retried even if no
+    exception was thrown
+  * `$task.retry.requested.reason` is an optional string describing 
+    the reason why the task is being retried, which is logged against 
+    the task as the transport status message for diagnostic purposes
 * `$pipeline` is an optional input pipeline to be used when invoking
   the given `$service` bizdoc processing service. Defaults to using
   the pipeline itself as the input pipeline for `$service`, if not
