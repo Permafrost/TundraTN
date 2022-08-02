@@ -1,7 +1,7 @@
 package tundra.tn.support;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2020-07-10T15:04:44.348
+// -----( CREATED: 2022-07-15 05:35:26 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -44,8 +44,12 @@ public final class queue
 		// --- <<IS-START(reflect)>> ---
 		// @subtype unknown
 		// @sigtype java 3.5
+		// [o] record:0:required $queue.processing
+		// [o] - object:0:required supervisor.started?
+		// [o] - record:1:optional workers
+		// [o] - object:0:required workers.length
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    IDataHelper.put(cursor, "$queue.processing", DeliveryQueueManager.getInstance().getIData());
 		} finally {
@@ -53,7 +57,21 @@ public final class queue
 		}
 		// --- <<IS-END>> ---
 
+                
+	}
 
+
+
+	public static final void restart (IData pipeline)
+        throws ServiceException
+	{
+		// --- <<IS-START(restart)>> ---
+		// @subtype unknown
+		// @sigtype java 3.5
+		DeliveryQueueManager.getInstance().restart();
+		// --- <<IS-END>> ---
+
+                
 	}
 
 
@@ -67,7 +85,7 @@ public final class queue
 		DeliveryQueueManager.getInstance().start();
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -81,7 +99,7 @@ public final class queue
 		DeliveryQueueManager.getInstance().stop();
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 
