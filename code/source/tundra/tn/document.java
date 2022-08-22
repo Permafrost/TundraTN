@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2021-08-18 11:13:22 AEST
+// -----( CREATED: 2022-08-23 05:33:16 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -29,6 +29,12 @@ import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
 import permafrost.tundra.tn.document.attribute.transform.Transformer;
 import permafrost.tundra.tn.document.attribute.transform.number.ImminentPrioritizer;
 import permafrost.tundra.tn.document.attribute.transform.string.ProfileFinder;
+import permafrost.tundra.tn.document.attribute.transform.string.FindPatternInAll;
+import permafrost.tundra.tn.document.attribute.transform.string.FindPatternInAny;
+import permafrost.tundra.tn.document.attribute.transform.string.FindPatternInNone;
+import permafrost.tundra.tn.document.attribute.transform.string.MatchPatternInAll;
+import permafrost.tundra.tn.document.attribute.transform.string.MatchPatternInAny;
+import permafrost.tundra.tn.document.attribute.transform.string.MatchPatternInNone;
 import permafrost.tundra.tn.document.BizDocAttributeHelper;
 import permafrost.tundra.tn.document.BizDocContentHelper;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
@@ -68,14 +74,14 @@ public final class document
 		// [o] record:0:optional $task
 		// [o] - field:0:required TaskId
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 		    DeliveryQueue queue = DeliveryQueueHelper.get(IDataHelper.get(cursor, "$queue", String.class));
 		    boolean force = IDataHelper.getOrDefault(cursor, "$force?", Boolean.class, false);
 		    String summary = IDataHelper.get(cursor, "$tundra.tn.document.enqueue.log.message.summary.prefix", String.class);
 		    IData context = IDataHelper.get(cursor, "$tundra.tn.document.enqueue.log.context", IData.class);
-
+		
 		    IDataHelper.put(cursor, "$task", BizDocEnvelopeHelper.enqueue(document, queue, force, summary, context), false);
 		} catch(Exception ex) {
 		    ExceptionHelper.raise(ex);
@@ -84,7 +90,7 @@ public final class document
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -145,14 +151,14 @@ public final class document
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    String id = IDataHelper.get(cursor, "$id", String.class);
 		    boolean content = IDataHelper.getOrDefault(cursor, "$content?", Boolean.class, false);
 		    boolean raise = IDataHelper.getOrDefault(cursor, "$raise?", Boolean.class, false);
-
+		
 		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.get(id, content);
-
+		
 		    if (bizdoc == null) {
 		        if (raise) throw new UnrecoverableException("Trading Networks document does not exist: " + id);
 		    } else {
@@ -166,7 +172,7 @@ public final class document
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -369,22 +375,22 @@ public final class document
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    IData input = IDataHelper.get(cursor, "$bizdoc", IData.class);
 		    boolean content = IDataHelper.getOrDefault(cursor, "$content?", Boolean.class, false);
 		    boolean sender = IDataHelper.getOrDefault(cursor, "$sender?", Boolean.class, false);
 		    boolean receiver = IDataHelper.getOrDefault(cursor, "$receiver?", Boolean.class, false);
 		    boolean raise = IDataHelper.getOrDefault(cursor, "$raise?", Boolean.class, false);
-
+		
 		    BizDocEnvelope output = BizDocEnvelopeHelper.normalize(input, content, false);
-
+		
 		    if (output == null) {
 		        if (raise && input != null) {
 		            IDataCursor inputCursor = input.getCursor();
 		            String id = IDataUtil.getString(inputCursor, "InternalID");
 		            inputCursor.destroy();
-
+		
 		            throw new UnrecoverableException("Trading Networks document does not exist: " + id);
 		        }
 		    } else {
@@ -400,7 +406,7 @@ public final class document
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -421,17 +427,17 @@ public final class document
 		// [o] field:0:optional $schema.type {&quot;Flat File&quot;,&quot;XML&quot;}
 		// [o] record:0:optional $namespace
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 		    String partName = IDataHelper.get(cursor, "$part", String.class);
 		    boolean validate = IDataHelper.getOrDefault(cursor, "$validate?", Boolean.class, false);
-
+		
 		    IData document = BizDocContentHelper.parse(bizdoc, partName, validate, true, pipeline);
-
+		
 		    if (document != null) {
 		        IDataHelper.put(cursor, "$document", document);
-
+		
 		        BizDocContentPart contentPart = BizDocContentHelper.getContentPart(bizdoc, partName);
 		        if (contentPart != null) IDataHelper.put(cursor, "$content.type", contentPart.getMimeType(), false);
 		        IDataHelper.put(cursor, "$schema", BizDocEnvelopeHelper.getContentSchema(bizdoc), false);
@@ -443,7 +449,7 @@ public final class document
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -460,19 +466,19 @@ public final class document
 		// [i] - field:0:required InternalID
 		// [i] field:0:optional $relationship
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope source = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.source", IData.class), false, false);
 		    BizDocEnvelope target = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc.target", IData.class), false, false);
 		    String relationship = IDataHelper.get(cursor, "$relationship", String.class);
-
+		
 		    BizDocEnvelopeHelper.relate(source, target, relationship);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -673,14 +679,14 @@ public final class document
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:optional TN_parms
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, true);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
+		
 		    if (bizdoc != null) {
 		        BizDocEnvelopeHelper.reroute(bizdoc, parameters);
-
+		
 		        IDataHelper.put(cursor, "$bizdoc", bizdoc);
 		        ProfileCache cache = ProfileCache.getInstance();
 		        IDataHelper.put(cursor, "$sender", cache.get(bizdoc.getSenderId()));
@@ -692,7 +698,7 @@ public final class document
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -761,17 +767,17 @@ public final class document
 		// [o] - field:0:optional processingRuleName
 		// [o] - field:0:optional $bypassRouting {&quot;false&quot;,&quot;true&quot;}
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope bizdoc = IDataHelper.get(cursor, "$bizdoc", BizDocEnvelope.class);
 		    boolean transportLog = IDataHelper.getOrDefault(cursor, "$transport.log?", Boolean.class, false);
 		    String transportLogPartName = IDataHelper.get(cursor, "$transport.log.part", String.class);
 		    boolean strict = IDataHelper.getOrDefault(cursor, "$strict?", Boolean.class, true);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
+		
 		    if (bizdoc != null) {
 		        BizDocEnvelopeHelper.route(bizdoc, transportLog, transportLogPartName, parameters, strict);
-
+		
 		        IDataHelper.put(cursor, "$bizdoc", bizdoc);
 		        ProfileCache cache = ProfileCache.getInstance();
 		        IDataHelper.put(cursor, "$sender", cache.get(bizdoc.getSenderId()));
@@ -783,14 +789,14 @@ public final class document
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 	// --- <<IS-START-SHARED>> ---
 	public static class ActivityLog {
 	    public static void log(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            String entryType = IDataHelper.getOrDefault(cursor, "$type", String.class, "MESSAGE");
@@ -798,46 +804,74 @@ public final class document
 	            String messageSummary = IDataHelper.get(cursor, "$summary", String.class);
 	            String messageDetail = IDataHelper.get(cursor, "$message", String.class);
 	            IData context = IDataHelper.get(cursor, "$context", IData.class);
-
+	
 	            ActivityLogHelper.log(EntryType.normalize(entryType), entryClass, messageSummary, messageDetail, bizdoc, context);
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
 	}
-
+	
 	public static class DocumentAttribute {
 	    public static void merge(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            IData attributes = IDataHelper.get(cursor, "$attributes", IData.class);
 	            boolean substitute = IDataHelper.getOrDefault(cursor, "$substitute?", Boolean.class, false);
-
+	
 	            BizDocAttributeHelper.merge(bizdoc, attributes, pipeline, substitute);
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
 	}
-
+	
 	public static class DocumentAttributeNumberTransformerPriority {
 	    public static void imminence(IData pipeline) throws ServiceException {
 	        Transformer.transform(pipeline, new ImminentPrioritizer());
 	    }
 	}
-
+	
 	public static class DocumentAttributeStringTransformerProfile {
 	    public static void find(IData pipeline) throws ServiceException {
 	        Transformer.transform(pipeline, new ProfileFinder());
 	    }
 	}
-
+	
+	public static class DocumentAttributeStringTransformerFind {
+	    public static void all(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new FindPatternInAll());
+	    }
+	
+	    public static void any(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new FindPatternInAny());
+	    }
+	
+	    public static void none(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new FindPatternInNone());
+	    }
+	}
+	
+	public static class DocumentAttributeStringTransformerMatch {
+	    public static void all(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new MatchPatternInAll());
+	    }
+	
+	    public static void any(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new MatchPatternInAny());
+	    }
+	
+	    public static void none(IData pipeline) throws ServiceException {
+	        Transformer.transform(pipeline, new MatchPatternInNone());
+	    }
+	}
+	
 	public static class DocumentContent {
 	    public static void add(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            Object content = IDataHelper.get(cursor, "$content");
@@ -845,34 +879,34 @@ public final class document
 	            String contentType = IDataHelper.get(cursor, "$content.type", String.class);
 	            Charset contentEncoding = IDataHelper.first(cursor, Charset.class, "$content.encoding", "$encoding");
 	            boolean overwrite = IDataHelper.getOrDefault(cursor, "$overwrite?", Boolean.class, false);
-
+	
 	            BizDocContentHelper.addContentPart(document, partName, contentType, contentEncoding, InputStreamHelper.normalize(content, contentEncoding), overwrite);
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
-
+	
 	    public static void exists(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.first(cursor, String.class, "$content.part", "$part");
-
+	
 	            IDataHelper.put(cursor, "$exists?", BizDocContentHelper.exists(document, partName), String.class);
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
-
+	
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.first(cursor, String.class, "$content.part", "$part");
 	            String mode = IDataHelper.first(cursor, String.class, "$content.mode", "$mode");
-
+	
 	            if (document != null) {
 	                BizDocContentPart contentPart = BizDocContentHelper.getContentPart(document, partName);
 	                if (contentPart != null) {
@@ -880,7 +914,7 @@ public final class document
 	                    if (content != null) {
 	                        String contentType = BizDocContentHelper.getContentType(contentPart);
 	                        Charset charset = CharsetHelper.normalize(null, MIMETypeHelper.of(contentType), false);
-
+	
 	                        IDataHelper.put(cursor, "$content", ObjectHelper.convert(content, charset, mode));
 	                        IDataHelper.put(cursor, "$content.part", contentPart.getPartName(), false);
 	                        IDataHelper.put(cursor, "$content.type", BizDocContentHelper.getContentType(contentPart), false);
@@ -894,32 +928,32 @@ public final class document
 	            cursor.destroy();
 	        }
 	    }
-
+	
 	    public static void remove(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope document = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, false);
 	            String partName = IDataHelper.first(cursor, String.class, "$content.part", "$part");
-
+	
 	            BizDocContentHelper.removeContentPart(document, partName);
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
 	}
-
+	
 	public static class DocumentDerivative {
 	    public static void exists(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            String originalDocumentID = BizDocEnvelopeHelper.getIdentity(IDataHelper.get(cursor, "$bizdoc", IData.class));
 	            String derivedSenderID = ProfileHelper.getIdentity(IDataHelper.get(cursor, "$sender", IData.class));
 	            String derivedReceiverID = ProfileHelper.getIdentity(IDataHelper.get(cursor, "$receiver", IData.class));
-
+	
 	            BizDocEnvelope derivedDocument = BizDocEnvelopeHelper.getDerivative(originalDocumentID, derivedSenderID, derivedReceiverID);
-
+	
 	            IDataHelper.put(cursor, "$exists?", derivedDocument != null, String.class);
 	            IDataHelper.put(cursor, "$derivative", derivedDocument, false);
 	        } finally {
@@ -927,11 +961,11 @@ public final class document
 	        }
 	    }
 	}
-
+	
 	public static class DocumentDuplicate {
 	    public static void check(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class), false, false);
 	            IDataHelper.put(cursor, "duplicate", BizDocEnvelopeHelper.isDuplicate(bizdoc), String.class);
@@ -940,17 +974,17 @@ public final class document
 	        }
 	    }
 	}
-
+	
 	public static class DocumentError {
 	    public static void exists(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            IData bizdoc = IDataHelper.get(cursor, "$bizdoc", IData.class);
 	            IData classes = IDataHelper.get(cursor, "$class", IData.class);
-
+	
 	            ActivityLogEntry[] errors = BizDocEnvelopeHelper.getErrors(bizdoc, classes);
-
+	
 	            IDataHelper.put(cursor, "$exists?", errors != null && errors.length > 0, String.class);
 	            IDataHelper.put(cursor, "$errors", IDataHelper.normalize(errors), false);
 	        } finally {
@@ -958,11 +992,11 @@ public final class document
 	        }
 	    }
 	}
-
+	
 	public static class DocumentNamespace {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            IDataHelper.put(cursor, "$namespace", BizDocEnvelopeHelper.getNamespaceDeclarations(bizdoc), false);
@@ -971,11 +1005,11 @@ public final class document
 	        }
 	    }
 	}
-
+	
 	public static class DocumentSchema {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            IDataHelper.put(cursor, "$schema", BizDocEnvelopeHelper.getContentSchema(bizdoc), false);
@@ -985,11 +1019,11 @@ public final class document
 	        }
 	    }
 	}
-
+	
 	public static class DocumentStatus {
 	    public static void set(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false, false);
 	            String systemStatus = IDataHelper.get(cursor, "$status.system", String.class);
@@ -997,38 +1031,38 @@ public final class document
 	            String userStatus = IDataHelper.first(cursor, String.class, "$status.user", "$status");
 	            String previousUserStatus = IDataHelper.get(cursor, "$status.user.previous", String.class);
 	            boolean silence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
-
+	
 	            BizDocEnvelopeHelper.setStatus(bizdoc, systemStatus, previousSystemStatus, userStatus, previousUserStatus, silence);
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
 	}
-
+	
 	public static class DocumentType {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            boolean backwardsCompatible = false;
-
+	
 	            String id = IDataHelper.get(cursor, "$document.type.id", String.class);
 	            String name = IDataHelper.get(cursor, "$document.type.name", String.class);
-
+	
 	            if (id == null && name == null) {
 	                id = IDataHelper.get(cursor, "$id", String.class);
 	                name = IDataHelper.get(cursor, "$name", String.class);
 	                backwardsCompatible = id != null || name != null;
 	            }
-
+	
 	            BizDocType type = null;
-
+	
 	            if (id != null) {
 	                type = BizDocTypeHelper.get(id);
 	            } else if (name != null) {
 	                type = BizDocTypeHelper.getByName(name);
 	            }
-
+	
 	            if (type != null) {
 	                IDataHelper.put(cursor, backwardsCompatible ? "$type" : "$document.type", IDataHelper.normalize((IData)type));
 	            }
@@ -1036,20 +1070,20 @@ public final class document
 	            cursor.destroy();
 	        }
 	    }
-
+	
 	    public static void normalize(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            boolean backwardsCompatible = false;
-
+	
 	            BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$document.type", IData.class));
-
+	
 	            if (type == null) {
 	                type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$type", IData.class));
 	                backwardsCompatible = type != null;
 	            }
-
+	
 	            if (type != null) {
 	                IDataHelper.put(cursor, backwardsCompatible ? "$type" : "$document.type", IDataHelper.normalize((IData)type));
 	            }
@@ -1058,11 +1092,11 @@ public final class document
 	        }
 	    }
 	}
-
+	
 	public static class DocumentTypeSchema {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            BizDocType type = BizDocTypeHelper.normalize(IDataHelper.get(cursor, "$document.type", IData.class));
 	            if (type == null) {
