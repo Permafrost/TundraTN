@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2021-06-12 11:58:52 EST
+// -----( CREATED: 2023-08-08 05:51:46 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -13,9 +13,13 @@ import com.wm.app.tn.profile.Destination;
 import com.wm.app.tn.profile.Profile;
 import com.wm.app.tn.profile.ProfileStore;
 import permafrost.tundra.data.IDataHelper;
+import permafrost.tundra.tn.cache.CacheManager;
+import permafrost.tundra.tn.cache.ProfileCache;
 import permafrost.tundra.tn.profile.DestinationHelper;
-import permafrost.tundra.tn.profile.ProfileCache;
+import permafrost.tundra.tn.profile.ExternalID;
+import permafrost.tundra.tn.profile.InternalID;
 import permafrost.tundra.tn.profile.ProfileHelper;
+import permafrost.tundra.tn.profile.ProfileID;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class profile
@@ -67,14 +71,20 @@ public final class profile
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
-		    String id = IDataHelper.get(cursor, "$id", String.class);
+		    String identity = IDataHelper.get(cursor, "$id", String.class);
 		    String type = IDataHelper.get(cursor, "$type", String.class);
 		    boolean refresh = IDataHelper.getOrDefault(cursor, "$refresh?", Boolean.class, false);
-
-		    if (id != null) {
-		        IData profile = ProfileCache.getInstance().get(id, type, refresh);
+		
+		    if (identity != null) {
+		        ProfileID profileID;
+		        if (type == null) {
+		            profileID = new InternalID(identity);
+		        } else {
+		            profileID = new ExternalID(identity, type);
+		        }
+		        IData profile = ProfileCache.getInstance().get(profileID, refresh);
 		        IDataHelper.put(cursor, "$profile", profile, false);
 		    }
 		} finally {
@@ -82,7 +92,7 @@ public final class profile
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -118,16 +128,20 @@ public final class profile
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    boolean refresh = IDataHelper.getOrDefault(cursor, "$refresh?", Boolean.class, false);
-		    IDataHelper.put(cursor, "$profiles", ProfileCache.getInstance().list(true, refresh), false);
+		
+		    ProfileCache.getInstance().seed(refresh);
+		    IData[] profiles = ProfileCache.getInstance().list();
+		
+		    IDataHelper.put(cursor, "$profiles", profiles, false);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -163,7 +177,7 @@ public final class profile
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    boolean refresh = IDataHelper.getOrDefault(cursor, "$refresh?", Boolean.class, false);
 		    IDataHelper.put(cursor, "$profile", ProfileCache.getInstance().self(refresh), false);
@@ -172,7 +186,7 @@ public final class profile
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 	// --- <<IS-START-SHARED>> ---
@@ -183,38 +197,39 @@ public final class profile
 	        // then clear the TundraTN profile cache
 	        ProfileCache.getInstance().clear();
 	    }
-
+	
 	    public static void list(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            IDataHelper.put(cursor, "$cache", ProfileCache.getInstance().list());
 	        } finally {
 	            cursor.destroy();
 	        }
 	    }
-
+	
 	    public static void refresh(IData pipeline) throws ServiceException {
 	        // first refresh the internal TN profile cache
 	        ProfileStore.getProfileStore(true);
 	        // then refresh the TundraTN profile cache
 	        ProfileCache.getInstance().refresh();
 	    }
-
+	
 	    public static void seed(IData pipeline) throws ServiceException {
 	        ProfileCache.getInstance().seed();
+	CacheManager.getInstance().start();
 	    }
 	}
-
+	
 	public static class Delivery {
 	    public static void get(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
-
+	
 	        try {
 	            IData profile = IDataHelper.get(cursor, "$profile", IData.class);
 	            String destinationName = IDataHelper.get(cursor, "$method", String.class);
 	            IData destination = ProfileHelper.getDestination(profile, destinationName);
-
+	
 	            IDataHelper.put(cursor, "$delivery", destination, false);
 	        } finally {
 	            cursor.destroy();

@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2021-09-10 06:00:31 EST
+// -----( CREATED: 2023-08-09 05:52:38 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -13,8 +13,8 @@ import com.wm.app.tn.doc.BizDocEnvelope;
 import java.nio.charset.Charset;
 import javax.activation.MimeType;
 import permafrost.tundra.data.IDataHelper;
+import permafrost.tundra.tn.cache.ProfileCache;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
-import permafrost.tundra.tn.profile.ProfileCache;
 // --- <<IS-END-IMPORTS>> ---
 
 public final class content

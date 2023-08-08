@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2022-08-23 05:33:16 EST
+// -----( CREATED: 2023-08-09 05:53:19 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -25,6 +25,7 @@ import permafrost.tundra.lang.ExceptionHelper;
 import permafrost.tundra.lang.ObjectHelper;
 import permafrost.tundra.lang.UnrecoverableException;
 import permafrost.tundra.mime.MIMETypeHelper;
+import permafrost.tundra.tn.cache.ProfileCache;
 import permafrost.tundra.tn.delivery.DeliveryQueueHelper;
 import permafrost.tundra.tn.document.attribute.transform.Transformer;
 import permafrost.tundra.tn.document.attribute.transform.number.ImminentPrioritizer;
@@ -41,7 +42,6 @@ import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
 import permafrost.tundra.tn.document.BizDocTypeHelper;
 import permafrost.tundra.tn.log.ActivityLogHelper;
 import permafrost.tundra.tn.log.EntryType;
-import permafrost.tundra.tn.profile.ProfileCache;
 import permafrost.tundra.tn.profile.ProfileHelper;
 // --- <<IS-END-IMPORTS>> ---
 

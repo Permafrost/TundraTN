@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2019-10-31T15:58:42.081
+// -----( CREATED: 2023-08-09 05:54:06 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -13,8 +13,8 @@ import com.wm.app.tn.doc.BizDocEnvelope;
 import com.wm.app.tn.route.RoutingRule;
 import permafrost.tundra.collection.CollectionHelper;
 import permafrost.tundra.data.IDataHelper;
+import permafrost.tundra.tn.cache.ProfileCache;
 import permafrost.tundra.tn.document.BizDocEnvelopeHelper;
-import permafrost.tundra.tn.profile.ProfileCache;
 import permafrost.tundra.tn.route.RoutingRuleHelper;
 // --- <<IS-END-IMPORTS>> ---
 
@@ -44,7 +44,7 @@ public final class rule
 		// [i] - field:0:optional RuleID
 		// [i] - field:0:optional RuleName
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    RoutingRule rule = RoutingRuleHelper.normalize(IDataHelper.get(cursor, "$rule", IData.class));
 		    RoutingRuleHelper.disable(rule);
@@ -53,7 +53,7 @@ public final class rule
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -68,7 +68,7 @@ public final class rule
 		// [i] - field:0:optional RuleID
 		// [i] - field:0:optional RuleName
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    RoutingRule rule = RoutingRuleHelper.normalize(IDataHelper.get(cursor, "$rule", IData.class));
 		    RoutingRuleHelper.enable(rule);
@@ -77,7 +77,7 @@ public final class rule
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -94,7 +94,7 @@ public final class rule
 		// [i] - field:0:optional RuleID
 		// [i] - field:0:optional RuleName
 		// [i] record:0:optional TN_parms
-		// [i] - field:0:optional $bypassRouting {"false","true"}
+		// [i] - field:0:optional $bypassRouting {&quot;false&quot;,&quot;true&quot;}
 		// [o] record:0:optional $bizdoc
 		// [o] - field:0:required InternalID
 		// [o] - record:0:required DocType
@@ -112,11 +112,11 @@ public final class rule
 		// [o] -- field:0:optional VerificationSvc
 		// [o] -- field:0:optional SigningSvc
 		// [o] -- record:0:optional PreProcessingFlags
-		// [o] --- field:0:optional validate? {"yes","no","dont care"}
-		// [o] --- field:0:optional verify? {"yes","no","dont care"}
-		// [o] --- field:0:optional persist? {"yes","no","dont care","only if unique"}
-		// [o] --- field:0:optional unique? {"dont care","Document ID only","Document ID and sender"}
-		// [o] --- field:0:optional persistOption? {"don't care","content, attributes and activity log","content only","attributes only","activity log only","content and attributes","content and activity log","attributes and activity log"}
+		// [o] --- field:0:optional validate? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;}
+		// [o] --- field:0:optional verify? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;}
+		// [o] --- field:0:optional persist? {&quot;yes&quot;,&quot;no&quot;,&quot;dont care&quot;,&quot;only if unique&quot;}
+		// [o] --- field:0:optional unique? {&quot;dont care&quot;,&quot;Document ID only&quot;,&quot;Document ID and sender&quot;}
+		// [o] --- field:0:optional persistOption? {&quot;don't care&quot;,&quot;content, attributes and activity log&quot;,&quot;content only&quot;,&quot;attributes only&quot;,&quot;activity log only&quot;,&quot;content and attributes&quot;,&quot;content and activity log&quot;,&quot;attributes and activity log&quot;}
 		// [o] --- field:0:optional dupCheckSvc
 		// [o] -- record:0:optional Attributes
 		// [o] -- record:0:optional RequiredAttributes
@@ -235,27 +235,12 @@ public final class rule
 		// [o] - field:0:optional RoutingType
 		// [o] - field:0:optional Duplicate
 		// [o] record:0:optional $sender
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -273,27 +258,12 @@ public final class rule
 		// [o] - field:1:required ProfileGroups
 		// [o] - object:0:required RoutingOffStatus?
 		// [o] record:0:optional $receiver
-		// [o] - recref:0:required Corporate wm.tn.rec:Corporation
-		// [o] - recref:1:required Contact wm.tn.rec:Contact
-		// [o] - recref:1:required Delivery wm.tn.rec:Delivery
-		// [o] - recref:1:required ID wm.tn.rec:ExternalID
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
 		// [o] - record:0:optional DeliveryMethods
-		// [o] -- recref:0:optional Preferred Protocol wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Primary HTTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary E-mail wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary FTPS wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTP wm.tn.rec:Delivery
-		// [o] -- recref:0:optional Secondary HTTPS wm.tn.rec:Delivery
 		// [o] - field:0:required ProfileID
 		// [o] - field:0:required CorporationName
 		// [o] - field:0:required OrgUnit
@@ -346,14 +316,14 @@ public final class rule
 		// [o] - object:0:required RuleIndex
 		// [o] record:0:optional TN_parms
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true);
 		    RoutingRule rule = RoutingRuleHelper.normalize(IDataHelper.get(cursor, "$rule", IData.class));
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
+		
 		    RoutingRuleHelper.execute(rule, bizdoc, parameters);
-
+		
 		    if (bizdoc != null) {
 		        IDataHelper.put(cursor, "$bizdoc", bizdoc);
 		        ProfileCache cache = ProfileCache.getInstance();
@@ -366,7 +336,7 @@ public final class rule
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -414,20 +384,20 @@ public final class rule
 		// [o] - field:0:required LastChangeSession
 		// [o] - object:0:required RuleIndex
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    String ruleID = IDataHelper.get(cursor, "$rule.id", String.class);
 		    String ruleName = IDataHelper.get(cursor, "$rule.name", String.class);
-
+		
 		    RoutingRule rule = RoutingRuleHelper.getByIdentityOrName(ruleID, ruleName);
-
+		
 		    IDataHelper.put(cursor, "$rule", rule, false);
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -474,11 +444,11 @@ public final class rule
 		// [o] - object:0:required RuleIndex
 		// [o] field:0:required $rule.list.length
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    IData[] ruleList = CollectionHelper.arrayify(RoutingRuleHelper.list(), IData.class);
 		    int length = ruleList == null ? 0 : ruleList.length;
-
+		
 		    IDataHelper.put(cursor, "$rule.list", ruleList, false);
 		    IDataHelper.put(cursor, "$rule.list.length", length, String.class);
 		} finally {
@@ -486,7 +456,7 @@ public final class rule
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -537,18 +507,18 @@ public final class rule
 		// [o] - field:0:required LastChangeSession
 		// [o] - object:0:required RuleIndex
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), false);
 		    IData parameters = IDataHelper.get(cursor, "TN_parms", IData.class);
-
+		
 		    IDataHelper.put(cursor, "$rule", RoutingRuleHelper.match(bizdoc, parameters, true));
 		} finally {
 		    cursor.destroy();
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 
 
@@ -597,7 +567,7 @@ public final class rule
 		// [o] - field:0:required LastChangeSession
 		// [o] - object:0:required RuleIndex
 		IDataCursor cursor = pipeline.getCursor();
-
+		
 		try {
 		    IData rule = IDataHelper.get(cursor, "$rule", IData.class);
 		    IDataHelper.put(cursor, "$rule", RoutingRuleHelper.normalize(rule), false);
@@ -606,7 +576,7 @@ public final class rule
 		}
 		// --- <<IS-END>> ---
 
-
+                
 	}
 }
 
