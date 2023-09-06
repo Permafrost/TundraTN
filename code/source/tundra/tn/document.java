@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2023-09-06 23:14:50 EST
+// -----( CREATED: 2023-09-06 11:22:22 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -963,23 +963,6 @@ public final class document
 	}
 	
 	public static class DocumentDuplicate {
-	    public static void check(IData pipeline) throws ServiceException {
-	        IDataCursor cursor = pipeline.getCursor();
-	
-	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class), false, true);
-	
-	            BizDocEnvelopeHelper.DuplicateResult result = BizDocEnvelopeHelper.isDuplicate(bizdoc);
-	
-	            IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
-	            IDataHelper.put(cursor, "message", result.toString(), String.class);
-	            IDataHelper.put(cursor, "bizdoc", result.getDocument());
-	            if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
-	        } finally {
-	            cursor.destroy();
-	        }
-	    }
-	
 	    public static void content(IData pipeline) throws ServiceException {
 	        IDataCursor cursor = pipeline.getCursor();
 	
@@ -997,6 +980,23 @@ public final class document
 	            IDataHelper.put(cursor, "message", result.toString());
 	            IDataHelper.put(cursor, "bizdoc", result.getDocument());
 	            IDataHelper.put(cursor, "bizdoc.content", content instanceof InputStream ? result.getContent() : content);
+	            if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	
+	    public static void identity(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+	
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class), true, true);
+	
+	            BizDocEnvelopeHelper.DuplicateResult result = BizDocEnvelopeHelper.isDuplicate(bizdoc);
+	
+	            IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
+	            IDataHelper.put(cursor, "message", result.toString(), String.class);
+	            IDataHelper.put(cursor, "bizdoc", result.getDocument());
 	            if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
 	        } finally {
 	            cursor.destroy();
