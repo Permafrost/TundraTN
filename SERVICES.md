@@ -2876,17 +2876,21 @@ against the document to be used for future duplicate checks.
   the `InternalID` of the bizdoc must be specified, with the
   remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
   optional.
-* `bizdoc.content` is an optional string, byte array, or input stream
-  used to calculate the SHA-512 message digest. If not specified,
-  the bizdoc's default content part will be used.
+* `bizdoc.content` is an optional string, byte array, input stream, or
+  `IData` document used to calculate the SHA-512 message digest. If an
+  `IData` document is provided, it is first canonicalized by
+  recursively sorting the keys in ascending lexicographic order and
+  then serialized as minified JSON before calculating the message
+  digest. If not specified, the bizdoc's default content part will be
+  used.
 
 #### Outputs:
 
 * `duplicate` is a boolean flag which when `true` indicates that the
   given document was detected as a duplicate of another pre-existing
   document.
-* `message` is an optional message describing the result of the
-  duplicate check suitable for logging.
+* `message` is a message describing the result of the duplicate check
+  suitable for logging.
 * `bizdoc` is the Trading Networks document that was checked.
 * `bizdoc.content` is the content used to calculate the SHA-512
   message digest. The content is returned in the same format as
@@ -2895,7 +2899,7 @@ against the document to be used for future duplicate checks.
   digest calculation, and therefore a new input stream containing the
   same input content is returned for subsequent use by the caller.
 * `bizdoc.duplicate` is returned when `duplicate` is `true`, and is
-  the Trading Networks document that is a pre-existing duplicate of
+  the Trading Networks document that is the pre-existing duplicate of
   `bizdoc`.
 
 ---
@@ -2921,11 +2925,11 @@ check service from Trading Networks, and is compatible with the the
 
 * `duplicate` is a boolean flag which when `true` indicates that the
   given document was considered a duplicate.
-* `message` is an optional message describing the result of the
-  duplicate check suitable for logging.
+* `message` is a message describing the result of the duplicate check
+  suitable for logging.
 * `bizdoc` is the Trading Networks document that was checked.
 * `bizdoc.duplicate` is returned when `duplicate` is `true`, and is
-  the Trading Networks document that is a pre-existing duplicate of
+  the Trading Networks document that is the pre-existing duplicate of
   `bizdoc`.
 
 ---

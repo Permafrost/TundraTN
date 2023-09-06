@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2023-09-06 11:22:22 EST
+// -----( CREATED: 2023-09-07 05:04:49 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -974,7 +974,12 @@ public final class document
 	                content = BizDocContentHelper.getContent(bizdoc);
 	            }
 	
-	            BizDocEnvelopeHelper.DuplicateResult result = BizDocEnvelopeHelper.isDuplicate(bizdoc, InputStreamHelper.normalize(content));
+	            BizDocEnvelopeHelper.DuplicateResult result;
+	            if (content instanceof IData) {
+	                result = BizDocEnvelopeHelper.isDuplicate(bizdoc, (IData)content);
+	            } else {
+	                result = BizDocEnvelopeHelper.isDuplicate(bizdoc, InputStreamHelper.normalize(content));
+	            }
 	
 	            IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
 	            IDataHelper.put(cursor, "message", result.toString());
