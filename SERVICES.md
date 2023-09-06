@@ -2877,6 +2877,56 @@ check service from Trading Networks, and is compatible with the the
 
 * `duplicate` is a boolean flag which when `true` indicates that the
   given document was considered a duplicate.
+* `message` is an optional message describing the result of the
+  duplicate check suitable for logging.
+* `bizdoc` is the Trading Networks document that was checked.
+* `bizdoc.duplicate` is returned when `duplicate` is `true`, and is
+  the Trading Networks document that is a pre-existing duplicate of
+  `bizdoc`.
+
+---
+
+### tundra.tn.document.duplicate:content
+
+Checks if the given document is a duplicate by checking if there
+are other documents with the same document type, sender, receiver,
+and SHA-512 message digest of the document content.
+
+This service is designed to be called as a custom document duplicate
+check service from Trading Networks, and is compatible with the the
+`WmTN/wm.tn.rec:DupCheckService` specification.
+
+This service can also be called directly, and it will perform
+the duplicate check when called and store the calculated unique key
+against the document to be used for future duplicate checks.
+
+#### Inputs:
+
+* `bizdoc` is the Trading Networks document to be checked. Only
+  the `InternalID` of the bizdoc must be specified, with the
+  remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
+  optional.
+* `bizdoc.content` is an optional string, byte array, or input stream
+  used to calculate the SHA-512 message digest. If not specified,
+  the bizdoc's default content part will be used.
+
+#### Outputs:
+
+* `duplicate` is a boolean flag which when `true` indicates that the
+  given document was detected as a duplicate of another pre-existing
+  document.
+* `message` is an optional message describing the result of the
+  duplicate check suitable for logging.
+* `bizdoc` is the Trading Networks document that was checked.
+* `bizdoc.content` is the content used to calculate the SHA-512
+  message digest. The content is returned in the same format as
+  provided. This is important as when the content was provided as an
+  input stream, it is necessarily consumed by the SHA-512 message
+  digest calculation, and therefore a new input stream containing the
+  same input content is returned for subsequent use by the caller.
+* `bizdoc.duplicate` is returned when `duplicate` is `true`, and is
+  the Trading Networks document that is a pre-existing duplicate of
+  `bizdoc`.
 
 ---
 
