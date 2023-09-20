@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2023-09-07 05:04:49 EST
+// -----( CREATED: 2023-09-20 17:28:28 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -17,6 +17,7 @@ import com.wm.app.tn.err.ActivityLogEntry;
 import java.io.InputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Map;
 import permafrost.tundra.data.IDataHelper;
 import permafrost.tundra.io.InputStreamHelper;
 import permafrost.tundra.lang.BooleanHelper;
@@ -967,8 +968,25 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 	
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class), true, true);
-	            Object content = IDataHelper.get(cursor, "bizdoc.content");
+	            boolean useDupCheckSpecification = false;
+	
+	            IData document = IDataHelper.get(cursor, "$bizdoc", IData.class);
+	            IData documentWithNoPrefix = IDataHelper.get(cursor, "bizdoc", IData.class);
+	
+	            if (document == null) {
+	                document = documentWithNoPrefix;
+	                if (document == null) {
+	                    throw new NullPointerException("bizdoc must not be null");
+	                } else {
+	                    useDupCheckSpecification = true;
+	                }
+	            } else if (documentWithNoPrefix != null) {
+	                String internalID = IDataHelper.get(document, "InternalID", String.class);
+	                useDupCheckSpecification = internalID != null && internalID.equals(IDataHelper.get(documentWithNoPrefix, "InternalID", String.class));
+	            }
+	
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(document, true, true);
+	            Object content = IDataHelper.get(cursor, useDupCheckSpecification ? "bizdoc.content" : "$bizdoc.content");
 	
 	            if (content == null) {
 	                content = BizDocContentHelper.getContent(bizdoc);
@@ -981,11 +999,20 @@ public final class document
 	                result = BizDocEnvelopeHelper.isDuplicate(bizdoc, InputStreamHelper.normalize(content));
 	            }
 	
-	            IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
-	            IDataHelper.put(cursor, "message", result.toString());
-	            IDataHelper.put(cursor, "bizdoc", result.getDocument());
-	            IDataHelper.put(cursor, "bizdoc.content", content instanceof InputStream ? result.getContent() : content);
-	            if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
+	            IDataHelper.put(cursor, "$bizdoc", result.getDocument());
+	            IDataHelper.put(cursor, "$bizdoc.content", content instanceof InputStream ? result.getContent() : content);
+	            IDataHelper.put(cursor, "$bizdoc.duplicate?", result.isDuplicate(), String.class);
+	            IDataHelper.put(cursor, "$bizdoc.duplicate.key", result.getUniqueKey());
+	            IDataHelper.put(cursor, "$bizdoc.duplicate.message", result.toString());
+	            if (result.isDuplicate()) IDataHelper.put(cursor, "$bizdoc.duplicate", result.getDuplicate());
+	
+	            if (useDupCheckSpecification) {
+	                IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
+	                IDataHelper.put(cursor, "message", result.toString());
+	                IDataHelper.put(cursor, "bizdoc", result.getDocument());
+	                IDataHelper.put(cursor, "bizdoc.content", content instanceof InputStream ? result.getContent() : content);
+	                if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
+	            }
 	        } finally {
 	            cursor.destroy();
 	        }
@@ -995,14 +1022,66 @@ public final class document
 	        IDataCursor cursor = pipeline.getCursor();
 	
 	        try {
-	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "bizdoc", IData.class), true, true);
+	            boolean useDupCheckSpecification = false;
+	
+	            IData document = IDataHelper.get(cursor, "$bizdoc", IData.class);
+	            IData documentWithNoPrefix = IDataHelper.get(cursor, "bizdoc", IData.class);
+	
+	            if (document == null) {
+	                document = documentWithNoPrefix;
+	                if (document == null) {
+	                    throw new NullPointerException("bizdoc must not be null");
+	                } else {
+	                    useDupCheckSpecification = true;
+	                }
+	            } else if (documentWithNoPrefix != null) {
+	                String internalID = IDataHelper.get(document, "InternalID", String.class);
+	                useDupCheckSpecification = internalID != null && internalID.equals(IDataHelper.get(documentWithNoPrefix, "InternalID", String.class));
+	            }
+	
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(document, true, true);
 	
 	            BizDocEnvelopeHelper.DuplicateResult result = BizDocEnvelopeHelper.isDuplicate(bizdoc);
 	
-	            IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
-	            IDataHelper.put(cursor, "message", result.toString(), String.class);
-	            IDataHelper.put(cursor, "bizdoc", result.getDocument());
-	            if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
+	            IDataHelper.put(cursor, "$bizdoc", result.getDocument());
+	            IDataHelper.put(cursor, "$bizdoc.duplicate?", result.isDuplicate(), String.class);
+	            IDataHelper.put(cursor, "$bizdoc.duplicate.key", result.getUniqueKey());
+	            IDataHelper.put(cursor, "$bizdoc.duplicate.message", result.toString());
+	            if (result.isDuplicate()) IDataHelper.put(cursor, "$bizdoc.duplicate", result.getDuplicate());
+	
+	            if (useDupCheckSpecification) {
+	                IDataHelper.put(cursor, "duplicate", result.isDuplicate(), String.class);
+	                IDataHelper.put(cursor, "message", result.toString());
+	                IDataHelper.put(cursor, "bizdoc", result.getDocument());
+	                if (result.isDuplicate()) IDataHelper.put(cursor, "bizdoc.duplicate", result.getDuplicate());
+	            }
+	        } finally {
+	            cursor.destroy();
+	        }
+	    }
+	
+	    public static void key(IData pipeline) throws ServiceException {
+	        IDataCursor cursor = pipeline.getCursor();
+	
+	        try {
+	            BizDocEnvelope bizdoc = BizDocEnvelopeHelper.normalize(IDataHelper.get(cursor, "$bizdoc", IData.class), true, true);
+	            Object content = IDataHelper.get(cursor, "$bizdoc.content");
+	            boolean useContent = "content".equals(IDataHelper.getOrDefault(cursor, "$bizdoc.duplicate.key.type", String.class, "content"));
+	
+	            if (content == null) {
+	                content = BizDocContentHelper.getContent(bizdoc);
+	            }
+	
+	            Map.Entry<String, InputStream> result;
+	            if (content instanceof IData) {
+	                result = BizDocEnvelopeHelper.getUniqueKey(bizdoc, useContent ? (IData)content : null);
+	            } else {
+	                result = BizDocEnvelopeHelper.getUniqueKey(bizdoc, useContent ? InputStreamHelper.normalize(content) : null);
+	            }
+	
+	            IDataHelper.put(cursor, "$bizdoc", bizdoc);
+	            IDataHelper.put(cursor, "$bizdoc.content", content instanceof InputStream ? result.getValue() : content);
+	            IDataHelper.put(cursor, "$bizdoc.duplicate.key", result.getKey());
 	        } finally {
 	            cursor.destroy();
 	        }

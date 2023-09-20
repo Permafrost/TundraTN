@@ -2862,45 +2862,55 @@ Checks if the given document is a duplicate by checking if there
 are other documents with the same document type, sender, receiver,
 and SHA-512 message digest of the document content.
 
-This service is designed to be called as a custom document duplicate
-check service from Trading Networks, and is compatible with the the
-`WmTN/wm.tn.rec:DupCheckService` specification.
+If the given document is unique (not a duplicate), it's unique key
+will be inserted into the `BizDocUniqueKeys` database table, to be
+used by future duplicate document checks.
 
-This service can also be called directly, and it will perform
-the duplicate check when called and store the calculated unique key
-against the document to be used for future duplicate checks.
+The calculated unique key will also be added as an attribute to the
+given document if a document attribute named `Unique Key` exists in
+Trading Networks, whether or not this document is considered a
+duplicate.
+
+This service can be called as a custom document duplicate check
+service from Trading Networks document types, as it is silently
+compatible with the `WmTN/wm.tn.rec:DupCheckService` specification.
+
+This service can also be called directly, when the result of using a
+document type duplicate check is not desirable.
 
 #### Inputs:
 
-* `bizdoc` is the Trading Networks document to be checked. Only
+* `$bizdoc` is the Trading Networks document to be checked. Only
   the `InternalID` of the bizdoc must be specified, with the
   remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
   optional.
-* `bizdoc.content` is an optional string, byte array, input stream, or
-  `IData` document used to calculate the SHA-512 message digest. If an
-  `IData` document is provided, it is first canonicalized by
+* `$bizdoc.content` is an optional string, byte array, input stream,
+  or `IData` document used to calculate the SHA-512 message digest. If
+  an `IData` document is provided, it is first canonicalized by
   recursively sorting the keys in ascending lexicographic order and
   then serialized as minified JSON before calculating the message
-  digest. If not specified, the bizdoc's default content part will be
+  digest. If not specified, the `$bizdoc` default content part will be
   used.
 
 #### Outputs:
 
-* `duplicate` is a boolean flag which when `true` indicates that the
-  given document was detected as a duplicate of another pre-existing
-  document.
-* `message` is a message describing the result of the duplicate check
-  suitable for logging.
-* `bizdoc` is the Trading Networks document that was checked.
-* `bizdoc.content` is the content used to calculate the SHA-512
+* `$bizdoc` is the Trading Networks document that was checked.
+* `$bizdoc.content` is the content used to calculate the SHA-512
   message digest. The content is returned in the same format as
   provided. This is important as when the content was provided as an
   input stream, it is necessarily consumed by the SHA-512 message
   digest calculation, and therefore a new input stream containing the
   same input content is returned for subsequent use by the caller.
-* `bizdoc.duplicate` is returned when `duplicate` is `true`, and is
+* `$bizdoc.duplicate?` is a boolean flag which when `true` indicates
+  that the given document was detected as a duplicate of another pre-
+  existing document.
+* `$bizdoc.duplicate.key` is the unique key calculated for the given
+  `$bizdoc` that was used to check for duplicate documents.
+* `$bizdoc.duplicate.message` is a message describing the result of
+  the duplicate check suitable for logging.
+* `$bizdoc.duplicate` is returned when `duplicate` is `true`, and is
   the Trading Networks document that is the pre-existing duplicate of
-  `bizdoc`.
+  `$bizdoc`.
 
 ---
 
@@ -2910,27 +2920,88 @@ Checks if the given document is a duplicate by checking if there
 are other documents with the same document type, sender, receiver,
 and document ID.
 
-This service is designed to be called as a custom document duplicate
-check service from Trading Networks, and is compatible with the the
-`WmTN/wm.tn.rec:DupCheckService` specification.
+If the given document is unique (not a duplicate), it's unique key
+will be inserted into the `BizDocUniqueKeys` database table, to be
+used by future duplicate document checks.
+
+The calculated unique key will also be added as an attribute to the
+given document if a document attribute named `Unique Key` exists in
+Trading Networks, whether or not this document is considered a
+duplicate.
+
+This service can be called as a custom document duplicate check
+service from Trading Networks document types, as it is silently
+compatible with the `WmTN/wm.tn.rec:DupCheckService` specification.
+
+This service can also be called directly, when the result of using a
+document type duplicate check is not desirable.
 
 #### Inputs:
 
-* `bizdoc` is the Trading Networks document to be checked. Only
-  the internal ID of the bizdoc must be specified, with the
+* `$bizdoc` is the Trading Networks document to be checked. Only
+  the `InternalID` of the bizdoc must be specified, with the
   remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
   optional.
 
 #### Outputs:
 
-* `duplicate` is a boolean flag which when `true` indicates that the
-  given document was considered a duplicate.
-* `message` is a message describing the result of the duplicate check
-  suitable for logging.
-* `bizdoc` is the Trading Networks document that was checked.
-* `bizdoc.duplicate` is returned when `duplicate` is `true`, and is
+* `$bizdoc` is the Trading Networks document that was checked.
+* `$bizdoc.duplicate?` is a boolean flag which when `true` indicates
+  that the given document was detected as a duplicate of another pre-
+  existing document.
+* `$bizdoc.duplicate.key` is the unique key calculated for the given
+  `$bizdoc` that was used to check for duplicate documents.
+* `$bizdoc.duplicate.message` is a message describing the result of
+  the duplicate check suitable for logging.
+* `$bizdoc.duplicate` is returned when `duplicate` is `true`, and is
   the Trading Networks document that is the pre-existing duplicate of
-  `bizdoc`.
+  `$bizdoc`.
+
+---
+
+### tundra.tn.document.duplicate:key
+
+Calculates the unique key for the given document that can be used for
+duplicate detection.
+
+#### Inputs:
+
+* `$bizdoc` is the Trading Networks document to be checked. Only
+  the `InternalID` of the bizdoc must be specified, with the
+  remainder of the `WmTN/wm.tn.rec:BizDocEnvelope` structure purely
+  optional.
+* `$bizdoc.content` is an optional string, byte array, input stream,
+  or `IData` document used to calculate the SHA-512 message digest. If
+  an `IData` document is provided, it is first canonicalized by
+  recursively sorting the keys in ascending lexicographic order and
+  then serialized as minified JSON before calculating the message
+  digest. If not specified, the `$bizdoc` default content part will be
+  used. This input parameter is only used when
+  `$bizdoc.duplicate.key.type` is specified as `content`.
+* `$bizdoc.duplicate.key.type` specifies the strategy for calculating
+  the unique key:
+  * `content` will calculate the unique key as a concatenation of the
+    document type, sender, receiver, and a SHA-512 message digest of
+    the specified `$bizdoc.content`, or `$bizdoc` default content part
+    if `$bizdoc.content` is not specified. This is the default
+    strategy, and is also the strategy used by the service:
+    `TundraTN/tundra.tn.document.duplicate:content`.
+  * `identity` will calculate the unique key as a concatenation of the
+    document type, sender, receiver, and document identity. This is
+    the strategy used by the service:
+    `TundraTN/tundra.tn.document.duplicate:identity`.
+
+#### Outputs:
+
+* `$bizdoc` is the Trading Networks document that was checked.
+* `$bizdoc.content` is the content used to calculate the SHA-512
+  message digest. The content is returned in the same format as
+  provided. This is important as when the content was provided as an
+  input stream, it is necessarily consumed by the SHA-512 message
+  digest calculation, and therefore a new input stream containing the
+  same input content is returned for subsequent use by the caller.
+* `$bizdoc.duplicate.key` is the unique key calculated for the given
+  `$bizdoc` that can be used to check for duplicate documents.
 
 ---
 
