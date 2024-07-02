@@ -1,3 +1,7 @@
+# 0.0.38 (2024-07-03)
+
+* update `./code/jars/Tundra.jar` library with same version used by Tundra 0.0.38 (2024-07-03), required for compatibility between the two packages Tundra and TundraTN
+
 # 0.0.37 (2023-10-12)
 
 * add `tundra.tn.document.duplicate:content` for checking for duplicates using a SHA-512 message digest of the document content
