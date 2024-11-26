@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2023-08-08 05:51:46 EST
+// -----( CREATED: 2024-11-26 17:10:00 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -50,6 +50,7 @@ public final class profile
 		// [o] record:0:required $profile
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
+		// [o] - field:0:required DisplayName
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
@@ -107,6 +108,7 @@ public final class profile
 		// [o] record:1:required $profiles
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
+		// [o] - field:0:required DisplayName
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
@@ -156,6 +158,7 @@ public final class profile
 		// [o] record:0:required $profile
 		// [o] - field:1:required ProfileGroups
 		// [o] - field:1:required users
+		// [o] - field:0:required DisplayName
 		// [o] - field:0:optional DefaultID
 		// [o] - record:0:optional ExternalID
 		// [o] - record:0:optional ExtendedFields
@@ -217,7 +220,7 @@ public final class profile
 	
 	    public static void seed(IData pipeline) throws ServiceException {
 	        ProfileCache.getInstance().seed();
-	CacheManager.getInstance().start();
+	        CacheManager.getInstance().start();
 	    }
 	}
 	
