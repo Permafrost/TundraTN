@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2023-09-20 17:28:28 EST
+// -----( CREATED: 2025-05-03 09:26:52 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -918,7 +918,7 @@ public final class document
 	
 	                        IDataHelper.put(cursor, "$content", ObjectHelper.convert(content, charset, mode));
 	                        IDataHelper.put(cursor, "$content.part", contentPart.getPartName(), false);
-	                        IDataHelper.put(cursor, "$content.type", BizDocContentHelper.getContentType(contentPart), false);
+	                        IDataHelper.put(cursor, "$content.type", contentType, false);
 	                        IDataHelper.put(cursor, "$content.length", contentPart.getLength(), String.class);
 	                    }
 	                }
