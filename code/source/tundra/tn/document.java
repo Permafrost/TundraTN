@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2025-05-03 09:26:52 EST
+// -----( CREATED: 2025-10-10 13:12:02 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -1145,7 +1145,9 @@ public final class document
 	            String previousUserStatus = IDataHelper.get(cursor, "$status.user.previous", String.class);
 	            boolean silence = IDataHelper.getOrDefault(cursor, "$status.silence?", Boolean.class, false);
 	
-	            BizDocEnvelopeHelper.setStatus(bizdoc, systemStatus, previousSystemStatus, userStatus, previousUserStatus, silence);
+	            boolean result = BizDocEnvelopeHelper.setStatus(bizdoc, systemStatus, previousSystemStatus, userStatus, previousUserStatus, silence);
+	
+	            IDataHelper.put(cursor, "$status.updated?", result, String.class);
 	        } finally {
 	            cursor.destroy();
 	        }

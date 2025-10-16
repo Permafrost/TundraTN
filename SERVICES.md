@@ -3337,6 +3337,10 @@ Sets user status on the given Trading Networks document.
   this service not to change the status on the document. Defaults to
   `false`.
 
+#### Outputs:
+
+* `$status.updated?` is `true` if the status was updated.
+
 ---
 
 ### tundra.tn.document.type:get
