@@ -2272,6 +2272,32 @@ document type attribute transformer.
 
 ---
 
+### tundra.tn.document.attribute.string.transformer.http:header
+
+Trading Networks string transformer which returns the value of the
+given HTTP header. The given HTTP header name is treated as case-
+insensitive.
+
+This service is intended to be invoked by Trading Networks as a custom
+document type attribute transformer.
+
+#### Inputs:
+
+* `values` is a list of arbitrary strings, their values are ignored by
+  this service and are therefore irrelevant.
+* `isArray` is a boolean indicating if the values argument contains
+  multiple items.
+* `arg` is the HTTP header name whose value will be returned.
+
+#### Outputs:
+
+* `newValues` is a list the same length as the input values list if
+  its length was greater than zero, or a list containing a single
+  item, where each returned item is the value of the given HTTP
+  header.
+
+---
+
 ### tundra.tn.document.attribute.string.transformer:last
 
 Trading Networks string transformer which returns only the last item
