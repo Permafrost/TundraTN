@@ -115,7 +115,11 @@ bizdoc processing rule.
   content to the input pipeline of the call to `$service`. Defaults to
   `$document` when `$parse?` is `true`, and `$content` when `$parse` is `false`.
 * `$status.done` is an optional user status to use for the bizdoc when
-  processing has completed successfully. Defaults to DONE.
+  processing has completed successfully. Defaults to `DONE`.
+* `$status.done.force?` is an optional boolean which when `true` will
+  set the user status to the `$status.done` value when processing has
+  completed successfully regardless of whether `$service` has updated
+  the user status in the interim or not. Defaults to `false`.
 * `$status.silence?` is an optional boolean which when `true` will cause this
   service not to change the status on the document. Defaults to `false`.
 * `$parse?` is an optional boolean flag which when `true` will parse the
@@ -594,6 +598,10 @@ Networks processing rule.
   an output pipeline argument named `$status.done` or it changes the
   status itself, this takes precedence over any value specified here.
   Defaults to `DONE`.
+* `$status.done.force?` is an optional boolean which when `true` will
+  set the user status to the `$status.done` value when processing has
+  completed successfully regardless of whether `$service` has updated
+  the user status in the interim or not. Defaults to `false`.
 * `$status.silence?` is an optional boolean which when `true` will
   cause this service not to change the status on the document.
   Defaults to `false`.
