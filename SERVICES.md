@@ -3127,9 +3127,8 @@ given internal ID, optionally including the document's content parts.
   to be retrieved.
 * `$content?` is an optional boolean indicating whether to also return
   the bizdoc's content parts. Defaults to `false`.
-* `$relationships?` is an optional boolean indicating whether to also
-  return the bizdoc's relationships with other bizdocs. Defaults to
-  `false`.
+* `$related?` is an optional boolean indicating whether to also return
+  the bizdoc's relationships with other bizdocs. Defaults to `false`.
 * `$raise?` is an optional boolean indicating whether to throw an
   exception if no bizdoc exists with the given `$id`. Defaults to
   `false`.
