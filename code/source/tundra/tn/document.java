@@ -1,7 +1,7 @@
 package tundra.tn;
 
 // -----( IS Java Code Template v1.2
-// -----( CREATED: 2025-10-10 13:12:02 EST
+// -----( CREATED: 2026-06-09 05:00:10 EST
 // -----( ON-HOST: -
 
 import com.wm.data.*;
@@ -104,6 +104,7 @@ public final class document
 		// @sigtype java 3.5
 		// [i] field:0:optional $id
 		// [i] field:0:optional $content? {&quot;false&quot;,&quot;true&quot;}
+		// [i] field:0:optional $relationships? {&quot;false&quot;,&quot;true&quot;}
 		// [i] field:0:optional $raise? {&quot;false&quot;,&quot;true&quot;}
 		// [o] record:0:optional $sender
 		// [o] - field:1:required ProfileGroups
@@ -156,9 +157,10 @@ public final class document
 		try {
 		    String id = IDataHelper.get(cursor, "$id", String.class);
 		    boolean content = IDataHelper.getOrDefault(cursor, "$content?", Boolean.class, false);
+		    boolean relationships = IDataHelper.getOrDefault(cursor, "$relationships?", Boolean.class, false);
 		    boolean raise = IDataHelper.getOrDefault(cursor, "$raise?", Boolean.class, false);
 		
-		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.get(id, content);
+		    BizDocEnvelope bizdoc = BizDocEnvelopeHelper.get(id, content, relationships);
 		
 		    if (bizdoc == null) {
 		        if (raise) throw new UnrecoverableException("Trading Networks document does not exist: " + id);
