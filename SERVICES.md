@@ -3822,7 +3822,7 @@ queue.
       ((Q1 + .. + Qn) + IS thread pool max) * Java thread stack size < Server free memory
 
   If a `$concurrency <= 1` is specified, tasks will be processed
-  sequentially on the main thread.
+  sequentially on the thread executing the queue's scheduled task.
 * `$thread.priority` is an optional priority used by the threads
   processing queued tasks. Defaults to [Thread.NORM_PRIORITY],
   if not specified.
@@ -3846,8 +3846,8 @@ queue.
 * `$expedite?` is an optional boolean which when `true` will expedite
   the queue's associated scheduled task to run immediately as soon as
   new queued tasks are detected for the queue. Defaults to `false`.
-  Note that this feature can only be enabled when no `$task.age` is
-  specified and both `$daemonize?` and `$ordered?` are `false`.
+  Note that this feature only supports queues where `$task.age` is not
+  specified and `$daemonize?` is `false`.
 
 #### Outputs:
 
